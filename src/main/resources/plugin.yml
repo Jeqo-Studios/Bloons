@@ -1,0 +1,18 @@
+name: Bloons
+version: '${project.version}'
+main: net.jeqo.bloons.Bloons
+api-version: 1.18
+prefix: Bloons
+authors: [ Jeqo, TwistedYetCreative ]
+description: A
+website: https://jeqo.net
+commands:
+  balloon:
+    description: Equip a balloon!
+permission:
+  balloon:
+    children:
+      force:
+        description: Ability to use fequip and funequip
+      reload:
+        description: Ability to reload the plugin

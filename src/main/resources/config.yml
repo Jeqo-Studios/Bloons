@@ -1,0 +1,27 @@
+balloons:
+  blue:
+    material: FLINT
+    custommodeldata: 1
+    permission: balloon.blue
+  green:
+    material: FLINT
+    custommodeldata: 2
+    permission: balloon.green
+  yellow:
+    material: FLINT
+    custommodeldata: 3
+    permission: balloon.yellow
+  pink:
+    material: FLINT
+    custommodeldata: 4
+    permission: balloon.pink
+
+messages:
+  prefix: '&d[Bloons] &r'
+  equipped: 'Equipped your balloon %s!'
+  unequipped: 'Unequipped your balloon!'
+  balloon-not-found: 'This balloon doesn't exist!'
+  not-equipped: 'No balloon equipped!'
+  no-permission: 'You don't have permission to use this balloon!'
+  usage: 'Usage: /balloon [equip/unequip] <balloon>'
+  config-reloaded: '&aConfig reloaded!'
