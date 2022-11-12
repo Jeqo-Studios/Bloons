@@ -2,6 +2,7 @@ package net.jeqo.bloons;
 
 import net.jeqo.bloons.data.BalloonCommand;
 import net.jeqo.bloons.data.BalloonRunner;
+import net.jeqo.bloons.data.Utils;
 import net.jeqo.bloons.listeners.PlayerLeave;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -41,11 +42,11 @@ public final class Bloons extends JavaPlugin {
     }
 
     public static String getMessage(String id, String arg) {
-        return ChatColor.translateAlternateColorCodes('&', String.format(getInstance().getConfig().getString("messages." + id, ""), arg));
+        return Utils.hex(String.format(getInstance().getConfig().getString("messages." + id, ""), arg));
     }
 
     public static String getMessage(String id) {
-        return ChatColor.translateAlternateColorCodes('&', getInstance().getConfig().getString("messages." + id, ""));
+        return Utils.hex(getInstance().getConfig().getString("messages." + id, ""));
     }
 
     public static Bloons getInstance() {

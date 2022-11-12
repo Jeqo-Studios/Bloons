@@ -1,27 +1,45 @@
+# --------------------------------------------------#
+#
+# Bloons 1.0.0-BETA
+# Made by Jeqo and TwistedDreams
+#
+# Wiki:     https://jeqo.net/wiki/bloons
+# Discord:     https://jeqo.net/discord
+#
+# --------------------------------------------------#
+#                     BALLOONS                      #
+# --------------------------------------------------#
+#
 balloons:
   blue:
     material: FLINT
-    custommodeldata: 1
+    custom-model-data: 1
     permission: balloon.blue
   green:
     material: FLINT
-    custommodeldata: 2
+    custom-model-data: 2
     permission: balloon.green
   yellow:
     material: FLINT
-    custommodeldata: 3
+    custom-model-data: 3
     permission: balloon.yellow
   pink:
     material: FLINT
-    custommodeldata: 4
+    custom-model-data: 4
     permission: balloon.pink
-
+#
+# --------------------------------------------------#
+#                     MESSAGES                      #
+# --------------------------------------------------#
+#
 messages:
-  prefix: '&d[Bloons] &r'
-  equipped: 'Equipped your balloon %s!'
-  unequipped: 'Unequipped your balloon!'
-  balloon-not-found: 'This balloon doesn't exist!'
-  not-equipped: 'No balloon equipped!'
-  no-permission: 'You don't have permission to use this balloon!'
-  usage: 'Usage: /balloon [equip/unequip] <balloon>'
+  prefix: '&5[&dBloons&5] &r'
+  no-permission: '#ee0000You do not have permission to use this balloon.'
+  player-not-found: '#ee0000Player not found.'
+  usage: '&7Usage: /balloon [equip/unequip] <balloon>'
   config-reloaded: '&aConfig reloaded!'
+  # Balloon related messages.
+  equipped: '&a%s balloon equipped!'
+  unequipped: '#ee0000Your balloon has been stored safely.'
+  balloon-not-found: '#ee0000Balloon not found.'
+  not-equipped: '#ee0000You do not currently have a balloon equipped.'
