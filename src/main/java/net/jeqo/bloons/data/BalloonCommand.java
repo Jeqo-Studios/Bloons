@@ -8,6 +8,7 @@ import java.util.Objects;
 import net.jeqo.bloons.Bloons;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -46,6 +47,7 @@ public class BalloonCommand implements CommandExecutor, TabCompleter {
                         ItemStack item = new ItemStack(Objects.requireNonNull(Material.matchMaterial(Objects.requireNonNull(keySection.getString("material")))));
                         ItemMeta meta = item.getItemMeta();
                         assert meta != null;
+                        meta.setLocalizedName(Bloons.config("balloons." + key + ".id"));
                         if (Bloons.config("balloons." + key + ".lore") != null) {
                             List<String> lore = keySection.getStringList("lore");
                             for (int i = 0; i < lore.size(); i++) {
@@ -72,9 +74,9 @@ public class BalloonCommand implements CommandExecutor, TabCompleter {
                     return true;
                 }
                 if (sender instanceof Player) {
-                    player = (Player)sender;
-                }
-                else { sender.sendMessage("Only players may execute this command!");
+                    player = (Player) sender;
+                } else {
+                    sender.sendMessage("Only players may execute this command!");
                     return true;
                 }
                 str1 = args[1];
@@ -89,30 +91,38 @@ public class BalloonCommand implements CommandExecutor, TabCompleter {
                     return true;
                 }
 
+                Utils.removeBalloon(player, (BalloonRunner) Bloons.playerBalloons.get(player.getUniqueId()));
                 Utils.checkBalloonRemovalOrAdd(player, str1);
-                player.sendMessage(Bloons.getMessage("prefix") + Bloons.getMessage("equipped", str1));
+                player.playSound(player.getLocation(), Sound.ENTITY_CHICKEN_EGG, 1, 1);
+                String balloonName = Bloons.config("balloons." + str1 + ".name");
+                player.sendMessage(Bloons.getMessage("prefix") + Bloons.getMessage("equipped", balloonName));
                 return true;
 
 
-            case "unequip": if (sender instanceof Player) {
-                player = (Player) sender;
-            } else { sender.sendMessage("Only players may execute this command!");
-                return true;
-            }
+            case "unequip":
+                if (sender instanceof Player) {
+                    player = (Player) sender;
+                } else {
+                    sender.sendMessage("Only players may execute this command!");
+                    return true;
+                }
                 balloonRunner1 = (BalloonRunner) Bloons.playerBalloons.get(player.getUniqueId());
                 if (balloonRunner1 == null) {
                     player.sendMessage(Bloons.getMessage("prefix") + Bloons.getMessage("not-equipped"));
+                    player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_BURP, 1, 1);
                     return true;
                 }
                 Utils.removeBalloon(player, balloonRunner1);
                 player.sendMessage(Bloons.getMessage("prefix") + Bloons.getMessage("unequipped"));
+                player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_HURT_SWEET_BERRY_BUSH, 1, 1);
                 return true;
 
 
-            case "fequip": if (args.length < 3) {
-                usage(sender);
-                return true;
-            }
+            case "fequip":
+                if (args.length < 3) {
+                    usage(sender);
+                    return true;
+                }
                 if (!sender.hasPermission("balloon.force")) {
                     sender.sendMessage(Bloons.getMessage("prefix") + Bloons.getMessage("no-permission"));
                     return true;
@@ -132,10 +142,11 @@ public class BalloonCommand implements CommandExecutor, TabCompleter {
                 return true;
 
 
-            case "funequip": if (!sender.hasPermission("balloon.force")) {
-                sender.sendMessage(Bloons.getMessage("prefix") + Bloons.getMessage("no-permission"));
-                return true;
-            }
+            case "funequip":
+                if (!sender.hasPermission("balloon.force")) {
+                    sender.sendMessage(Bloons.getMessage("prefix") + Bloons.getMessage("no-permission"));
+                    return true;
+                }
                 player = Bukkit.getPlayer(args[1]);
                 if (player == null) {
                     sender.sendMessage(Bloons.getMessage("prefix") + Bloons.getMessage("player-not-found"));
@@ -151,10 +162,12 @@ public class BalloonCommand implements CommandExecutor, TabCompleter {
                 return true;
 
 
-            case "reload": if (!sender.hasPermission("balloon.reload")) {
-                sender.sendMessage(Bloons.getMessage("prefix") + Bloons.getMessage("no-permission"));
-                return true;
-            }
+            case "reload":
+            case "rl":
+                if (!sender.hasPermission("balloon.reload")) {
+                    sender.sendMessage(Bloons.getMessage("prefix") + Bloons.getMessage("no-permission"));
+                    return true;
+                }
                 Bloons.getInstance().reloadConfig();
                 sender.sendMessage(Bloons.getMessage("prefix") + Bloons.getMessage("config-reloaded"));
                 return true;
@@ -178,7 +191,7 @@ public class BalloonCommand implements CommandExecutor, TabCompleter {
                     return Objects.requireNonNull(Bloons.getInstance().getConfig().getConfigurationSection("balloons")).getKeys(false).stream().toList();
                 }
             } else if (args.length == 1) {
-                return List.of("equip", "unequip", "fequip", "funequip", "reload");
+                return List.of("equip", "unequip", "fequip", "funequip", "reload", "menu", "rl");
             }
             return Collections.emptyList();
         } else {
@@ -188,7 +201,7 @@ public class BalloonCommand implements CommandExecutor, TabCompleter {
             if (args.length == 2) {
                 return Objects.requireNonNull(Bloons.getInstance().getConfig().getConfigurationSection("balloons")).getKeys(false).stream().toList();
             }
-            return List.of("equip", "unequip");
+            return List.of("equip", "unequip", "menu");
         }
     }
 }

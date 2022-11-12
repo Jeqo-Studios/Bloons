@@ -3,30 +3,53 @@
 # Bloons 1.0.0-BETA
 # Made by Jeqo and TwistedDreams
 #
-# Wiki:     https://jeqo.net/wiki/bloons
-# Discord:     https://jeqo.net/bloonsdiscord
-#
 # --------------------------------------------------#
 #                     BALLOONS                      #
 # --------------------------------------------------#
 #
+menu-title: "&0ʙᴀʟʟᴏᴏɴs"
+#
 balloons:
   blue:
+    id: blue
+    permission: balloon.blue
     material: FLINT
     custom-model-data: 1
-    permission: balloon.blue
+    name: '&bBlue &fBalloon'
+    lore:
+      - '&8Bloons Default Balloon'
+      - ''
+      - '&eᴄʟɪᴄᴋ ᴛᴏ ᴇǫᴜɪᴘ'
   green:
+    id: green
+    permission: balloon.green
     material: FLINT
     custom-model-data: 2
-    permission: balloon.green
+    name: '&aGreen &fBalloon'
+    lore:
+      - '&8Bloons Default Balloon'
+      - ''
+      - '&eᴄʟɪᴄᴋ ᴛᴏ ᴇǫᴜɪᴘ'
   yellow:
+    id: yellow
+    permission: balloon.yellow
     material: FLINT
     custom-model-data: 3
-    permission: balloon.yellow
+    name: '&eYellow &fBalloon'
+    lore:
+      - '&8Bloons Default Balloon'
+      - ''
+      - '&eᴄʟɪᴄᴋ ᴛᴏ ᴇǫᴜɪᴘ'
   pink:
+    id: pink
+    permission: balloon.pink
     material: FLINT
     custom-model-data: 4
-    permission: balloon.pink
+    name: '&dPink &fBalloon'
+    lore:
+      - '&8Bloons Default Balloon'
+      - ''
+      - '&eᴄʟɪᴄᴋ ᴛᴏ ᴇǫᴜɪᴘ'
 #
 # --------------------------------------------------#
 #                     MESSAGES                      #
@@ -36,10 +59,10 @@ messages:
   prefix: '#ff00cc[#e207c5B#c50fbdl#a816b6o#8a1dafo#6d24a8n#502ca0s#333399] &r'
   no-permission: '#ee0000You do not have permission to use this balloon.'
   player-not-found: '#ee0000Player not found.'
-  usage: '&7Usage: /balloon [equip/unequip] <balloon>'
+  usage: '&7Usage: /balloon [menu/equip/unequip] <balloon>'
   config-reloaded: '&aConfig reloaded!'
   # Balloon related messages.
   equipped: '&a%s balloon equipped!'
-  unequipped: '#ee0000Your balloon has been stored safely.'
+  unequipped: '&aYour balloon has been stored safely.'
   balloon-not-found: '#ee0000Balloon not found.'
   not-equipped: '#ee0000You do not currently have a balloon equipped.'
