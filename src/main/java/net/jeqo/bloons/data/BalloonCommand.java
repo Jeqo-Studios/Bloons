@@ -1,5 +1,6 @@
 package net.jeqo.bloons.data;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -16,9 +17,9 @@ public class BalloonCommand implements CommandExecutor, TabCompleter {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         Player player;
         String str1;
-        BalloonRunner balloonRunner1;
+        BalloonOwner balloonRunner1;
         String balloonId;
-        BalloonRunner runner;
+        BalloonOwner runner;
         if (args.length < 1) {
             usage(sender);
             return true;
@@ -60,7 +61,7 @@ public class BalloonCommand implements CommandExecutor, TabCompleter {
             } else { sender.sendMessage("Only players may execute this command!");
                 return true;
             }
-                balloonRunner1 = (BalloonRunner) Bloons.playerBalloons.get(player.getUniqueId());
+                balloonRunner1 = (BalloonOwner) Bloons.playerBalloons.get(player.getUniqueId());
                 if (balloonRunner1 == null) {
                     player.sendMessage(Bloons.getMessage("prefix") + Bloons.getMessage("not-equipped"));
                     return true;
@@ -102,7 +103,7 @@ public class BalloonCommand implements CommandExecutor, TabCompleter {
                     sender.sendMessage(Bloons.getMessage("prefix") + Bloons.getMessage("player-not-found"));
                     return true;
                 }
-                runner = (BalloonRunner) Bloons.playerBalloons.get(player.getUniqueId());
+                runner = (BalloonOwner) Bloons.playerBalloons.get(player.getUniqueId());
                 if (runner == null) {
                     sender.sendMessage(Bloons.getMessage("prefix") + Bloons.getMessage("not-equipped"));
                     return true;
@@ -128,9 +129,28 @@ public class BalloonCommand implements CommandExecutor, TabCompleter {
     }
 
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
-        if (args.length == 2) {
-            return Objects.requireNonNull(Bloons.getInstance().getConfig().getConfigurationSection("balloons")).getKeys(false).stream().toList();
+        if (sender.hasPermission("bloons.reload")) {
+            if (args.length == 3) {
+                return null;
+                }
+            if (args.length == 2) {
+                if (args[0].equalsIgnoreCase("unequip") || args[0].equalsIgnoreCase("funequip")) {
+                    return null;
+                } else {
+                    return Objects.requireNonNull(Bloons.getInstance().getConfig().getConfigurationSection("balloons")).getKeys(false).stream().toList();
+                }
+            } else if (args.length == 1) {
+                return List.of("equip", "unequip", "fequip", "funequip", "reload");
+            }
+            return Collections.emptyList();
+        } else {
+            if (args.length == 3) {
+                return List.of("");
+            }
+            if (args.length == 2) {
+                return Objects.requireNonNull(Bloons.getInstance().getConfig().getConfigurationSection("balloons")).getKeys(false).stream().toList();
+            }
+            return List.of("equip", "unequip");
         }
-        return List.of("equip", "unequip", "fequip", "funequip", "reload");
     }
 }

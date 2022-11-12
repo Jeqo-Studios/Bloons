@@ -1,6 +1,7 @@
 package net.jeqo.bloons.data;
 
 
+import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 
 import net.jeqo.bloons.Bloons;
@@ -19,7 +20,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.EulerAngle;
 import org.bukkit.util.Vector;
 
-public class BalloonRunner extends BukkitRunnable {
+public class BalloonOwner extends BukkitRunnable {
     private final Player player;
     private final ItemStack balloon;
     private final String balloonId;
@@ -30,12 +31,13 @@ public class BalloonRunner extends BukkitRunnable {
     private int ticks = 0;
     private float targetYaw = 0.0F;
 
-    public BalloonRunner(Player player, String balloonId) {
+    public BalloonOwner(Player player, String balloonId) {
         this.player = player;
         this.balloonId = balloonId;
         ConfigurationSection configuration = Bloons.getInstance().getConfig().getConfigurationSection("balloons." + balloonId);
         ItemStack item = new ItemStack(Material.valueOf(configuration.getString("material", "PAPER")));
         ItemMeta meta = item.getItemMeta();
+        assert meta != null;
         meta.setCustomModelData(configuration.getInt("custom-model-data"));
         item.setItemMeta(meta);
         this.balloon = item;
@@ -95,10 +97,10 @@ public class BalloonRunner extends BukkitRunnable {
         this.playerLocation.setYaw(0.0F);
 
         ItemMeta meta = this.balloon.getItemMeta();
-        meta.addItemFlags(new ItemFlag[] { ItemFlag.HIDE_UNBREAKABLE });
+        meta.addItemFlags(new ItemFlag[] {ItemFlag.HIDE_UNBREAKABLE });
         this.balloon.setItemMeta(meta);
 
-        this.armorStand = (ArmorStand)this.playerLocation.getWorld().spawn(this.playerLocation, ArmorStand.class);
+        this.armorStand = (ArmorStand) Objects.requireNonNull(this.playerLocation.getWorld()).spawn(this.playerLocation, ArmorStand.class);
         this.armorStand.setBasePlate(false);
         this.armorStand.setVisible(false);
         this.armorStand.setInvulnerable(true);

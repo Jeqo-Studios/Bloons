@@ -1,10 +1,9 @@
 package net.jeqo.bloons;
 
 import net.jeqo.bloons.data.BalloonCommand;
-import net.jeqo.bloons.data.BalloonRunner;
+import net.jeqo.bloons.data.BalloonOwner;
 import net.jeqo.bloons.data.Utils;
 import net.jeqo.bloons.listeners.PlayerLeave;
-import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.TabCompleter;
@@ -18,7 +17,7 @@ import java.util.UUID;
 
 public final class Bloons extends JavaPlugin {
 
-    public static HashMap<UUID, BalloonRunner> playerBalloons = new HashMap<>();
+    public static HashMap<UUID, BalloonOwner> playerBalloons = new HashMap<>();
     private static Bloons instance;
 
     @Override
@@ -34,7 +33,7 @@ public final class Bloons extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        for (BalloonRunner runner : playerBalloons.values()) {
+        for (BalloonOwner runner : playerBalloons.values()) {
             runner.cancel();
         }
 
