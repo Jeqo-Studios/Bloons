@@ -13,19 +13,19 @@ public class Utils {
         (new BukkitRunnable()
         {
             public void run() {
-                BalloonOwner runner = (BalloonOwner) Bloons.playerBalloons.get(player.getUniqueId());
+                BalloonRunner runner = (BalloonRunner) Bloons.playerBalloons.get(player.getUniqueId());
                 if (runner != null) {
                     return;
                 }
                 Utils.removeBalloon(player, runner);
-                BalloonOwner balloonRunner = new BalloonOwner(player, balloonId);
+                BalloonRunner balloonRunner = new BalloonRunner(player, balloonId);
                 balloonRunner.runTaskTimer((Plugin) Bloons.getInstance(), 0L, 1L);
                 Bloons.playerBalloons.put(player.getUniqueId(), balloonRunner);
             }
         }).runTaskLater((Plugin) Bloons.getInstance(), 1L);
     }
 
-    public static void removeBalloon(Player player, BalloonOwner runner) {
+    public static void removeBalloon(Player player, BalloonRunner runner) {
         if (runner != null) {
             runner.spawnRemoveParticle();
             runner.cancel();

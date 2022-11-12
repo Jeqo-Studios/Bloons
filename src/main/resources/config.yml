@@ -33,7 +33,7 @@ balloons:
 # --------------------------------------------------#
 #
 messages:
-  prefix: '&5[&dBloons&5] &r'
+  prefix: '#ff00cc[#e207c5B#c50fbdl#a816b6o#8a1dafo#6d24a8n#502ca0s#333399] &r'
   no-permission: '#ee0000You do not have permission to use this balloon.'
   player-not-found: '#ee0000Player not found.'
   usage: '&7Usage: /balloon [equip/unequip] <balloon>'

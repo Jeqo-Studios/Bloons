@@ -8,6 +8,7 @@ description: A
 website: https://jeqo.net
 commands:
   balloon:
+    aliases: [bloons, bloon]
     description: Equip a balloon!
 permission:
   balloon:

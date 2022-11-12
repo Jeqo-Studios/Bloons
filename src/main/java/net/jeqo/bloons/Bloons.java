@@ -1,8 +1,9 @@
 package net.jeqo.bloons;
 
 import net.jeqo.bloons.data.BalloonCommand;
-import net.jeqo.bloons.data.BalloonOwner;
+import net.jeqo.bloons.data.BalloonRunner;
 import net.jeqo.bloons.data.Utils;
+import net.jeqo.bloons.listeners.MenuHandlers;
 import net.jeqo.bloons.listeners.PlayerLeave;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.command.CommandExecutor;
@@ -17,7 +18,7 @@ import java.util.UUID;
 
 public final class Bloons extends JavaPlugin {
 
-    public static HashMap<UUID, BalloonOwner> playerBalloons = new HashMap<>();
+    public static HashMap<UUID, BalloonRunner> playerBalloons = new HashMap<>();
     private static Bloons instance;
 
     @Override
@@ -25,6 +26,7 @@ public final class Bloons extends JavaPlugin {
         instance = this;
         saveDefaultConfig();
         getServer().getPluginManager().registerEvents((Listener)new PlayerLeave(), (Plugin)this);
+        getServer().getPluginManager().registerEvents((Listener)new MenuHandlers(), (Plugin)this);
 
         BalloonCommand command = new BalloonCommand();
         Objects.requireNonNull(getCommand("balloon")).setExecutor((CommandExecutor)command);
@@ -33,7 +35,7 @@ public final class Bloons extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        for (BalloonOwner runner : playerBalloons.values()) {
+        for (BalloonRunner runner : playerBalloons.values()) {
             runner.cancel();
         }
 
@@ -50,5 +52,9 @@ public final class Bloons extends JavaPlugin {
 
     public static Bloons getInstance() {
         return instance;
+    }
+
+    public static String config(String path) {
+        return getInstance().getConfig().getString(path);
     }
 }

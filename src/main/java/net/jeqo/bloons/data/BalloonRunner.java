@@ -20,7 +20,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.EulerAngle;
 import org.bukkit.util.Vector;
 
-public class BalloonOwner extends BukkitRunnable {
+public class BalloonRunner extends BukkitRunnable {
     private final Player player;
     private final ItemStack balloon;
     private final String balloonId;
@@ -31,11 +31,12 @@ public class BalloonOwner extends BukkitRunnable {
     private int ticks = 0;
     private float targetYaw = 0.0F;
 
-    public BalloonOwner(Player player, String balloonId) {
+    public BalloonRunner(Player player, String balloonId) {
         this.player = player;
         this.balloonId = balloonId;
         ConfigurationSection configuration = Bloons.getInstance().getConfig().getConfigurationSection("balloons." + balloonId);
-        ItemStack item = new ItemStack(Material.valueOf(configuration.getString("material", "PAPER")));
+        assert configuration != null;
+        ItemStack item = new ItemStack(Material.valueOf(configuration.getString("material")));
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
         meta.setCustomModelData(configuration.getInt("custom-model-data"));
