@@ -10,13 +10,13 @@
     <packaging>jar</packaging>
 
     <name>Bloons</name>
+    <description>A unique balloons plugin.</description>
+    <url>https://jeqo.net</url>
 
-    <description>A</description>
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-    <url>https://jeqo.net</url>
 
     <build>
         <plugins>

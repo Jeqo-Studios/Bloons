@@ -20,7 +20,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.EulerAngle;
 import org.bukkit.util.Vector;
 
-public class BalloonRunner extends BukkitRunnable {
+public class BalloonOwner extends BukkitRunnable {
     private final Player player;
     private final ItemStack balloon;
     private final String balloonId;
@@ -31,7 +31,7 @@ public class BalloonRunner extends BukkitRunnable {
     private int ticks = 0;
     private float targetYaw = 0.0F;
 
-    public BalloonRunner(Player player, String balloonId) {
+    public BalloonOwner(Player player, String balloonId) {
         this.player = player;
         this.balloonId = balloonId;
         ConfigurationSection configuration = Bloons.getInstance().getConfig().getConfigurationSection("balloons." + balloonId);

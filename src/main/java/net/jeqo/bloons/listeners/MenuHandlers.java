@@ -1,9 +1,8 @@
 package net.jeqo.bloons.listeners;
 
-import jdk.jshell.execution.Util;
 import net.jeqo.bloons.Bloons;
-import net.jeqo.bloons.data.BalloonRunner;
-import net.jeqo.bloons.data.ScrollerInventory;
+import net.jeqo.bloons.data.BalloonOwner;
+import net.jeqo.bloons.data.BalloonMenu;
 import net.jeqo.bloons.data.Utils;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -17,20 +16,18 @@ public class MenuHandlers implements Listener {
     public void onClick(InventoryClickEvent event){
         if(!(event.getWhoClicked() instanceof Player)) return;
         Player p = (Player) event.getWhoClicked();
-        if(!ScrollerInventory.users.containsKey(p.getUniqueId())) return;
+        if(!BalloonMenu.users.containsKey(p.getUniqueId())) return;
         event.setCancelled(true);
-        ScrollerInventory inv = ScrollerInventory.users.get(p.getUniqueId());
+        BalloonMenu inv = BalloonMenu.users.get(p.getUniqueId());
         if(event.getCurrentItem() == null) return;
         if(event.getCurrentItem().getItemMeta() == null) return;
         event.setCancelled(true);
 
         if (event.getSlot() < 45) {
             event.setCancelled(true);
-            Utils.removeBalloon(p, (BalloonRunner) Bloons.playerBalloons.get(p.getUniqueId()));
+            Utils.removeBalloon(p, (BalloonOwner) Bloons.playerBalloons.get(p.getUniqueId()));
             Player player = (Player) event.getWhoClicked();
             String balloon = event.getCurrentItem().getItemMeta().getLocalizedName();
-
-
             Utils.checkBalloonRemovalOrAdd(player, balloon);
             player.playSound(player.getLocation(), Sound.ENTITY_CHICKEN_EGG, 1, 1);
             String balloonName = event.getCurrentItem().getItemMeta().getDisplayName();
@@ -38,18 +35,7 @@ public class MenuHandlers implements Listener {
             player.closeInventory();
         }
 
-        /*if (event.getSlot() < 45) {
-            event.setCancelled(true);
-            Utils.removeBalloon(p, (BalloonRunner) Bloons.playerBalloons.get(p.getUniqueId()));
-            event.setCancelled(true);
-            Player player = (Player) event.getWhoClicked();
-            String balloon = event.getCurrentItem().getItemMeta().getDisplayName();
-            Utils.checkBalloonRemovalOrAdd(player, balloon);
-            player.sendMessage(Bloons.getMessage("prefix") + Bloons.getMessage("equipped", balloon));
-            player.closeInventory();
-        }*/
-
-        if(event.getCurrentItem().getItemMeta().getDisplayName().equals(ScrollerInventory.nextPageName)) {
+        if(event.getCurrentItem().getItemMeta().getDisplayName().equals(BalloonMenu.nextPageName)) {
             event.setCancelled(true);
             if (inv.currpage >= inv.pages.size()-1) {
                 ((Player) event.getWhoClicked()).playSound(event.getWhoClicked().getLocation(), Sound.BLOCK_BONE_BLOCK_BREAK, 1, 1);
@@ -59,7 +45,7 @@ public class MenuHandlers implements Listener {
             }
 
 
-        } else if(event.getCurrentItem().getItemMeta().getDisplayName().equals(ScrollerInventory.previousPageName)) {
+        } else if(event.getCurrentItem().getItemMeta().getDisplayName().equals(BalloonMenu.previousPageName)) {
             event.setCancelled(true);
             if (inv.currpage > 0) {
                 inv.currpage -= 1;
@@ -68,12 +54,12 @@ public class MenuHandlers implements Listener {
                 ((Player) event.getWhoClicked()).playSound(event.getWhoClicked().getLocation(), Sound.BLOCK_BONE_BLOCK_BREAK, 1, 1);
             }
 
-        } else if(event.getCurrentItem().getItemMeta().getDisplayName().equals(ScrollerInventory.removeName)) {
+        } else if(event.getCurrentItem().getItemMeta().getDisplayName().equals(BalloonMenu.removeName)) {
             event.setCancelled(true);
             Player player = (Player) event.getWhoClicked();
 
-            BalloonRunner balloonRunner1 = (BalloonRunner) Bloons.playerBalloons.get(player.getUniqueId());
-            if (balloonRunner1 == null) {
+            BalloonOwner balloonOwner1 = (BalloonOwner) Bloons.playerBalloons.get(player.getUniqueId());
+            if (balloonOwner1 == null) {
                 player.sendMessage(Bloons.getMessage("prefix") + Bloons.getMessage("not-equipped"));
                 player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_BURP, 1, 1);
             } else {
@@ -81,7 +67,7 @@ public class MenuHandlers implements Listener {
                 player.sendMessage(Bloons.getMessage("prefix") + Bloons.getMessage("unequipped"));
                 player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_HURT_SWEET_BERRY_BUSH, 1, 1);
             }
-            Utils.removeBalloon(player, balloonRunner1);
+            Utils.removeBalloon(player, balloonOwner1);
         } else {
             event.setCancelled(true);
         }

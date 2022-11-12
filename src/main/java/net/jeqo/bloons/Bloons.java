@@ -1,12 +1,12 @@
 package net.jeqo.bloons;
 
 import net.jeqo.bloons.data.BalloonCommand;
-import net.jeqo.bloons.data.BalloonRunner;
+import net.jeqo.bloons.data.BalloonOwner;
+import net.jeqo.bloons.data.BalloonTab;
 import net.jeqo.bloons.data.Utils;
 import net.jeqo.bloons.listeners.MenuHandlers;
-import net.jeqo.bloons.listeners.PlayerLeave;
+import net.jeqo.bloons.listeners.PlayerQuit;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
@@ -18,28 +18,63 @@ import java.util.UUID;
 
 public final class Bloons extends JavaPlugin {
 
-    public static HashMap<UUID, BalloonRunner> playerBalloons = new HashMap<>();
+    public static HashMap<UUID, BalloonOwner> playerBalloons = new HashMap<>();
     private static Bloons instance;
 
     @Override
     public void onEnable() {
-        instance = this;
-        saveDefaultConfig();
-        getServer().getPluginManager().registerEvents((Listener)new PlayerLeave(), (Plugin)this);
-        getServer().getPluginManager().registerEvents((Listener)new MenuHandlers(), (Plugin)this);
+        Utils.log("|---[ BLOONS ]-------------------------------------------------------|");
+        Utils.log("|                           Plugin loaded.                           |");
+        Utils.log("|-------------------------------------------------[ MADE BY JEQO ]---|");
 
-        BalloonCommand command = new BalloonCommand();
-        Objects.requireNonNull(getCommand("balloon")).setExecutor((CommandExecutor)command);
-        Objects.requireNonNull(getCommand("balloon")).setTabCompleter((TabCompleter)command);
+        instance = this;
+        loadCommands();
+        loadListeners();
+
+        getConfig().options().copyDefaults();
+        saveDefaultConfig();
     }
+
 
     @Override
     public void onDisable() {
-        for (BalloonRunner runner : playerBalloons.values()) {
-            runner.cancel();
+
+        Utils.log("|---[ BLOONS ]-------------------------------------------------------|");
+        Utils.log("|                          Shutting down...                          |");
+        Utils.log("|-------------------------------------------------[ MADE BY JEQO ]---|");
+
+        for (BalloonOwner owner : playerBalloons.values()) {
+            owner.cancel();
         }
 
         HandlerList.unregisterAll((Plugin)this);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private void loadListeners() {
+        getServer().getPluginManager().registerEvents((Listener)new PlayerQuit(), (Plugin)this);
+        getServer().getPluginManager().registerEvents((Listener)new MenuHandlers(), (Plugin)this);
+    }
+
+    private void loadCommands() {
+        Objects.requireNonNull(getCommand("balloon")).setExecutor(new BalloonCommand());
+        TabCompleter tc = new BalloonTab();
+        Objects.requireNonNull(this.getCommand("balloon")).setTabCompleter(tc);
     }
 
     public static String getMessage(String id, String arg) {

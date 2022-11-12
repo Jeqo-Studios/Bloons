@@ -1,7 +1,6 @@
 package net.jeqo.bloons.data;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -12,62 +11,60 @@ import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
-public class BalloonCommand implements CommandExecutor, TabCompleter {
+public class BalloonCommand implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         Player player;
         String str1;
-        BalloonRunner balloonRunner1;
+        BalloonOwner balloonOwner1;
         String balloonId;
-        BalloonRunner runner;
+        BalloonOwner owner;
         if (args.length < 1) {
-            usage(sender);
-            return true;
+            //usage(sender);
+            //return true;
+            if (sender instanceof Player) {
+                player = (Player) sender;
+
+                ArrayList<ItemStack> items = new ArrayList<ItemStack>();
+                for (String key : Objects.requireNonNull(Bloons.getInstance().getConfig().getConfigurationSection("balloons")).getKeys(false)) {
+
+                    ConfigurationSection keySection = Objects.requireNonNull(Bloons.getInstance().getConfig().getConfigurationSection("balloons")).getConfigurationSection(key);
+
+                    assert keySection != null;
+                    ItemStack item = new ItemStack(Objects.requireNonNull(Material.matchMaterial(Objects.requireNonNull(keySection.getString("material")))));
+                    ItemMeta meta = item.getItemMeta();
+                    assert meta != null;
+                    meta.setLocalizedName(Bloons.config("balloons." + key + ".id"));
+                    if (Bloons.config("balloons." + key + ".lore") != null) {
+                        List<String> lore = keySection.getStringList("lore");
+                        for (int i = 0; i < lore.size(); i++) {
+                            lore.set(i, Utils.hex(lore.get(i)));
+                        }
+                        meta.setLore(lore);
+                    }
+                    meta.setDisplayName(Utils.hex(keySection.getString("name")));
+                    meta.setCustomModelData(keySection.getInt("custom-model-data"));
+                    item.setItemMeta(meta);
+
+                    items.add(item);
+                }
+
+                new BalloonMenu(items, Bloons.config("menu-title"), player);
+                return true;
+            } else {
+                sender.sendMessage("Only players may execute this command!");
+                return true;
+            }
         }
 
         Bloons plugin = Bloons.getInstance();
 
         switch (args[0]) {
-            case "menu":
-                if (sender instanceof Player) {
-                    player = (Player) sender;
-
-                    ArrayList<ItemStack> items = new ArrayList<ItemStack>();
-                    for (String key : Objects.requireNonNull(Bloons.getInstance().getConfig().getConfigurationSection("balloons")).getKeys(false)) {
-
-                        ConfigurationSection keySection = Objects.requireNonNull(Bloons.getInstance().getConfig().getConfigurationSection("balloons")).getConfigurationSection(key);
-
-                        assert keySection != null;
-                        ItemStack item = new ItemStack(Objects.requireNonNull(Material.matchMaterial(Objects.requireNonNull(keySection.getString("material")))));
-                        ItemMeta meta = item.getItemMeta();
-                        assert meta != null;
-                        meta.setLocalizedName(Bloons.config("balloons." + key + ".id"));
-                        if (Bloons.config("balloons." + key + ".lore") != null) {
-                            List<String> lore = keySection.getStringList("lore");
-                            for (int i = 0; i < lore.size(); i++) {
-                                lore.set(i, Utils.hex(lore.get(i)));
-                            }
-                            meta.setLore(lore);
-                        }
-                        meta.setDisplayName(Utils.hex(keySection.getString("name")));
-                        meta.setCustomModelData(keySection.getInt("custom-model-data"));
-                        item.setItemMeta(meta);
-
-                        items.add(item);
-                    }
-
-                    new ScrollerInventory(items, Bloons.config("menu-title"), player);
-                    return true;
-                } else {
-                    sender.sendMessage("Only players may execute this command!");
-                    return true;
-                }
             case "equip":
                 if (args.length < 2) {
                     usage(sender);
@@ -91,7 +88,7 @@ public class BalloonCommand implements CommandExecutor, TabCompleter {
                     return true;
                 }
 
-                Utils.removeBalloon(player, (BalloonRunner) Bloons.playerBalloons.get(player.getUniqueId()));
+                Utils.removeBalloon(player, (BalloonOwner) Bloons.playerBalloons.get(player.getUniqueId()));
                 Utils.checkBalloonRemovalOrAdd(player, str1);
                 player.playSound(player.getLocation(), Sound.ENTITY_CHICKEN_EGG, 1, 1);
                 String balloonName = Bloons.config("balloons." + str1 + ".name");
@@ -106,13 +103,13 @@ public class BalloonCommand implements CommandExecutor, TabCompleter {
                     sender.sendMessage("Only players may execute this command!");
                     return true;
                 }
-                balloonRunner1 = (BalloonRunner) Bloons.playerBalloons.get(player.getUniqueId());
-                if (balloonRunner1 == null) {
+                balloonOwner1 = (BalloonOwner) Bloons.playerBalloons.get(player.getUniqueId());
+                if (balloonOwner1 == null) {
                     player.sendMessage(Bloons.getMessage("prefix") + Bloons.getMessage("not-equipped"));
                     player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_BURP, 1, 1);
                     return true;
                 }
-                Utils.removeBalloon(player, balloonRunner1);
+                Utils.removeBalloon(player, balloonOwner1);
                 player.sendMessage(Bloons.getMessage("prefix") + Bloons.getMessage("unequipped"));
                 player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_HURT_SWEET_BERRY_BUSH, 1, 1);
                 return true;
@@ -152,12 +149,12 @@ public class BalloonCommand implements CommandExecutor, TabCompleter {
                     sender.sendMessage(Bloons.getMessage("prefix") + Bloons.getMessage("player-not-found"));
                     return true;
                 }
-                runner = (BalloonRunner) Bloons.playerBalloons.get(player.getUniqueId());
-                if (runner == null) {
+                owner = (BalloonOwner) Bloons.playerBalloons.get(player.getUniqueId());
+                if (owner == null) {
                     sender.sendMessage(Bloons.getMessage("prefix") + Bloons.getMessage("not-equipped"));
                     return true;
                 }
-                Utils.removeBalloon(player, runner);
+                Utils.removeBalloon(player, owner);
                 sender.sendMessage(Bloons.getMessage("prefix") + Bloons.getMessage("unequipped"));
                 return true;
 
@@ -177,31 +174,5 @@ public class BalloonCommand implements CommandExecutor, TabCompleter {
     }
     void usage(CommandSender sender) {
         sender.sendMessage(Bloons.getMessage("prefix") + Bloons.getMessage("usage"));
-    }
-
-    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
-        if (sender.hasPermission("bloons.reload")) {
-            if (args.length == 3) {
-                return null;
-                }
-            if (args.length == 2) {
-                if (args[0].equalsIgnoreCase("unequip") || args[0].equalsIgnoreCase("funequip")) {
-                    return null;
-                } else {
-                    return Objects.requireNonNull(Bloons.getInstance().getConfig().getConfigurationSection("balloons")).getKeys(false).stream().toList();
-                }
-            } else if (args.length == 1) {
-                return List.of("equip", "unequip", "fequip", "funequip", "reload", "menu", "rl");
-            }
-            return Collections.emptyList();
-        } else {
-            if (args.length == 3) {
-                return List.of("");
-            }
-            if (args.length == 2) {
-                return Objects.requireNonNull(Bloons.getInstance().getConfig().getConfigurationSection("balloons")).getKeys(false).stream().toList();
-            }
-            return List.of("equip", "unequip", "menu");
-        }
     }
 }

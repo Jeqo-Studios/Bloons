@@ -13,13 +13,13 @@ import java.util.HashMap;
 import java.util.UUID;
 
 
-public class ScrollerInventory{
+public class BalloonMenu {
 
     public ArrayList<Inventory> pages = new ArrayList<Inventory>();
     public UUID id;
     public int currpage = 0;
-    public static HashMap<UUID, ScrollerInventory> users = new HashMap<UUID, ScrollerInventory>();
-    public ScrollerInventory(ArrayList<ItemStack> items, String name, Player p){
+    public static HashMap<UUID, BalloonMenu> users = new HashMap<UUID, BalloonMenu>();
+    public BalloonMenu(ArrayList<ItemStack> items, String name, Player p){
         this.id = UUID.randomUUID();
         Inventory page = getBlankPage(name);
         for(int i = 0;i < items.size(); i++){
