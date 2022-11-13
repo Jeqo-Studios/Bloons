@@ -1,5 +1,6 @@
 package net.jeqo.bloons.data;
 
+import net.jeqo.bloons.Bloons;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -7,7 +8,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
@@ -40,33 +40,37 @@ public class BalloonMenu {
 
 
 
+    /*public static final String previousPageName = ChatColor.GRAY + "ᴘʀᴇᴠɪᴏᴜs ᴘᴀɢᴇ";
     public static final String removeName = ChatColor.GRAY + "ᴜɴᴇǫᴜɪᴘ ʙᴀʟʟᴏᴏɴ";
-    public static final String nextPageName = ChatColor.GRAY + "ɴᴇxᴛ ᴘᴀɢᴇ";
-    public static final String previousPageName = ChatColor.GRAY + "ᴘʀᴇᴠɪᴏᴜs ᴘᴀɢᴇ";
+    public static final String nextPageName = ChatColor.GRAY + "ɴᴇxᴛ ᴘᴀɢᴇ";*/
+
     private Inventory getBlankPage(String name){
         Inventory page = Bukkit.createInventory(null, 54, Utils.hex(name));
 
-        ItemStack nextpage =  new ItemStack(Material.ARROW, 1, (byte) 5);
-        ItemMeta nextMeta = nextpage.getItemMeta();
+        ItemStack nextPage = new ItemStack(Material.valueOf(Bloons.getString("buttons.next-page.material")));
+        ItemMeta nextMeta = nextPage.getItemMeta();
         assert nextMeta != null;
-        nextMeta.setDisplayName(nextPageName);;
-        nextpage.setItemMeta(nextMeta);
+        nextMeta.setDisplayName(Utils.hex(Bloons.getString("buttons.next-page.name")));;
+        nextMeta.setCustomModelData(Bloons.getInt("custom-model-data"));
+        nextPage.setItemMeta(nextMeta);
 
-        page.setItem(51, nextpage);
+        page.setItem(51, nextPage);
 
-        ItemStack prevpage = new ItemStack(Material.ARROW, 1, (byte) 2);
-        ItemMeta prevMeta = prevpage.getItemMeta();
+        ItemStack prevPage = new ItemStack(Material.valueOf(Bloons.getString("buttons.previous-page.material")));
+        ItemMeta prevMeta = prevPage.getItemMeta();
         assert prevMeta != null;
-        prevMeta.setDisplayName(previousPageName);;
-        prevpage.setItemMeta(prevMeta);
+        prevMeta.setDisplayName(Utils.hex(Bloons.getString("buttons.previous-page.name")));;
+        prevMeta.setCustomModelData(Bloons.getInt("custom-model-data"));
+        prevPage.setItemMeta(prevMeta);
 
 
-        page.setItem(47, prevpage);
+        page.setItem(47, prevPage);
 
-        ItemStack removeBalloon = new ItemStack(Material.LAVA_BUCKET, 1, (byte) 2);
-        ItemMeta removeMeta = prevpage.getItemMeta();
+        ItemStack removeBalloon = new ItemStack(Material.valueOf(Bloons.getString("buttons.unequip.material")));
+        ItemMeta removeMeta = removeBalloon.getItemMeta();
         assert removeMeta != null;
-        removeMeta.setDisplayName(removeName);;
+        removeMeta.setDisplayName(Utils.hex(Bloons.getString("buttons.unequip.name")));;
+        removeMeta.setCustomModelData(Bloons.getInt("custom-model-data"));
         removeBalloon.setItemMeta(removeMeta);
 
 

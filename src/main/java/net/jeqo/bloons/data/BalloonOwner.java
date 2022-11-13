@@ -1,10 +1,9 @@
 package net.jeqo.bloons.data;
 
+import net.jeqo.bloons.Bloons;
 
 import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
-
-import net.jeqo.bloons.Bloons;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -16,6 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.EulerAngle;
 import org.bukkit.util.Vector;
@@ -119,5 +119,23 @@ public class BalloonOwner extends BukkitRunnable {
         this.chicken.setAgeLock(true);
         this.chicken.setAware(false);
         this.chicken.setLeashHolder((Entity)this.player);
+    }
+
+
+    public static void checkBalloonRemovalOrAdd(final Player player, final String balloonId) {
+        (new BukkitRunnable()
+        {
+            public void run() {
+                BalloonOwner owner = (BalloonOwner) Bloons.playerBalloons.get(player.getUniqueId());
+                if (owner != null) {
+                    return;
+                }
+                Utils.removeBalloon(player, owner);
+                BalloonOwner balloonOwner = new BalloonOwner(player, balloonId);
+                balloonOwner.runTaskTimer((Plugin) Bloons.getInstance(), 0L, 1L);
+                Bloons.playerBalloons.put(player.getUniqueId(), balloonOwner);
+
+            }
+        }).runTaskLater((Plugin) Bloons.getInstance(), 1L);
     }
 }

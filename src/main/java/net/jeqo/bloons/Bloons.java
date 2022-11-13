@@ -72,9 +72,9 @@ public final class Bloons extends JavaPlugin {
     }
 
     private void loadCommands() {
-        Objects.requireNonNull(getCommand("balloon")).setExecutor(new BalloonCommand());
+        Objects.requireNonNull(getCommand("bloons")).setExecutor(new BalloonCommand());
         TabCompleter tc = new BalloonTab();
-        Objects.requireNonNull(this.getCommand("balloon")).setTabCompleter(tc);
+        Objects.requireNonNull(this.getCommand("bloons")).setTabCompleter(tc);
     }
 
     public static String getMessage(String id, String arg) {
@@ -89,7 +89,12 @@ public final class Bloons extends JavaPlugin {
         return instance;
     }
 
-    public static String config(String path) {
+    public static String getString(String path) {
         return getInstance().getConfig().getString(path);
+    }
+
+
+    public static Integer getInt(String path) {
+        return getInstance().getConfig().getInt(path);
     }
 }

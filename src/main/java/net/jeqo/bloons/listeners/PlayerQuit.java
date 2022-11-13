@@ -9,8 +9,8 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class PlayerQuit implements Listener {
     @EventHandler
-    public void onQuit(PlayerQuitEvent event) {
-        BalloonOwner owner = (BalloonOwner) Bloons.playerBalloons.get(event.getPlayer().getUniqueId());
-        Utils.removeBalloon(event.getPlayer(), owner);
+    public void onQuit(PlayerQuitEvent e) {
+        BalloonOwner owner = (BalloonOwner) Bloons.playerBalloons.get(e.getPlayer().getUniqueId());
+        Utils.removeBalloon(e.getPlayer(), owner);
     }
 }

@@ -7,13 +7,6 @@ authors: [ Jeqo ]
 description: A unique balloons plugin.
 website: https://jeqo.net
 commands:
-  balloon:
-    aliases: [bloons]
-    description: Equip a balloon!
-permission:
-  balloon:
-    children:
-      force:
-        description: Access to /fequip and /funequip
-      reload:
-        description: Reload the config
+  bloons:
+    aliases: [balloons, b]
+    description: Open the balloon menu.

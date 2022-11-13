@@ -1,16 +1,63 @@
 # --------------------------------------------------#
 #
 # Bloons 1.0.0-BETA
-# Made by Jeqo and TwistedDreams
+# Made by Jeqo
+# Default Assets Made by Twisted
+#
+# Wiki:     https://jeqo.net/wiki/bloons
+# Discord:     https://jeqo.net/discord
+#
+#
+# Get custom and unique balloons for your server:
+# https://pixelsonpoint.com
+#
+# --------------------------------------------------#
+#                     SETTINGS                      #
+# --------------------------------------------------#
+#
+# Title for the balloons menu.
+menu-title: "#000000ʙᴀʟʟᴏᴏɴs"
+# Do you want to close the menu when a player equips a balloon?
+close-on-equip: true
+# Do you want to close the menu when a player unequips a balloon?
+close-on-unequip: true
+#
+buttons:
+  next-page:
+    material: ARROW
+    custom-model-data: 1
+    name: '&7ɴᴇxᴛ ᴘᴀɢᴇ →'
+  previous-page:
+    material: ARROW
+    custom-model-data: 1
+    name: '&7← ᴘʀᴇᴠɪᴏᴜs ᴘᴀɢᴇ'
+  unequip:
+    material: ENDER_CHEST
+    custom-model-data: 1
+    name: '&7ᴜɴᴇǫᴜɪᴘ ʙᴀʟʟᴏᴏɴ'
+#
+# --------------------------------------------------#
+#                     MESSAGES                      #
+# --------------------------------------------------#
+#
+messages:
+  prefix: '#ff00cc[#e207c5B#c50fbdl#a816b6o#8a1dafo#6d24a8n#502ca0s#333399] &r'
+  no-permission: '#fc1c1cAccess denied.'
+  player-not-found: '#fc1c1cPlayer not found.'
+  usage: '&7Usage: /balloon [equip/unequip] <balloon>'
+  config-reloaded: '&aConfig reloaded!'
+  # Balloon related messages.
+  equipped: '&a%s equipped!'
+  unequipped: '&aYour balloon has been stored safely.'
+  balloon-not-found: '#fc1c1cBalloon not found.'
+  not-equipped: '#fc1c1cYou do not currently have a balloon equipped.'
 #
 # --------------------------------------------------#
 #                     BALLOONS                      #
 # --------------------------------------------------#
 #
-menu-title: "&0ʙᴀʟʟᴏᴏɴs"
-#
 balloons:
-  blue:
+  blue: # This identifier must match with the ID below!
     id: blue
     permission: balloon.blue
     material: FLINT
@@ -20,7 +67,7 @@ balloons:
       - '&8Bloons Default Balloon'
       - ''
       - '&eᴄʟɪᴄᴋ ᴛᴏ ᴇǫᴜɪᴘ'
-  green:
+  green: # This identifier must match with the ID below!
     id: green
     permission: balloon.green
     material: FLINT
@@ -30,7 +77,7 @@ balloons:
       - '&8Bloons Default Balloon'
       - ''
       - '&eᴄʟɪᴄᴋ ᴛᴏ ᴇǫᴜɪᴘ'
-  yellow:
+  yellow: # This identifier must match with the ID below!
     id: yellow
     permission: balloon.yellow
     material: FLINT
@@ -40,7 +87,7 @@ balloons:
       - '&8Bloons Default Balloon'
       - ''
       - '&eᴄʟɪᴄᴋ ᴛᴏ ᴇǫᴜɪᴘ'
-  pink:
+  pink: # This identifier must match with the ID below!
     id: pink
     permission: balloon.pink
     material: FLINT
@@ -50,19 +97,3 @@ balloons:
       - '&8Bloons Default Balloon'
       - ''
       - '&eᴄʟɪᴄᴋ ᴛᴏ ᴇǫᴜɪᴘ'
-#
-# --------------------------------------------------#
-#                     MESSAGES                      #
-# --------------------------------------------------#
-#
-messages:
-  prefix: '#ff00cc[#e207c5B#c50fbdl#a816b6o#8a1dafo#6d24a8n#502ca0s#333399] &r'
-  no-permission: '#ee0000You do not have permission to use this balloon.'
-  player-not-found: '#ee0000Player not found.'
-  usage: '&7Usage: /balloon [menu/equip/unequip] <balloon>'
-  config-reloaded: '&aConfig reloaded!'
-  # Balloon related messages.
-  equipped: '&a%s balloon equipped!'
-  unequipped: '&aYour balloon has been stored safely.'
-  balloon-not-found: '#ee0000Balloon not found.'
-  not-equipped: '#ee0000You do not currently have a balloon equipped.'
