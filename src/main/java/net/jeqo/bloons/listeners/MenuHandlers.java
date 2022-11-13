@@ -1,6 +1,5 @@
 package net.jeqo.bloons.listeners;
 
-import jdk.jshell.execution.Util;
 import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.data.BalloonOwner;
 import net.jeqo.bloons.data.BalloonMenu;
@@ -13,7 +12,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 
 public class MenuHandlers implements Listener {
 
-    @EventHandler(ignoreCancelled = true)
+    @EventHandler
     public void onClick(InventoryClickEvent event){
         if (!event.getView().getTitle().equals(Utils.hex(Bloons.getString("menu-title")))) return;
         if(!(event.getWhoClicked() instanceof Player)) return;
@@ -23,8 +22,8 @@ public class MenuHandlers implements Listener {
         if(event.getCurrentItem() == null) return;
         if(event.getCurrentItem().getItemMeta() == null) return;
 
-        if (event.getSlot() < 44) {
-            event.setCancelled(true);
+        int pageSize = Bloons.getInt("menu-size")-10;
+        if (event.getRawSlot() <= pageSize) {
             Utils.removeBalloon(p, (BalloonOwner) Bloons.playerBalloons.get(p.getUniqueId()));
             Player player = (Player) event.getWhoClicked();
             String balloon = event.getCurrentItem().getItemMeta().getLocalizedName();
@@ -35,15 +34,18 @@ public class MenuHandlers implements Listener {
             if (Bloons.getString("close-on-equip").equals("true")) {
                 player.closeInventory();
             }
+        } else {
+            event.setCancelled(true);
         }
 
         if(event.getCurrentItem().getItemMeta().getDisplayName().equals(Utils.hex(Bloons.getString("buttons.next-page.name")))) {
             event.setCancelled(true);
             if (inv.currpage >= inv.pages.size()-1) {
-                ((Player) event.getWhoClicked()).playSound(event.getWhoClicked().getLocation(), Sound.BLOCK_BONE_BLOCK_BREAK, 1, 1);
+                ((Player) event.getWhoClicked()).playSound(event.getWhoClicked().getLocation(), Sound.BLOCK_NOTE_BLOCK_IRON_XYLOPHONE, 0.6F, 1);
             } else {
                 inv.currpage += 1;
                 p.openInventory(inv.pages.get(inv.currpage));
+                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BIT, 1, 1);
             }
 
 
@@ -52,8 +54,9 @@ public class MenuHandlers implements Listener {
             if (inv.currpage > 0) {
                 inv.currpage -= 1;
                 p.openInventory(inv.pages.get(inv.currpage));
+                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BIT, 1, 1);
             } else {
-                ((Player) event.getWhoClicked()).playSound(event.getWhoClicked().getLocation(), Sound.BLOCK_BONE_BLOCK_BREAK, 1, 1);
+                ((Player) event.getWhoClicked()).playSound(event.getWhoClicked().getLocation(), Sound.BLOCK_NOTE_BLOCK_IRON_XYLOPHONE, 0.6F, 1);
             }
 
         } else if(event.getCurrentItem().getItemMeta().getDisplayName().equals(Utils.hex(Bloons.getString("buttons.unequip.name")))) {
@@ -63,7 +66,7 @@ public class MenuHandlers implements Listener {
             BalloonOwner balloonOwner1 = (BalloonOwner) Bloons.playerBalloons.get(player.getUniqueId());
             if (balloonOwner1 == null) {
                 player.sendMessage(Bloons.getMessage("prefix") + Bloons.getMessage("not-equipped"));
-                player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_BURP, 1, 1);
+                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_DIDGERIDOO, 1, 1);
             } else {
                 if (Bloons.getString("close-on-unequip").equals("true")) {
                     player.closeInventory();

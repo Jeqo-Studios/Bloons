@@ -11,8 +11,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -185,11 +183,24 @@ public class BalloonCommand implements CommandExecutor {
     }
     void usage(CommandSender sender) {
         sender.sendMessage("");
-        sender.sendMessage(Utils.hex("   #ff00cc/#dd09c4b#bb11bbl#991ab3o#7722aao#552ba2n#333399s &7- Open the balloon menu"));
-        sender.sendMessage(Utils.hex("   #ff00cc/#f503c9b#eb05c7l#e008c4o#d60ac2o#cc0dbfn#c20fbds #b812bae#ad14b8q#a317b5u#991ab3i#8f1cb0p #851fad<#7a21abb#7024a8a#6626a6l#5c29a3l#522ba1o#472e9eo#3d309cn#333399> &7- Equip a balloon"));
-        sender.sendMessage(Utils.hex("   #ff00cc/#ef04c8b#e008c4l#d00cc0o#c010bco#b114b8n#a118b4s #911bb1u#811fadn#7223a9e#6227a5q#522ba1u#432f9di#333399p &7- Unequip a balloon"));
+        if (sender.hasPermission("bloons.menu")) {
+            sender.sendMessage(Utils.hex("   #ff00cc/#e30ed5b#c61cddl#aa2be6o#8e39eeo#7147f7n#5555ffs &7- Open the balloon menu"));
+        }
+        if (sender.hasPermission("bloons.equip")) {
+            sender.sendMessage(Utils.hex("   #ff00cc/#f008d1b#e00fd5l#d117dao#c11fdfo#b227e3n#a22ee8s #9336ece#833ef1q#7446f6u#644dfai#5555ffp &7- Equip a balloon"));
+        }
+        if (sender.hasPermission("bloons.unequip")) {
+            sender.sendMessage(Utils.hex("   #ff00cc/#f207d0b#e50dd4l#d814d8o#cb1adco#be21e0n#b127e4s #a32ee7u#9634ebn#893befe#7c41f3q#6f48f7u#624efbi#5555ffp &7- Unequip a balloon"));
+        }
+        if (sender.hasPermission("bloons.force")) {
+            sender.sendMessage(Utils.hex("   #ff00cc/#f107d0b#e30ed5l#d515d9o#c61cddo#b823e1n#aa2be6s #9c32eaf#8e39eee#8040f2q#7147f7u#634efbi#5555ffp &7- Equip a balloon to a player"));
+            sender.sendMessage(Utils.hex("   #ff00cc/#f306d0b#e70cd3l#db12d7o#ce18dbo#c21eden#b624e2s #aa2be6f#9e31e9u#9237edn#863df0e#7943f4q#6d49f8u#614ffbi#5555ffp &7- Unequip a balloon from a player"));
+        }
+        if (sender.hasPermission("bloons.reload")) {
+            sender.sendMessage(Utils.hex("   #ff00cc/#f107d0b#e30ed5l#d515d9o#c61cddo#b823e1n#aa2be6s #9c32ear#8e39eee#8040f2l#7147f7o#634efba#5555ffd &7- Reload the Bloons config"));
+        }
         sender.sendMessage("");
-        sender.sendMessage(Utils.hex("   #ff00ccB#f103c9l#e407c5o#d60ac2o#c90eben#bb11bbs #ad14b81#a018b4.#921bb10#851fad.#7722aa0#6925a7-#5c29a3B#4e2ca0E#41309cT#333399A &7- &fMade by Jeqo"));
+        sender.sendMessage(Utils.hex("   #ff00ccB#f406cfl#e80bd3o#dd11d6o#d217dan#c61cdds #bb22e01#b028e4.#a42de70#9933eb.#8e39ee1#823ef1-#7744f5B#6c4af8E#604ffcT#5555ffA &7- &fMade by Jeqo"));
         sender.sendMessage("");
     }
 

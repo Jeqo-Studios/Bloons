@@ -1,53 +1,56 @@
 # --------------------------------------------------#
 #
-# Bloons 1.0.0-BETA
+# Bloons 1.0.1-BETA
 # Made by Jeqo
-# Default Assets Made by Twisted
 #
 # Wiki:     https://jeqo.net/wiki/bloons
 # Discord:     https://jeqo.net/discord
 #
-#
-# Get custom and unique balloons for your server:
-# https://pixelsonpoint.com
+# Default Assets Made by TwistedDreams
+# Get custom balloons and more for your server:
+# https://mcmodels.net/vendors/pixelsonpoint/
 #
 # --------------------------------------------------#
 #                     SETTINGS                      #
 # --------------------------------------------------#
 #
 # Title for the balloons menu.
-menu-title: "#000000ʙᴀʟʟᴏᴏɴs"
+menu-title: "&f"
+# Amount of slots per page. Note: You need to add 9 extra due to needing a full row for the buttons!
+menu-size: 54
 # Do you want to close the menu when a player equips a balloon?
 close-on-equip: true
 # Do you want to close the menu when a player unequips a balloon?
 close-on-unequip: true
 #
 buttons:
-  next-page:
-    material: ARROW
-    custom-model-data: 1
-    name: '&7ɴᴇxᴛ ᴘᴀɢᴇ →'
   previous-page:
-    material: ARROW
-    custom-model-data: 1
+    material: FLINT
+    slot: 47
+    custom-model-data: -2
     name: '&7← ᴘʀᴇᴠɪᴏᴜs ᴘᴀɢᴇ'
   unequip:
-    material: ENDER_CHEST
-    custom-model-data: 1
+    material: FLINT
+    slot: 49
+    custom-model-data: -3
     name: '&7ᴜɴᴇǫᴜɪᴘ ʙᴀʟʟᴏᴏɴ'
+  next-page:
+    material: FLINT
+    slot: 51
+    custom-model-data: -1
+    name: '&7ɴᴇxᴛ ᴘᴀɢᴇ →'
 #
 # --------------------------------------------------#
 #                     MESSAGES                      #
 # --------------------------------------------------#
 #
 messages:
-  prefix: '#ff00cc[#e207c5B#c50fbdl#a816b6o#8a1dafo#6d24a8n#502ca0s#333399] &r'
+  prefix: '#ff00cc[#e70cd3B#ce18dbl#b624e2o#9e31e9o#863df0n#6d49f8s#5555ff] &r'
   no-permission: '#fc1c1cAccess denied.'
   player-not-found: '#fc1c1cPlayer not found.'
-  usage: '&7Usage: /balloon [equip/unequip] <balloon>'
   config-reloaded: '&aConfig reloaded!'
   # Balloon related messages.
-  equipped: '&a%s equipped!'
+  equipped: '%s &aequipped!'
   unequipped: '&aYour balloon has been stored safely.'
   balloon-not-found: '#fc1c1cBalloon not found.'
   not-equipped: '#fc1c1cYou do not currently have a balloon equipped.'
@@ -77,22 +80,22 @@ balloons:
       - '&8Bloons Default Balloon'
       - ''
       - '&eᴄʟɪᴄᴋ ᴛᴏ ᴇǫᴜɪᴘ'
-  yellow: # This identifier must match with the ID below!
-    id: yellow
-    permission: balloon.yellow
-    material: FLINT
-    custom-model-data: 3
-    name: '&eYellow &fBalloon'
-    lore:
-      - '&8Bloons Default Balloon'
-      - ''
-      - '&eᴄʟɪᴄᴋ ᴛᴏ ᴇǫᴜɪᴘ'
   pink: # This identifier must match with the ID below!
     id: pink
     permission: balloon.pink
     material: FLINT
-    custom-model-data: 4
+    custom-model-data: 3
     name: '&dPink &fBalloon'
+    lore:
+      - '&8Bloons Default Balloon'
+      - ''
+      - '&eᴄʟɪᴄᴋ ᴛᴏ ᴇǫᴜɪᴘ'
+  yellow: # This identifier must match with the ID below!
+    id: yellow
+    permission: balloon.yellow
+    material: FLINT
+    custom-model-data: 4
+    name: '&eYellow &fBalloon'
     lore:
       - '&8Bloons Default Balloon'
       - ''

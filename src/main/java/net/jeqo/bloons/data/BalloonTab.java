@@ -33,6 +33,8 @@ public class BalloonTab implements TabCompleter {
                 return List.of("equip", "unequip", "fequip", "funequip", "reload", "rl");
             }
             return Collections.emptyList();
+
+
         } else {
             if (args.length == 3) {
                 return List.of("");

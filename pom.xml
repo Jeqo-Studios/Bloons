@@ -5,13 +5,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>net.jeqo</groupId>
-    <artifactId>bloons</artifactId>
-    <version>1.0.0-BETA</version>
+    <artifactId>Bloons</artifactId>
+    <version>1.0.1-BETA</version>
     <packaging>jar</packaging>
 
     <name>Bloons</name>
     <description>A unique balloons plugin by Jeqo.</description>
-    <url>https://jeqo.net</url>
+    <url>https://jeqo.net/bloons</url>
 
     <properties>
         <java.version>1.8</java.version>
