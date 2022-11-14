@@ -41,36 +41,78 @@ public class BalloonCommand implements CommandExecutor {
 
                 ConfigurationSection keySection = Objects.requireNonNull(Bloons.getInstance().getConfig().getConfigurationSection("balloons")).getConfigurationSection(key);
 
-                assert keySection != null;
-                ItemStack item = new ItemStack(Objects.requireNonNull(Material.matchMaterial(Objects.requireNonNull(keySection.getString("material")))));
-                ItemMeta meta = item.getItemMeta();
-                assert meta != null;
-                meta.setLocalizedName(Bloons.getString("balloons." + key + ".id"));
-                if (Bloons.getString("balloons." + key + ".lore") != null) {
-                    List<String> lore = keySection.getStringList("lore");
-                    for (int i = 0; i < lore.size(); i++) {
-                        lore.set(i, Utils.hex(lore.get(i)));
-                    }
-                    meta.setLore(lore);
-                }
-                meta.setDisplayName(Utils.hex(keySection.getString("name")));
-                meta.setCustomModelData(keySection.getInt("custom-model-data"));
-                if (Bloons.getString("balloons." + key + ".color") != null) {
-                    if (!Bloons.getString("balloons." + key + ".color").equalsIgnoreCase("potion")) {
-                        LeatherArmorMeta leatherArmorMeta = (LeatherArmorMeta) meta;
-                        leatherArmorMeta.setColor(Utils.hexToColor(keySection.getString("color")));
-                    } else {
-                        Utils.warn("The color of the balloon " + key + " is set, but the material is not a leather item!");
-                    }
-                }
-                item.setItemMeta(meta);
 
-                items.add(item);
+
+                if (Bloons.getString("hide-balloons-without-permission").equalsIgnoreCase("true")) {
+                    if (player.hasPermission(Bloons.getString("balloons." + key + ".permission"))) {
+                        assert keySection != null;
+                        ItemStack item = new ItemStack(Objects.requireNonNull(Material.matchMaterial(Objects.requireNonNull(keySection.getString("material")))));
+                        ItemMeta meta = item.getItemMeta();
+                        assert meta != null;
+                        meta.setLocalizedName(Bloons.getString("balloons." + key + ".id"));
+                        if (Bloons.getString("balloons." + key + ".lore") != null) {
+                            List<String> lore = keySection.getStringList("lore");
+                            for (int i = 0; i < lore.size(); i++) {
+                                lore.set(i, Utils.hex(lore.get(i)));
+                            }
+                            meta.setLore(lore);
+                        }
+                        meta.setDisplayName(Utils.hex(keySection.getString("name")));
+                        meta.setCustomModelData(keySection.getInt("custom-model-data"));
+                        if (Bloons.getString("balloons." + key + ".color") != null) {
+                            if (!Bloons.getString("balloons." + key + ".color").equalsIgnoreCase("potion")) {
+                                LeatherArmorMeta leatherArmorMeta = (LeatherArmorMeta) meta;
+                                leatherArmorMeta.setColor(Utils.hexToColor(keySection.getString("color")));
+                            } else {
+                                Utils.warn("The color of the balloon " + key + " is set, but the material is not a leather item!");
+                            }
+                        }
+                        item.setItemMeta(meta);
+
+                        items.add(item);
+                    }
+                }
+
+
+
+                else {
+                    assert keySection != null;
+                    ItemStack item = new ItemStack(Objects.requireNonNull(Material.matchMaterial(Objects.requireNonNull(keySection.getString("material")))));
+                    ItemMeta meta = item.getItemMeta();
+                    assert meta != null;
+                    meta.setLocalizedName(Bloons.getString("balloons." + key + ".id"));
+                    if (Bloons.getString("balloons." + key + ".lore") != null) {
+                        List<String> lore = keySection.getStringList("lore");
+                        for (int i = 0; i < lore.size(); i++) {
+                            lore.set(i, Utils.hex(lore.get(i)));
+                        }
+                        meta.setLore(lore);
+                    }
+                    meta.setDisplayName(Utils.hex(keySection.getString("name")));
+                    meta.setCustomModelData(keySection.getInt("custom-model-data"));
+                    if (Bloons.getString("balloons." + key + ".color") != null) {
+                        if (!Bloons.getString("balloons." + key + ".color").equalsIgnoreCase("potion")) {
+                            LeatherArmorMeta leatherArmorMeta = (LeatherArmorMeta) meta;
+                            leatherArmorMeta.setColor(Utils.hexToColor(keySection.getString("color")));
+                        } else {
+                            Utils.warn("The color of the balloon " + key + " is set, but the material is not a leather item!");
+                        }
+                    }
+                    item.setItemMeta(meta);
+
+                    items.add(item);
+                }
+
+
+
             }
-
                 new BalloonMenu(items, Bloons.getString("menu-title"), player);
                 return true;
         }
+
+
+
+
 
         switch (args[0]) {
             case "equip":
@@ -209,7 +251,7 @@ public class BalloonCommand implements CommandExecutor {
             sender.sendMessage(Utils.hex("   #ff00cc/#f107d0b#e30ed5l#d515d9o#c61cddo#b823e1n#aa2be6s #9c32ear#8e39eee#8040f2l#7147f7o#634efba#5555ffd &7- Reload the Bloons config"));
         }
         sender.sendMessage("");
-        sender.sendMessage(Utils.hex("   #ff00ccB#f406cfl#e80bd3o#dd11d6o#d217dan#c61cdds #bb22e01#b028e4.#a42de70#9933eb.#8e39ee1#823ef1-#7744f5B#6c4af8E#604ffcT#5555ffA &7- &fMade by Jeqo"));
+        sender.sendMessage(Utils.hex("   #ff00ccB#f406cfl#e80bd3o#dd11d6o#d217dan#c61cdds #bb22e01#b028e4.#a42de70#9933eb.#8e39ee1#823ef2-#7744f5B#6c4af8E#604ffcT#5555ffA &7- &fMade by Jeqo"));
         sender.sendMessage("");
     }
 

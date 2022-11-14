@@ -30,15 +30,12 @@ public class BalloonMenu {
         nextMeta.setCustomModelData(Bloons.getInt("buttons.next-page.custom-model-data"));
         nextPage.setItemMeta(nextMeta);
 
-
         ItemStack prevPage = new ItemStack(Material.valueOf(Bloons.getString("buttons.previous-page.material")));
         ItemMeta prevMeta = prevPage.getItemMeta();
         assert prevMeta != null;
         prevMeta.setDisplayName(Utils.hex(Bloons.getString("buttons.previous-page.name")));;
         prevMeta.setCustomModelData(Bloons.getInt("buttons.previous-page.custom-model-data"));
         prevPage.setItemMeta(prevMeta);
-
-
 
         ItemStack removeBalloon = new ItemStack(Material.valueOf(Bloons.getString("buttons.unequip.material")));
         ItemMeta removeMeta = removeBalloon.getItemMeta();
@@ -65,8 +62,6 @@ public class BalloonMenu {
         for (int i = 0; i < nextPageSlots.size(); i++) {
             page.setItem(Integer.parseInt(nextPageSlots.get(i)), nextPage);
         }
-
-
         return page;
     }
 

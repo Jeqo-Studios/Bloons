@@ -1,6 +1,6 @@
 # --------------------------------------------------#
 #
-# Bloons 1.0.1-BETA
+# Bloons 1.0.2-BETA
 # Made by Jeqo
 #
 # Wiki:     https://jeqo.net/wiki/bloons
@@ -18,23 +18,31 @@
 menu-title: "&f"
 # Amount of slots per page. Valid options are 18, 27, 36, 45, and 54. 9 of these slots will be used for the menu buttons.
 menu-size: 54
+# Amount of slots from the top that you want the balloons to appear in.
 balloon-slots: 45
 # Do you want to close the menu when a player equips a balloon?
 close-on-equip: true
 # Do you want to close the menu when a player unequips a balloon?
 close-on-unequip: true
 #
+# Notice: Keep buttons in the last row of your entire menu to avoid any bugs!
 buttons:
   previous-page:
     material: FLINT
+    slots:
+      - 46
     custom-model-data: 2
     name: '&7← ᴘʀᴇᴠɪᴏᴜs ᴘᴀɢᴇ'
   unequip:
     material: FLINT
+    slots:
+      - 49
     custom-model-data: 3
     name: '&7ᴜɴᴇǫᴜɪᴘ ʙᴀʟʟᴏᴏɴ'
   next-page:
     material: FLINT
+    slots:
+      - 52
     custom-model-data: 4
     name: '&7ɴᴇxᴛ ᴘᴀɢᴇ →'
 #
@@ -57,6 +65,8 @@ messages:
 #                     BALLOONS                      #
 # --------------------------------------------------#
 #
+# Balloons can be dyed by adding a color option with a hex value and setting the material to any leather item.
+# Valid leather items: LEATHER_HELMET, LEATHER_CHESTPLATE, LEATHER_LEGGINGS, LEATHER_HORSE_ARMOR
 balloons:
   blue:
     id: blue
@@ -96,5 +106,16 @@ balloons:
     name: '&eYellow &fBalloon'
     lore:
       - '&8Bloons Default Balloon'
+      - ''
+      - '&eᴄʟɪᴄᴋ ᴛᴏ ᴇǫᴜɪᴘ'
+  dyeable_example:
+    id: dyeable_example
+    permission: balloon.dyeable_example
+    material: LEATHER_HORSE_ARMOR
+    color: '#ff00cc'
+    custom-model-data: 1
+    name: '#ff00ccDyeable &fBalloon'
+    lore:
+      - '&8Bloons Example Balloon'
       - ''
       - '&eᴄʟɪᴄᴋ ᴛᴏ ᴇǫᴜɪᴘ'
