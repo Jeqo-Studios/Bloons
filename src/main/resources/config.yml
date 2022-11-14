@@ -16,8 +16,9 @@
 #
 # Title for the balloons menu.
 menu-title: "&f"
-# Amount of slots per page. Note: You need to add 9 extra due to needing a full row for the buttons!
+# Amount of slots per page. Valid options are 18, 27, 36, 45, and 54. 9 of these slots will be used for the menu buttons.
 menu-size: 54
+balloon-slots: 45
 # Do you want to close the menu when a player equips a balloon?
 close-on-equip: true
 # Do you want to close the menu when a player unequips a balloon?
@@ -26,18 +27,15 @@ close-on-unequip: true
 buttons:
   previous-page:
     material: FLINT
-    slot: 47
-    custom-model-data: -2
+    custom-model-data: 2
     name: '&7← ᴘʀᴇᴠɪᴏᴜs ᴘᴀɢᴇ'
   unequip:
     material: FLINT
-    slot: 49
-    custom-model-data: -3
+    custom-model-data: 3
     name: '&7ᴜɴᴇǫᴜɪᴘ ʙᴀʟʟᴏᴏɴ'
   next-page:
     material: FLINT
-    slot: 51
-    custom-model-data: -1
+    custom-model-data: 4
     name: '&7ɴᴇxᴛ ᴘᴀɢᴇ →'
 #
 # --------------------------------------------------#
@@ -60,41 +58,41 @@ messages:
 # --------------------------------------------------#
 #
 balloons:
-  blue: # This identifier must match with the ID below!
+  blue:
     id: blue
     permission: balloon.blue
     material: FLINT
-    custom-model-data: 1
+    custom-model-data: 5
     name: '&bBlue &fBalloon'
     lore:
       - '&8Bloons Default Balloon'
       - ''
       - '&eᴄʟɪᴄᴋ ᴛᴏ ᴇǫᴜɪᴘ'
-  green: # This identifier must match with the ID below!
+  green:
     id: green
     permission: balloon.green
     material: FLINT
-    custom-model-data: 2
+    custom-model-data: 6
     name: '&aGreen &fBalloon'
     lore:
       - '&8Bloons Default Balloon'
       - ''
       - '&eᴄʟɪᴄᴋ ᴛᴏ ᴇǫᴜɪᴘ'
-  pink: # This identifier must match with the ID below!
+  pink:
     id: pink
     permission: balloon.pink
     material: FLINT
-    custom-model-data: 3
+    custom-model-data: 7
     name: '&dPink &fBalloon'
     lore:
       - '&8Bloons Default Balloon'
       - ''
       - '&eᴄʟɪᴄᴋ ᴛᴏ ᴇǫᴜɪᴘ'
-  yellow: # This identifier must match with the ID below!
+  yellow:
     id: yellow
     permission: balloon.yellow
     material: FLINT
-    custom-model-data: 4
+    custom-model-data: 8
     name: '&eYellow &fBalloon'
     lore:
       - '&8Bloons Default Balloon'

@@ -23,7 +23,8 @@ public class MenuHandlers implements Listener {
         if(event.getCurrentItem().getItemMeta() == null) return;
 
         int pageSize = Bloons.getInt("menu-size")-10;
-        if (event.getRawSlot() <= pageSize) {
+
+        if (event.getRawSlot() <= pageSize && !(event.getCurrentItem().getItemMeta().getDisplayName().getBytes().equals(Utils.hex(Bloons.getString("buttons.next-page.name")).getBytes())) && !(event.getCurrentItem().getItemMeta().getDisplayName().getBytes().equals(Utils.hex(Bloons.getString("buttons.previous-page.name")).getBytes())) && !(event.getCurrentItem().getItemMeta().getDisplayName().getBytes().equals(Utils.hex(Bloons.getString("buttons.unequip.name")).getBytes()))) {
             Utils.removeBalloon(p, (BalloonOwner) Bloons.playerBalloons.get(p.getUniqueId()));
             Player player = (Player) event.getWhoClicked();
             String balloon = event.getCurrentItem().getItemMeta().getLocalizedName();

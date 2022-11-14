@@ -123,8 +123,7 @@ public class BalloonOwner extends BukkitRunnable {
 
 
     public static void checkBalloonRemovalOrAdd(final Player player, final String balloonId) {
-        (new BukkitRunnable()
-        {
+        (new BukkitRunnable() {
             public void run() {
                 BalloonOwner owner = (BalloonOwner) Bloons.playerBalloons.get(player.getUniqueId());
                 if (owner != null) {

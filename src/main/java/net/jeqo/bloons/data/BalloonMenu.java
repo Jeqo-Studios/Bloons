@@ -9,6 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -18,33 +19,6 @@ public class BalloonMenu {
     public UUID id;
     public int currpage = 0;
     public static HashMap<UUID, BalloonMenu> users = new HashMap<UUID, BalloonMenu>();
-    public BalloonMenu(ArrayList<ItemStack> items, String name, Player p){
-        this.id = UUID.randomUUID();
-        Inventory page = getBlankPage(name);
-        for(int i = 0;i < items.size(); i++){
-            if(page.firstEmpty() == Bloons.getInt("menu-size")-9){
-                pages.add(page);
-                page = getBlankPage(name);
-                page.addItem(items.get(i));
-            }else{
-                page.addItem(items.get(i));
-            }
-        }
-        pages.add(page);
-        p.openInventory(pages.get(currpage));
-        users.put(p.getUniqueId(), this);
-    }
-
-
-
-
-
-
-
-
-
-
-
     private Inventory getBlankPage(String name){
         Integer pageSize = Bloons.getInt("menu-size");
         Inventory page = Bukkit.createInventory(null, pageSize, Utils.hex(name));
@@ -56,7 +30,6 @@ public class BalloonMenu {
         nextMeta.setCustomModelData(Bloons.getInt("buttons.next-page.custom-model-data"));
         nextPage.setItemMeta(nextMeta);
 
-        page.setItem(Bloons.getInt("buttons.next-page.slot"), nextPage);
 
         ItemStack prevPage = new ItemStack(Material.valueOf(Bloons.getString("buttons.previous-page.material")));
         ItemMeta prevMeta = prevPage.getItemMeta();
@@ -66,7 +39,6 @@ public class BalloonMenu {
         prevPage.setItemMeta(prevMeta);
 
 
-        page.setItem(Bloons.getInt("buttons.previous-page.slot"), prevPage);
 
         ItemStack removeBalloon = new ItemStack(Material.valueOf(Bloons.getString("buttons.unequip.material")));
         ItemMeta removeMeta = removeBalloon.getItemMeta();
@@ -76,7 +48,51 @@ public class BalloonMenu {
         removeBalloon.setItemMeta(removeMeta);
 
 
-        page.setItem(Bloons.getInt("buttons.unequip.slot"), removeBalloon);
+
+
+
+        List<String> previousPageSlots = Bloons.getInstance().getConfig().getStringList("buttons.previous-page.slots");
+        for (int i = 0; i < previousPageSlots.size(); i++) {
+            page.setItem(Integer.parseInt(previousPageSlots.get(i)), prevPage);
+        }
+
+        List<String> unequipSlots = Bloons.getInstance().getConfig().getStringList("buttons.unequip.slots");
+        for (int i = 0; i < unequipSlots.size(); i++) {
+            page.setItem(Integer.parseInt(unequipSlots.get(i)), removeBalloon);
+        }
+
+        List<String> nextPageSlots = Bloons.getInstance().getConfig().getStringList("buttons.next-page.slots");
+        for (int i = 0; i < nextPageSlots.size(); i++) {
+            page.setItem(Integer.parseInt(nextPageSlots.get(i)), nextPage);
+        }
+
+
         return page;
+    }
+
+
+
+
+
+
+
+
+
+
+    public BalloonMenu(ArrayList<ItemStack> items, String name, Player p){
+        this.id = UUID.randomUUID();
+        Inventory page = getBlankPage(name);
+        for(int i = 0;i < items.size(); i++){
+            if(page.firstEmpty() == Bloons.getInt("balloon-slots")){
+                pages.add(page);
+                page = getBlankPage(name);
+                page.addItem(items.get(i));
+            }else{
+                page.addItem(items.get(i));
+            }
+        }
+        pages.add(page);
+        p.openInventory(pages.get(currpage));
+        users.put(p.getUniqueId(), this);
     }
 }
