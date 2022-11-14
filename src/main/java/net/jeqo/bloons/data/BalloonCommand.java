@@ -4,6 +4,8 @@ import net.jeqo.bloons.Bloons;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import net.jeqo.bloons.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -163,8 +165,8 @@ public class BalloonCommand implements CommandExecutor {
                 }
                 balloonOwner1 = (BalloonOwner) Bloons.playerBalloons.get(player.getUniqueId());
                 if (balloonOwner1 == null) {
+                    player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_DIDGERIDOO, 1, 1);
                     player.sendMessage(Bloons.getMessage("prefix") + Bloons.getMessage("not-equipped"));
-                    player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_BURP, 1, 1);
                     return true;
                 }
                 Utils.removeBalloon(player, balloonOwner1);
@@ -211,6 +213,7 @@ public class BalloonCommand implements CommandExecutor {
                 }
                 owner = (BalloonOwner) Bloons.playerBalloons.get(player.getUniqueId());
                 if (owner == null) {
+                    player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_DIDGERIDOO, 1, 1);
                     sender.sendMessage(Bloons.getMessage("prefix") + Bloons.getMessage("not-equipped"));
                     return true;
                 }
@@ -251,7 +254,7 @@ public class BalloonCommand implements CommandExecutor {
             sender.sendMessage(Utils.hex("   #ff00cc/#f107d0b#e30ed5l#d515d9o#c61cddo#b823e1n#aa2be6s #9c32ear#8e39eee#8040f2l#7147f7o#634efba#5555ffd &7- Reload the Bloons config"));
         }
         sender.sendMessage("");
-        sender.sendMessage(Utils.hex("   #ff00ccB#f406cfl#e80bd3o#dd11d6o#d217dan#c61cdds #bb22e01#b028e4.#a42de70#9933eb.#8e39ee1#823ef2-#7744f5B#6c4af8E#604ffcT#5555ffA &7- &fMade by Jeqo"));
+        sender.sendMessage(Utils.hex("   #ff00ccB#f406cfl#e80bd3o#dd11d6o#d217dan#c61cdds #bb22e01#b028e4.#a42de70#9933eb.#8e39ee1#823ef3-#7744f5B#6c4af8E#604ffcT#5555ffA &7- &fMade by Jeqo"));
         sender.sendMessage("");
     }
 

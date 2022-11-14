@@ -1,6 +1,6 @@
 # --------------------------------------------------#
 #
-# Bloons 1.0.2-BETA
+# Bloons 1.0.3-BETA
 # Made by Jeqo
 #
 # Wiki:     https://jeqo.net/wiki/bloons
@@ -14,37 +14,39 @@
 #                     SETTINGS                      #
 # --------------------------------------------------#
 #
-# Title for the balloons menu.
-menu-title: "&f"
-# Amount of slots per page. Valid options are 18, 27, 36, 45, and 54. 9 of these slots will be used for the menu buttons.
-menu-size: 54
-# Amount of slots from the top that you want the balloons to appear in.
-balloon-slots: 45
 # Do you want to close the menu when a player equips a balloon?
 close-on-equip: true
 # Do you want to close the menu when a player unequips a balloon?
 close-on-unequip: true
+# Do you want to hide balloons that the player does not have permission for?
+hide-balloons-without-permission: true
+# Title for the balloons menu.
+menu-title: "&f"
+# Amount of slots per page. Valid values: 27, 36, 45, and 54. 9 of these slots will be used for the menu buttons.
+menu-size: 54
+# Amount of slots from the top that you want the balloons to appear in. Valid values: 9, 18, 27, 36, and 45.
+balloon-slots: 45
 #
 # Notice: Keep buttons in the last row of your entire menu to avoid any bugs!
 buttons:
   previous-page:
     material: FLINT
-    slots:
-      - 46
     custom-model-data: 2
     name: '&7← ᴘʀᴇᴠɪᴏᴜs ᴘᴀɢᴇ'
+    slots:
+      - 48
   unequip:
     material: FLINT
-    slots:
-      - 49
     custom-model-data: 3
     name: '&7ᴜɴᴇǫᴜɪᴘ ʙᴀʟʟᴏᴏɴ'
+    slots:
+      - 49
   next-page:
     material: FLINT
-    slots:
-      - 52
     custom-model-data: 4
     name: '&7ɴᴇxᴛ ᴘᴀɢᴇ →'
+    slots:
+      - 50
 #
 # --------------------------------------------------#
 #                     MESSAGES                      #
@@ -110,11 +112,11 @@ balloons:
       - '&eᴄʟɪᴄᴋ ᴛᴏ ᴇǫᴜɪᴘ'
   dyeable_example:
     id: dyeable_example
-    permission: balloon.dyeable_example
+    permission: balloon.dyeable
     material: LEATHER_HORSE_ARMOR
-    color: '#ff00cc'
+    color: '#ffffff'
     custom-model-data: 1
-    name: '#ff00ccDyeable &fBalloon'
+    name: '#ffffffDyeable Balloon'
     lore:
       - '&8Bloons Example Balloon'
       - ''

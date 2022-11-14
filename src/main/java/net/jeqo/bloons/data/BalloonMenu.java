@@ -1,6 +1,7 @@
 package net.jeqo.bloons.data;
 
 import net.jeqo.bloons.Bloons;
+import net.jeqo.bloons.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -20,7 +21,7 @@ public class BalloonMenu {
     public int currpage = 0;
     public static HashMap<UUID, BalloonMenu> users = new HashMap<UUID, BalloonMenu>();
     private Inventory getBlankPage(String name){
-        Integer pageSize = Bloons.getInt("menu-size");
+        int pageSize = Bloons.getInt("menu-size");
         Inventory page = Bukkit.createInventory(null, pageSize, Utils.hex(name));
 
         ItemStack nextPage = new ItemStack(Material.valueOf(Bloons.getString("buttons.next-page.material")));
@@ -50,17 +51,29 @@ public class BalloonMenu {
 
         List<String> previousPageSlots = Bloons.getInstance().getConfig().getStringList("buttons.previous-page.slots");
         for (int i = 0; i < previousPageSlots.size(); i++) {
-            page.setItem(Integer.parseInt(previousPageSlots.get(i)), prevPage);
+            if (Integer.parseInt(previousPageSlots.get(i)) < pageSize) {
+                page.setItem(Integer.parseInt(previousPageSlots.get(i)), prevPage);
+            } else {
+                Utils.warn("Previous page button slot(s) out of bounds!");
+            }
         }
 
         List<String> unequipSlots = Bloons.getInstance().getConfig().getStringList("buttons.unequip.slots");
         for (int i = 0; i < unequipSlots.size(); i++) {
-            page.setItem(Integer.parseInt(unequipSlots.get(i)), removeBalloon);
+            if (Integer.parseInt(unequipSlots.get(i)) < pageSize){
+                page.setItem(Integer.parseInt(unequipSlots.get(i)), removeBalloon);
+            } else {
+                Utils.warn("Unequip button slot(s) out of bounds!");
+            }
         }
 
         List<String> nextPageSlots = Bloons.getInstance().getConfig().getStringList("buttons.next-page.slots");
         for (int i = 0; i < nextPageSlots.size(); i++) {
-            page.setItem(Integer.parseInt(nextPageSlots.get(i)), nextPage);
+            if (Integer.parseInt(nextPageSlots.get(i)) < pageSize) {
+                page.setItem(Integer.parseInt(nextPageSlots.get(i)), nextPage);
+            } else {
+                Utils.warn("Next page button slot(s) out of bounds!");
+            }
         }
         return page;
     }

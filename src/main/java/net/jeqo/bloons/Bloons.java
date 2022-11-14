@@ -1,12 +1,11 @@
 package net.jeqo.bloons;
 
-import net.jeqo.bloons.data.BalloonCommand;
-import net.jeqo.bloons.data.BalloonOwner;
-import net.jeqo.bloons.data.BalloonTab;
-import net.jeqo.bloons.data.Utils;
+import net.jeqo.bloons.data.*;
 import net.jeqo.bloons.listeners.LeashHandlers;
 import net.jeqo.bloons.listeners.MenuHandlers;
 import net.jeqo.bloons.listeners.PlayerHandlers;
+import net.jeqo.bloons.utils.Metrics;
+import net.jeqo.bloons.utils.Utils;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.event.HandlerList;
@@ -32,6 +31,8 @@ public final class Bloons extends JavaPlugin {
         instance = this;
         loadCommands();
         loadListeners();
+
+        Metrics metrics = new Metrics(this, 16872);
 
         getConfig().options().copyDefaults();
         saveDefaultConfig();

@@ -3,7 +3,7 @@ package net.jeqo.bloons.listeners;
 import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.data.BalloonOwner;
 import net.jeqo.bloons.data.BalloonMenu;
-import net.jeqo.bloons.data.Utils;
+import net.jeqo.bloons.utils.Utils;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
