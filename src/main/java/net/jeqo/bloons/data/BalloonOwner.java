@@ -15,6 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.EulerAngle;
@@ -40,6 +41,14 @@ public class BalloonOwner extends BukkitRunnable {
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
         meta.setCustomModelData(configuration.getInt("custom-model-data"));
+        if (Bloons.getString("balloons." + balloonId + ".color") != null) {
+            if (!Bloons.getString("balloons." + balloonId + ".color").equalsIgnoreCase("potion")) {
+                LeatherArmorMeta leatherArmorMeta = (LeatherArmorMeta) meta;
+                leatherArmorMeta.setColor(Utils.hexToColor(Bloons.getString("balloons." + balloonId + ".color")));
+            } else {
+                Utils.warn("The color of the balloon " + balloonId + " is set, but the material is not a leather item!");
+            }
+        }
         item.setItemMeta(meta);
         this.balloon = item;
     }

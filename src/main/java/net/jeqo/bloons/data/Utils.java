@@ -3,6 +3,7 @@ package net.jeqo.bloons.data;
 import net.jeqo.bloons.Bloons;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Color;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import java.util.logging.Level;
@@ -27,5 +28,9 @@ public class Utils {
 
     public static void warn(@NotNull String text) {
         Bukkit.getLogger().log(Level.WARNING, text);
+    }
+
+    public static Color hexToColor(String string) {
+        return Color.fromRGB(Integer.parseInt(string.substring(1), 16));
     }
 }

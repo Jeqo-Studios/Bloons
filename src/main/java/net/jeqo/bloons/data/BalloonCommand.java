@@ -14,6 +14,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.jetbrains.annotations.NotNull;
 
 public class BalloonCommand implements CommandExecutor {
@@ -54,6 +55,14 @@ public class BalloonCommand implements CommandExecutor {
                 }
                 meta.setDisplayName(Utils.hex(keySection.getString("name")));
                 meta.setCustomModelData(keySection.getInt("custom-model-data"));
+                if (Bloons.getString("balloons." + key + ".color") != null) {
+                    if (!Bloons.getString("balloons." + key + ".color").equalsIgnoreCase("potion")) {
+                        LeatherArmorMeta leatherArmorMeta = (LeatherArmorMeta) meta;
+                        leatherArmorMeta.setColor(Utils.hexToColor(keySection.getString("color")));
+                    } else {
+                        Utils.warn("The color of the balloon " + key + " is set, but the material is not a leather item!");
+                    }
+                }
                 item.setItemMeta(meta);
 
                 items.add(item);
