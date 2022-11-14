@@ -4,8 +4,9 @@ import net.jeqo.bloons.data.BalloonCommand;
 import net.jeqo.bloons.data.BalloonOwner;
 import net.jeqo.bloons.data.BalloonTab;
 import net.jeqo.bloons.data.Utils;
+import net.jeqo.bloons.listeners.LeashHandlers;
 import net.jeqo.bloons.listeners.MenuHandlers;
-import net.jeqo.bloons.listeners.PlayerQuit;
+import net.jeqo.bloons.listeners.PlayerHandlers;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.event.HandlerList;
@@ -19,6 +20,7 @@ import java.util.UUID;
 public final class Bloons extends JavaPlugin {
 
     public static HashMap<UUID, BalloonOwner> playerBalloons = new HashMap<>();
+    public static HashMap<UUID, String> playerBalloonID = new HashMap<>();
     private static Bloons instance;
 
     @Override
@@ -67,7 +69,8 @@ public final class Bloons extends JavaPlugin {
 
 
     private void loadListeners() {
-        getServer().getPluginManager().registerEvents((Listener)new PlayerQuit(), (Plugin)this);
+        getServer().getPluginManager().registerEvents((Listener)new LeashHandlers(), (Plugin)this);
+        getServer().getPluginManager().registerEvents((Listener)new PlayerHandlers(), (Plugin)this);
         getServer().getPluginManager().registerEvents((Listener)new MenuHandlers(), (Plugin)this);
     }
 

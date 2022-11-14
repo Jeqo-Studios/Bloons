@@ -10,7 +10,6 @@ import org.bukkit.Particle;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Chicken;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -118,6 +117,7 @@ public class BalloonOwner extends BukkitRunnable {
         this.armorStand.setGravity(false);
         this.armorStand.setSmall(false);
         this.armorStand.setMarker(true);
+        this.armorStand.setCollidable(false);
         this.armorStand.getEquipment().setHelmet(this.balloon);
 
         this.chicken = (Chicken)this.playerLocation.getWorld().spawn(this.playerLocation, Chicken.class);
@@ -127,7 +127,9 @@ public class BalloonOwner extends BukkitRunnable {
         this.chicken.setBaby();
         this.chicken.setAgeLock(true);
         this.chicken.setAware(false);
-        this.chicken.setLeashHolder((Entity)this.player);
+        this.chicken.setCollidable(false);
+        this.chicken.setLeashHolder(player);
+        this.chicken.setCustomName("4001148");
     }
 
 
@@ -142,6 +144,7 @@ public class BalloonOwner extends BukkitRunnable {
                 BalloonOwner balloonOwner = new BalloonOwner(player, balloonId);
                 balloonOwner.runTaskTimer((Plugin) Bloons.getInstance(), 0L, 1L);
                 Bloons.playerBalloons.put(player.getUniqueId(), balloonOwner);
+                Bloons.playerBalloonID.put(player.getUniqueId(), balloonId);
 
             }
         }).runTaskLater((Plugin) Bloons.getInstance(), 1L);
