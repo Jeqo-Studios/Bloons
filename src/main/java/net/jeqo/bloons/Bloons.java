@@ -32,7 +32,8 @@ public final class Bloons extends JavaPlugin {
         loadCommands();
         loadListeners();
 
-        Metrics metrics = new Metrics(this, 16872);
+        int pluginId = 16872;
+        Metrics metrics = new Metrics(this, pluginId);
 
         getConfig().options().copyDefaults();
         saveDefaultConfig();

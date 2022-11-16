@@ -93,7 +93,6 @@ public class BalloonOwner extends BukkitRunnable {
     public void spawnRemoveParticle() {
         this.moveLocation.getWorld().spawnParticle(Particle.CLOUD, this.moveLocation, 5, 0.0D, 0.0D, 0.0D, 0.1D);
     }
-
     public String getBalloonId() {
         return this.balloonId;
     }

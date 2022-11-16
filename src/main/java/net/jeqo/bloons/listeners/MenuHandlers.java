@@ -25,15 +25,19 @@ public class MenuHandlers implements Listener {
         int pageSize = Bloons.getInt("balloon-slots");
 
         if (event.getRawSlot() <= pageSize && !(event.getCurrentItem().getItemMeta().getDisplayName().getBytes().equals(Utils.hex(Bloons.getString("buttons.next-page.name")).getBytes())) && !(event.getCurrentItem().getItemMeta().getDisplayName().getBytes().equals(Utils.hex(Bloons.getString("buttons.previous-page.name")).getBytes())) && !(event.getCurrentItem().getItemMeta().getDisplayName().getBytes().equals(Utils.hex(Bloons.getString("buttons.unequip.name")).getBytes()))) {
-            Utils.removeBalloon(p, (BalloonOwner) Bloons.playerBalloons.get(p.getUniqueId()));
-            Player player = (Player) event.getWhoClicked();
-            String balloon = event.getCurrentItem().getItemMeta().getLocalizedName();
-            BalloonOwner.checkBalloonRemovalOrAdd(player, balloon);
-            player.playSound(player.getLocation(), Sound.ENTITY_CHICKEN_EGG, 1, 1);
-            String balloonName = event.getCurrentItem().getItemMeta().getDisplayName();
-            player.sendMessage(Bloons.getMessage("prefix") + Bloons.getMessage("equipped", balloonName));
-            if (Bloons.getString("close-on-equip").equals("true")) {
-                player.closeInventory();
+            if (event.isShiftClick()) {
+                event.setCancelled(true);
+            } else {
+                Utils.removeBalloon(p, (BalloonOwner) Bloons.playerBalloons.get(p.getUniqueId()));
+                Player player = (Player) event.getWhoClicked();
+                String balloon = event.getCurrentItem().getItemMeta().getLocalizedName();
+                BalloonOwner.checkBalloonRemovalOrAdd(player, balloon);
+                player.playSound(player.getLocation(), Sound.ENTITY_CHICKEN_EGG, 1, 1);
+                String balloonName = event.getCurrentItem().getItemMeta().getDisplayName();
+                player.sendMessage(Bloons.getMessage("prefix") + Bloons.getMessage("equipped", balloonName));
+                if (Bloons.getString("close-on-equip").equals("true")) {
+                    player.closeInventory();
+                }
             }
         } else {
             event.setCancelled(true);
@@ -42,7 +46,7 @@ public class MenuHandlers implements Listener {
         if(event.getCurrentItem().getItemMeta().getDisplayName().equals(Utils.hex(Bloons.getString("buttons.next-page.name")))) {
             event.setCancelled(true);
             if (inv.currpage >= inv.pages.size()-1) {
-                ((Player) event.getWhoClicked()).playSound(event.getWhoClicked().getLocation(), Sound.BLOCK_NOTE_BLOCK_IRON_XYLOPHONE, 0.6F, 1);
+                ((Player) event.getWhoClicked()).playSound(event.getWhoClicked().getLocation(), Sound.BLOCK_NOTE_BLOCK_IRON_XYLOPHONE, 0.9F, 0.3F);
             } else {
                 inv.currpage += 1;
                 p.openInventory(inv.pages.get(inv.currpage));
@@ -57,7 +61,7 @@ public class MenuHandlers implements Listener {
                 p.openInventory(inv.pages.get(inv.currpage));
                 p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BIT, 1, 1);
             } else {
-                ((Player) event.getWhoClicked()).playSound(event.getWhoClicked().getLocation(), Sound.BLOCK_NOTE_BLOCK_IRON_XYLOPHONE, 0.6F, 1);
+                ((Player) event.getWhoClicked()).playSound(event.getWhoClicked().getLocation(), Sound.BLOCK_NOTE_BLOCK_IRON_XYLOPHONE, 0.9F, 0.3F);
             }
 
         } else if(event.getCurrentItem().getItemMeta().getDisplayName().equals(Utils.hex(Bloons.getString("buttons.unequip.name")))) {
