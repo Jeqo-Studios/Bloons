@@ -1,8 +1,11 @@
 package net.jeqo.bloons.listeners;
 
+import jdk.jshell.execution.Util;
 import net.jeqo.bloons.data.BalloonOwner;
 import net.jeqo.bloons.Bloons;
+import net.jeqo.bloons.data.UpdateChecker;
 import net.jeqo.bloons.utils.Utils;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -24,6 +27,19 @@ public class PlayerHandlers implements Listener {
         String id = Bloons.playerBalloonID.get(e.getPlayer().getUniqueId());
         if (id != null) {
             BalloonOwner.checkBalloonRemovalOrAdd(e.getPlayer(), id);
+        }
+
+
+        if (e.getPlayer().isOp()) {
+            Player p = e.getPlayer();
+            new UpdateChecker(Bloons.getInstance(), 106243).getVersion(version -> {
+                if (!Bloons.getInstance().getDescription().getVersion().equals(version)) {
+                    p.sendMessage("");
+                    p.sendMessage(Utils.hex(Bloons.getMessage("prefix") + "&eNew update! " + version + " is now available."));
+                    p.sendMessage(Utils.hex(Bloons.getMessage("prefix") + "&eDownload it here: &nhttps://jeqo.net/spigot/bloons"));
+                    p.sendMessage("");
+                }
+            });
         }
     }
 

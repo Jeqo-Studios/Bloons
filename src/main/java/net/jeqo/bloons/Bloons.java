@@ -29,14 +29,11 @@ public final class Bloons extends JavaPlugin {
         Utils.log("|-------------------------------------------------[ MADE BY JEQO ]---|");
 
         instance = this;
-        loadCommands();
-        loadListeners();
+        loadCommands(); loadListeners();
+        Metrics metrics = new Metrics(this, pluginId); updateChecker();
+        getConfig().options().copyDefaults(); saveDefaultConfig();
 
-        int pluginId = 16872;
-        Metrics metrics = new Metrics(this, pluginId);
 
-        getConfig().options().copyDefaults();
-        saveDefaultConfig();
     }
 
 
@@ -69,6 +66,22 @@ public final class Bloons extends JavaPlugin {
 
 
 
+
+
+
+
+
+    int pluginId = 16872;
+    public void updateChecker() {
+        new UpdateChecker(this, 106243).getVersion(version -> {
+            if (!this.getDescription().getVersion().equals(version)) {
+                Utils.warn("|---[ BLOONS ]-------------------------------------------------------|");
+                Utils.warn("|                  There is a new update available!                  |");
+                Utils.warn("|                   https://jeqo.net/spigot/bloons                   |");
+                Utils.warn("|-------------------------------------------------[ MADE BY JEQO ]---|");
+            }
+        });
+    }
 
     private void loadListeners() {
         getServer().getPluginManager().registerEvents((Listener)new LeashHandlers(), (Plugin)this);

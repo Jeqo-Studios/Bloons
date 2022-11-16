@@ -89,11 +89,7 @@ public class BalloonMenu {
         Inventory page = getBlankPage(name);
         int slot = 0;
         for (int i = -1; i < items.size(); i++) {
-            if (slot == 1) {
-                page.setItem(slot, items.get(0));
-            }
-            if (slot == 0 || slot == 8 || slot == 17 || slot == 26 || slot == 35 || slot == 44) {
-                if (slot == 9) { slot = 10; } else if (slot == 18) { slot = 19; } else if (slot == 27) { slot = 28; } else if (slot == 36) { slot = 37; } else { slot++; }
+            if (slot == 0 || slot == 8 || slot == 9 || slot == 17 || slot == 18 || slot == 26 || slot == 27 || slot == 35 || slot == 36 || slot == 44) {
                 slot++;
             } else {
                 page.setItem(slot, items.get(i));
@@ -110,23 +106,4 @@ public class BalloonMenu {
         p.openInventory(pages.get(currpage));
         users.put(p.getUniqueId(), this);
     }
-
-    /*
-    public BalloonMenu(ArrayList<ItemStack> items, String name, Player p){
-        this.id = UUID.randomUUID();
-        Inventory page = getBlankPage(name);
-        for(int i = 0;i < items.size(); i++){
-            if(page.firstEmpty() == Bloons.getInt("balloon-slots")){
-                pages.add(page);
-                page = getBlankPage(name);
-                page.addItem(items.get(i));
-            }else{
-                page.addItem(items.get(i));
-            }
-        }
-        pages.add(page);
-        p.openInventory(pages.get(currpage));
-        users.put(p.getUniqueId(), this);
-    }
-    */
 }

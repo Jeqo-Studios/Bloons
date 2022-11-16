@@ -24,62 +24,74 @@ public class MenuHandlers implements Listener {
 
         int pageSize = Bloons.getInt("balloon-slots");
 
-        if (event.getRawSlot() <= pageSize && !(event.getCurrentItem().getItemMeta().getDisplayName().getBytes().equals(Utils.hex(Bloons.getString("buttons.next-page.name")).getBytes())) && !(event.getCurrentItem().getItemMeta().getDisplayName().getBytes().equals(Utils.hex(Bloons.getString("buttons.previous-page.name")).getBytes())) && !(event.getCurrentItem().getItemMeta().getDisplayName().getBytes().equals(Utils.hex(Bloons.getString("buttons.unequip.name")).getBytes()))) {
-            if (event.isShiftClick()) {
+        if (event.getRawSlot() <= pageSize) {
+            if (event.getCurrentItem().getItemMeta().getDisplayName().equals(Utils.hex(Bloons.getString("buttons.previous-page.name"))) || event.getCurrentItem().getItemMeta().getDisplayName().equals(Utils.hex(Bloons.getString("buttons.next-page.name"))) || event.getCurrentItem().getItemMeta().getDisplayName().equals(Utils.hex(Bloons.getString("buttons.unequip.name"))) ) {
                 event.setCancelled(true);
             } else {
-                Utils.removeBalloon(p, (BalloonOwner) Bloons.playerBalloons.get(p.getUniqueId()));
-                Player player = (Player) event.getWhoClicked();
-                String balloon = event.getCurrentItem().getItemMeta().getLocalizedName();
-                BalloonOwner.checkBalloonRemovalOrAdd(player, balloon);
-                player.playSound(player.getLocation(), Sound.ENTITY_CHICKEN_EGG, 1, 1);
-                String balloonName = event.getCurrentItem().getItemMeta().getDisplayName();
-                player.sendMessage(Bloons.getMessage("prefix") + Bloons.getMessage("equipped", balloonName));
-                if (Bloons.getString("close-on-equip").equals("true")) {
-                    player.closeInventory();
+                if (event.isShiftClick()) {
+                    event.setCancelled(true);
+                } else {
+                    Utils.removeBalloon(p, (BalloonOwner) Bloons.playerBalloons.get(p.getUniqueId()));
+                    Player player = (Player) event.getWhoClicked();
+                    String balloon = event.getCurrentItem().getItemMeta().getLocalizedName();
+                    BalloonOwner.checkBalloonRemovalOrAdd(player, balloon);
+                    player.playSound(player.getLocation(), Sound.ENTITY_CHICKEN_EGG, 1, 1);
+                    String balloonName = event.getCurrentItem().getItemMeta().getDisplayName();
+                    player.sendMessage(Bloons.getMessage("prefix") + Bloons.getMessage("equipped", balloonName));
+                    if (Bloons.getString("close-on-equip").equals("true")) {
+                        player.closeInventory();
+                    }
                 }
             }
         } else {
+            if (event.isShiftClick()) {
+                event.setCancelled(true);
+            }
             event.setCancelled(true);
         }
 
         if(event.getCurrentItem().getItemMeta().getDisplayName().equals(Utils.hex(Bloons.getString("buttons.next-page.name")))) {
             event.setCancelled(true);
             if (inv.currpage >= inv.pages.size()-1) {
-                ((Player) event.getWhoClicked()).playSound(event.getWhoClicked().getLocation(), Sound.BLOCK_NOTE_BLOCK_IRON_XYLOPHONE, 0.9F, 0.3F);
+                ((Player) event.getWhoClicked()).playSound(event.getWhoClicked().getLocation(), Sound.BLOCK_NOTE_BLOCK_DIDGERIDOO, 1, 1);
             } else {
+                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BIT, 1, 1);
                 inv.currpage += 1;
                 p.openInventory(inv.pages.get(inv.currpage));
-                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BIT, 1, 1);
             }
 
 
         } else if(event.getCurrentItem().getItemMeta().getDisplayName().equals(Utils.hex(Bloons.getString("buttons.previous-page.name")))) {
             event.setCancelled(true);
             if (inv.currpage > 0) {
+                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BIT, 1, 1);
                 inv.currpage -= 1;
                 p.openInventory(inv.pages.get(inv.currpage));
-                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BIT, 1, 1);
             } else {
-                ((Player) event.getWhoClicked()).playSound(event.getWhoClicked().getLocation(), Sound.BLOCK_NOTE_BLOCK_IRON_XYLOPHONE, 0.9F, 0.3F);
+                ((Player) event.getWhoClicked()).playSound(event.getWhoClicked().getLocation(), Sound.BLOCK_NOTE_BLOCK_DIDGERIDOO, 1, 1);
             }
 
         } else if(event.getCurrentItem().getItemMeta().getDisplayName().equals(Utils.hex(Bloons.getString("buttons.unequip.name")))) {
             event.setCancelled(true);
             Player player = (Player) event.getWhoClicked();
 
-            BalloonOwner balloonOwner1 = (BalloonOwner) Bloons.playerBalloons.get(player.getUniqueId());
-            if (balloonOwner1 == null) {
-                player.sendMessage(Bloons.getMessage("prefix") + Bloons.getMessage("not-equipped"));
-                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_DIDGERIDOO, 1, 1);
+
+            if (event.isShiftClick()) {
+                event.setCancelled(true);
             } else {
-                if (Bloons.getString("close-on-unequip").equals("true")) {
-                    player.closeInventory();
+                BalloonOwner balloonOwner1 = (BalloonOwner) Bloons.playerBalloons.get(player.getUniqueId());
+                if (balloonOwner1 == null) {
+                    player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_DIDGERIDOO, 1, 1);
+                    player.sendMessage(Bloons.getMessage("prefix") + Bloons.getMessage("not-equipped"));
+                } else {
+                    if (Bloons.getString("close-on-unequip").equals("true")) {
+                        player.closeInventory();
+                    }
+                    player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_HURT_SWEET_BERRY_BUSH, 1, 1);
+                    player.sendMessage(Bloons.getMessage("prefix") + Bloons.getMessage("unequipped"));
                 }
-                player.sendMessage(Bloons.getMessage("prefix") + Bloons.getMessage("unequipped"));
-                player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_HURT_SWEET_BERRY_BUSH, 1, 1);
+                Utils.removeBalloon(player, balloonOwner1);
             }
-            Utils.removeBalloon(player, balloonOwner1);
         } else {
             event.setCancelled(true);
         }

@@ -14,6 +14,8 @@
 #                     SETTINGS                      #
 # --------------------------------------------------#
 #
+# Send a message to operators when they join if there is a Bloons update.
+check-for-updates: true
 # Do you want to close the menu when a player equips a balloon?
 close-on-equip: true
 # Do you want to close the menu when a player unequips a balloon?
@@ -25,6 +27,7 @@ menu-title: "&f"
 # Amount of slots per page. Valid values: 27, 36, 45, and 54. 9 of these slots will be used for the menu buttons.
 menu-size: 54
 # Amount of slots from the top that you want the balloons to appear in. Valid values: 9, 18, 27, 36, and 45.
+# This has the be at least 9 less than the menu-size!
 balloon-slots: 45
 #
 # Notice: Keep buttons in the last row of your entire menu to avoid any bugs!
