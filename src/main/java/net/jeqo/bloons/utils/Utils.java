@@ -18,6 +18,7 @@ public class Utils {
             owner.spawnRemoveParticle();
             owner.cancel();
             Bloons.playerBalloons.remove(player.getUniqueId());
+            Bloons.playerBalloonID.remove(player.getUniqueId());
         }
     }
 
@@ -25,6 +26,13 @@ public class Utils {
         if (owner != null) {
             owner.cancel();
             Bloons.playerBalloons.remove(player.getUniqueId());
+            Bloons.playerBalloonID.remove(player.getUniqueId());
+        }
+    }
+
+    public static void storeBalloon(Player player, BalloonOwner owner) {
+        if (owner != null) {
+            owner.cancel();
         }
     }
 

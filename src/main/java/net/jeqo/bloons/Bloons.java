@@ -6,6 +6,8 @@ import net.jeqo.bloons.listeners.MenuHandlers;
 import net.jeqo.bloons.listeners.PlayerHandlers;
 import net.jeqo.bloons.utils.Metrics;
 import net.jeqo.bloons.utils.Utils;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.event.HandlerList;
@@ -114,5 +116,10 @@ public final class Bloons extends JavaPlugin {
 
     public static Integer getInt(String path) {
         return getInstance().getConfig().getInt(path);
+    }
+
+
+    public static ConfigurationSection getConfigSec(String s) {
+        return instance.getConfig().getConfigurationSection(s);
     }
 }

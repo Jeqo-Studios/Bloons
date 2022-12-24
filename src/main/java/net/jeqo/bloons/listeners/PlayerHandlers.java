@@ -13,12 +13,16 @@ import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.plugin.Plugin;
+
+import java.util.Objects;
 
 public class PlayerHandlers implements Listener {
+
     @EventHandler
     public void onQuit(PlayerQuitEvent e) {
         BalloonOwner owner = (BalloonOwner) Bloons.playerBalloons.get(e.getPlayer().getUniqueId());
-        Utils.removeBalloon(e.getPlayer(), owner);
+        Utils.storeBalloon(e.getPlayer(), owner);
     }
 
 
@@ -26,6 +30,7 @@ public class PlayerHandlers implements Listener {
     public void onJoin(PlayerJoinEvent e) {
         String id = Bloons.playerBalloonID.get(e.getPlayer().getUniqueId());
         if (id != null) {
+            Utils.removeBalloon(e.getPlayer(), (BalloonOwner) Bloons.playerBalloons.get(e.getPlayer().getUniqueId()));
             BalloonOwner.checkBalloonRemovalOrAdd(e.getPlayer(), id);
         }
 
@@ -46,7 +51,7 @@ public class PlayerHandlers implements Listener {
 
     @EventHandler
     public void onDeath(PlayerDeathEvent e) {
-        BalloonOwner owner = (BalloonOwner) Bloons.playerBalloons.get(e.getEntity().getPlayer().getUniqueId());
+        BalloonOwner owner = (BalloonOwner) Bloons.playerBalloons.get(Objects.requireNonNull(e.getEntity().getPlayer()).getUniqueId());
         Utils.removeBalloon(e.getEntity().getPlayer(), owner);
     }
 
@@ -62,9 +67,12 @@ public class PlayerHandlers implements Listener {
     @EventHandler
     public void onWorldChange(PlayerChangedWorldEvent e) {
         BalloonOwner owner = (BalloonOwner) Bloons.playerBalloons.get(e.getPlayer().getUniqueId());
-        Utils.removeBalloon(e.getPlayer(), owner);
+        Utils.storeBalloon(e.getPlayer(), owner);
+
+
         String id = Bloons.playerBalloonID.get(e.getPlayer().getUniqueId());
         if (id != null) {
+            Utils.removeBalloon(e.getPlayer(), (BalloonOwner) Bloons.playerBalloons.get(e.getPlayer().getUniqueId()));
             BalloonOwner.checkBalloonRemovalOrAdd(e.getPlayer(), id);
         }
     }

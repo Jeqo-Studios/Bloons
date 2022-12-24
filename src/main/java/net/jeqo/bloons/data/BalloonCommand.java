@@ -156,7 +156,7 @@ public class BalloonCommand implements CommandExecutor {
                 if (sender instanceof Player) {
                     player = (Player) sender;
                 } else {
-                    sender.sendMessage("Only players may execute this command!");
+                    sender.sendMessage("You must be a player to execute this command.");
                     return true;
                 }
                 if (!sender.hasPermission("bloons.unequip")) {
@@ -254,7 +254,7 @@ public class BalloonCommand implements CommandExecutor {
             sender.sendMessage(Utils.hex("   #ff00cc/#f107d0b#e30ed5l#d515d9o#c61cddo#b823e1n#aa2be6s #9c32ear#8e39eee#8040f2l#7147f7o#634efba#5555ffd &7- Reload the Bloons config"));
         }
         sender.sendMessage("");
-        sender.sendMessage(Utils.hex("   #ff00ccB#f406cfl#e80bd3o#dd11d6o#d217dan#c61cdds #bb22e01#b028e4.#a42de70#9933eb.#8e39ee1#823ef3-#7744f5B#6c4af8E#604ffcT#5555ffA &7- &fMade by Jeqo"));
+        sender.sendMessage(Utils.hex("   #ff00ccB#f406cfl#e80bd3o#dd11d6o#d217dan#c61cdds #bb22e01#b028e4.#a42de70#9933eb.#8e39ee1#823ef5-#7744f5B#6c4af8E#604ffcT#5555ffA &7- &fMade by Jeqo"));
         sender.sendMessage("");
     }
 

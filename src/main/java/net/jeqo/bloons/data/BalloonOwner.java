@@ -27,7 +27,7 @@ public class BalloonOwner extends BukkitRunnable {
     private final ItemStack balloon;
     private final String balloonId;
     private ArmorStand armorStand;
-    private Chicken chicken;
+    public Chicken chicken;
     private Location playerLocation;
     private Location moveLocation;
     private int ticks = 0;
@@ -120,6 +120,7 @@ public class BalloonOwner extends BukkitRunnable {
         this.armorStand.setMarker(true);
         this.armorStand.setCollidable(false);
         this.armorStand.getEquipment().setHelmet(this.balloon);
+        this.armorStand.setCustomName("4001147");
 
         this.chicken = (Chicken)this.playerLocation.getWorld().spawn(this.playerLocation, Chicken.class);
         this.chicken.setInvulnerable(true);
