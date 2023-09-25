@@ -1,11 +1,5 @@
-<style>
-  .logo img {
-    max-width: 10em;
-  }
-</style>
-
 <div class="logo" align="center">
-  <img src="https://jeqo.net/images/bloons-logo.png" alt="bloons-logo">
+  <img width="25%" src="https://jeqo.net/images/bloons-logo.png" alt="bloons-logo">
   <br>
 </div>
 
