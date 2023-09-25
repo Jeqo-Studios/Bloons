@@ -4,6 +4,9 @@
 </div>
 
 <div align="center">
+  <a href="https://jeqo.net/bloons" alt="jeqo">
+    <img src="https://img.shields.io/badge/jeqo.net-bloons">
+  </a>
   <a href="https://www.spigotmc.org/resources/authors/jeqo.9929/" alt="spigot">
     <img src="https://img.shields.io/badge/spigot-bloons">
   </a>
