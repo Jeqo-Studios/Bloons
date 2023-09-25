@@ -1,4 +1,10 @@
-<div align="center">
+<style>
+  .logo img {
+    max-width: 10em;
+  }
+</style>
+
+<div class="logo" align="center">
   <img src="https://jeqo.net/images/bloons-logo.png" alt="bloons-logo">
   <br>
 </div>
@@ -8,7 +14,7 @@
     <img src="https://img.shields.io/badge/spigot-bloons">
   </a>
   <a href="https://jeqo.net/discord" alt="discord">
-    <img src="https://img.shields.io/discord/902495259517394944?label=discord&logo=discord" style="max-width:10em">
+    <img src="https://img.shields.io/discord/902495259517394944?label=discord&logo=discord">
   </a>
 </div>
 
