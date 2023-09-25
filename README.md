@@ -8,7 +8,7 @@
     <img src="https://img.shields.io/badge/spigot-bloons">
   </a>
   <a href="https://jeqo.net/discord" alt="discord">
-    <img src="https://img.shields.io/discord/902495259517394944?label=discord&logo=discord"/>
+    <img style="width:25%" src="https://img.shields.io/discord/902495259517394944?label=discord&logo=discord"/>
   </a>
 </div>
 
