@@ -1,10 +1,6 @@
 package net.jeqo.bloons.data;
 
 import net.jeqo.bloons.Bloons;
-
-import java.util.Objects;
-import java.util.concurrent.ThreadLocalRandom;
-
 import net.jeqo.bloons.utils.Utils;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -17,15 +13,16 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.EulerAngle;
 import org.bukkit.util.Vector;
 
+import java.util.Objects;
+import java.util.concurrent.ThreadLocalRandom;
+
 public class BalloonOwner extends BukkitRunnable {
     private final Player player;
     private final ItemStack balloon;
-    private final String balloonId;
     private ArmorStand armorStand;
     public Chicken chicken;
     private Location playerLocation;
@@ -35,7 +32,6 @@ public class BalloonOwner extends BukkitRunnable {
 
     public BalloonOwner(Player player, String balloonId) {
         this.player = player;
-        this.balloonId = balloonId;
         ConfigurationSection configuration = Bloons.getInstance().getConfig().getConfigurationSection("balloons." + balloonId);
         assert configuration != null;
         ItemStack item = new ItemStack(Material.valueOf(configuration.getString("material")));
@@ -53,7 +49,6 @@ public class BalloonOwner extends BukkitRunnable {
         item.setItemMeta(meta);
         this.balloon = item;
     }
-
 
     public void run() {
         if (this.armorStand == null) {
@@ -83,7 +78,6 @@ public class BalloonOwner extends BukkitRunnable {
         this.ticks++;
     }
 
-
     public synchronized void cancel() throws IllegalStateException {
         this.armorStand.remove();
         this.chicken.remove();
@@ -92,9 +86,6 @@ public class BalloonOwner extends BukkitRunnable {
 
     public void spawnRemoveParticle() {
         this.moveLocation.getWorld().spawnParticle(Particle.CLOUD, this.moveLocation, 5, 0.0D, 0.0D, 0.0D, 0.1D);
-    }
-    public String getBalloonId() {
-        return this.balloonId;
     }
 
     private void teleport(Location location) {
@@ -107,10 +98,11 @@ public class BalloonOwner extends BukkitRunnable {
         this.playerLocation.setYaw(0.0F);
 
         ItemMeta meta = this.balloon.getItemMeta();
-        meta.addItemFlags(new ItemFlag[] {ItemFlag.HIDE_UNBREAKABLE });
+        assert meta != null;
+        meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
         this.balloon.setItemMeta(meta);
 
-        this.armorStand = (ArmorStand) Objects.requireNonNull(this.playerLocation.getWorld()).spawn(this.playerLocation, ArmorStand.class);
+        this.armorStand = Objects.requireNonNull(this.playerLocation.getWorld()).spawn(this.playerLocation, ArmorStand.class);
         this.armorStand.setBasePlate(false);
         this.armorStand.setVisible(false);
         this.armorStand.setInvulnerable(true);
@@ -122,7 +114,7 @@ public class BalloonOwner extends BukkitRunnable {
         this.armorStand.getEquipment().setHelmet(this.balloon);
         this.armorStand.setCustomName("4001147");
 
-        this.chicken = (Chicken)this.playerLocation.getWorld().spawn(this.playerLocation, Chicken.class);
+        this.chicken = this.playerLocation.getWorld().spawn(this.playerLocation, Chicken.class);
         this.chicken.setInvulnerable(true);
         this.chicken.setInvisible(true);
         this.chicken.setSilent(true);
@@ -138,17 +130,17 @@ public class BalloonOwner extends BukkitRunnable {
     public static void checkBalloonRemovalOrAdd(final Player player, final String balloonId) {
         (new BukkitRunnable() {
             public void run() {
-                BalloonOwner owner = (BalloonOwner) Bloons.playerBalloons.get(player.getUniqueId());
+                BalloonOwner owner = Bloons.playerBalloons.get(player.getUniqueId());
                 if (owner != null) {
                     return;
                 }
                 Utils.removeBalloon(player, owner);
                 BalloonOwner balloonOwner = new BalloonOwner(player, balloonId);
-                balloonOwner.runTaskTimer((Plugin) Bloons.getInstance(), 0L, 1L);
+                balloonOwner.runTaskTimer(Bloons.getInstance(), 0L, 1L);
                 Bloons.playerBalloons.put(player.getUniqueId(), balloonOwner);
                 Bloons.playerBalloonID.put(player.getUniqueId(), balloonId);
 
             }
-        }).runTaskLater((Plugin) Bloons.getInstance(), 1L);
+        }).runTaskLater(Bloons.getInstance(), 1L);
     }
 }

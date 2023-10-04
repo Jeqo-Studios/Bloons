@@ -16,10 +16,10 @@ import java.util.UUID;
 
 public class BalloonMenu {
 
-    public ArrayList<Inventory> pages = new ArrayList<Inventory>();
+    public ArrayList<Inventory> pages = new ArrayList<>();
     public UUID id;
     public int currpage = 0;
-    public static HashMap<UUID, BalloonMenu> users = new HashMap<UUID, BalloonMenu>();
+    public static HashMap<UUID, BalloonMenu> users = new HashMap<>();
     private Inventory getBlankPage(String name){
         int pageSize = Bloons.getInt("menu-size");
         Inventory page = Bukkit.createInventory(null, pageSize, Utils.hex(name));
@@ -45,44 +45,34 @@ public class BalloonMenu {
         removeMeta.setCustomModelData(Bloons.getInt("buttons.unequip.custom-model-data"));
         removeBalloon.setItemMeta(removeMeta);
 
-
-
-
-
         List<String> previousPageSlots = Bloons.getInstance().getConfig().getStringList("buttons.previous-page.slots");
-        for (int i = 0; i < previousPageSlots.size(); i++) {
-            if (Integer.parseInt(previousPageSlots.get(i)) < pageSize) {
-                page.setItem(Integer.parseInt(previousPageSlots.get(i)), prevPage);
+        for (String previousPageSlot : previousPageSlots) {
+            if (Integer.parseInt(previousPageSlot) < pageSize) {
+                page.setItem(Integer.parseInt(previousPageSlot), prevPage);
             } else {
                 Utils.warn("Previous page button slot(s) out of bounds!");
             }
         }
 
         List<String> unequipSlots = Bloons.getInstance().getConfig().getStringList("buttons.unequip.slots");
-        for (int i = 0; i < unequipSlots.size(); i++) {
-            if (Integer.parseInt(unequipSlots.get(i)) < pageSize){
-                page.setItem(Integer.parseInt(unequipSlots.get(i)), removeBalloon);
+        for (String unequipSlot : unequipSlots) {
+            if (Integer.parseInt(unequipSlot) < pageSize) {
+                page.setItem(Integer.parseInt(unequipSlot), removeBalloon);
             } else {
                 Utils.warn("Unequip button slot(s) out of bounds!");
             }
         }
 
         List<String> nextPageSlots = Bloons.getInstance().getConfig().getStringList("buttons.next-page.slots");
-        for (int i = 0; i < nextPageSlots.size(); i++) {
-            if (Integer.parseInt(nextPageSlots.get(i)) < pageSize) {
-                page.setItem(Integer.parseInt(nextPageSlots.get(i)), nextPage);
+        for (String nextPageSlot : nextPageSlots) {
+            if (Integer.parseInt(nextPageSlot) < pageSize) {
+                page.setItem(Integer.parseInt(nextPageSlot), nextPage);
             } else {
                 Utils.warn("Next page button slot(s) out of bounds!");
             }
         }
         return page;
     }
-
-
-
-
-
-
 
     public BalloonMenu(ArrayList<ItemStack> items, String name, Player p){
         this.id = UUID.randomUUID();
