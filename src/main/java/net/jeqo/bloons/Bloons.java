@@ -1,18 +1,17 @@
 package net.jeqo.bloons;
 
-import net.jeqo.bloons.data.*;
+import net.jeqo.bloons.data.BalloonCommand;
+import net.jeqo.bloons.data.BalloonOwner;
+import net.jeqo.bloons.data.BalloonTab;
+import net.jeqo.bloons.data.UpdateChecker;
 import net.jeqo.bloons.listeners.LeashHandlers;
 import net.jeqo.bloons.listeners.MenuHandlers;
 import net.jeqo.bloons.listeners.PlayerHandlers;
 import net.jeqo.bloons.utils.Metrics;
 import net.jeqo.bloons.utils.Utils;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.event.HandlerList;
-import org.bukkit.event.Listener;
-import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
 import java.util.Objects;
@@ -34,14 +33,10 @@ public final class Bloons extends JavaPlugin {
         loadCommands(); loadListeners();
         Metrics metrics = new Metrics(this, pluginId); updateChecker();
         getConfig().options().copyDefaults(); saveDefaultConfig();
-
-
     }
-
 
     @Override
     public void onDisable() {
-
         Utils.log("|---[ BLOONS ]-------------------------------------------------------|");
         Utils.log("|                          Shutting down...                          |");
         Utils.log("|-------------------------------------------------[ MADE BY JEQO ]---|");
@@ -50,28 +45,8 @@ public final class Bloons extends JavaPlugin {
             owner.cancel();
         }
 
-        HandlerList.unregisterAll((Plugin)this);
+        HandlerList.unregisterAll(this);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     int pluginId = 16872;
     public void updateChecker() {
@@ -86,9 +61,9 @@ public final class Bloons extends JavaPlugin {
     }
 
     private void loadListeners() {
-        getServer().getPluginManager().registerEvents((Listener)new LeashHandlers(), (Plugin)this);
-        getServer().getPluginManager().registerEvents((Listener)new PlayerHandlers(), (Plugin)this);
-        getServer().getPluginManager().registerEvents((Listener)new MenuHandlers(), (Plugin)this);
+        getServer().getPluginManager().registerEvents(new LeashHandlers(), this);
+        getServer().getPluginManager().registerEvents(new PlayerHandlers(), this);
+        getServer().getPluginManager().registerEvents(new MenuHandlers(), this);
     }
 
     private void loadCommands() {
@@ -113,13 +88,7 @@ public final class Bloons extends JavaPlugin {
         return getInstance().getConfig().getString(path);
     }
 
-
     public static Integer getInt(String path) {
         return getInstance().getConfig().getInt(path);
-    }
-
-
-    public static ConfigurationSection getConfigSec(String s) {
-        return instance.getConfig().getConfigurationSection(s);
     }
 }

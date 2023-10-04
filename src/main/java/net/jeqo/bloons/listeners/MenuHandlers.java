@@ -1,27 +1,21 @@
 package net.jeqo.bloons.listeners;
 
 import net.jeqo.bloons.Bloons;
-import net.jeqo.bloons.data.BalloonOwner;
 import net.jeqo.bloons.data.BalloonMenu;
+import net.jeqo.bloons.data.BalloonOwner;
 import net.jeqo.bloons.utils.Utils;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.LeatherArmorMeta;
-
-import java.util.Objects;
 
 public class MenuHandlers implements Listener {
 
     @EventHandler
+    /**
+     * When a player interacts with the GUI menu, do the action required accordingly
+     */
     public void onClick(InventoryClickEvent e){
         if (!e.getView().getTitle().equals(Utils.hex(Bloons.getString("menu-title")))) return;
         if(!(e.getWhoClicked() instanceof Player)) return;
@@ -40,7 +34,7 @@ public class MenuHandlers implements Listener {
                 if (e.isShiftClick()) {
                     e.setCancelled(true);
                 } else {
-                    Utils.removeBalloon(p, (BalloonOwner) Bloons.playerBalloons.get(p.getUniqueId()));
+                    Utils.removeBalloon(p, Bloons.playerBalloons.get(p.getUniqueId()));
                     Player player = (Player) e.getWhoClicked();
                     String balloon = e.getCurrentItem().getItemMeta().getLocalizedName();
                     BalloonOwner.checkBalloonRemovalOrAdd(player, balloon);
@@ -88,7 +82,7 @@ public class MenuHandlers implements Listener {
             if (e.isShiftClick()) {
                 e.setCancelled(true);
             } else {
-                BalloonOwner balloonOwner1 = (BalloonOwner) Bloons.playerBalloons.get(player.getUniqueId());
+                BalloonOwner balloonOwner1 = Bloons.playerBalloons.get(player.getUniqueId());
                 if (balloonOwner1 == null) {
                     player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_DIDGERIDOO, 1, 1);
                     player.sendMessage(Bloons.getMessage("prefix") + Bloons.getMessage("not-equipped"));
