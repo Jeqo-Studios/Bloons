@@ -9,4 +9,4 @@ website: https://jeqo.net
 commands:
   bloons:
     aliases: [balloons, b]
-    description: Open the balloon menu.
+    description: The central command to access the bloons commands.
