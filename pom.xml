@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>net.jeqo</groupId>
-    <artifactId>Bloons</artifactId>
+    <artifactId>bloons</artifactId>
     <version>1.0.6-BETA</version>
     <packaging>jar</packaging>
 
