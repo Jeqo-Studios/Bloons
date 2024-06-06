@@ -3,9 +3,9 @@ name: Build on Latest and All Platforms
 # Triggered on both PRs and pushes to main
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "main" ]
 
 jobs:
   # Runs on Ubuntu latest (version 22.04)
