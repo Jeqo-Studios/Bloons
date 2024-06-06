@@ -3,9 +3,9 @@ name: Submit Dependency Summary
 # Triggered on both PRs and pushes to main
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "staging" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "staging" ]
 
 jobs:
   # Runs on Ubuntu latest (version 22.04)
