@@ -1,0 +1,81 @@
+name: Build on Latest and All Platforms
+
+# Triggered on both PRs and pushes to main
+on:
+  push:
+    branches: [ $default-branch ]
+  pull_request:
+    branches: [ $default-branch ]
+
+jobs:
+  # Runs on Ubuntu latest (version 22.04)
+  ubunutu:
+    name: 'Build Ubuntu Latest'
+    runs-on: ubuntu-latest
+    environment: jdk21-building
+    permissions:
+      contents: read
+
+    # This will run on the JDK environment specified above
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK ${{ vars.JAVA_VERSION }}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ vars.JAVA_VERSION }}
+          distribution: ${{ vars.UBUNTU_DISTRIBUTION }}
+          cache: maven
+
+      - name: Run the Maven verify phase
+        run: mvn --batch-mode --update-snapshots verify
+
+      - name: Build with Maven
+        run: mvn -B package --file pom.xml
+
+  # Runs on MacOS latest (version 12.0)
+  macos:
+    name: 'Build MacOS Latest'
+    runs-on: macos-latest
+    environment: jdk21-building
+    permissions:
+      contents: read
+
+    # This will run on the JDK environment specified above
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK ${{ vars.JAVA_VERSION }}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ vars.JAVA_VERSION }}
+          distribution: ${{ vars.MACOS_DISTRIBUTION }}
+          cache: maven
+
+      - name: Run the Maven verify phase
+        run: mvn --batch-mode --update-snapshots verify
+
+      - name: Build with Maven
+        run: mvn -B package --file pom.xml
+
+  # Runs on Windows latest (version 2022)
+  windows:
+    name: 'Build Windows Latest'
+    runs-on: windows-latest
+    environment: jdk21-building
+    permissions:
+      contents: read
+
+    # This will run on the JDK environment specified above
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK ${{ vars.JAVA_VERSION }}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ vars.JAVA_VERSION }}
+          distribution: ${{ vars.WINDOWS_DISTRIBUTION }}
+          cache: maven
+
+      - name: Run the Maven verify phase
+        run: mvn --batch-mode --update-snapshots verify
+
+      - name: Build with Maven
+        run: mvn -B package --file pom.xml
