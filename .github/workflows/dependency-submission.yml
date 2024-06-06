@@ -1,0 +1,29 @@
+name: Submit Dependency Summary
+
+# Triggered on both PRs and pushes to main
+on:
+  push:
+    branches: [ $default-branch ]
+  pull_request:
+    branches: [ $default-branch ]
+
+jobs:
+  # Runs on Ubuntu latest (version 22.04)
+  dependency-submission:
+    name: Generate and submit dependency graph
+    runs-on: ubuntu-latest
+    environment: jdk21-flat
+    permissions:
+      contents: write
+
+    # This will run on the JDK environment specified above
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK ${{ vars.JAVA_VERSION }}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ vars.JAVA_VERSION }}
+          distribution: ${{ vars.JAVA_DISTRIBUTION }}
+
+      - name: Generate and submit dependency graph
+        uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
