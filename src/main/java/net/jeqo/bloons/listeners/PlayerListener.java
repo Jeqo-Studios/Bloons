@@ -2,6 +2,10 @@ package net.jeqo.bloons.listeners;
 
 import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.balloon.SingleBalloon;
+import net.jeqo.bloons.events.balloon.SingleBalloonEquipEvent;
+import net.jeqo.bloons.events.balloon.SingleBalloonForceUnequipEvent;
+import net.jeqo.bloons.events.balloon.SingleBalloonStoreEvent;
+import net.jeqo.bloons.events.balloon.SingleBalloonUnequipEvent;
 import net.jeqo.bloons.utils.UpdateChecker;
 import net.jeqo.bloons.logger.Logger;
 import net.jeqo.bloons.utils.BalloonManagement;
@@ -24,6 +28,10 @@ public class PlayerListener implements Listener {
     @EventHandler
     public void onQuit(PlayerQuitEvent e) {
         SingleBalloon owner = Bloons.playerBalloons.get(e.getPlayer().getUniqueId());
+
+        SingleBalloonStoreEvent event = new SingleBalloonStoreEvent(e.getPlayer(), owner);
+        event.callEvent();
+
         BalloonManagement.storeBalloon(owner);
     }
 
@@ -37,7 +45,13 @@ public class PlayerListener implements Listener {
 
         // If they have a balloon active, remove it and add it back to reduce issues
         if (balloonID != null) {
+            SingleBalloonForceUnequipEvent unequipEvent = new SingleBalloonForceUnequipEvent(player, Bloons.playerBalloons.get(player.getUniqueId()));
+            unequipEvent.callEvent();
+
+            if (!unequipEvent.isCancelled()) return;
+
             BalloonManagement.removeBalloon(event.getPlayer(), Bloons.playerBalloons.get(event.getPlayer().getUniqueId()));
+
             SingleBalloon.checkBalloonRemovalOrAdd(event.getPlayer(), balloonID);
         }
 
@@ -57,6 +71,10 @@ public class PlayerListener implements Listener {
     @EventHandler
     public void onDeath(PlayerDeathEvent event) {
         SingleBalloon balloonOwner = Bloons.playerBalloons.get(Objects.requireNonNull(event.getEntity().getPlayer()).getUniqueId());
+
+        SingleBalloonForceUnequipEvent unequipEvent = new SingleBalloonForceUnequipEvent(event.getEntity().getPlayer(), balloonOwner);
+        unequipEvent.callEvent();
+
         BalloonManagement.removeBalloon(event.getEntity().getPlayer(), balloonOwner);
     }
 
@@ -79,10 +97,22 @@ public class PlayerListener implements Listener {
     public void onWorldChange(PlayerChangedWorldEvent event) {
         SingleBalloon balloonOwner = Bloons.playerBalloons.get(event.getPlayer().getUniqueId());
         String balloonID = Bloons.playerBalloonID.get(event.getPlayer().getUniqueId());
+
+        SingleBalloonStoreEvent storeEvent = new SingleBalloonStoreEvent(event.getPlayer(), balloonOwner);
+        storeEvent.callEvent();
+
+        if (storeEvent.isCancelled()) return;
+
         BalloonManagement.storeBalloon(balloonOwner);
 
         if (balloonID != null) {
+            SingleBalloonForceUnequipEvent unequipEvent = new SingleBalloonForceUnequipEvent(event.getPlayer(), Bloons.playerBalloons.get(event.getPlayer().getUniqueId()));
+            unequipEvent.callEvent();
+
+            if (unequipEvent.isCancelled()) return;
+
             BalloonManagement.removeBalloon(event.getPlayer(), Bloons.playerBalloons.get(event.getPlayer().getUniqueId()));
+
             SingleBalloon.checkBalloonRemovalOrAdd(event.getPlayer(), balloonID);
         }
     }

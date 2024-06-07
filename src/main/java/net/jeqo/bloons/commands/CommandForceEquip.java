@@ -3,6 +3,7 @@ package net.jeqo.bloons.commands;
 import net.jeqo.bloons.balloon.SingleBalloon;
 import net.jeqo.bloons.commands.manager.Command;
 import net.jeqo.bloons.commands.manager.enums.CommandPermission;
+import net.jeqo.bloons.events.balloon.SingleBalloonForceEquipEvent;
 import net.jeqo.bloons.utils.MessageTranslations;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
@@ -43,6 +44,11 @@ public class CommandForceEquip extends Command {
             sender.sendMessage(balloonNotFoundMessage);
             return false;
         }
+
+        SingleBalloonForceEquipEvent singleBalloonForceEquipEvent = new SingleBalloonForceEquipEvent(player, balloonID);
+        singleBalloonForceEquipEvent.callEvent();
+
+        if (singleBalloonForceEquipEvent.isCancelled()) return false;
 
         SingleBalloon.checkBalloonRemovalOrAdd(player.getPlayer(), balloonID);
         String balloonName = messageTranslations.getString("balloons." + balloonID + ".name");

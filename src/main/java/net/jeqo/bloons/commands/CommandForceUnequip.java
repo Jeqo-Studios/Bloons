@@ -4,6 +4,7 @@ import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.balloon.SingleBalloon;
 import net.jeqo.bloons.commands.manager.Command;
 import net.jeqo.bloons.commands.manager.enums.CommandPermission;
+import net.jeqo.bloons.events.balloon.SingleBalloonForceUnequipEvent;
 import net.jeqo.bloons.utils.BalloonManagement;
 import net.jeqo.bloons.utils.MessageTranslations;
 import net.kyori.adventure.text.Component;
@@ -33,14 +34,20 @@ public class CommandForceUnequip extends Command {
             return false;
         }
 
-        SingleBalloon owner = Bloons.playerBalloons.get(player.getUniqueId());
-        if (owner == null) {
+        SingleBalloon balloon = Bloons.playerBalloons.get(player.getUniqueId());
+        if (balloon == null) {
             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_DIDGERIDOO, 1, 1);
             Component notEquippedMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("not-equipped"));
             sender.sendMessage(notEquippedMessage);
             return false;
         }
-        BalloonManagement.removeBalloon(player, owner);
+
+        SingleBalloonForceUnequipEvent singleBalloonForceEquipEvent = new SingleBalloonForceUnequipEvent(player, balloon);
+        singleBalloonForceEquipEvent.callEvent();
+
+        if (singleBalloonForceEquipEvent.isCancelled()) return false;
+
+        BalloonManagement.removeBalloon(player, balloon);
         Component unequipSuccessfulMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("unequipped"));
         sender.sendMessage(unequipSuccessfulMessage);
         return false;

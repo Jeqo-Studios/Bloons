@@ -2,6 +2,8 @@ package net.jeqo.bloons.utils;
 
 import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.balloon.SingleBalloon;
+import net.jeqo.bloons.events.balloon.SingleBalloonStoreEvent;
+import net.jeqo.bloons.events.balloon.SingleBalloonUnequipEvent;
 import org.bukkit.entity.Player;
 
 public class BalloonManagement {
@@ -13,6 +15,11 @@ public class BalloonManagement {
      */
     public static void removeBalloon(Player player, SingleBalloon owner) {
         if (owner != null) {
+            SingleBalloonUnequipEvent event = new SingleBalloonUnequipEvent(player, owner);
+            event.callEvent();
+
+            if (event.isCancelled()) return;
+
             owner.spawnRemoveParticle();
             owner.cancel();
             Bloons.playerBalloons.remove(player.getUniqueId());
@@ -27,6 +34,11 @@ public class BalloonManagement {
      */
     public static void quickRemoveBalloon(Player player, SingleBalloon owner) {
         if (owner != null) {
+            SingleBalloonUnequipEvent event = new SingleBalloonUnequipEvent(player, owner);
+            event.callEvent();
+
+            if (event.isCancelled()) return;
+
             owner.cancel();
             Bloons.playerBalloons.remove(player.getUniqueId());
             Bloons.playerBalloonID.remove(player.getUniqueId());
@@ -35,11 +47,16 @@ public class BalloonManagement {
 
     /**
      * Store the balloon in storage and just cancel the runnable
-     * @param owner The balloon
+     * @param balloon The balloon
      */
-    public static void storeBalloon(SingleBalloon owner) {
-        if (owner != null) {
-            owner.cancel();
+    public static void storeBalloon(SingleBalloon balloon) {
+        if (balloon != null) {
+            SingleBalloonStoreEvent event = new SingleBalloonStoreEvent(balloon.getPlayer(), balloon);
+            event.callEvent();
+
+            if (event.isCancelled()) return;
+
+            balloon.cancel();
         }
     }
 }

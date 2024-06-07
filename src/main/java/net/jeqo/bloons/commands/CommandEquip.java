@@ -4,11 +4,10 @@ import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.balloon.SingleBalloon;
 import net.jeqo.bloons.commands.manager.Command;
 import net.jeqo.bloons.commands.manager.enums.CommandPermission;
+import net.jeqo.bloons.events.balloon.SingleBalloonEquipEvent;
 import net.jeqo.bloons.utils.BalloonManagement;
 import net.jeqo.bloons.utils.MessageTranslations;
-import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -48,6 +47,12 @@ public class CommandEquip extends Command {
             player.sendMessage(noPermissionMessage);
             return false;
         }
+
+        // Call the equip event and check if it's cancelled, if it is, don't spawn the balloon or do anything
+        SingleBalloonEquipEvent singleBalloonEquipEvent = new SingleBalloonEquipEvent(player, balloonID);
+        singleBalloonEquipEvent.callEvent();
+
+        if (singleBalloonEquipEvent.isCancelled()) return false;
 
         BalloonManagement.removeBalloon(player, Bloons.playerBalloons.get(player.getUniqueId()));
         SingleBalloon.checkBalloonRemovalOrAdd(player, balloonID);
