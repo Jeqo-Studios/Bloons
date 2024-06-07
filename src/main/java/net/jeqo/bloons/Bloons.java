@@ -5,16 +5,14 @@ import lombok.Setter;
 import net.jeqo.bloons.balloon.SingleBalloon;
 import net.jeqo.bloons.commands.manager.CommandCore;
 import net.jeqo.bloons.utils.UpdateChecker;
-import net.jeqo.bloons.listeners.LeashHandlers;
+import net.jeqo.bloons.listeners.BalloonUnleashListener;
 import net.jeqo.bloons.listeners.ListenerCore;
-import net.jeqo.bloons.listeners.MenuHandlers;
-import net.jeqo.bloons.listeners.PlayerHandlers;
+import net.jeqo.bloons.listeners.MenuClickListener;
+import net.jeqo.bloons.listeners.PlayerListener;
 import net.jeqo.bloons.logger.Logger;
 import net.jeqo.bloons.utils.Metrics;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -44,9 +42,9 @@ public final class Bloons extends JavaPlugin {
         setListenerCore(new ListenerCore(getInstance()));
 
         // Stage listeners
-        getListenerCore().stageListener(new PlayerHandlers());
-        getListenerCore().stageListener(new LeashHandlers());
-        getListenerCore().stageListener(new MenuHandlers());
+        getListenerCore().stageListener(new PlayerListener());
+        getListenerCore().stageListener(new BalloonUnleashListener());
+        getListenerCore().stageListener(new MenuClickListener());
 
         // Register all handlers
         getListenerCore().registerListeners();

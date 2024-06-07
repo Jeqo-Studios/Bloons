@@ -13,12 +13,10 @@ import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
-import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 
-import java.io.IOException;
 import java.util.Objects;
 
-public class PlayerHandlers implements Listener {
+public class PlayerListener implements Listener {
 
     /**
      * When a player quits, make sure to despawn and store their balloon in storage

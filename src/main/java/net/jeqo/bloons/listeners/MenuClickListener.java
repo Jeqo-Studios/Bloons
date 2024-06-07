@@ -12,7 +12,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
-public class MenuHandlers implements Listener {
+public class MenuClickListener implements Listener {
 
     /**
      * When a player interacts with the GUI menu, do the action required accordingly

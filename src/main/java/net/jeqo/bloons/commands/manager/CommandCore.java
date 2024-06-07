@@ -67,12 +67,14 @@ public class CommandCore implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, org.bukkit.command.@NotNull Command command, @NotNull String label, String[] args) {
         if (args.length < 1) {
             if (!(sender instanceof Player player)) {
-                sender.sendMessage("Only players may execute this command!");
+                Component consoleMessage = Component.text("This command can only be executed by a player.").color(NamedTextColor.RED);
+                sender.sendMessage(consoleMessage);
                 return true;
             }
 
             if (!player.hasPermission("bloons.menu")) {
-                player.sendMessage(messageTranslations.getMessage("prefix") + messageTranslations.getMessage("no-permission"));
+                Component noPermission = Component.text(messageTranslations.getMessage("prefix") + messageTranslations.getMessage("no-permission"));
+                player.sendMessage(noPermission);
                 return true;
             }
 
@@ -135,6 +137,12 @@ public class CommandCore implements CommandExecutor {
         return command.hasRequirement(sender, command.getRequiredPermission());
     }
 
+    /**
+     * Checks if we should add the balloon to the menu
+     * @param player The player to check
+     * @param key The key of the balloon
+     * @return Whether we should add the balloon to the menu
+     */
     private boolean shouldAddBalloon(Player player, String key) {
         if (messageTranslations.getString("hide-balloons-without-permission").equalsIgnoreCase("true")) {
             return player.hasPermission(messageTranslations.getString("balloons." + key + ".permission"));
@@ -142,8 +150,14 @@ public class CommandCore implements CommandExecutor {
         return true;
     }
 
+    /**
+     * Creates an ItemStack for a balloon
+     * @param keySection The configuration section of the balloon
+     * @param key The key of the balloon
+     * @return The ItemStack of the balloon
+     */
     private ItemStack createBalloonItem(ConfigurationSection keySection, String key) {
-        Material material = Material.matchMaterial(keySection.getString("material"));
+        Material material = Material.matchMaterial(Objects.requireNonNull(keySection.getString("material")));
         if (material == null) return null;
 
         ItemStack item = new ItemStack(material);
@@ -160,6 +174,11 @@ public class CommandCore implements CommandExecutor {
         return item;
     }
 
+    /**
+     * Sets the lore of the balloon
+     * @param meta The ItemMeta of the balloon
+     * @param keySection The configuration section of the balloon
+     */
     private void setBalloonLore(ItemMeta meta, ConfigurationSection keySection) {
         if (keySection.contains("lore")) {
             List<String> lore = keySection.getStringList("lore");
@@ -168,13 +187,24 @@ public class CommandCore implements CommandExecutor {
         }
     }
 
+    /**
+     * Sets the display name of the balloon
+     * @param meta The ItemMeta of the balloon
+     * @param keySection The configuration section of the balloon
+     */
     private void setBalloonDisplayName(ItemMeta meta, ConfigurationSection keySection) {
         String name = keySection.getString("name");
         if (name != null) {
-            meta.setDisplayName(ColorManagement.fromHex(name));
+            meta.displayName(Component.text(ColorManagement.fromHex(name)));
         }
     }
 
+    /**
+     * Sets the color of the balloon
+     * @param meta The ItemMeta of the balloon
+     * @param key The key of the balloon
+     * @param keySection The configuration section of the balloon
+     */
     private void setBalloonColor(ItemMeta meta, String key, ConfigurationSection keySection) {
         String color = keySection.getString("color");
         if (color != null && !color.equalsIgnoreCase("potion")) {
