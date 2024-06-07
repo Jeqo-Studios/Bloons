@@ -26,13 +26,13 @@ public class Logger {
      * @param message The message to log
      */
     public static void logToPlayer(LoggingLevel level, Player player, String message) {
-        Component component = Component.text(level.getColor() + "[" + level.getName() + "] " + message);
+        Component component = Component.text("[" + level.getName() + "] " + message).color(level.getColor());
         player.sendMessage(component);
     }
 
     public static void logToPlayer(Player player, String message) {
         MessageTranslations messageTranslations = new MessageTranslations(Bloons.getInstance());
-        Component component = Component.text(messageTranslations.getMessage("prefix") + " " + message);
+        Component component = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix") + " " + message);
         player.sendMessage(component);
     }
 

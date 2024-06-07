@@ -20,6 +20,7 @@ public class CommandTabCompleter implements TabCompleter {
                     return List.of("");
                 }
             }
+
             if (args.length == 2) {
                 if (args[0].equalsIgnoreCase("unequip")) {
                     return List.of("");
@@ -37,6 +38,7 @@ public class CommandTabCompleter implements TabCompleter {
 
 
         } else {
+
             if (args.length == 3) {
                 return List.of("");
             }
