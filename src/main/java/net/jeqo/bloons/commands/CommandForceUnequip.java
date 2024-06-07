@@ -28,7 +28,7 @@ public class CommandForceUnequip extends Command {
         Player player = Bukkit.getPlayer(args[0]);
         MessageTranslations messageTranslations = new MessageTranslations(this.plugin);
         if (player == null) {
-            Component playerNotFoundMessage = Component.text(messageTranslations.getMessage("prefix") + messageTranslations.getMessage("player-not-found"));
+            Component playerNotFoundMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("player-not-found"));
             sender.sendMessage(playerNotFoundMessage);
             return false;
         }
@@ -36,12 +36,12 @@ public class CommandForceUnequip extends Command {
         SingleBalloon owner = Bloons.playerBalloons.get(player.getUniqueId());
         if (owner == null) {
             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_DIDGERIDOO, 1, 1);
-            Component notEquippedMessage = Component.text(messageTranslations.getMessage("prefix") + messageTranslations.getMessage("not-equipped"));
+            Component notEquippedMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("not-equipped"));
             sender.sendMessage(notEquippedMessage);
             return false;
         }
         BalloonManagement.removeBalloon(player, owner);
-        Component unequipSuccessfulMessage = Component.text(messageTranslations.getMessage("prefix") + messageTranslations.getMessage("unequipped"));
+        Component unequipSuccessfulMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("unequipped"));
         sender.sendMessage(unequipSuccessfulMessage);
         return false;
     }

@@ -73,7 +73,7 @@ public class CommandCore implements CommandExecutor {
             }
 
             if (!player.hasPermission("bloons.menu")) {
-                Component noPermission = Component.text(messageTranslations.getMessage("prefix") + messageTranslations.getMessage("no-permission"));
+                Component noPermission = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("no-permission"));
                 player.sendMessage(noPermission);
                 return true;
             }
@@ -105,7 +105,7 @@ public class CommandCore implements CommandExecutor {
         for (Command currentCommand : getCommands()) {
             if (currentCommand.getCommandAliases().contains(subcommand)) {
                 if (!meetsRequirements(currentCommand, sender)) {
-                    sender.sendMessage(messageTranslations.getMessage("prefix") + messageTranslations.getMessage("no-permission"));
+                    sender.sendMessage(messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("no-permission")));
                     return false;
                 }
 
@@ -194,8 +194,9 @@ public class CommandCore implements CommandExecutor {
      */
     private void setBalloonDisplayName(ItemMeta meta, ConfigurationSection keySection) {
         String name = keySection.getString("name");
+        MessageTranslations messageTranslations = new MessageTranslations(this.plugin);
         if (name != null) {
-            meta.displayName(Component.text(ColorManagement.fromHex(name)));
+            meta.displayName(messageTranslations.getSerializedString(name));
         }
     }
 

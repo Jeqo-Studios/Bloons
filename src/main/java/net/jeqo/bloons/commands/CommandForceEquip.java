@@ -32,21 +32,21 @@ public class CommandForceEquip extends Command {
         MessageTranslations messageTranslations = new MessageTranslations(this.plugin);
 
         if (player == null) {
-            Component playerNotFoundMessage = Component.text(messageTranslations.getMessage("prefix") + messageTranslations.getMessage("player-not-found"));
+            Component playerNotFoundMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("player-not-found"));
             sender.sendMessage(playerNotFoundMessage);
             return false;
         }
 
         String balloonID = args[1];
         if (!this.plugin.getConfig().contains("balloons." + balloonID)) {
-            Component balloonNotFoundMessage = Component.text(messageTranslations.getMessage("prefix") + messageTranslations.getMessage("balloon-not-found"));
+            Component balloonNotFoundMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("balloon-not-found"));
             sender.sendMessage(balloonNotFoundMessage);
             return false;
         }
 
         SingleBalloon.checkBalloonRemovalOrAdd(player.getPlayer(), balloonID);
         String balloonName = messageTranslations.getString("balloons." + balloonID + ".name");
-        Component equippedMessage = Component.text(messageTranslations.getMessage("prefix") + messageTranslations.getMessage("equipped", balloonName));
+        Component equippedMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("equipped", balloonName));
         player.sendMessage(equippedMessage);
         return false;
     }

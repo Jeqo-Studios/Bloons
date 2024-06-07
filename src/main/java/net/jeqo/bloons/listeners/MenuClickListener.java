@@ -6,6 +6,7 @@ import net.jeqo.bloons.gui.menus.BalloonMenu;
 import net.jeqo.bloons.utils.BalloonManagement;
 import net.jeqo.bloons.utils.ColorManagement;
 import net.jeqo.bloons.utils.MessageTranslations;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -45,7 +46,8 @@ public class MenuClickListener implements Listener {
                     SingleBalloon.checkBalloonRemovalOrAdd(player, balloon);
                     player.playSound(player.getLocation(), Sound.ENTITY_CHICKEN_EGG, 1, 1);
                     String balloonName = event.getCurrentItem().getItemMeta().getDisplayName();
-                    player.sendMessage(messageTranslations.getMessage("prefix") + messageTranslations.getMessage("equipped", balloonName));
+                    String translatedName = messageTranslations.convertBukkitColorsToAdventure(balloonName);
+                    player.sendMessage(messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("equipped", translatedName)));
                     if (messageTranslations.getString("close-on-equip").equals("true")) {
                         player.closeInventory();
                     }
@@ -89,13 +91,13 @@ public class MenuClickListener implements Listener {
                 SingleBalloon balloonOwner1 = Bloons.playerBalloons.get(player.getUniqueId());
                 if (balloonOwner1 == null) {
                     player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_DIDGERIDOO, 1, 1);
-                    player.sendMessage(messageTranslations.getMessage("prefix") + messageTranslations.getMessage("not-equipped"));
+                    player.sendMessage(messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("not-equipped")));
                 } else {
                     if (messageTranslations.getString("close-on-unequip").equals("true")) {
                         player.closeInventory();
                     }
                     player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_HURT_SWEET_BERRY_BUSH, 1, 1);
-                    player.sendMessage(messageTranslations.getMessage("prefix") + messageTranslations.getMessage("unequipped"));
+                    player.sendMessage(messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("unequipped")));
                 }
                 BalloonManagement.removeBalloon(player, balloonOwner1);
             }

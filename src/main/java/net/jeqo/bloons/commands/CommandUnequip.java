@@ -31,13 +31,13 @@ public class CommandUnequip extends Command {
 
         if (singleBalloon == null) {
             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_DIDGERIDOO, 1, 1);
-            Component notEquippedMessage = Component.text(messageTranslations.getMessage("prefix") + messageTranslations.getMessage("not-equipped"));
+            Component notEquippedMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("not-equipped"));
             player.sendMessage(notEquippedMessage);
             return false;
         }
 
         BalloonManagement.removeBalloon(player, singleBalloon);
-        Component unequipSuccessfulMessage = Component.text(messageTranslations.getMessage("prefix") + messageTranslations.getMessage("unequipped"));
+        Component unequipSuccessfulMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("unequipped"));
         player.sendMessage(unequipSuccessfulMessage);
         player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_HURT_SWEET_BERRY_BUSH, 1, 1);
         return false;

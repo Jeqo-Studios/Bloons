@@ -30,21 +30,21 @@ public class BalloonMenu {
         ItemStack nextPage = new ItemStack(Material.valueOf(messageTranslations.getString("buttons.next-page.material")));
         ItemMeta nextMeta = nextPage.getItemMeta();
         assert nextMeta != null;
-        nextMeta.setDisplayName(ColorManagement.fromHex(messageTranslations.getString("buttons.next-page.name")));;
+        nextMeta.displayName(messageTranslations.getSerializedString(messageTranslations.getString("buttons.next-page.name")));
         nextMeta.setCustomModelData(messageTranslations.getInt("buttons.next-page.custom-model-data"));
         nextPage.setItemMeta(nextMeta);
 
         ItemStack prevPage = new ItemStack(Material.valueOf(messageTranslations.getString("buttons.previous-page.material")));
         ItemMeta prevMeta = prevPage.getItemMeta();
         assert prevMeta != null;
-        prevMeta.setDisplayName(ColorManagement.fromHex(messageTranslations.getString("buttons.previous-page.name")));;
+        prevMeta.displayName(messageTranslations.getSerializedString(messageTranslations.getString("buttons.previous-page.name")));;
         prevMeta.setCustomModelData(messageTranslations.getInt("buttons.previous-page.custom-model-data"));
         prevPage.setItemMeta(prevMeta);
 
         ItemStack removeBalloon = new ItemStack(Material.valueOf(messageTranslations.getString("buttons.unequip.material")));
         ItemMeta removeMeta = removeBalloon.getItemMeta();
         assert removeMeta != null;
-        removeMeta.setDisplayName(ColorManagement.fromHex(messageTranslations.getString("buttons.unequip.name")));;
+        removeMeta.displayName(messageTranslations.getSerializedString(messageTranslations.getString("buttons.unequip.name")));;
         removeMeta.setCustomModelData(messageTranslations.getInt("buttons.unequip.custom-model-data"));
         removeBalloon.setItemMeta(removeMeta);
 

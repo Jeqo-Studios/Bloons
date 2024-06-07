@@ -6,7 +6,9 @@ import net.jeqo.bloons.commands.manager.Command;
 import net.jeqo.bloons.commands.manager.enums.CommandPermission;
 import net.jeqo.bloons.utils.BalloonManagement;
 import net.jeqo.bloons.utils.MessageTranslations;
+import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -36,13 +38,13 @@ public class CommandEquip extends Command {
         MessageTranslations messageTranslations = new MessageTranslations(this.plugin);
 
         if (!this.plugin.getConfig().contains("balloons." + balloonID)) {
-            Component balloonNotFoundMessage = Component.text(messageTranslations.getMessage("prefix") + messageTranslations.getMessage("balloon-not-found"));
+            Component balloonNotFoundMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("balloon-not-found"));
             player.sendMessage(balloonNotFoundMessage);
             return false;
         }
 
         if (!player.hasPermission(this.plugin.getConfig().getString("balloons." + balloonID + ".permission", "balloons." + balloonID))) {
-            Component noPermissionMessage = Component.text(messageTranslations.getMessage("prefix") + messageTranslations.getMessage("no-permission"));
+            Component noPermissionMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("no-permission"));
             player.sendMessage(noPermissionMessage);
             return false;
         }
@@ -52,7 +54,7 @@ public class CommandEquip extends Command {
         player.playSound(player.getLocation(), Sound.ENTITY_CHICKEN_EGG, 1, 1);
 
         String balloonName = messageTranslations.getString("balloons." + balloonID + ".name");
-        Component equippedMessage = Component.text(messageTranslations.getMessage("prefix") + messageTranslations.getMessage("equipped", balloonName));
+        Component equippedMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("equipped", balloonName));
         player.sendMessage(equippedMessage);
 
         return false;
