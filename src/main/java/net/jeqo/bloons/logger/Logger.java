@@ -1,7 +1,9 @@
 package net.jeqo.bloons.logger;
 
 import net.jeqo.bloons.configuration.PluginConfiguration;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 
 import java.io.IOException;
@@ -16,6 +18,17 @@ public class Logger {
      */
     public static void logWithSTDOUT(String message) {
         System.out.println(message);
+    }
+
+    /**
+     * Logs a message to the specified player
+     * @param level The logging level
+     * @param player The player to log the message to
+     * @param message The message to log
+     */
+    public static void logToPlayer(LoggingLevel level, Player player, String message) {
+        Component component = Component.text(level.getColor() + "[" + level.getName() + "] " + message);
+        player.sendMessage(component);
     }
 
     /**
