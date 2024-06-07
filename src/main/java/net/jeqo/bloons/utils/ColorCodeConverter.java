@@ -10,6 +10,7 @@ public class ColorCodeConverter {
 
     private static final Map<String, String> colorCodes = new HashMap<>();
 
+    // Add any adventure and minecraft equivalent color codes here
     static {
         colorCodes.put("<black>", "§0");
         colorCodes.put("<dark_blue>", "§1");

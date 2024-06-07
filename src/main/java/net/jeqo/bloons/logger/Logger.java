@@ -30,6 +30,11 @@ public class Logger {
         player.sendMessage(component);
     }
 
+    /**
+     * Logs a message to the specified player with the plugin prefix
+     * @param player The player to log the message to
+     * @param message The message to log
+     */
     public static void logToPlayer(Player player, String message) {
         MessageTranslations messageTranslations = new MessageTranslations(Bloons.getInstance());
         Component component = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix") + " " + message);

@@ -15,14 +15,14 @@ public abstract class Command {
 
     protected JavaPlugin plugin;
 
-    @Setter
+    @Setter @Getter
     private CommandPermission requiredPermission;
-    @Setter
+    @Setter @Getter
     private CommandAccess requiredAccess = CommandAccess.ENABLED;
-    @Setter
+    @Setter @Getter
     private String commandSyntax;
-    @Setter
-    private String commandDescription;
+    @Setter @Getter
+    public String commandDescription;
     private final ArrayList<String> commandAliases = new ArrayList<>();
 
     public Command(JavaPlugin providedPlugin) {
@@ -38,6 +38,13 @@ public abstract class Command {
         this.getCommandAliases().add(alias);
     }
 
+    /**
+     * What's executed on the command run
+     * @param sender The sender of the command
+     * @param args The arguments of the command
+     * @return Whether the command was executed successfully
+     * @throws Exception If an error occurs during command execution
+     */
     public abstract boolean execute(CommandSender sender, String[] args) throws Exception;
 
     /**

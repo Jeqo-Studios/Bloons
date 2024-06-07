@@ -18,7 +18,7 @@ public class CommandForceEquip extends Command {
     public CommandForceEquip(JavaPlugin plugin) {
         super(plugin);
         this.addCommandAlias("fequip");
-        this.setCommandDescription("Force equips a balloon to you");
+        this.setCommandDescription("Equip a balloon to a player");
         this.setCommandSyntax("/bloons fequip <player> <balloon>");
         this.setRequiredPermission(CommandPermission.FORCE);
     }
@@ -30,7 +30,7 @@ public class CommandForceEquip extends Command {
         }
 
         Player player = Bukkit.getPlayer(args[0]);
-        MessageTranslations messageTranslations = new MessageTranslations(this.plugin);
+        MessageTranslations messageTranslations = new MessageTranslations(this.getPlugin());
 
         if (player == null) {
             Component playerNotFoundMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("player-not-found"));
@@ -39,7 +39,7 @@ public class CommandForceEquip extends Command {
         }
 
         String balloonID = args[1];
-        if (!this.plugin.getConfig().contains("balloons." + balloonID)) {
+        if (!this.getPlugin().getConfig().contains("balloons." + balloonID)) {
             Component balloonNotFoundMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("balloon-not-found"));
             sender.sendMessage(balloonNotFoundMessage);
             return false;

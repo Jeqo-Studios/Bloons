@@ -39,15 +39,17 @@ public class CommandCore implements CommandExecutor {
         this.commands = new ArrayList<>();
         this.messageTranslations = new MessageTranslations(this.getPlugin());
 
+        // Add any commands you want registered here
         addCommand(new CommandEquip(this.getPlugin()));
         addCommand(new CommandForceEquip(this.getPlugin()));
         addCommand(new CommandForceUnequip(this.getPlugin()));
         addCommand(new CommandReload(this.getPlugin()));
         addCommand(new CommandUnequip(this.getPlugin()));
 
+        // Register all commands staged
         registerCommands();
 
-        Objects.requireNonNull(this.plugin.getCommand("bloons")).setTabCompleter(new CommandTabCompleter());
+        Objects.requireNonNull(this.getPlugin().getCommand("bloons")).setTabCompleter(new CommandTabCompleter());
     }
 
     /**
@@ -55,6 +57,20 @@ public class CommandCore implements CommandExecutor {
      */
     public void registerCommands() {
         Objects.requireNonNull(this.getPlugin().getCommand("bloons")).setExecutor(this);
+    }
+
+    /**
+     * Gets a commands description by its alias
+     * @param commandAlias The alias of the command
+     * @return The description of the command
+     */
+    public String getCommandDescription(String commandAlias) {
+        for (Command command : this.getCommands()) {
+            if (command.getCommandAliases().contains(commandAlias)) {
+                return command.getCommandDescription();
+            }
+        }
+        return null;
     }
 
     /**
@@ -75,7 +91,7 @@ public class CommandCore implements CommandExecutor {
             }
 
             if (!player.hasPermission("bloons.menu")) {
-                Component noPermission = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("no-permission"));
+                Component noPermission = this.getMessageTranslations().getSerializedString(this.getMessageTranslations().getMessage("prefix"), this.getMessageTranslations().getMessage("no-permission"));
                 player.sendMessage(noPermission);
                 return true;
             }
@@ -95,7 +111,7 @@ public class CommandCore implements CommandExecutor {
                 }
             }
 
-            new BalloonMenu(items, messageTranslations.getString("menu-title"), player);
+            new BalloonMenu(items, this.getMessageTranslations().getString("menu-title"), player);
             return true;
         }
 
@@ -107,7 +123,7 @@ public class CommandCore implements CommandExecutor {
         for (Command currentCommand : getCommands()) {
             if (currentCommand.getCommandAliases().contains(subcommand)) {
                 if (!meetsRequirements(currentCommand, sender)) {
-                    sender.sendMessage(messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("no-permission")));
+                    sender.sendMessage(this.getMessageTranslations().getSerializedString(this.getMessageTranslations().getMessage("prefix"), this.getMessageTranslations().getMessage("no-permission")));
                     return false;
                 }
 
@@ -146,8 +162,8 @@ public class CommandCore implements CommandExecutor {
      * @return Whether we should add the balloon to the menu
      */
     private boolean shouldAddBalloon(Player player, String key) {
-        if (messageTranslations.getString("hide-balloons-without-permission").equalsIgnoreCase("true")) {
-            return player.hasPermission(messageTranslations.getString("balloons." + key + ".permission"));
+        if (this.getMessageTranslations().getString("hide-balloons-without-permission").equalsIgnoreCase("true")) {
+            return player.hasPermission(this.getMessageTranslations().getString("balloons." + key + ".permission"));
         }
         return true;
     }
@@ -166,7 +182,7 @@ public class CommandCore implements CommandExecutor {
         ItemMeta meta = item.getItemMeta();
         if (meta == null) return null;
 
-        meta.setLocalizedName(messageTranslations.getString("balloons." + key + ".id"));
+        meta.setLocalizedName(this.getMessageTranslations().getString("balloons." + key + ".id"));
         setBalloonLore(meta, keySection);
         setBalloonDisplayName(meta, keySection);
         meta.setCustomModelData(keySection.getInt("custom-model-data"));
@@ -196,7 +212,7 @@ public class CommandCore implements CommandExecutor {
      */
     private void setBalloonDisplayName(ItemMeta meta, ConfigurationSection keySection) {
         String name = keySection.getString("name");
-        MessageTranslations messageTranslations = new MessageTranslations(this.plugin);
+        MessageTranslations messageTranslations = new MessageTranslations(this.getPlugin());
         if (name != null) {
             meta.displayName(messageTranslations.getSerializedString(name));
         }

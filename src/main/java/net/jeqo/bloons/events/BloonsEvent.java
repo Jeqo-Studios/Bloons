@@ -6,6 +6,10 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * A custom even class that can be used to create our own bloons events
+ * These are nearly the same as Bukkit events and can be used interchangeably
+ */
 public class BloonsEvent extends Event implements Cancellable {
 
     private static final HandlerList HANDLER_LIST = new HandlerList();
