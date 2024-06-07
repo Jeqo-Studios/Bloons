@@ -24,28 +24,6 @@ public record MessageTranslations(JavaPlugin instance) {
         return mm.deserialize(message);
     }
 
-    public String convertBukkitColorsToAdventure(String message) {
-        message = message.replace("§0", "<black>");
-        message = message.replace("§1", "<dark_blue>");
-        message = message.replace("§2", "<dark_green>");
-        message = message.replace("§3", "<dark_aqua>");
-        message = message.replace("§4", "<dark_red>");
-        message = message.replace("§5", "<dark_purple>");
-        message = message.replace("§6", "<gold>");
-        message = message.replace("§7", "<gray>");
-        message = message.replace("§8", "<dark_gray>");
-        message = message.replace("§9", "<blue>");
-        message = message.replace("§a", "<green>");
-        message = message.replace("§b", "<aqua>");
-        message = message.replace("§c", "<red>");
-        message = message.replace("§d", "<light_purple>");
-        message = message.replace("§e", "<yellow>");
-        message = message.replace("§f", "<white>");
-
-        return message;
-    }
-
-
     public String getString(String path) {
         return this.instance.getConfig().getString(path);
     }
