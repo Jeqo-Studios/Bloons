@@ -1,7 +1,9 @@
-package net.jeqo.bloons.data;
+package net.jeqo.bloons.gui.menus;
 
 import net.jeqo.bloons.Bloons;
-import net.jeqo.bloons.utils.Utils;
+import net.jeqo.bloons.logger.Logger;
+import net.jeqo.bloons.utils.ColorManagement;
+import net.jeqo.bloons.utils.MessageTranslations;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -20,29 +22,30 @@ public class BalloonMenu {
     public UUID id;
     public int currpage = 0;
     public static HashMap<UUID, BalloonMenu> users = new HashMap<>();
+    MessageTranslations messageTranslations = new MessageTranslations(Bloons.getInstance());
     private Inventory getBlankPage(String name){
-        int pageSize = Bloons.getInt("menu-size");
-        Inventory page = Bukkit.createInventory(null, pageSize, Utils.hex(name));
+        int pageSize = messageTranslations.getInt("menu-size");
+        Inventory page = Bukkit.createInventory(null, pageSize, ColorManagement.fromHex(name));
 
-        ItemStack nextPage = new ItemStack(Material.valueOf(Bloons.getString("buttons.next-page.material")));
+        ItemStack nextPage = new ItemStack(Material.valueOf(messageTranslations.getString("buttons.next-page.material")));
         ItemMeta nextMeta = nextPage.getItemMeta();
         assert nextMeta != null;
-        nextMeta.setDisplayName(Utils.hex(Bloons.getString("buttons.next-page.name")));;
-        nextMeta.setCustomModelData(Bloons.getInt("buttons.next-page.custom-model-data"));
+        nextMeta.setDisplayName(ColorManagement.fromHex(messageTranslations.getString("buttons.next-page.name")));;
+        nextMeta.setCustomModelData(messageTranslations.getInt("buttons.next-page.custom-model-data"));
         nextPage.setItemMeta(nextMeta);
 
-        ItemStack prevPage = new ItemStack(Material.valueOf(Bloons.getString("buttons.previous-page.material")));
+        ItemStack prevPage = new ItemStack(Material.valueOf(messageTranslations.getString("buttons.previous-page.material")));
         ItemMeta prevMeta = prevPage.getItemMeta();
         assert prevMeta != null;
-        prevMeta.setDisplayName(Utils.hex(Bloons.getString("buttons.previous-page.name")));;
-        prevMeta.setCustomModelData(Bloons.getInt("buttons.previous-page.custom-model-data"));
+        prevMeta.setDisplayName(ColorManagement.fromHex(messageTranslations.getString("buttons.previous-page.name")));;
+        prevMeta.setCustomModelData(messageTranslations.getInt("buttons.previous-page.custom-model-data"));
         prevPage.setItemMeta(prevMeta);
 
-        ItemStack removeBalloon = new ItemStack(Material.valueOf(Bloons.getString("buttons.unequip.material")));
+        ItemStack removeBalloon = new ItemStack(Material.valueOf(messageTranslations.getString("buttons.unequip.material")));
         ItemMeta removeMeta = removeBalloon.getItemMeta();
         assert removeMeta != null;
-        removeMeta.setDisplayName(Utils.hex(Bloons.getString("buttons.unequip.name")));;
-        removeMeta.setCustomModelData(Bloons.getInt("buttons.unequip.custom-model-data"));
+        removeMeta.setDisplayName(ColorManagement.fromHex(messageTranslations.getString("buttons.unequip.name")));;
+        removeMeta.setCustomModelData(messageTranslations.getInt("buttons.unequip.custom-model-data"));
         removeBalloon.setItemMeta(removeMeta);
 
         List<String> previousPageSlots = Bloons.getInstance().getConfig().getStringList("buttons.previous-page.slots");
@@ -50,7 +53,7 @@ public class BalloonMenu {
             if (Integer.parseInt(previousPageSlot) < pageSize) {
                 page.setItem(Integer.parseInt(previousPageSlot), prevPage);
             } else {
-                Utils.warn("Previous page button slot(s) out of bounds!");
+                Logger.logWarning("Previous page button slot(s) out of bounds!");
             }
         }
 
@@ -59,7 +62,7 @@ public class BalloonMenu {
             if (Integer.parseInt(unequipSlot) < pageSize) {
                 page.setItem(Integer.parseInt(unequipSlot), removeBalloon);
             } else {
-                Utils.warn("Unequip button slot(s) out of bounds!");
+                Logger.logWarning("Unequip button slot(s) out of bounds!");
             }
         }
 
@@ -68,7 +71,7 @@ public class BalloonMenu {
             if (Integer.parseInt(nextPageSlot) < pageSize) {
                 page.setItem(Integer.parseInt(nextPageSlot), nextPage);
             } else {
-                Utils.warn("Next page button slot(s) out of bounds!");
+                Logger.logWarning("Next page button slot(s) out of bounds!");
             }
         }
         return page;
@@ -85,7 +88,7 @@ public class BalloonMenu {
                 page.setItem(slot, items.get(i));
                 slot++;
             }
-            if (slot == Bloons.getInt("balloon-slots")-1) {
+            if (slot == messageTranslations.getInt("balloon-slots")-1) {
                 pages.add(page);
                 page = getBlankPage(name);
                 slot = 0;

@@ -1,6 +1,7 @@
 package net.jeqo.bloons.logger;
 
 import net.jeqo.bloons.configuration.PluginConfiguration;
+import net.jeqo.bloons.utils.MessageTranslations;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -28,6 +29,12 @@ public class Logger {
      */
     public static void logToPlayer(LoggingLevel level, Player player, String message) {
         Component component = Component.text(level.getColor() + "[" + level.getName() + "] " + message);
+        player.sendMessage(component);
+    }
+
+    public static void logToPlayer(Player player, String message) {
+        MessageTranslations messageTranslations = new MessageTranslations(null);
+        Component component = Component.text(messageTranslations.getMessage("prefix") + " " + message);
         player.sendMessage(component);
     }
 
@@ -88,6 +95,23 @@ public class Logger {
         log(LoggingLevel.INFO, "Version: " + PluginConfiguration.getVersion());
         log(LoggingLevel.INFO, "Developers: " + PluginConfiguration.DEVELOPER_CREDITS);
     }
+
+    /**
+     * Logs an update notification to the Bukkit console
+     */
+    public static void logUpdateNotificationConsole() throws XmlPullParserException, IOException {
+        logInfo("A new update is available for " + PluginConfiguration.getName() + " plugin");
+        logInfo("You can find the update at: https://jeqo.net/spigot/bloons");
+    }
+
+    /**
+     * Logs an update notification to a player
+     */
+    public static void logUpdateNotificationPlayer(Player player) throws XmlPullParserException, IOException {
+        logToPlayer(player, "A new update is available for " + PluginConfiguration.getName() + " plugin");
+        logToPlayer(player, "You can find the update at: https://jeqo.net/spigot/bloons");
+    }
+
 
     /**
      * Logs a shutdown message to the Bukkit console

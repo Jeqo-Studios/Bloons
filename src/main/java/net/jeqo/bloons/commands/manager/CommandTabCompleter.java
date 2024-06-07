@@ -1,15 +1,16 @@
-package net.jeqo.bloons.data;
+package net.jeqo.bloons.commands.manager;
 
 import net.jeqo.bloons.Bloons;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.jetbrains.annotations.NotNull;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public class BalloonTab implements TabCompleter {
+public class CommandTabCompleter implements TabCompleter {
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (sender.hasPermission("bloons.reload")) {
             if (args.length == 3) {

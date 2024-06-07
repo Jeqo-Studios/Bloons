@@ -1,9 +1,10 @@
 package net.jeqo.bloons.listeners;
 
 import net.jeqo.bloons.Bloons;
-import net.jeqo.bloons.data.BalloonOwner;
-import net.jeqo.bloons.data.UpdateChecker;
-import net.jeqo.bloons.utils.Utils;
+import net.jeqo.bloons.balloon.SingleBalloon;
+import net.jeqo.bloons.utils.UpdateChecker;
+import net.jeqo.bloons.logger.Logger;
+import net.jeqo.bloons.utils.BalloonManagement;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -12,76 +13,83 @@ import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 
+import java.io.IOException;
 import java.util.Objects;
 
 public class PlayerHandlers implements Listener {
 
-    @EventHandler
     /**
      * When a player quits, make sure to despawn and store their balloon in storage
      */
+    @EventHandler
     public void onQuit(PlayerQuitEvent e) {
-        BalloonOwner owner = Bloons.playerBalloons.get(e.getPlayer().getUniqueId());
-        Utils.storeBalloon(e.getPlayer(), owner);
+        SingleBalloon owner = Bloons.playerBalloons.get(e.getPlayer().getUniqueId());
+        BalloonManagement.storeBalloon(e.getPlayer(), owner);
     }
 
-    @EventHandler
     /**
      * When a player joins, add the balloon back if they left with one, or just don't add anything
      */
-    public void onJoin(PlayerJoinEvent e) {
-        String id = Bloons.playerBalloonID.get(e.getPlayer().getUniqueId());
-        if (id != null) {
-            Utils.removeBalloon(e.getPlayer(), (BalloonOwner) Bloons.playerBalloons.get(e.getPlayer().getUniqueId()));
-            BalloonOwner.checkBalloonRemovalOrAdd(e.getPlayer(), id);
+    @EventHandler
+    public void onJoin(PlayerJoinEvent event) {
+        Player player = event.getPlayer();
+        String balloonID = Bloons.playerBalloonID.get(event.getPlayer().getUniqueId());
+
+        // If they have a balloon active, remove it and add it back to reduce issues
+        if (balloonID != null) {
+            BalloonManagement.removeBalloon(event.getPlayer(), Bloons.playerBalloons.get(event.getPlayer().getUniqueId()));
+            SingleBalloon.checkBalloonRemovalOrAdd(event.getPlayer(), balloonID);
         }
 
-        if (e.getPlayer().isOp()) {
-            Player p = e.getPlayer();
+        if (event.getPlayer().isOp()) {
+            // Check for an update if the player is an operator on the server
             new UpdateChecker(Bloons.getInstance(), 106243).getVersion(version -> {
                 if (!Bloons.getInstance().getDescription().getVersion().equals(version)) {
-                    p.sendMessage("");
-                    p.sendMessage(Utils.hex(Bloons.getMessage("prefix") + "&eNew update! " + version + " is now available."));
-                    p.sendMessage(Utils.hex(Bloons.getMessage("prefix") + "&eDownload it here: &nhttps://jeqo.net/spigot/bloons"));
-                    p.sendMessage("");
+                    try {
+                        Logger.logUpdateNotificationPlayer(player);
+                    } catch (XmlPullParserException | IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
                 }
             });
         }
     }
 
-    @EventHandler
     /**
      * When they die, remove their balloon
      */
-    public void onDeath(PlayerDeathEvent e) {
-        BalloonOwner owner = Bloons.playerBalloons.get(Objects.requireNonNull(e.getEntity().getPlayer()).getUniqueId());
-        Utils.removeBalloon(e.getEntity().getPlayer(), owner);
+    @EventHandler
+    public void onDeath(PlayerDeathEvent event) {
+        SingleBalloon balloonOwner = Bloons.playerBalloons.get(Objects.requireNonNull(event.getEntity().getPlayer()).getUniqueId());
+        BalloonManagement.removeBalloon(event.getEntity().getPlayer(), balloonOwner);
     }
 
-    @EventHandler
     /**
      * When they respawn, add the balloon they back that they died with
      */
-    public void onRespawn(PlayerRespawnEvent e) {
-        String id = Bloons.playerBalloonID.get(e.getPlayer().getUniqueId());
-        if (id != null) {
-            BalloonOwner.checkBalloonRemovalOrAdd(e.getPlayer(), id);
+    @EventHandler
+    public void onRespawn(PlayerRespawnEvent event) {
+        String balloonID = Bloons.playerBalloonID.get(event.getPlayer().getUniqueId());
+
+        if (balloonID != null) {
+            SingleBalloon.checkBalloonRemovalOrAdd(event.getPlayer(), balloonID);
         }
     }
 
-    @EventHandler
     /**
      * When they change worlds, store their balloon and move the balloon armor stand over
      */
-    public void onWorldChange(PlayerChangedWorldEvent e) {
-        BalloonOwner owner = Bloons.playerBalloons.get(e.getPlayer().getUniqueId());
-        Utils.storeBalloon(e.getPlayer(), owner);
+    @EventHandler
+    public void onWorldChange(PlayerChangedWorldEvent event) {
+        SingleBalloon balloonOwner = Bloons.playerBalloons.get(event.getPlayer().getUniqueId());
+        String balloonID = Bloons.playerBalloonID.get(event.getPlayer().getUniqueId());
+        BalloonManagement.storeBalloon(event.getPlayer(), balloonOwner);
 
-        String id = Bloons.playerBalloonID.get(e.getPlayer().getUniqueId());
-        if (id != null) {
-            Utils.removeBalloon(e.getPlayer(), Bloons.playerBalloons.get(e.getPlayer().getUniqueId()));
-            BalloonOwner.checkBalloonRemovalOrAdd(e.getPlayer(), id);
+        if (balloonID != null) {
+            BalloonManagement.removeBalloon(event.getPlayer(), Bloons.playerBalloons.get(event.getPlayer().getUniqueId()));
+            SingleBalloon.checkBalloonRemovalOrAdd(event.getPlayer(), balloonID);
         }
     }
 }
