@@ -35,10 +35,9 @@ public class BalloonManagement {
 
     /**
      * Store the balloon in storage and just cancel the runnable
-     * @param player The player to store the balloon for
      * @param owner The balloon
      */
-    public static void storeBalloon(Player player, SingleBalloon owner) {
+    public static void storeBalloon(SingleBalloon owner) {
         if (owner != null) {
             owner.cancel();
         }

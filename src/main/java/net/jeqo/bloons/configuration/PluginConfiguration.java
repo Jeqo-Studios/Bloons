@@ -1,12 +1,6 @@
 package net.jeqo.bloons.configuration;
 
 import net.jeqo.bloons.Bloons;
-import org.apache.maven.model.Model;
-import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
-import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
-
-import java.io.FileReader;
-import java.io.IOException;
 
 /**
  * A class that contains configurations and information regarding the plugin
@@ -24,7 +18,7 @@ public class PluginConfiguration {
     }
 
     /**
-     * Get the name of the plugin from the pom.xml file
+     * Get the name of the plugin from the plugin.yml file
      * @return The name of the plugin
      */
     public static String getName() {
@@ -32,7 +26,7 @@ public class PluginConfiguration {
     }
 
     /**
-     * Get the description of the plugin from the pom.xml file
+     * Get the description of the plugin from the plugin.yml file
      * @return The description of the plugin
      */
     public static String getDescription() {
@@ -40,7 +34,7 @@ public class PluginConfiguration {
     }
 
     /**
-     * Gets the website URL of the plugin from the pom.xml file
+     * Gets the website URL of the plugin from the plugin.yml file
      * @return The website URL of the plugin
      */
     public static String getURL() {

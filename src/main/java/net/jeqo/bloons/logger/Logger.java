@@ -6,9 +6,6 @@ import net.jeqo.bloons.utils.MessageTranslations;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
-
-import java.io.IOException;
 
 /**
  * A utility class intended to log messages easily to the Bukkit console

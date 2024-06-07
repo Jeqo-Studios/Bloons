@@ -137,6 +137,11 @@ public class SingleBalloon extends BukkitRunnable {
 
         ConfigurationSection balloonConfiguration = Bloons.getInstance().getConfig().getConfigurationSection("balloons." + balloonID);
 
+        if (balloonConfiguration == null) {
+            Logger.logWarning("The balloon " + balloonID + " is not set in the configuration!");
+            return null;
+        }
+
         if (balloonConfiguration.getString("material") == null) {
             Logger.logWarning("The material of the balloon " + balloonID + " is not set!");
             return null;
@@ -203,7 +208,7 @@ public class SingleBalloon extends BukkitRunnable {
                 SingleBalloon owner = Bloons.playerBalloons.get(player.getUniqueId());
                 if (owner != null) return;
 
-                BalloonManagement.removeBalloon(player, owner);
+                BalloonManagement.removeBalloon(player, null);
                 SingleBalloon balloonOwner = new SingleBalloon(player, balloonID);
                 balloonOwner.runTaskTimer(Bloons.getInstance(), 0L, 1L);
                 Bloons.playerBalloons.put(player.getUniqueId(), balloonOwner);

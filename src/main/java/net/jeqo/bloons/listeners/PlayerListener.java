@@ -24,7 +24,7 @@ public class PlayerListener implements Listener {
     @EventHandler
     public void onQuit(PlayerQuitEvent e) {
         SingleBalloon owner = Bloons.playerBalloons.get(e.getPlayer().getUniqueId());
-        BalloonManagement.storeBalloon(e.getPlayer(), owner);
+        BalloonManagement.storeBalloon(owner);
     }
 
     /**
@@ -79,7 +79,7 @@ public class PlayerListener implements Listener {
     public void onWorldChange(PlayerChangedWorldEvent event) {
         SingleBalloon balloonOwner = Bloons.playerBalloons.get(event.getPlayer().getUniqueId());
         String balloonID = Bloons.playerBalloonID.get(event.getPlayer().getUniqueId());
-        BalloonManagement.storeBalloon(event.getPlayer(), balloonOwner);
+        BalloonManagement.storeBalloon(balloonOwner);
 
         if (balloonID != null) {
             BalloonManagement.removeBalloon(event.getPlayer(), Bloons.playerBalloons.get(event.getPlayer().getUniqueId()));
