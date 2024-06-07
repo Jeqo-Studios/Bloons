@@ -20,7 +20,7 @@ public class CommandEquip extends Command {
     public CommandEquip(JavaPlugin plugin) {
         super(plugin);
         this.addCommandAlias("equip");
-        this.setCommandDescription("Equips a balloon to you");
+        this.setCommandDescription("Equip a balloon");
         this.setCommandSyntax("/bloons equip <balloon>");
         this.setRequiredPermission(CommandPermission.EQUIP);
     }
@@ -34,15 +34,15 @@ public class CommandEquip extends Command {
         }
 
         String balloonID = args[0];
-        MessageTranslations messageTranslations = new MessageTranslations(this.plugin);
+        MessageTranslations messageTranslations = new MessageTranslations(this.getPlugin());
 
-        if (!this.plugin.getConfig().contains("balloons." + balloonID)) {
+        if (!this.getPlugin().getConfig().contains("balloons." + balloonID)) {
             Component balloonNotFoundMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("balloon-not-found"));
             player.sendMessage(balloonNotFoundMessage);
             return false;
         }
 
-        if (!player.hasPermission(this.plugin.getConfig().getString("balloons." + balloonID + ".permission", "balloons." + balloonID))) {
+        if (!player.hasPermission(this.getPlugin().getConfig().getString("balloons." + balloonID + ".permission", "balloons." + balloonID))) {
             Component noPermissionMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("no-permission"));
             player.sendMessage(noPermissionMessage);
             return false;
@@ -54,7 +54,7 @@ public class CommandEquip extends Command {
 
         if (singleBalloonEquipEvent.isCancelled()) return false;
 
-        BalloonManagement.removeBalloon(player, Bloons.playerBalloons.get(player.getUniqueId()));
+        BalloonManagement.removeBalloon(player, Bloons.getPlayerBalloons().get(player.getUniqueId()));
         SingleBalloon.checkBalloonRemovalOrAdd(player, balloonID);
         player.playSound(player.getLocation(), Sound.ENTITY_CHICKEN_EGG, 1, 1);
 

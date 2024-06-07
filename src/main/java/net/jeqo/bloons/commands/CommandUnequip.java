@@ -18,7 +18,7 @@ public class CommandUnequip extends Command {
     public CommandUnequip(JavaPlugin plugin) {
         super(plugin);
         this.addCommandAlias("unequip");
-        this.setCommandDescription("Equips a balloon to you");
+        this.setCommandDescription("Unequip a balloon");
         this.setCommandSyntax("/bloons unequip <balloon>");
         this.setRequiredPermission(CommandPermission.UNEQUIP);
     }
@@ -28,7 +28,7 @@ public class CommandUnequip extends Command {
         if (!(sender instanceof Player player)) return false;
 
         SingleBalloon singleBalloon = Bloons.getPlayerBalloons().get(player.getUniqueId());
-        MessageTranslations messageTranslations = new MessageTranslations(this.plugin);
+        MessageTranslations messageTranslations = new MessageTranslations(this.getPlugin());
 
         if (singleBalloon == null) {
             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_DIDGERIDOO, 1, 1);

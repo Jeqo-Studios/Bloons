@@ -3,7 +3,7 @@ package net.jeqo.bloons.commands;
 import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.commands.manager.Command;
 import net.jeqo.bloons.commands.manager.enums.CommandPermission;
-import net.jeqo.bloons.events.balloon.general.BloonsConfigReloadEvent;
+import net.jeqo.bloons.events.general.BloonsConfigReloadEvent;
 import net.jeqo.bloons.utils.MessageTranslations;
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandSender;
@@ -15,14 +15,14 @@ public class CommandReload extends Command {
         super(plugin);
         this.addCommandAlias("reload");
         this.addCommandAlias("rl");
-        this.setCommandDescription("Reloads the bloons config");
+        this.setCommandDescription("Reload the Bloons config");
         this.setCommandSyntax("/bloons reload");
         this.setRequiredPermission(CommandPermission.RELOAD);
     }
 
     @Override
     public boolean execute(CommandSender sender, String[] args) {
-        MessageTranslations messageTranslations = new MessageTranslations(this.plugin);
+        MessageTranslations messageTranslations = new MessageTranslations(this.getPlugin());
 
         BloonsConfigReloadEvent bloonsConfigReloadEvent = new BloonsConfigReloadEvent();
         bloonsConfigReloadEvent.callEvent();

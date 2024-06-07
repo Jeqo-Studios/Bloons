@@ -19,7 +19,7 @@ public class CommandForceUnequip extends Command {
     public CommandForceUnequip(JavaPlugin plugin) {
         super(plugin);
         this.addCommandAlias("funequip");
-        this.setCommandDescription("Force unequips a balloon that you have equipped");
+        this.setCommandDescription("Unequip a balloon to a player");
         this.setCommandSyntax("/bloons funequip <player>");
         this.setRequiredPermission(CommandPermission.FORCE);
     }
@@ -27,27 +27,27 @@ public class CommandForceUnequip extends Command {
     @Override
     public boolean execute(CommandSender sender, String[] args) {
         Player player = Bukkit.getPlayer(args[0]);
-        MessageTranslations messageTranslations = new MessageTranslations(this.plugin);
+        MessageTranslations messageTranslations = new MessageTranslations(this.getPlugin());
         if (player == null) {
             Component playerNotFoundMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("player-not-found"));
             sender.sendMessage(playerNotFoundMessage);
             return false;
         }
 
-        SingleBalloon balloon = Bloons.playerBalloons.get(player.getUniqueId());
-        if (balloon == null) {
+        SingleBalloon singleBalloon = Bloons.getPlayerBalloons().get(player.getUniqueId());
+        if (singleBalloon == null) {
             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_DIDGERIDOO, 1, 1);
             Component notEquippedMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("not-equipped"));
             sender.sendMessage(notEquippedMessage);
             return false;
         }
 
-        SingleBalloonForceUnequipEvent singleBalloonForceEquipEvent = new SingleBalloonForceUnequipEvent(player, balloon);
+        SingleBalloonForceUnequipEvent singleBalloonForceEquipEvent = new SingleBalloonForceUnequipEvent(player, singleBalloon);
         singleBalloonForceEquipEvent.callEvent();
 
         if (singleBalloonForceEquipEvent.isCancelled()) return false;
 
-        BalloonManagement.removeBalloon(player, balloon);
+        BalloonManagement.removeBalloon(player, singleBalloon);
         Component unequipSuccessfulMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("unequipped"));
         sender.sendMessage(unequipSuccessfulMessage);
         return false;

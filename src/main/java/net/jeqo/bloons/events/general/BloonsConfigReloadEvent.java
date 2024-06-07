@@ -1,4 +1,4 @@
-package net.jeqo.bloons.events.balloon.general;
+package net.jeqo.bloons.events.general;
 
 import net.jeqo.bloons.events.BloonsEvent;
 

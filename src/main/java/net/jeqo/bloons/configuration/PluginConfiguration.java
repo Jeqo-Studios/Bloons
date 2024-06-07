@@ -6,7 +6,7 @@ import net.jeqo.bloons.Bloons;
  * A class that contains configurations and information regarding the plugin
  */
 public class PluginConfiguration {
-    // The developer credits for the plugin, displayed on startup
+    // The developer credits for the plugin, displayed on startup and in the help command
     public static final String DEVELOPER_CREDITS = "Jeqo and Gucci Fox";
 
     /**
