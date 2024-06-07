@@ -1,10 +1,12 @@
 package net.jeqo.bloons.commands;
 
 import net.jeqo.bloons.Bloons;
+import net.jeqo.bloons.balloon.SingleBalloon;
 import net.jeqo.bloons.commands.manager.Command;
 import net.jeqo.bloons.commands.manager.enums.CommandPermission;
-import net.jeqo.bloons.data.BalloonOwner;
-import net.jeqo.bloons.utils.Utils;
+import net.jeqo.bloons.utils.BalloonManagement;
+import net.jeqo.bloons.utils.MessageTranslations;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
@@ -24,19 +26,23 @@ public class CommandForceUnequip extends Command {
     @Override
     public boolean execute(CommandSender sender, String[] args) {
         Player player = Bukkit.getPlayer(args[0]);
+        MessageTranslations messageTranslations = new MessageTranslations(this.plugin);
         if (player == null) {
-            sender.sendMessage(Bloons.getMessage("prefix") + Bloons.getMessage("player-not-found"));
+            Component playerNotFoundMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("player-not-found"));
+            sender.sendMessage(playerNotFoundMessage);
             return false;
         }
 
-        BalloonOwner owner = Bloons.playerBalloons.get(player.getUniqueId());
+        SingleBalloon owner = Bloons.playerBalloons.get(player.getUniqueId());
         if (owner == null) {
             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_DIDGERIDOO, 1, 1);
-            sender.sendMessage(Bloons.getMessage("prefix") + Bloons.getMessage("not-equipped"));
+            Component notEquippedMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("not-equipped"));
+            sender.sendMessage(notEquippedMessage);
             return false;
         }
-        Utils.removeBalloon(player, owner);
-        sender.sendMessage(Bloons.getMessage("prefix") + Bloons.getMessage("unequipped"));
+        BalloonManagement.removeBalloon(player, owner);
+        Component unequipSuccessfulMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("unequipped"));
+        sender.sendMessage(unequipSuccessfulMessage);
         return false;
     }
 }

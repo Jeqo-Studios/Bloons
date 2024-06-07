@@ -2,87 +2,87 @@ package net.jeqo.bloons;
 
 import lombok.Getter;
 import lombok.Setter;
-import net.jeqo.bloons.commands.manager.CommandManager;
-import net.jeqo.bloons.data.BalloonOwner;
-import net.jeqo.bloons.data.UpdateChecker;
-import net.jeqo.bloons.listeners.LeashHandlers;
-import net.jeqo.bloons.listeners.MenuHandlers;
-import net.jeqo.bloons.listeners.PlayerHandlers;
+import net.jeqo.bloons.balloon.SingleBalloon;
+import net.jeqo.bloons.commands.manager.CommandCore;
+import net.jeqo.bloons.utils.UpdateChecker;
+import net.jeqo.bloons.listeners.BalloonUnleashListener;
+import net.jeqo.bloons.listeners.ListenerCore;
+import net.jeqo.bloons.listeners.MenuClickListener;
+import net.jeqo.bloons.listeners.PlayerListener;
+import net.jeqo.bloons.logger.Logger;
 import net.jeqo.bloons.utils.Metrics;
-import net.jeqo.bloons.utils.Utils;
-import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
 import java.util.UUID;
 
 public final class Bloons extends JavaPlugin {
-
-    public static HashMap<UUID, BalloonOwner> playerBalloons = new HashMap<>();
-    public static HashMap<UUID, String> playerBalloonID = new HashMap<>();
     @Getter @Setter
     private static Bloons instance;
+    @Getter @Setter
+    private static CommandCore commandCore;
+    @Getter @Setter
+    private static ListenerCore listenerCore;
+
+    @Getter @Setter
+    public static HashMap<UUID, SingleBalloon> playerBalloons = new HashMap<>();
+    @Getter @Setter
+    public static HashMap<UUID, String> playerBalloonID = new HashMap<>();
 
     @Override
     public void onEnable() {
-        Utils.log("|---[ BLOONS ]-------------------------------------------------------|");
-        Utils.log("|                           Plugin loaded.                           |");
-        Utils.log("|-------------------------------------------------[ MADE BY JEQO ]---|");
-
+        // Create an instance of the plugin
         setInstance(this);
 
-        new CommandManager(getInstance());
-        loadListeners();
+        // Send startup message
+        Logger.logStartup();
 
+        // Register core managers within the plugin
+        setCommandCore(new CommandCore(getInstance()));
+        setListenerCore(new ListenerCore(getInstance()));
+
+        // Stage listeners
+        getListenerCore().stageListener(new PlayerListener());
+        getListenerCore().stageListener(new BalloonUnleashListener());
+        getListenerCore().stageListener(new MenuClickListener());
+
+        // Register all handlers
+        getListenerCore().registerListeners();
+
+        // Startup the metrics and update checker
+        int pluginId = 16872;
         new Metrics(this, pluginId);
         updateChecker();
 
-        getConfig().options().copyDefaults(); saveDefaultConfig();
+        // Generate config(s) and set defaults
+        getConfig().options().copyDefaults();
+        saveDefaultConfig();
     }
 
     @Override
     public void onDisable() {
-        Utils.log("|---[ BLOONS ]-------------------------------------------------------|");
-        Utils.log("|                          Shutting down...                          |");
-        Utils.log("|-------------------------------------------------[ MADE BY JEQO ]---|");
+        // Log shutdown message
+        Logger.logShutdown();
 
-        for (BalloonOwner owner : playerBalloons.values()) {
+        // Unregister all balloons and stop the task
+        for (SingleBalloon owner : playerBalloons.values()) {
             owner.cancel();
         }
 
-        HandlerList.unregisterAll(this);
+        // Unregister all listeners in the manager
+        getListenerCore().unregisterListeners();
     }
 
-    int pluginId = 16872;
+    /**
+     * Checks for updates and notifies the user via a log to console
+     * getDescription() is still used because of the usage of a plugin.yml.
+     * Not planned to change
+     */
     public void updateChecker() {
         new UpdateChecker(this, 106243).getVersion(version -> {
             if (!this.getDescription().getVersion().equals(version)) {
-                Utils.warn("|---[ BLOONS ]-------------------------------------------------------|");
-                Utils.warn("|                  There is a new update available!                  |");
-                Utils.warn("|                   https://jeqo.net/spigot/bloons                   |");
-                Utils.warn("|-------------------------------------------------[ MADE BY JEQO ]---|");
+                Logger.logUpdateNotificationConsole();
             }
         });
-    }
-
-    private void loadListeners() {
-        getServer().getPluginManager().registerEvents(new LeashHandlers(), this);
-        getServer().getPluginManager().registerEvents(new PlayerHandlers(), this);
-        getServer().getPluginManager().registerEvents(new MenuHandlers(), this);
-    }
-    public static String getMessage(String id, String arg) {
-        return Utils.hex(String.format(getInstance().getConfig().getString("messages." + id, ""), arg));
-    }
-
-    public static String getMessage(String id) {
-        return Utils.hex(getInstance().getConfig().getString("messages." + id, ""));
-    }
-
-    public static String getString(String path) {
-        return getInstance().getConfig().getString(path);
-    }
-
-    public static Integer getInt(String path) {
-        return getInstance().getConfig().getInt(path);
     }
 }

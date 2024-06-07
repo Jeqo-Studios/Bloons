@@ -10,23 +10,23 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
 
+@Getter
 public abstract class Command {
 
     protected JavaPlugin plugin;
 
-    @Getter @Setter
+    @Setter
     private CommandPermission requiredPermission;
-    @Getter @Setter
+    @Setter
     private CommandAccess requiredAccess = CommandAccess.ENABLED;
-    @Getter @Setter
+    @Setter
     private String commandSyntax;
-    @Getter @Setter
+    @Setter
     private String commandDescription;
-    @Getter
     private final ArrayList<String> commandAliases = new ArrayList<>();
 
     public Command(JavaPlugin providedPlugin) {
-        plugin = providedPlugin;
+        this.plugin = providedPlugin;
     }
 
     /**
@@ -35,43 +35,43 @@ public abstract class Command {
      * @param alias The alias to add to the command
      */
     public void addCommandAlias(String alias) {
-        commandAliases.add(alias);
+        this.getCommandAliases().add(alias);
     }
 
     public abstract boolean execute(CommandSender sender, String[] args) throws Exception;
 
     /**
      * Checks if the command meets the requirements to be executed
-     * @param s The sender of the command
-     * @param perm The permission required to execute the command
-     * @return Whether or not the command meets the requirements
+     * @param sender The sender of the command
+     * @param permission The permission required to execute the command
+     * @return Whether the command meets the requirements
      */
-    public boolean hasRequirement(CommandSender s, CommandPermission perm) {
-        switch (perm) {
+    public boolean hasRequirement(CommandSender sender, CommandPermission permission) {
+        switch (permission) {
             case EQUIP -> {
-                if (s instanceof Player) {
-                    if (!s.hasPermission("bloons.equip")) {
+                if (sender instanceof Player) {
+                    if (!sender.hasPermission("bloons.equip")) {
                         return false;
                     }
                 }
             }
             case UNEQUIP -> {
-                if (s instanceof Player) {
-                    if (!s.hasPermission("bloons.unequip")) {
+                if (sender instanceof Player) {
+                    if (!sender.hasPermission("bloons.unequip")) {
                         return false;
                     }
                 }
             }
             case FORCE -> {
-                if (s instanceof Player) {
-                    if (!s.hasPermission("bloons.force")) {
+                if (sender instanceof Player) {
+                    if (!sender.hasPermission("bloons.force")) {
                         return false;
                     }
                 }
             }
             case RELOAD -> {
-                if (s instanceof Player) {
-                    if (!s.hasPermission("bloons.reload")) {
+                if (sender instanceof Player) {
+                    if (!sender.hasPermission("bloons.reload")) {
                         return false;
                     }
                 }

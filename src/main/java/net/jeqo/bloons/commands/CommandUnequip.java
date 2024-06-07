@@ -1,10 +1,12 @@
 package net.jeqo.bloons.commands;
 
 import net.jeqo.bloons.Bloons;
+import net.jeqo.bloons.balloon.SingleBalloon;
 import net.jeqo.bloons.commands.manager.Command;
 import net.jeqo.bloons.commands.manager.enums.CommandPermission;
-import net.jeqo.bloons.data.BalloonOwner;
-import net.jeqo.bloons.utils.Utils;
+import net.jeqo.bloons.utils.BalloonManagement;
+import net.jeqo.bloons.utils.MessageTranslations;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -14,7 +16,7 @@ public class CommandUnequip extends Command {
 
     public CommandUnequip(JavaPlugin plugin) {
         super(plugin);
-        this.addCommandAlias("equip");
+        this.addCommandAlias("unequip");
         this.setCommandDescription("Equips a balloon to you");
         this.setCommandSyntax("/bloons unequip <balloon>");
         this.setRequiredPermission(CommandPermission.UNEQUIP);
@@ -22,15 +24,21 @@ public class CommandUnequip extends Command {
 
     @Override
     public boolean execute(CommandSender sender, String[] args) {
-        Player player = (Player) sender;
-        BalloonOwner balloonOwner1 = Bloons.playerBalloons.get(player.getUniqueId());
-        if (balloonOwner1 == null) {
+        if (!(sender instanceof Player player)) return false;
+
+        SingleBalloon singleBalloon = Bloons.getPlayerBalloons().get(player.getUniqueId());
+        MessageTranslations messageTranslations = new MessageTranslations(this.plugin);
+
+        if (singleBalloon == null) {
             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_DIDGERIDOO, 1, 1);
-            player.sendMessage(Bloons.getMessage("prefix") + Bloons.getMessage("not-equipped"));
+            Component notEquippedMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("not-equipped"));
+            player.sendMessage(notEquippedMessage);
             return false;
         }
-        Utils.removeBalloon(player, balloonOwner1);
-        player.sendMessage(Bloons.getMessage("prefix") + Bloons.getMessage("unequipped"));
+
+        BalloonManagement.removeBalloon(player, singleBalloon);
+        Component unequipSuccessfulMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("unequipped"));
+        player.sendMessage(unequipSuccessfulMessage);
         player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_HURT_SWEET_BERRY_BUSH, 1, 1);
         return false;
     }

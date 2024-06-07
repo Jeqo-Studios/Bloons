@@ -1,6 +1,6 @@
 # --------------------------------------------------#
 #
-# Bloons 1.0.5-BETA
+# Bloons 1.1.0-BETA
 # Made by Jeqo
 #
 # Wiki:     https://jeqo.net/wiki/bloons
@@ -23,7 +23,7 @@ close-on-unequip: true
 # Do you want to hide balloons that the player does not have permission for?
 hide-balloons-without-permission: true
 # Title for the balloons menu.
-menu-title: "&f"
+menu-title: "<white>"
 # Amount of slots per page. Valid values: 27, 36, 45, and 54. 9 of these slots will be used for the menu buttons.
 menu-size: 54
 # Amount of slots from the top that you want the balloons to appear in. Valid values: 9, 18, 27, 36, and 45.
@@ -35,19 +35,19 @@ buttons:
   previous-page:
     material: FLINT
     custom-model-data: 2
-    name: '&7← ᴘʀᴇᴠɪᴏᴜs ᴘᴀɢᴇ'
+    name: '<gray>← ᴘʀᴇᴠɪᴏᴜs ᴘᴀɢᴇ'
     slots:
       - 48
   unequip:
     material: FLINT
     custom-model-data: 3
-    name: '&7ᴜɴᴇǫᴜɪᴘ ʙᴀʟʟᴏᴏɴ'
+    name: '<gray>ᴜɴᴇǫᴜɪᴘ ʙᴀʟʟᴏᴏɴ'
     slots:
       - 49
   next-page:
     material: FLINT
     custom-model-data: 4
-    name: '&7ɴᴇxᴛ ᴘᴀɢᴇ →'
+    name: '<gray>ɴᴇxᴛ ᴘᴀɢᴇ →'
     slots:
       - 50
 #
@@ -56,15 +56,15 @@ buttons:
 # --------------------------------------------------#
 #
 messages:
-  prefix: '#ff00cc[#e70cd3B#ce18dbl#b624e2o#9e31e9o#863df0n#6d49f8s#5555ff] &r'
-  no-permission: '#fc1c1cAccess denied.'
-  player-not-found: '#fc1c1cPlayer not found.'
-  config-reloaded: '&aConfig reloaded!'
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
+  no-permission: '<#fc1c1c>Access denied.'
+  player-not-found: '<#fc1c1c>Player not found.'
+  config-reloaded: '<green>Config reloaded.'
   # Balloon related messages.
-  equipped: '%s &aequipped!'
-  unequipped: '&aYour balloon has been stored safely.'
-  balloon-not-found: '#fc1c1cBalloon not found.'
-  not-equipped: '#fc1c1cYou do not currently have a balloon equipped.'
+  equipped: '%s <green>equipped!'
+  unequipped: '<green>Your balloon has been stored safely.'
+  balloon-not-found: '<#fc1c1c>Balloon not found.'
+  not-equipped: '<#fc1c1c>You do not currently have a balloon equipped.'
 #
 # --------------------------------------------------#
 #                     BALLOONS                      #
@@ -78,7 +78,7 @@ balloons:
     permission: balloon.blue
     material: FLINT
     custom-model-data: 5
-    name: '&bBlue &fBalloon'
+    name: '<blue>Blue <white>Balloon'
     lore:
       - '&8Bloons Default Balloon'
       - ''
@@ -88,7 +88,7 @@ balloons:
     permission: balloon.green
     material: FLINT
     custom-model-data: 6
-    name: '&aGreen &fBalloon'
+    name: '<green>Green <white>Balloon'
     lore:
       - '&8Bloons Default Balloon'
       - ''
@@ -98,7 +98,7 @@ balloons:
     permission: balloon.pink
     material: FLINT
     custom-model-data: 7
-    name: '&dPink &fBalloon'
+    name: '<light_purple>Pink <white>Balloon'
     lore:
       - '&8Bloons Default Balloon'
       - ''
@@ -108,7 +108,7 @@ balloons:
     permission: balloon.yellow
     material: FLINT
     custom-model-data: 8
-    name: '&eYellow &fBalloon'
+    name: '<yellow>Yellow <white>Balloon'
     lore:
       - '&8Bloons Default Balloon'
       - ''
@@ -119,7 +119,7 @@ balloons:
     material: LEATHER_HORSE_ARMOR
     color: '#ffffff'
     custom-model-data: 1
-    name: '#ffffffDyeable Balloon'
+    name: '<white>Dyeable Balloon'
     lore:
       - '&8Bloons Example Balloon'
       - ''

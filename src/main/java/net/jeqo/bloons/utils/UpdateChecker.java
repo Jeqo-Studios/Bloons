@@ -1,4 +1,4 @@
-package net.jeqo.bloons.data;
+package net.jeqo.bloons.utils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -8,6 +8,9 @@ import java.net.URL;
 import java.util.Scanner;
 import java.util.function.Consumer;
 
+/**
+ * A utility class intended to check for updates on the SpigotMC website
+ */
 public class UpdateChecker {
     private final JavaPlugin plugin;
     private final int resourceId;
@@ -17,6 +20,10 @@ public class UpdateChecker {
         this.resourceId = resourceId;
     }
 
+    /**
+     * Gets the latest version of the plugin available on SpigotMC
+     * @param consumer The consumer to accept the version
+     */
     public void getVersion(final Consumer<String> consumer) {
         Bukkit.getScheduler().runTaskAsynchronously(this.plugin, () -> {
             try (InputStream inputStream = new URL("https://api.spigotmc.org/legacy/update.php?resource=" + this.resourceId).openStream(); Scanner scanner = new Scanner(inputStream)) {

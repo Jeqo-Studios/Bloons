@@ -1,9 +1,10 @@
 package net.jeqo.bloons.commands;
 
-import net.jeqo.bloons.Bloons;
+import net.jeqo.bloons.balloon.SingleBalloon;
 import net.jeqo.bloons.commands.manager.Command;
 import net.jeqo.bloons.commands.manager.enums.CommandPermission;
-import net.jeqo.bloons.data.BalloonOwner;
+import net.jeqo.bloons.utils.MessageTranslations;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -25,24 +26,28 @@ public class CommandForceEquip extends Command {
     public boolean execute(CommandSender sender, String[] args) {
         if (args.length < 1) {
             usage(sender);
-            System.out.println("args.length < 1");
         }
 
         Player player = Bukkit.getPlayer(args[0]);
+        MessageTranslations messageTranslations = new MessageTranslations(this.plugin);
 
         if (player == null) {
-            sender.sendMessage(Bloons.getMessage("prefix") + Bloons.getMessage("player-not-found"));
-            return false;
-        }
-        String balloonId = args[1];
-        if (!plugin.getConfig().contains("balloons." + balloonId)) {
-            sender.sendMessage(Bloons.getMessage("prefix") + Bloons.getMessage("balloon-not-found"));
+            Component playerNotFoundMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("player-not-found"));
+            sender.sendMessage(playerNotFoundMessage);
             return false;
         }
 
-        BalloonOwner.checkBalloonRemovalOrAdd(player.getPlayer(), balloonId);
-        String balloonName2 = Bloons.getString("balloons." + balloonId + ".name");
-        player.sendMessage(Bloons.getMessage("prefix") + Bloons.getMessage("equipped", balloonName2));
+        String balloonID = args[1];
+        if (!this.plugin.getConfig().contains("balloons." + balloonID)) {
+            Component balloonNotFoundMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("balloon-not-found"));
+            sender.sendMessage(balloonNotFoundMessage);
+            return false;
+        }
+
+        SingleBalloon.checkBalloonRemovalOrAdd(player.getPlayer(), balloonID);
+        String balloonName = messageTranslations.getString("balloons." + balloonID + ".name");
+        Component equippedMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("equipped", balloonName));
+        player.sendMessage(equippedMessage);
         return false;
     }
 }

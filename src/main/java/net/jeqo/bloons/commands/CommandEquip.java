@@ -1,10 +1,14 @@
 package net.jeqo.bloons.commands;
 
 import net.jeqo.bloons.Bloons;
+import net.jeqo.bloons.balloon.SingleBalloon;
 import net.jeqo.bloons.commands.manager.Command;
 import net.jeqo.bloons.commands.manager.enums.CommandPermission;
-import net.jeqo.bloons.data.BalloonOwner;
-import net.jeqo.bloons.utils.Utils;
+import net.jeqo.bloons.utils.BalloonManagement;
+import net.jeqo.bloons.utils.MessageTranslations;
+import net.kyori.adventure.audience.Audience;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -24,28 +28,35 @@ public class CommandEquip extends Command {
 
     @Override
     public boolean execute(CommandSender sender, String[] args) {
+        if (!(sender instanceof Player player)) return false;
+
         if (args.length < 1) {
             usage(sender);
         }
 
-        Player player = (Player) sender;
-        String str1 = args[0];
+        String balloonID = args[0];
+        MessageTranslations messageTranslations = new MessageTranslations(this.plugin);
 
-        if (!plugin.getConfig().contains("balloons." + str1)) {
-            player.sendMessage(Bloons.getMessage("prefix") + Bloons.getMessage("balloon-not-found"));
+        if (!this.plugin.getConfig().contains("balloons." + balloonID)) {
+            Component balloonNotFoundMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("balloon-not-found"));
+            player.sendMessage(balloonNotFoundMessage);
             return false;
         }
 
-        if (!player.hasPermission(plugin.getConfig().getString("balloons." + str1 + ".permission", "balloons." + str1))) {
-            player.sendMessage(Bloons.getMessage("prefix") + Bloons.getMessage("no-permission"));
+        if (!player.hasPermission(this.plugin.getConfig().getString("balloons." + balloonID + ".permission", "balloons." + balloonID))) {
+            Component noPermissionMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("no-permission"));
+            player.sendMessage(noPermissionMessage);
             return false;
         }
 
-        Utils.removeBalloon(player, Bloons.playerBalloons.get(player.getUniqueId()));
-        BalloonOwner.checkBalloonRemovalOrAdd(player, str1);
+        BalloonManagement.removeBalloon(player, Bloons.playerBalloons.get(player.getUniqueId()));
+        SingleBalloon.checkBalloonRemovalOrAdd(player, balloonID);
         player.playSound(player.getLocation(), Sound.ENTITY_CHICKEN_EGG, 1, 1);
-        String balloonName = Bloons.getString("balloons." + str1 + ".name");
-        player.sendMessage(Bloons.getMessage("prefix") + Bloons.getMessage("equipped", balloonName));
+
+        String balloonName = messageTranslations.getString("balloons." + balloonID + ".name");
+        Component equippedMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("equipped", balloonName));
+        player.sendMessage(equippedMessage);
+
         return false;
     }
 }
