@@ -46,6 +46,8 @@ public class CommandCore implements CommandExecutor {
         addCommand(new CommandUnequip(this.getPlugin()));
 
         registerCommands();
+
+        Objects.requireNonNull(this.plugin.getCommand("bloons")).setTabCompleter(new CommandTabCompleter());
     }
 
     /**
