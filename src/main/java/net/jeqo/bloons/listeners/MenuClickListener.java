@@ -52,6 +52,7 @@ public class MenuClickListener implements Listener {
             if (displayName.equals(ColorCodeConverter.adventureToColorCode(messageTranslations.getString("buttons.unequip.name")))) event.setCancelled(true);
 
             // Check if a balloon needs to be added or removed
+            BalloonManagement.removeBalloon(player, Bloons.playerBalloons.get(player.getUniqueId()));
             SingleBalloon.checkBalloonRemovalOrAdd(player, localizedName);
 
             // Send equipped message and play sound
