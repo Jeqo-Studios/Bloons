@@ -37,7 +37,8 @@ public class Logger {
      * @param message The message to log
      */
     public static void log(LoggingLevel level, String message) {
-        Bukkit.getServer().getConsoleSender().sendMessage(level.getColor() + "[" + level.getName() + "] " + message);
+        Component component = Component.text(level.getColor() + "[" + level.getName() + "] " + message);
+        Bukkit.getServer().getConsoleSender().sendMessage(component);
     }
 
     /**
