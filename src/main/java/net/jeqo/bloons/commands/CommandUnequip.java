@@ -4,6 +4,7 @@ import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.balloon.SingleBalloon;
 import net.jeqo.bloons.commands.manager.Command;
 import net.jeqo.bloons.commands.manager.enums.CommandPermission;
+import net.jeqo.bloons.events.balloon.SingleBalloonUnequipEvent;
 import net.jeqo.bloons.utils.BalloonManagement;
 import net.jeqo.bloons.utils.MessageTranslations;
 import net.kyori.adventure.text.Component;
@@ -35,6 +36,11 @@ public class CommandUnequip extends Command {
             player.sendMessage(notEquippedMessage);
             return false;
         }
+
+        SingleBalloonUnequipEvent singleBalloonUnequipEvent = new SingleBalloonUnequipEvent(player, singleBalloon);
+        singleBalloonUnequipEvent.callEvent();
+
+        if (singleBalloonUnequipEvent.isCancelled()) return false;
 
         BalloonManagement.removeBalloon(player, singleBalloon);
         Component unequipSuccessfulMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("unequipped"));

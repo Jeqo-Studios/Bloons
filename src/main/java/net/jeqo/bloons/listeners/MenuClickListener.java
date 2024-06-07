@@ -2,6 +2,7 @@ package net.jeqo.bloons.listeners;
 
 import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.balloon.SingleBalloon;
+import net.jeqo.bloons.events.balloon.SingleBalloonUnequipEvent;
 import net.jeqo.bloons.gui.menus.BalloonMenu;
 import net.jeqo.bloons.utils.BalloonManagement;
 import net.jeqo.bloons.utils.ColorCodeConverter;
@@ -51,7 +52,6 @@ public class MenuClickListener implements Listener {
             if (displayName.equals(ColorCodeConverter.adventureToColorCode(messageTranslations.getString("buttons.unequip.name")))) event.setCancelled(true);
 
             // Check if a balloon needs to be added or removed
-            BalloonManagement.removeBalloon(player, Bloons.playerBalloons.get(player.getUniqueId()));
             SingleBalloon.checkBalloonRemovalOrAdd(player, localizedName);
 
             // Send equipped message and play sound
