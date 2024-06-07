@@ -9,7 +9,7 @@ public record MessageTranslations(JavaPlugin instance) {
     }
 
     public String getMessage(String id) {
-        return ColorManagement.fromHex(instance.getConfig().getString("messages." + id, ""));
+        return ColorManagement.fromHex(this.instance.getConfig().getString("messages." + id, ""));
     }
 
     public String getString(String path) {

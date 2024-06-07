@@ -37,11 +37,7 @@ public final class Bloons extends JavaPlugin {
         setInstance(this);
 
         // Send startup message
-        try {
-            Logger.logStartup();
-        } catch (XmlPullParserException | IOException e) {
-            throw new RuntimeException(e);
-        }
+        Logger.logStartup();
 
         // Register core managers within the plugin
         setCommandCore(new CommandCore(getInstance()));
@@ -68,11 +64,7 @@ public final class Bloons extends JavaPlugin {
     @Override
     public void onDisable() {
         // Log shutdown message
-        try {
-            Logger.logShutdown();
-        } catch (XmlPullParserException | IOException e) {
-            throw new RuntimeException(e);
-        }
+        Logger.logShutdown();
 
         // Unregister all balloons and stop the task
         for (SingleBalloon owner : playerBalloons.values()) {
@@ -91,11 +83,7 @@ public final class Bloons extends JavaPlugin {
     public void updateChecker() {
         new UpdateChecker(this, 106243).getVersion(version -> {
             if (!this.getDescription().getVersion().equals(version)) {
-                try {
-                    Logger.logUpdateNotificationConsole();
-                } catch (XmlPullParserException | IOException e) {
-                    throw new RuntimeException(e);
-                }
+                Logger.logUpdateNotificationConsole();
             }
         });
     }

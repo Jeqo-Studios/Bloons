@@ -16,7 +16,7 @@ public class CommandUnequip extends Command {
 
     public CommandUnequip(JavaPlugin plugin) {
         super(plugin);
-        this.addCommandAlias("equip");
+        this.addCommandAlias("unequip");
         this.setCommandDescription("Equips a balloon to you");
         this.setCommandSyntax("/bloons unequip <balloon>");
         this.setRequiredPermission(CommandPermission.UNEQUIP);

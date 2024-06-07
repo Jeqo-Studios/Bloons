@@ -1,5 +1,6 @@
 package net.jeqo.bloons.logger;
 
+import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.configuration.PluginConfiguration;
 import net.jeqo.bloons.utils.MessageTranslations;
 import net.kyori.adventure.text.Component;
@@ -33,7 +34,7 @@ public class Logger {
     }
 
     public static void logToPlayer(Player player, String message) {
-        MessageTranslations messageTranslations = new MessageTranslations(null);
+        MessageTranslations messageTranslations = new MessageTranslations(Bloons.getInstance());
         Component component = Component.text(messageTranslations.getMessage("prefix") + " " + message);
         player.sendMessage(component);
     }
@@ -44,7 +45,7 @@ public class Logger {
      * @param message The message to log
      */
     public static void log(LoggingLevel level, String message) {
-        Component component = Component.text(level.getColor() + "[" + level.getName() + "] " + message);
+        Component component = Component.text("[" + level.getName() + "] " + message).color(level.getColor());
         Bukkit.getServer().getConsoleSender().sendMessage(component);
     }
 
@@ -83,15 +84,15 @@ public class Logger {
     /**
      * Logs an initialization message to the Bukkit console
      */
-    public static void logInitialization() throws XmlPullParserException, IOException {
-        log(LoggingLevel.INFO, "Initializing" + PluginConfiguration.getName() + " plugin...");
+    public static void logInitialization() {
+        log(LoggingLevel.INFO, "Initializing " + PluginConfiguration.getName() + " plugin...");
     }
 
     /**
      * Logs a startup message to the Bukkit console containing plugin information
      */
-    public static void logStartup() throws XmlPullParserException, IOException {
-        log(LoggingLevel.INFO, PluginConfiguration.getName() + "plugin has initialized");
+    public static void logStartup() {
+        log(LoggingLevel.INFO, PluginConfiguration.getName() + " plugin has initialized");
         log(LoggingLevel.INFO, "Version: " + PluginConfiguration.getVersion());
         log(LoggingLevel.INFO, "Developers: " + PluginConfiguration.DEVELOPER_CREDITS);
     }
@@ -99,7 +100,7 @@ public class Logger {
     /**
      * Logs an update notification to the Bukkit console
      */
-    public static void logUpdateNotificationConsole() throws XmlPullParserException, IOException {
+    public static void logUpdateNotificationConsole() {
         logInfo("A new update is available for " + PluginConfiguration.getName() + " plugin");
         logInfo("You can find the update at: https://jeqo.net/spigot/bloons");
     }
@@ -107,7 +108,7 @@ public class Logger {
     /**
      * Logs an update notification to a player
      */
-    public static void logUpdateNotificationPlayer(Player player) throws XmlPullParserException, IOException {
+    public static void logUpdateNotificationPlayer(Player player) {
         logToPlayer(player, "A new update is available for " + PluginConfiguration.getName() + " plugin");
         logToPlayer(player, "You can find the update at: https://jeqo.net/spigot/bloons");
     }
@@ -116,7 +117,7 @@ public class Logger {
     /**
      * Logs a shutdown message to the Bukkit console
      */
-    public static void logShutdown() throws XmlPullParserException, IOException {
-        log(LoggingLevel.INFO, PluginConfiguration.getName() + "plugin has been shutdown gracefully");
+    public static void logShutdown() {
+        log(LoggingLevel.INFO, PluginConfiguration.getName() + " plugin has been shutdown gracefully");
     }
 }

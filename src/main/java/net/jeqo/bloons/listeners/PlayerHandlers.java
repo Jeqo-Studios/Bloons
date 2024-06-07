@@ -47,11 +47,7 @@ public class PlayerHandlers implements Listener {
             // Check for an update if the player is an operator on the server
             new UpdateChecker(Bloons.getInstance(), 106243).getVersion(version -> {
                 if (!Bloons.getInstance().getDescription().getVersion().equals(version)) {
-                    try {
-                        Logger.logUpdateNotificationPlayer(player);
-                    } catch (XmlPullParserException | IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
+                    Logger.logUpdateNotificationPlayer(player);
                 }
             });
         }

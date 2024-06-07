@@ -3,6 +3,7 @@ package net.jeqo.bloons.listeners;
 import lombok.Getter;
 import lombok.Setter;
 import net.jeqo.bloons.Bloons;
+import net.jeqo.bloons.logger.Logger;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 
@@ -18,6 +19,8 @@ public class ListenerCore {
 
     public ListenerCore(Bloons plugin) {
         this.plugin = plugin;
+
+        this.setListeners(new ArrayList<>());
     }
 
     /**
@@ -35,6 +38,8 @@ public class ListenerCore {
         for (Listener listener : this.getListeners()) {
             this.getPlugin().getServer().getPluginManager().registerEvents(listener, this.getPlugin());
         }
+
+        Logger.logInfo("Bloons registered all listeners");
     }
 
     /**
