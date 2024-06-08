@@ -53,6 +53,19 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>blue.lhf</groupId>
+                <artifactId>run-paper-maven-plugin</artifactId>
+                <version>1.1.0</version>
+                <configuration>
+                    <minecraftVersion>1.20.4</minecraftVersion>
+                    <acceptEula>true</acceptEula>
+                    <serverDirectory>run</serverDirectory>
+                    <jvmFlags>
+                        <flag>-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:25566</flag>
+                    </jvmFlags>
+                </configuration>
+            </plugin>
         </plugins>
         <resources>
             <resource>
@@ -72,6 +85,14 @@
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
     </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>kiputyttö-releases</id>
+            <name>Ilari's Project Repository</name>
+            <url>https://maven.lhf.blue/releases</url>
+        </pluginRepository>
+    </pluginRepositories>
 
     <dependencies>
         <dependency>
