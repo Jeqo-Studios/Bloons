@@ -1,6 +1,6 @@
 # --------------------------------------------------#
 #
-# Bloons 1.1.1-BETA
+# Bloons 1.1.2-BETA
 # Made by Jeqo
 #
 # Wiki:     https://jeqo.net/wiki/bloons
@@ -77,7 +77,7 @@ balloons:
     id: blue
     permission: balloon.blue
     material: FLINT
-    custom-model-data: 5
+    custom-model-data: 4
     name: '<blue>Blue <white>Balloon'
     lore:
       - '&8Bloons Default Balloon'
@@ -87,7 +87,7 @@ balloons:
     id: green
     permission: balloon.green
     material: FLINT
-    custom-model-data: 6
+    custom-model-data: 5
     name: '<green>Green <white>Balloon'
     lore:
       - '&8Bloons Default Balloon'
@@ -97,7 +97,7 @@ balloons:
     id: pink
     permission: balloon.pink
     material: FLINT
-    custom-model-data: 7
+    custom-model-data: 6
     name: '<light_purple>Pink <white>Balloon'
     lore:
       - '&8Bloons Default Balloon'
@@ -107,7 +107,7 @@ balloons:
     id: yellow
     permission: balloon.yellow
     material: FLINT
-    custom-model-data: 8
+    custom-model-data: 7
     name: '<yellow>Yellow <white>Balloon'
     lore:
       - '&8Bloons Default Balloon'

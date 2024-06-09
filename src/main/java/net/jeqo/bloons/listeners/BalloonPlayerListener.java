@@ -2,6 +2,7 @@ package net.jeqo.bloons.listeners;
 
 import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.balloon.SingleBalloon;
+import net.jeqo.bloons.configuration.BalloonConfiguration;
 import net.jeqo.bloons.events.balloon.SingleBalloonForceUnequipEvent;
 import net.jeqo.bloons.events.balloon.SingleBalloonStoreEvent;
 import net.jeqo.bloons.utils.UpdateChecker;
@@ -10,11 +11,14 @@ import net.jeqo.bloons.utils.BalloonManagement;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityPortalEnterEvent;
+import org.bukkit.event.entity.EntityPortalEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Objects;
 

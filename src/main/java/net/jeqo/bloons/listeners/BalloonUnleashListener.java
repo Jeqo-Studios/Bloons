@@ -3,7 +3,9 @@ package net.jeqo.bloons.listeners;
 import net.jeqo.bloons.configuration.BalloonConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityUnleashEvent;
 import org.bukkit.event.entity.PlayerLeashEntityEvent;
+import org.bukkit.event.player.PlayerUnleashEntityEvent;
 
 public class BalloonUnleashListener implements Listener {
 
@@ -16,4 +18,15 @@ public class BalloonUnleashListener implements Listener {
             event.setCancelled(true);
         }
     }
+
+    @EventHandler
+    public void onUnleash(PlayerUnleashEntityEvent event) {
+        if (event.getReason() == EntityUnleashEvent.UnleashReason.PLAYER_UNLEASH) {
+            if (event.getEntity().getCustomName() != null && event.getEntity().getCustomName().contains(BalloonConfiguration.BALLOON_CHICKEN_ID)) {
+                event.setCancelled(true);
+            }
+        }
+    }
+
+
 }

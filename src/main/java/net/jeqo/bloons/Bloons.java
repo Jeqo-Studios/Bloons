@@ -4,11 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import net.jeqo.bloons.balloon.SingleBalloon;
 import net.jeqo.bloons.commands.manager.CommandCore;
+import net.jeqo.bloons.listeners.*;
 import net.jeqo.bloons.utils.UpdateChecker;
-import net.jeqo.bloons.listeners.BalloonUnleashListener;
-import net.jeqo.bloons.listeners.ListenerCore;
-import net.jeqo.bloons.listeners.BalloonMenuListener;
-import net.jeqo.bloons.listeners.BalloonPlayerListener;
 import net.jeqo.bloons.logger.Logger;
 import net.jeqo.bloons.utils.Metrics;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -45,6 +42,7 @@ public final class Bloons extends JavaPlugin {
         getListenerCore().stageListener(new BalloonPlayerListener());
         getListenerCore().stageListener(new BalloonUnleashListener());
         getListenerCore().stageListener(new BalloonMenuListener());
+        getListenerCore().stageListener(new BalloonEntityListener());
 
         // Register all handlers
         getListenerCore().registerListeners();
