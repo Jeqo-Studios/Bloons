@@ -50,7 +50,7 @@ public class BalloonPlayerListener implements Listener {
             SingleBalloonForceUnequipEvent unequipEvent = new SingleBalloonForceUnequipEvent(player, Bloons.getPlayerBalloons().get(player.getUniqueId()));
             unequipEvent.callEvent();
 
-            if (!unequipEvent.isCancelled()) return;
+            if (unequipEvent.isCancelled()) return;
 
             BalloonManagement.removeBalloon(event.getPlayer(), Bloons.getPlayerBalloons().get(event.getPlayer().getUniqueId()));
 
