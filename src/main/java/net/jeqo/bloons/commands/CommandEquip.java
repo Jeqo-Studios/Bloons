@@ -1,7 +1,7 @@
 package net.jeqo.bloons.commands;
 
 import net.jeqo.bloons.Bloons;
-import net.jeqo.bloons.balloon.SingleBalloon;
+import net.jeqo.bloons.balloon.single.SingleBalloon;
 import net.jeqo.bloons.commands.manager.Command;
 import net.jeqo.bloons.commands.manager.enums.CommandPermission;
 import net.jeqo.bloons.events.balloon.SingleBalloonEquipEvent;
@@ -54,7 +54,7 @@ public class CommandEquip extends Command {
 
         if (singleBalloonEquipEvent.isCancelled()) return false;
 
-        BalloonManagement.removeBalloon(player, Bloons.getPlayerBalloons().get(player.getUniqueId()));
+        BalloonManagement.removeBalloon(player, Bloons.getPlayerSingleBalloons().get(player.getUniqueId()));
         SingleBalloon.checkBalloonRemovalOrAdd(player, balloonID);
         player.playSound(player.getLocation(), Sound.ENTITY_CHICKEN_EGG, 1, 1);
 

@@ -1,6 +1,6 @@
 # --------------------------------------------------#
 #
-# Bloons 1.1.3-BETA
+# Bloons 2.0.0
 # Made by Jeqo
 #
 # Wiki:     https://jeqo.net/wiki/bloons
@@ -72,7 +72,7 @@ messages:
 #
 # Balloons can be dyed by adding a color option with a hex value and setting the material to any leather item.
 # Valid leather items: LEATHER_HELMET, LEATHER_CHESTPLATE, LEATHER_LEGGINGS, LEATHER_HORSE_ARMOR
-balloons:
+single-balloons:
   blue:
     id: blue
     permission: balloon.blue
@@ -124,3 +124,36 @@ balloons:
       - '&8Bloons Example Balloon'
       - ''
       - '&eᴄʟɪᴄᴋ ᴛᴏ ᴇǫᴜɪᴘ'
+
+# Multipart balloons are made up of three parts: head, body, and tail.
+# Each part can be dyed by adding a color option with a hex value and setting the material to any leather item.
+# Valid leather items: LEATHER_HELMET, LEATHER_CHESTPLATE, LEATHER_LEGGINGS, LEATHER_HORSE_ARMOR
+multipart-balloons:
+  train:
+    id: train
+    permission: balloon.train
+    name: '<white>Train Balloon'
+    lore:
+      - '&8Bloons Default Balloon'
+      - ''
+      - '&eᴄʟɪᴄᴋ ᴛᴏ ᴇǫᴜɪᴘ'
+    node-count: 5 # The amount of nodes/models in the balloon including the head and tail
+    distance-between-nodes: 2.0 # The distance between nodes/models in blocks
+    head-node-offset: 0.0 # The offset of length of head node segments in blocks
+    body-node-offset: 0.0 # The offset of length of body node segments in blocks
+    tail-node-offset: 0.0 # The offset of length of tail node segments in blocks
+    max-joint-angle: 35.0 # The max angle in degrees of freedom for each joint between nodes
+    y-axis-interpolation: 0.2 # The amount of interpolation between nodes on the Y axis (must be between 0.0 and 1.0)
+    turning-spline-interpolation: 0.5 # The amount of interpolation for the spline when turning
+    head: # Head must be supplied for a balloon of this kind
+      material: LEATHER_HORSE_ARMOR # The material of the head
+      color: '#ffffff' # The color of the head item, this is optional
+      custom-model-data: 10280 # The custom model data of the head, this is not required but is recommended for use of models
+    body: # Body must be supplied for a balloon of this kind
+        material: LEATHER_HORSE_ARMOR # The material of the body
+        color: '#ffffff' # The color of the body, this is optional
+        custom-model-data: 10281 # The custom model data of the body, this is not required but is recommended for use of models
+    tail: # Tail must be supplied for a balloon of this kind
+        material: LEATHER_HORSE_ARMOR # The material of the tail
+        color: '#ffffff' # The color of the tail, this is optional
+        custom-model-data: 10282 # The custom model data of the tail, this is not required but is recommended for use of models

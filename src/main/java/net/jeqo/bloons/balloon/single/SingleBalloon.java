@@ -1,4 +1,4 @@
-package net.jeqo.bloons.balloon;
+package net.jeqo.bloons.balloon.single;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -6,7 +6,6 @@ import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.configuration.BalloonConfiguration;
 import net.jeqo.bloons.events.balloon.SingleBalloonEquipEvent;
 import net.jeqo.bloons.events.balloon.SingleBalloonForceUnequipEvent;
-import net.jeqo.bloons.events.balloon.SingleBalloonUnequipEvent;
 import net.jeqo.bloons.logger.Logger;
 import net.jeqo.bloons.utils.BalloonManagement;
 import net.jeqo.bloons.utils.ColorManagement;
@@ -208,7 +207,7 @@ public class SingleBalloon extends BukkitRunnable {
     public static void checkBalloonRemovalOrAdd(final Player player, final String balloonID) {
         new BukkitRunnable() {
             public void run() {
-                SingleBalloon initialBalloon = Bloons.playerBalloons.get(player.getUniqueId());
+                SingleBalloon initialBalloon = Bloons.playerSingleBalloons.get(player.getUniqueId());
                 if (initialBalloon != null) return;
 
                 SingleBalloonForceUnequipEvent unequipEvent = new SingleBalloonForceUnequipEvent(player, null);
@@ -225,8 +224,8 @@ public class SingleBalloon extends BukkitRunnable {
 
                 SingleBalloon balloon = new SingleBalloon(player, balloonID);
                 balloon.runTaskTimer(Bloons.getInstance(), 0L, 1L);
-                Bloons.playerBalloons.put(player.getUniqueId(), balloon);
-                Bloons.playerBalloonID.put(player.getUniqueId(), balloonID);
+                Bloons.playerSingleBalloons.put(player.getUniqueId(), balloon);
+                Bloons.playerSingleBalloonID.put(player.getUniqueId(), balloonID);
 
             }
         }.runTaskLater(Bloons.getInstance(), 1L);

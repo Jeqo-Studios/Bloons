@@ -1,7 +1,7 @@
 package net.jeqo.bloons.commands;
 
 import net.jeqo.bloons.Bloons;
-import net.jeqo.bloons.balloon.SingleBalloon;
+import net.jeqo.bloons.balloon.single.SingleBalloon;
 import net.jeqo.bloons.commands.manager.Command;
 import net.jeqo.bloons.commands.manager.enums.CommandPermission;
 import net.jeqo.bloons.events.balloon.SingleBalloonForceUnequipEvent;
@@ -34,7 +34,7 @@ public class CommandForceUnequip extends Command {
             return false;
         }
 
-        SingleBalloon singleBalloon = Bloons.getPlayerBalloons().get(player.getUniqueId());
+        SingleBalloon singleBalloon = Bloons.getPlayerSingleBalloons().get(player.getUniqueId());
         if (singleBalloon == null) {
             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_DIDGERIDOO, 1, 1);
             Component notEquippedMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("not-equipped"));

@@ -1,7 +1,7 @@
 package net.jeqo.bloons.commands;
 
 import net.jeqo.bloons.Bloons;
-import net.jeqo.bloons.balloon.SingleBalloon;
+import net.jeqo.bloons.balloon.single.SingleBalloon;
 import net.jeqo.bloons.commands.manager.Command;
 import net.jeqo.bloons.commands.manager.enums.CommandPermission;
 import net.jeqo.bloons.events.balloon.SingleBalloonUnequipEvent;
@@ -27,7 +27,7 @@ public class CommandUnequip extends Command {
     public boolean execute(CommandSender sender, String[] args) {
         if (!(sender instanceof Player player)) return false;
 
-        SingleBalloon singleBalloon = Bloons.getPlayerBalloons().get(player.getUniqueId());
+        SingleBalloon singleBalloon = Bloons.getPlayerSingleBalloons().get(player.getUniqueId());
         MessageTranslations messageTranslations = new MessageTranslations(this.getPlugin());
 
         if (singleBalloon == null) {

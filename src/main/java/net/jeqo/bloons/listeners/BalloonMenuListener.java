@@ -1,7 +1,7 @@
 package net.jeqo.bloons.listeners;
 
 import net.jeqo.bloons.Bloons;
-import net.jeqo.bloons.balloon.SingleBalloon;
+import net.jeqo.bloons.balloon.single.SingleBalloon;
 import net.jeqo.bloons.gui.menus.BalloonMenu;
 import net.jeqo.bloons.utils.BalloonManagement;
 import net.jeqo.bloons.utils.ColorCodeConverter;
@@ -51,7 +51,7 @@ public class BalloonMenuListener implements Listener {
             if (displayName.equals(ColorCodeConverter.adventureToColorCode(messageTranslations.getString("buttons.unequip.name")))) event.setCancelled(true);
 
             // Check if a balloon needs to be added or removed
-            BalloonManagement.removeBalloon(player, Bloons.getPlayerBalloons().get(player.getUniqueId()));
+            BalloonManagement.removeBalloon(player, Bloons.getPlayerSingleBalloons().get(player.getUniqueId()));
             SingleBalloon.checkBalloonRemovalOrAdd(player, localizedName);
 
             // Send equipped message and play sound
@@ -101,7 +101,7 @@ public class BalloonMenuListener implements Listener {
             event.setCancelled(true);
 
             if (!event.isShiftClick()) {
-                SingleBalloon balloon = Bloons.getPlayerBalloons().get(player.getUniqueId());
+                SingleBalloon balloon = Bloons.getPlayerSingleBalloons().get(player.getUniqueId());
 
                 if (balloon == null) {
                     // If no balloon equipped, play sound and send message notifying them
