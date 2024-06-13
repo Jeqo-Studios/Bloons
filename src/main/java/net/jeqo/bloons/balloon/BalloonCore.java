@@ -11,18 +11,31 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
 
+/**
+ * The core class to handle the registering of multipart balloons
+ */
 @Setter @Getter
 public class BalloonCore {
     private JavaPlugin plugin;
     private ArrayList<MultipartBalloonType> balloons = new ArrayList<>();
 
+    /**
+     * Creates a new instance of the balloon core manager with preset registered balloons
+     * @param plugin The plugin instance
+     * @param balloons The balloons to register
+     */
     public BalloonCore(JavaPlugin plugin, ArrayList<MultipartBalloonType> balloons) {
-        this.plugin = plugin;
-        this.balloons = balloons;
+        this.setPlugin(plugin);
+        this.setBalloons(balloons);
     }
 
+
+    /**
+     * Creates a new empty balloon core
+     * @param plugin The plugin instance
+     */
     public BalloonCore(JavaPlugin plugin) {
-        this.plugin = plugin;
+        this.setPlugin(plugin);
     }
 
     /**
@@ -63,16 +76,29 @@ public class BalloonCore {
         }
     }
 
+    /**
+     * Adds a balloon to the registered balloons list
+     * @param balloon The balloon to add
+     */
     public void addBalloon(MultipartBalloonType balloon) {
-        this.balloons.add(balloon);
+        this.getBalloons().add(balloon);
     }
 
+    /**
+     * Removes a balloon from the registered balloons list
+     * @param balloon The balloon to remove
+     */
     public void removeBalloon(MultipartBalloonType balloon) {
-        this.balloons.remove(balloon);
+        this.getBalloons().remove(balloon);
     }
 
+    /**
+     * Gets a balloon by its name from the registered balloons list
+     * @param name The name of the balloon
+     * @return A Multipart Balloon Type object
+     */
     public MultipartBalloonType getBalloon(String name) {
-        for (MultipartBalloonType balloon : this.balloons) {
+        for (MultipartBalloonType balloon : this.getBalloons()) {
             if (balloon.getId().equalsIgnoreCase(name)) {
                 return balloon;
             }

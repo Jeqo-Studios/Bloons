@@ -20,6 +20,13 @@ public class MultipartBalloonModel {
     private String color;
     private Integer customModelData;
 
+    /**
+     * Creates a new model for a multipart balloon
+     * @param modelType The type of model (head, body, tail)
+     * @param material The material of the model as a string
+     * @param color The color of the model as a hex color code value
+     * @param customModelData The custom model data value as a integer
+     */
     public MultipartBalloonModel(BalloonModelType modelType, String material, String color, int customModelData) {
         this.setModelType(modelType);
         this.setMaterial(material);

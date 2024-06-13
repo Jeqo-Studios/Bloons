@@ -120,7 +120,6 @@ public class MultipartBalloon {
 
     /**
      * Destroys the balloons visual appearance and functionality
-     *
      * This should be initiated with the removal of the player from the balloons array
      */
     public void destroy() {
@@ -137,6 +136,10 @@ public class MultipartBalloon {
         this.getModelNodes().clear();
     }
 
+    /**
+     * Hooks into the builder to retrieve the built variables
+     * @param builder The builder to retrieve the variables from
+     */
     MultipartBalloon(MultipartBalloonBuilder builder) {
         this.setBalloonType(builder.balloonType);
         this.setBalloonOwner(builder.balloonOwner);

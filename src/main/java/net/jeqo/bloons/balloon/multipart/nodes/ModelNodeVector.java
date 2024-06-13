@@ -7,14 +7,14 @@ import java.io.Serializable;
  */
 public class ModelNodeVector implements Serializable {
     /**
-     * Segment vector axis.
+     * Model node vector axis.
      */
     public float x;
     public float y;
     public float z;
 
     /**
-     * Creates a blank segment vector.
+     * Creates a blank model node vector.
      */
     public ModelNodeVector() {
     }

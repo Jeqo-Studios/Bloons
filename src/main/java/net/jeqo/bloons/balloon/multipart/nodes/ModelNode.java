@@ -169,6 +169,10 @@ public class ModelNode {
         return startVal + t * difference;
     }
 
+    /**
+     * Gets the heading of two node vectors
+     * @return The heading of the two node vectors as a float
+     */
     public float heading(){
         return ModelNodeVector.subtract(this.getPointA(), this.getPointB()).heading();
     }

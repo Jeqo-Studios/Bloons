@@ -5,19 +5,33 @@ import net.jeqo.bloons.balloon.multipart.balloon.MultipartBalloon;
 
 import java.util.UUID;
 
+/**
+ * A class to manage the active balloons tied to a player
+ */
 public class MultipartBalloonManagement {
 
-    // Add a method to set a player's balloon
+    /**
+     * Set the player's balloon in the active balloons map
+     * @param playerId The player's UUID
+     * @param balloon The balloon to set
+     */
     public static void setPlayerBalloon(UUID playerId, MultipartBalloon balloon) {
         Bloons.getPlayerMultipartBalloons().put(playerId, balloon);
     }
 
-    // Add a method to get a player's balloon
+    /**
+     * Get the player's balloon from the active balloons map
+     * @param playerId The player's UUID
+     * @return The player's balloon
+     */
     public static MultipartBalloon getPlayerBalloon(UUID playerId) {
         return Bloons.getPlayerMultipartBalloons().get(playerId);
     }
 
-    // Add a method to remove a player's balloon
+    /**
+     * Remove the player's balloon from the active balloons map
+     * @param playerId The player's UUID
+     */
     public static void removePlayerBalloon(UUID playerId) {
         MultipartBalloon balloon = Bloons.getPlayerMultipartBalloons().remove(playerId);
         if (balloon != null) {
