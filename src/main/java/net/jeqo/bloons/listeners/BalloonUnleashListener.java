@@ -25,7 +25,7 @@ public class BalloonUnleashListener implements Listener {
      */
     @EventHandler
     public void onUnleash(PlayerUnleashEntityEvent event) {
-        if (event.getReason() == EntityUnleashEvent.UnleashReason.PLAYER_UNLEASH) {
+        if (event.getReason() == EntityUnleashEvent.UnleashReason.PLAYER_UNLEASH || event.getReason() == EntityUnleashEvent.UnleashReason.HOLDER_GONE) {
             if (event.getEntity().getCustomName() != null && event.getEntity().getCustomName().contains(BalloonConfiguration.BALLOON_CHICKEN_ID)) {
                 event.setCancelled(true);
             }

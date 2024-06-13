@@ -29,8 +29,8 @@ public class ModelNode {
 
     float index;
     float length;
-    MultipartBalloonType balloonType;
-    Player balloonOwner;
+    private MultipartBalloonType balloonType;
+    private Player balloonOwner;
     double maxNodeJointAngle;
     double yAxisInterpolation;
     double turningSplineInterpolation;
@@ -54,6 +54,10 @@ public class ModelNode {
 
         this.setBalloonArmorStand(this.getBalloonOwner().getWorld().spawn(new Location(this.getBalloonOwner().getWorld(), x, balloonOwner.getLocation().getY() + 2, z), ArmorStand.class)); // Change Y value to the right height
         this.getBalloonArmorStand().setVisible(false);
+        this.getBalloonArmorStand().setInvulnerable(true);
+        this.getBalloonArmorStand().setInvisible(true);
+        this.getBalloonArmorStand().setSilent(true);
+        this.getBalloonArmorStand().setCollidable(false);
         this.getBalloonArmorStand().setLeashHolder(balloonOwner);
 
         float dx = length * (float)cos(0);
@@ -80,6 +84,10 @@ public class ModelNode {
 
         this.setBalloonArmorStand(this.getBalloonOwner().getWorld().spawn(new Location(this.getBalloonOwner().getWorld(), this.getPointA().x, balloonOwner.getLocation().getY() + 2, this.getPointA().z), ArmorStand.class)); // Change Y value to the right height
         this.getBalloonArmorStand().setVisible(false);
+        this.getBalloonArmorStand().setInvulnerable(true);
+        this.getBalloonArmorStand().setInvisible(true);
+        this.getBalloonArmorStand().setSilent(true);
+        this.getBalloonArmorStand().setCollidable(false);
         this.getBalloonArmorStand().setLeashHolder(balloonOwner);
 
         float dx = length * (float)cos(0);
@@ -184,7 +192,7 @@ public class ModelNode {
      * @return The Euler angle of the armor stand.
      */
     public EulerAngle calculateHeadPose(Vector pointA, Vector pointB) {
-        Location loc = new Location(Bukkit.getWorld("world"), pointA.getX(), pointA.getY(), pointA.getZ());
+        Location loc = new Location(this.getBalloonOwner().getWorld(), pointA.getX(), pointA.getY(), pointA.getZ());
         loc.setDirection(pointB.subtract(pointA));
         Vector direction = loc.getDirection();
 
@@ -216,7 +224,7 @@ public class ModelNode {
         // Set the direction for the armor stand to face
         this.getBalloonArmorStand().setHeadPose(calculateHeadPose(pointAVector, pointBVector));
         // Teleport it to the correct location
-        this.getBalloonArmorStand().teleport(new Location(this.getBalloonArmorStand().getWorld(), (this.getPointA().x + this.getPointB().x) / 2.0, (this.getPointA().y + this.getPointB().y) / 2.0, (this.getPointA().z + this.getPointB().z) / 2.0)); // Change Y value to the right height
+        this.getBalloonArmorStand().teleport(new Location(this.getBalloonOwner().getWorld(), (this.getPointA().x + this.getPointB().x) / 2.0, (this.getPointA().y + this.getPointB().y) / 2.0, (this.getPointA().z + this.getPointB().z) / 2.0)); // Change Y value to the right height
     }
 
     public void destroy() {

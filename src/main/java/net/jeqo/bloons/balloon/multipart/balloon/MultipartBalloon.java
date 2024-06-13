@@ -153,11 +153,12 @@ public class MultipartBalloon {
             this.setRunnable(null);
         }
 
+        this.getBalloonChicken().remove();
+
         for (ModelNode modelNode : this.getModelNodes()) {
             modelNode.destroy();
         }
 
-        this.getBalloonChicken().remove();
 
         this.getModelNodes().clear();
     }
