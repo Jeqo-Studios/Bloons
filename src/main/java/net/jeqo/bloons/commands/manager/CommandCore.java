@@ -4,6 +4,7 @@ import lombok.Getter;
 import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.commands.*;
 import net.jeqo.bloons.commands.manager.enums.CommandAccess;
+import net.jeqo.bloons.configuration.ConfigConfiguration;
 import net.jeqo.bloons.gui.menus.BalloonMenu;
 import net.jeqo.bloons.logger.Logger;
 import net.jeqo.bloons.utils.ColorManagement;
@@ -174,14 +175,14 @@ public class CommandCore implements CommandExecutor {
      */
     private boolean shouldAddBalloon(Player player, String key) {
         if (this.getMessageTranslations().getString("hide-balloons-without-permission").equalsIgnoreCase("true")) {
-            return player.hasPermission(this.getMessageTranslations().getString("single-balloons." + key + ".permission"));
+            return player.hasPermission(this.getMessageTranslations().getString(ConfigConfiguration.SINGLE_BALLOON_SECTION + key + ".permission"));
         }
         return true;
     }
 
     private boolean shouldAddMultipartBalloon(Player player, String key) {
         if (this.getMessageTranslations().getString("hide-balloons-without-permission").equalsIgnoreCase("true")) {
-            return player.hasPermission(this.getMessageTranslations().getString("multipart-balloons." + key + ".permission"));
+            return player.hasPermission(this.getMessageTranslations().getString(ConfigConfiguration.MULTIPART_BALLOON_SECTION + key + ".permission"));
         }
         return true;
     }
@@ -200,7 +201,7 @@ public class CommandCore implements CommandExecutor {
         ItemMeta meta = item.getItemMeta();
         if (meta == null) return null;
 
-        meta.setLocalizedName(this.getMessageTranslations().getString("single-balloons." + key + ".id"));
+        meta.setLocalizedName(this.getMessageTranslations().getString(ConfigConfiguration.SINGLE_BALLOON_SECTION + key + ".id"));
         setBalloonLore(meta, keySection);
         setBalloonDisplayName(meta, keySection);
         meta.setCustomModelData(keySection.getInt("custom-model-data"));
@@ -218,7 +219,7 @@ public class CommandCore implements CommandExecutor {
         ItemMeta meta = item.getItemMeta();
         if (meta == null) return null;
 
-        meta.setLocalizedName(this.getMessageTranslations().getString("multipart-balloons." + key + ".id"));
+        meta.setLocalizedName(this.getMessageTranslations().getString(ConfigConfiguration.MULTIPART_BALLOON_SECTION + key + ".id"));
         setBalloonLore(meta, keySection);
         setBalloonDisplayName(meta, keySection);
         meta.setCustomModelData(keySection.getInt("head.custom-model-data"));

@@ -3,6 +3,7 @@ package net.jeqo.bloons.commands;
 import net.jeqo.bloons.balloon.single.SingleBalloon;
 import net.jeqo.bloons.commands.manager.Command;
 import net.jeqo.bloons.commands.manager.enums.CommandPermission;
+import net.jeqo.bloons.configuration.ConfigConfiguration;
 import net.jeqo.bloons.events.balloon.SingleBalloonForceEquipEvent;
 import net.jeqo.bloons.utils.MessageTranslations;
 import net.kyori.adventure.text.Component;
@@ -39,7 +40,7 @@ public class CommandForceEquip extends Command {
         }
 
         String balloonID = args[1];
-        if (!this.getPlugin().getConfig().contains("single-balloons." + balloonID)) {
+        if (!this.getPlugin().getConfig().contains(ConfigConfiguration.SINGLE_BALLOON_SECTION + balloonID)) {
             Component balloonNotFoundMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("balloon-not-found"));
             sender.sendMessage(balloonNotFoundMessage);
             return false;
@@ -51,7 +52,7 @@ public class CommandForceEquip extends Command {
         if (singleBalloonForceEquipEvent.isCancelled()) return false;
 
         SingleBalloon.checkBalloonRemovalOrAdd(player.getPlayer(), balloonID);
-        String balloonName = messageTranslations.getString("single-balloons." + balloonID + ".name");
+        String balloonName = messageTranslations.getString(ConfigConfiguration.SINGLE_BALLOON_SECTION + balloonID + ".name");
         Component equippedMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("equipped", balloonName));
         player.sendMessage(equippedMessage);
         return false;

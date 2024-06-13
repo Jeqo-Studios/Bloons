@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.configuration.BalloonConfiguration;
+import net.jeqo.bloons.configuration.ConfigConfiguration;
 import net.jeqo.bloons.events.balloon.SingleBalloonEquipEvent;
 import net.jeqo.bloons.events.balloon.SingleBalloonForceUnequipEvent;
 import net.jeqo.bloons.logger.Logger;
@@ -137,7 +138,7 @@ public class SingleBalloon extends BukkitRunnable {
     public ItemStack getConfiguredBalloonVisual(String balloonID) {
         MessageTranslations messageTranslations = new MessageTranslations(Bloons.getInstance());
 
-        ConfigurationSection balloonConfiguration = Bloons.getInstance().getConfig().getConfigurationSection("single-balloons." + balloonID);
+        ConfigurationSection balloonConfiguration = Bloons.getInstance().getConfig().getConfigurationSection(ConfigConfiguration.SINGLE_BALLOON_SECTION + balloonID);
 
         if (balloonConfiguration == null) {
             Logger.logWarning("The balloon " + balloonID + " is not set in the configuration!");
@@ -153,10 +154,10 @@ public class SingleBalloon extends BukkitRunnable {
         ItemMeta meta = item.getItemMeta();
         meta.setCustomModelData(balloonConfiguration.getInt("custom-model-data"));
 
-        if (messageTranslations.getString("single-balloons." + balloonID + ".color") != null) {
-            if (!messageTranslations.getString("single-balloons." + balloonID + ".color").equalsIgnoreCase("potion")) {
+        if (messageTranslations.getString(ConfigConfiguration.SINGLE_BALLOON_SECTION + balloonID + ".color") != null) {
+            if (!messageTranslations.getString(ConfigConfiguration.SINGLE_BALLOON_SECTION + balloonID + ".color").equalsIgnoreCase("potion")) {
                 LeatherArmorMeta leatherArmorMeta = (LeatherArmorMeta) meta;
-                leatherArmorMeta.setColor(ColorManagement.hexToColor(messageTranslations.getString("single-balloons." + balloonID + ".color")));
+                leatherArmorMeta.setColor(ColorManagement.hexToColor(messageTranslations.getString(ConfigConfiguration.SINGLE_BALLOON_SECTION + balloonID + ".color")));
             } else {
                 Logger.logWarning("The color of the balloonVisual " + balloonID + " is set, but the material is not a leather item!");
             }
