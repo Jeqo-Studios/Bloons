@@ -8,8 +8,9 @@ import net.jeqo.bloons.balloon.single.SingleBalloon;
 import net.jeqo.bloons.commands.manager.Command;
 import net.jeqo.bloons.commands.manager.enums.CommandPermission;
 import net.jeqo.bloons.configuration.ConfigConfiguration;
-import net.jeqo.bloons.events.balloon.SingleBalloonEquipEvent;
-import net.jeqo.bloons.events.balloon.SingleBalloonForceEquipEvent;
+import net.jeqo.bloons.events.balloon.multipart.MultipartBalloonEquipEvent;
+import net.jeqo.bloons.events.balloon.multipart.MultipartBalloonUnequipEvent;
+import net.jeqo.bloons.events.balloon.single.SingleBalloonEquipEvent;
 import net.jeqo.bloons.utils.BalloonManagement;
 import net.jeqo.bloons.utils.MessageTranslations;
 import net.jeqo.bloons.utils.MultipartBalloonManagement;
@@ -56,10 +57,20 @@ public class CommandForceEquip extends Command {
         MultipartBalloonType type = Bloons.getBalloonCore().getBalloon(balloonID);
         MultipartBalloon previousBalloon = MultipartBalloonManagement.getPlayerBalloon(player.getUniqueId());
         if (previousBalloon != null) {
+            MultipartBalloonUnequipEvent multipartBalloonUnequipEvent = new MultipartBalloonUnequipEvent(player, previousBalloon);
+            multipartBalloonUnequipEvent.callEvent();
+
+            if (multipartBalloonUnequipEvent.isCancelled()) return false;
+
             previousBalloon.destroy();
             MultipartBalloonManagement.removePlayerBalloon(player.getUniqueId());
         }
+
         if (type != null) {
+            MultipartBalloonEquipEvent multipartBalloonEquipEvent = new MultipartBalloonEquipEvent(player, balloonID);
+            multipartBalloonEquipEvent.callEvent();
+
+            if (multipartBalloonEquipEvent.isCancelled()) return false;
 
             MultipartBalloonBuilder builder = new MultipartBalloonBuilder(type, player);
             BalloonManagement.removeBalloon(player, Bloons.getPlayerSingleBalloons().get(player.getUniqueId()));

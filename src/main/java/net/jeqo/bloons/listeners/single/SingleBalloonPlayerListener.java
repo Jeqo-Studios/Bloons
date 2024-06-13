@@ -1,9 +1,9 @@
-package net.jeqo.bloons.listeners;
+package net.jeqo.bloons.listeners.single;
 
 import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.balloon.single.SingleBalloon;
-import net.jeqo.bloons.events.balloon.SingleBalloonForceUnequipEvent;
-import net.jeqo.bloons.events.balloon.SingleBalloonStoreEvent;
+import net.jeqo.bloons.events.balloon.single.SingleBalloonForceUnequipEvent;
+import net.jeqo.bloons.events.balloon.single.SingleBalloonStoreEvent;
 import net.jeqo.bloons.utils.UpdateChecker;
 import net.jeqo.bloons.logger.Logger;
 import net.jeqo.bloons.utils.BalloonManagement;
@@ -18,7 +18,7 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 
 import java.util.Objects;
 
-public class BalloonPlayerListener implements Listener {
+public class SingleBalloonPlayerListener implements Listener {
 
     /**
      * When a player quits, make sure to despawn and store their balloon in storage

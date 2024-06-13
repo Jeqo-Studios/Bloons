@@ -2,8 +2,8 @@ package net.jeqo.bloons.utils;
 
 import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.balloon.single.SingleBalloon;
-import net.jeqo.bloons.events.balloon.SingleBalloonStoreEvent;
-import net.jeqo.bloons.events.balloon.SingleBalloonUnequipEvent;
+import net.jeqo.bloons.events.balloon.single.SingleBalloonStoreEvent;
+import net.jeqo.bloons.events.balloon.single.SingleBalloonUnequipEvent;
 import org.bukkit.entity.Player;
 
 /**

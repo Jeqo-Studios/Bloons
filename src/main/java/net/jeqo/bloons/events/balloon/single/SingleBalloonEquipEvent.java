@@ -1,4 +1,4 @@
-package net.jeqo.bloons.events.balloon;
+package net.jeqo.bloons.events.balloon.single;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -13,5 +13,9 @@ public class SingleBalloonEquipEvent extends BloonsEvent {
     public SingleBalloonEquipEvent(Player player, String balloonID) {
         this.player = player;
         this.balloonID = balloonID;
+    }
+
+    public SingleBalloonEquipEvent(Player player) {
+        this.player = player;
     }
 }

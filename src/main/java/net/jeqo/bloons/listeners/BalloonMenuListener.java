@@ -5,6 +5,9 @@ import net.jeqo.bloons.balloon.multipart.balloon.MultipartBalloon;
 import net.jeqo.bloons.balloon.multipart.balloon.MultipartBalloonBuilder;
 import net.jeqo.bloons.balloon.multipart.MultipartBalloonType;
 import net.jeqo.bloons.balloon.single.SingleBalloon;
+import net.jeqo.bloons.events.balloon.multipart.MultipartBalloonEquipEvent;
+import net.jeqo.bloons.events.balloon.multipart.MultipartBalloonUnequipEvent;
+import net.jeqo.bloons.events.balloon.single.SingleBalloonEquipEvent;
 import net.jeqo.bloons.gui.menus.BalloonMenu;
 import net.jeqo.bloons.utils.*;
 import net.kyori.adventure.text.Component;
@@ -50,26 +53,38 @@ public class BalloonMenuListener implements Listener {
             if (displayName.equals(ColorCodeConverter.adventureToColorCode(messageTranslations.getString("buttons.next-page.name")))) event.setCancelled(true);
             if (displayName.equals(ColorCodeConverter.adventureToColorCode(messageTranslations.getString("buttons.unequip.name")))) event.setCancelled(true);
 
-//            if ((NBTItem) event.getCurrentItem().get
-//            // Check if a balloon needs to be added or removed
-//            BalloonManagement.removeBalloon(player, Bloons.getPlayerSingleBalloons().get(player.getUniqueId()));
-//            SingleBalloon.checkBalloonRemovalOrAdd(player, localizedName);
             MultipartBalloonType type = Bloons.getBalloonCore().getBalloon(localizedName);
             MultipartBalloon previousBalloon = MultipartBalloonManagement.getPlayerBalloon(player.getUniqueId());
             if (previousBalloon != null) {
+                MultipartBalloonUnequipEvent multipartBalloonEquipEvent = new MultipartBalloonUnequipEvent(player, previousBalloon);
+                multipartBalloonEquipEvent.callEvent();
+
+                if (multipartBalloonEquipEvent.isCancelled()) return;
+
                 previousBalloon.destroy();
                 MultipartBalloonManagement.removePlayerBalloon(player.getUniqueId());
             }
             if (type != null) {
-
                 MultipartBalloonBuilder builder = new MultipartBalloonBuilder(type, player);
                 BalloonManagement.removeBalloon(player, Bloons.getPlayerSingleBalloons().get(player.getUniqueId()));
                 MultipartBalloon balloon = builder.build();
+
+                // Call the equip event and check if it's cancelled, if it is, don't spawn the balloon or do anything
+                MultipartBalloonEquipEvent multipartBalloonEquipEvent = new MultipartBalloonEquipEvent(player);
+                multipartBalloonEquipEvent.callEvent();
+
+                if (multipartBalloonEquipEvent.isCancelled()) return;
+
                 balloon.initialize();
                 balloon.run();
 
                 MultipartBalloonManagement.setPlayerBalloon(player.getUniqueId(), balloon);
             } else {
+                // Call the equip event and check if it's cancelled, if it is, don't spawn the balloon or do anything
+                SingleBalloonEquipEvent singleBalloonEquipEvent = new SingleBalloonEquipEvent(player);
+                singleBalloonEquipEvent.callEvent();
+
+                if (singleBalloonEquipEvent.isCancelled()) return;
 
                 // Check if a balloon needs to be added or removed
                 BalloonManagement.removeBalloon(player, Bloons.getPlayerSingleBalloons().get(player.getUniqueId()));

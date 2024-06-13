@@ -9,6 +9,7 @@ import net.jeqo.bloons.commands.manager.CommandCore;
 import net.jeqo.bloons.listeners.*;
 import net.jeqo.bloons.listeners.multipart.MultipartBalloonPlayerJoinListener;
 import net.jeqo.bloons.listeners.multipart.MultipartBalloonPlayerLeaveListener;
+import net.jeqo.bloons.listeners.single.SingleBalloonPlayerListener;
 import net.jeqo.bloons.utils.UpdateChecker;
 import net.jeqo.bloons.logger.Logger;
 import net.jeqo.bloons.utils.Metrics;
@@ -53,7 +54,7 @@ public final class Bloons extends JavaPlugin {
         getBalloonCore().initialize();
 
         // Stage listeners
-        getListenerCore().stageListener(new BalloonPlayerListener());
+        getListenerCore().stageListener(new SingleBalloonPlayerListener());
         getListenerCore().stageListener(new BalloonUnleashListener());
         getListenerCore().stageListener(new BalloonMenuListener());
         getListenerCore().stageListener(new BalloonEntityListener());

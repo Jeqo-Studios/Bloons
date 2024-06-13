@@ -5,14 +5,14 @@ import net.jeqo.bloons.balloon.multipart.balloon.MultipartBalloon;
 import net.jeqo.bloons.balloon.single.SingleBalloon;
 import net.jeqo.bloons.commands.manager.Command;
 import net.jeqo.bloons.commands.manager.enums.CommandPermission;
-import net.jeqo.bloons.events.balloon.SingleBalloonForceUnequipEvent;
-import net.jeqo.bloons.events.balloon.SingleBalloonUnequipEvent;
+import net.jeqo.bloons.events.balloon.multipart.MultipartBalloonEquipEvent;
+import net.jeqo.bloons.events.balloon.multipart.MultipartBalloonUnequipEvent;
+import net.jeqo.bloons.events.balloon.single.SingleBalloonUnequipEvent;
 import net.jeqo.bloons.utils.BalloonManagement;
 import net.jeqo.bloons.utils.MessageTranslations;
 import net.jeqo.bloons.utils.MultipartBalloonManagement;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
-import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -56,11 +56,15 @@ public class CommandForceUnequip extends Command {
         }
 
         if (multipartBalloon != null) {
+            MultipartBalloonUnequipEvent multipartBalloonUnequipEvent = new MultipartBalloonUnequipEvent(player, multipartBalloon);
+            multipartBalloonUnequipEvent.callEvent();
+
+            if (multipartBalloonUnequipEvent.isCancelled()) return false;
+
             multipartBalloon.destroy();
             MultipartBalloonManagement.removePlayerBalloon(player.getUniqueId());
         }
 
-        BalloonManagement.removeBalloon(player, singleBalloon);
         Component unequipSuccessfulMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("unequipped"));
         sender.sendMessage(unequipSuccessfulMessage);
         return false;
