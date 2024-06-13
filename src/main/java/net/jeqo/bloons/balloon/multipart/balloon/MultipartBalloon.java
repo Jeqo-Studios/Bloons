@@ -5,7 +5,11 @@ import lombok.Setter;
 import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.balloon.multipart.MultipartBalloonType;
 import net.jeqo.bloons.balloon.multipart.nodes.ModelNode;
+import net.jeqo.bloons.balloon.multipart.nodes.ModelNodeVector;
+import net.jeqo.bloons.configuration.BalloonConfiguration;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
+import org.bukkit.entity.Chicken;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
@@ -25,6 +29,9 @@ public class MultipartBalloon {
     private Player balloonOwner;
 
     private final List<ModelNode> modelNodes = new ArrayList<>();
+
+    @Setter
+    private Chicken balloonChicken;
 
     @Setter
     private ModelNode tentacle;
@@ -50,6 +57,16 @@ public class MultipartBalloon {
             current = next;
         }
         this.setTentacle(current);
+
+        this.setBalloonChicken(this.getBalloonOwner().getWorld().spawn(new Location(this.getBalloonOwner().getWorld(), this.getBalloonOwner().getLocation().getX(), this.getBalloonOwner().getLocation().getY() + 2, this.getBalloonOwner().getLocation().getZ()), Chicken.class));
+        this.getBalloonChicken().setInvulnerable(true);
+        this.getBalloonChicken().setInvisible(true);
+        this.getBalloonChicken().setBaby();
+        this.getBalloonChicken().setSilent(true);
+        this.getBalloonChicken().setAgeLock(true);
+        this.getBalloonChicken().setAware(false);
+        this.getBalloonChicken().setCollidable(false);
+        this.getBalloonChicken().customName(Component.text(BalloonConfiguration.BALLOON_CHICKEN_ID));
     }
 
     private @NotNull ModelNode getModelNode(int i, ModelNode current) {
@@ -59,7 +76,6 @@ public class MultipartBalloon {
                     i, getBalloonType(), this.getBalloonOwner(), this.getBalloonType().getMaxNodeJointAngle(), this.getBalloonType().getYAxisInterpolation(),
                     this.getBalloonType().getTurningSplineInterpolation());
 
-            // TODO: Create chicken tethering
         } else {
             next = new ModelNode(current, (float) ((float) this.getBalloonType().getDistanceBetweenNodes() + this.getBalloonType().getBodyNodeOffset()),
                     i, getBalloonType(), this.getBalloonOwner(), this.getBalloonType().getMaxNodeJointAngle(), this.getBalloonType().getYAxisInterpolation(),
@@ -95,11 +111,17 @@ public class MultipartBalloon {
                 // Adjust the nose amplitude based on the sine value
                 double noseOffset = noseAmplitude * sinValue;
 
+                // Calculate the midpoint between Point A and Point B
+                double midpointX = (getTentacle().getPointA().x + getTentacle().getPointB().x) / 2.0;
+                double midpointZ = (getTentacle().getPointA().z + getTentacle().getPointA().z) / 2.0;
+
+                // Teleport the chicken holding the leash constantly
+                getBalloonChicken().teleport(new Location(getBalloonOwner().getWorld(), midpointX, getTentacle().getPointA().y + 1.5, midpointZ));
+                getBalloonChicken().setLeashHolder(getBalloonOwner());
+
                 // Constantly teleport the balloons
                 getTentacle().follow((float) ownerLocation.getX(), (float) (newY + noseOffset), (float) ownerLocation.getZ());
                 getTentacle().show();
-
-                // TODO: Teleport a chicken constantly
 
                 // Make the other segments follow
                 ModelNode next = getTentacle().parent;
@@ -132,6 +154,8 @@ public class MultipartBalloon {
         for (ModelNode modelNode : this.getModelNodes()) {
             modelNode.destroy();
         }
+
+        this.getBalloonChicken().remove();
 
         this.getModelNodes().clear();
     }
