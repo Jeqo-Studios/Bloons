@@ -1,12 +1,14 @@
 package net.jeqo.bloons.commands;
 
 import net.jeqo.bloons.Bloons;
+import net.jeqo.bloons.balloon.multipart.balloon.MultipartBalloon;
 import net.jeqo.bloons.balloon.single.SingleBalloon;
 import net.jeqo.bloons.commands.manager.Command;
 import net.jeqo.bloons.commands.manager.enums.CommandPermission;
 import net.jeqo.bloons.events.balloon.SingleBalloonUnequipEvent;
 import net.jeqo.bloons.utils.BalloonManagement;
 import net.jeqo.bloons.utils.MessageTranslations;
+import net.jeqo.bloons.utils.MultipartBalloonManagement;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
@@ -28,21 +30,29 @@ public class CommandUnequip extends Command {
         if (!(sender instanceof Player player)) return false;
 
         SingleBalloon singleBalloon = Bloons.getPlayerSingleBalloons().get(player.getUniqueId());
+        MultipartBalloon multipartBalloon = MultipartBalloonManagement.getPlayerBalloon(player.getUniqueId());
         MessageTranslations messageTranslations = new MessageTranslations(this.getPlugin());
 
-        if (singleBalloon == null) {
-            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_DIDGERIDOO, 1, 1);
+        if (singleBalloon == null && multipartBalloon == null) {
             Component notEquippedMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("not-equipped"));
             player.sendMessage(notEquippedMessage);
             return false;
         }
 
-        SingleBalloonUnequipEvent singleBalloonUnequipEvent = new SingleBalloonUnequipEvent(player, singleBalloon);
-        singleBalloonUnequipEvent.callEvent();
+        if (singleBalloon != null) {
+            SingleBalloonUnequipEvent singleBalloonUnequipEvent = new SingleBalloonUnequipEvent(player, singleBalloon);
+            singleBalloonUnequipEvent.callEvent();
 
-        if (singleBalloonUnequipEvent.isCancelled()) return false;
+            if (singleBalloonUnequipEvent.isCancelled()) return false;
 
-        BalloonManagement.removeBalloon(player, singleBalloon);
+            BalloonManagement.removeBalloon(player, singleBalloon);
+        }
+
+        if (multipartBalloon != null) {
+            multipartBalloon.destroy();
+            MultipartBalloonManagement.removePlayerBalloon(player.getUniqueId());
+        }
+
         Component unequipSuccessfulMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("unequipped"));
         player.sendMessage(unequipSuccessfulMessage);
         player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_HURT_SWEET_BERRY_BUSH, 1, 1);
