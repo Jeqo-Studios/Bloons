@@ -12,7 +12,6 @@ import java.util.function.Consumer;
 /**
  * A utility class intended to check for updates on the SpigotMC website
  */
-@Getter
 public record UpdateChecker(JavaPlugin plugin, int resourceId) {
 
     /**
