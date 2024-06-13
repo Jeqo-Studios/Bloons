@@ -103,15 +103,17 @@ public class MultipartBalloon {
 
             @Override
             public void run() {
-                Location ownerLocation = getBalloonOwner().getLocation();
+                // Gets the constantly updated owners location
+                Location balloonOwnerLocation = getBalloonOwner().getLocation();
+
                 // Calculate the Y offset using a sine function with adjusted amplitude
                 double sinValue = Math.sin(yOffset);
-                double newY = ownerLocation.getY() + 2 + amplitude * sinValue; // Adjust the amplitude and offset as needed
+                double newY = balloonOwnerLocation.getY() + 2 + amplitude * sinValue; // Adjust the amplitude and offset as needed
 
                 // Adjust the nose amplitude based on the sine value
                 double noseOffset = noseAmplitude * sinValue;
 
-                // Calculate the midpoint between Point A and Point B
+                // Calculate the midpoint between Point A and Point B in the leading balloon
                 double midpointX = (getTentacle().getPointA().x + getTentacle().getPointB().x) / 2.0;
                 double midpointZ = (getTentacle().getPointA().z + getTentacle().getPointA().z) / 2.0;
 
@@ -120,16 +122,16 @@ public class MultipartBalloon {
                 getBalloonChicken().setLeashHolder(getBalloonOwner());
 
                 // Constantly teleport the balloons
-                getTentacle().follow((float) ownerLocation.getX(), (float) (newY + noseOffset), (float) ownerLocation.getZ());
+                getTentacle().follow((float) balloonOwnerLocation.getX(), (float) (newY + noseOffset), (float) balloonOwnerLocation.getZ());
                 getTentacle().show();
 
                 // Make the other segments follow
-                ModelNode next = getTentacle().parent;
+                ModelNode next = getTentacle().getParent();
                 while (next != null) {
                     next.follow();
                     next.show();
 
-                    next = next.parent;
+                    next = next.getParent();
                 }
 
                 // Increment the yOffset based on the speed for the next iteration

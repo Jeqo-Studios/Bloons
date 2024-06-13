@@ -8,7 +8,7 @@ import net.jeqo.bloons.configuration.ConfigConfiguration;
 import net.jeqo.bloons.events.balloon.single.SingleBalloonEquipEvent;
 import net.jeqo.bloons.events.balloon.single.SingleBalloonForceUnequipEvent;
 import net.jeqo.bloons.logger.Logger;
-import net.jeqo.bloons.utils.BalloonManagement;
+import net.jeqo.bloons.utils.management.SingleBalloonManagement;
 import net.jeqo.bloons.utils.ColorManagement;
 import net.jeqo.bloons.utils.MessageTranslations;
 import net.kyori.adventure.text.Component;
@@ -208,7 +208,7 @@ public class SingleBalloon extends BukkitRunnable {
     public static void checkBalloonRemovalOrAdd(final Player player, final String balloonID) {
         new BukkitRunnable() {
             public void run() {
-                SingleBalloon initialBalloon = Bloons.playerSingleBalloons.get(player.getUniqueId());
+                SingleBalloon initialBalloon = Bloons.getPlayerSingleBalloons().get(player.getUniqueId());
                 if (initialBalloon != null) return;
 
                 SingleBalloonForceUnequipEvent unequipEvent = new SingleBalloonForceUnequipEvent(player, null);
@@ -216,7 +216,7 @@ public class SingleBalloon extends BukkitRunnable {
 
                 if (unequipEvent.isCancelled()) return;
 
-                BalloonManagement.removeBalloon(player, null);
+                SingleBalloonManagement.removeBalloon(player, null);
 
                 SingleBalloonEquipEvent equipEvent = new SingleBalloonEquipEvent(player, balloonID);
                 equipEvent.callEvent();
@@ -225,8 +225,8 @@ public class SingleBalloon extends BukkitRunnable {
 
                 SingleBalloon balloon = new SingleBalloon(player, balloonID);
                 balloon.runTaskTimer(Bloons.getInstance(), 0L, 1L);
-                Bloons.playerSingleBalloons.put(player.getUniqueId(), balloon);
-                Bloons.playerSingleBalloonID.put(player.getUniqueId(), balloonID);
+                Bloons.getPlayerSingleBalloons().put(player.getUniqueId(), balloon);
+                Bloons.getPlayerSingleBalloonID().put(player.getUniqueId(), balloonID);
 
             }
         }.runTaskLater(Bloons.getInstance(), 1L);

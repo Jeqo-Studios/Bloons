@@ -6,7 +6,7 @@ import net.jeqo.bloons.events.balloon.single.SingleBalloonForceUnequipEvent;
 import net.jeqo.bloons.events.balloon.single.SingleBalloonStoreEvent;
 import net.jeqo.bloons.utils.UpdateChecker;
 import net.jeqo.bloons.logger.Logger;
-import net.jeqo.bloons.utils.BalloonManagement;
+import net.jeqo.bloons.utils.management.SingleBalloonManagement;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -30,7 +30,7 @@ public class SingleBalloonPlayerListener implements Listener {
         SingleBalloonStoreEvent event = new SingleBalloonStoreEvent(e.getPlayer(), owner);
         event.callEvent();
 
-        BalloonManagement.storeBalloon(owner);
+        SingleBalloonManagement.storeBalloon(owner);
     }
 
     /**
@@ -48,7 +48,7 @@ public class SingleBalloonPlayerListener implements Listener {
 
             if (unequipEvent.isCancelled()) return;
 
-            BalloonManagement.removeBalloon(event.getPlayer(), Bloons.getPlayerSingleBalloons().get(event.getPlayer().getUniqueId()));
+            SingleBalloonManagement.removeBalloon(event.getPlayer(), Bloons.getPlayerSingleBalloons().get(event.getPlayer().getUniqueId()));
 
             SingleBalloon.checkBalloonRemovalOrAdd(event.getPlayer(), balloonID);
         }
@@ -73,7 +73,7 @@ public class SingleBalloonPlayerListener implements Listener {
         SingleBalloonForceUnequipEvent unequipEvent = new SingleBalloonForceUnequipEvent(event.getEntity().getPlayer(), balloonOwner);
         unequipEvent.callEvent();
 
-        BalloonManagement.removeBalloon(event.getEntity().getPlayer(), balloonOwner);
+        SingleBalloonManagement.removeBalloon(event.getEntity().getPlayer(), balloonOwner);
     }
 
     /**
@@ -101,7 +101,7 @@ public class SingleBalloonPlayerListener implements Listener {
 
         if (storeEvent.isCancelled()) return;
 
-        BalloonManagement.storeBalloon(balloonOwner);
+        SingleBalloonManagement.storeBalloon(balloonOwner);
 
         if (balloonID != null) {
             SingleBalloonForceUnequipEvent unequipEvent = new SingleBalloonForceUnequipEvent(event.getPlayer(), Bloons.getPlayerSingleBalloons().get(event.getPlayer().getUniqueId()));
@@ -109,7 +109,7 @@ public class SingleBalloonPlayerListener implements Listener {
 
             if (unequipEvent.isCancelled()) return;
 
-            BalloonManagement.removeBalloon(event.getPlayer(), Bloons.getPlayerSingleBalloons().get(event.getPlayer().getUniqueId()));
+            SingleBalloonManagement.removeBalloon(event.getPlayer(), Bloons.getPlayerSingleBalloons().get(event.getPlayer().getUniqueId()));
 
             SingleBalloon.checkBalloonRemovalOrAdd(event.getPlayer(), balloonID);
         }

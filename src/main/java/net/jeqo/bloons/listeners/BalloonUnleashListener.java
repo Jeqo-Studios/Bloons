@@ -19,6 +19,10 @@ public class BalloonUnleashListener implements Listener {
         }
     }
 
+    /**
+     * Prevents unleashing of chicken with the internal ID
+     * @param event The event that is called when a player unleashes an entity
+     */
     @EventHandler
     public void onUnleash(PlayerUnleashEntityEvent event) {
         if (event.getReason() == EntityUnleashEvent.UnleashReason.PLAYER_UNLEASH) {
@@ -27,6 +31,4 @@ public class BalloonUnleashListener implements Listener {
             }
         }
     }
-
-
 }

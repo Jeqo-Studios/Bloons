@@ -1,4 +1,4 @@
-package net.jeqo.bloons.utils;
+package net.jeqo.bloons.utils.management;
 
 import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.balloon.single.SingleBalloon;
@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 /**
  * A class to manage balloons and their removal
  */
-public class BalloonManagement {
+public class SingleBalloonManagement {
 
     /**
      * Remove the balloon from the player

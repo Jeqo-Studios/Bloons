@@ -23,7 +23,7 @@ public class NBTItem extends ItemStack {
      * @param item The item to create the NBTItem from
      */
     public NBTItem(ItemStack item) {
-        this.item = item;
+        this.setItem(item);
     }
 
     /**
@@ -33,7 +33,7 @@ public class NBTItem extends ItemStack {
      */
     public boolean hasKey(String key) {
         NamespacedKey nbtKey = new NamespacedKey(Bloons.getInstance(), key);
-        PersistentDataContainer container = item.getItemMeta().getPersistentDataContainer();
+        PersistentDataContainer container = this.getItem().getItemMeta().getPersistentDataContainer();
 
         return container.getKeys().contains(nbtKey);
     }
@@ -46,10 +46,10 @@ public class NBTItem extends ItemStack {
     public void setStringFlag(String key, String value) {
         NamespacedKey nbtKey = new NamespacedKey(Bloons.getInstance(), key);
 
-        ItemMeta meta = item.getItemMeta();
+        ItemMeta meta = getItem().getItemMeta();
         meta.getPersistentDataContainer().set(nbtKey, PersistentDataType.STRING, value);
 
-        this.item.setItemMeta(meta);
+        this.getItem().setItemMeta(meta);
     }
 
     /**
@@ -59,7 +59,7 @@ public class NBTItem extends ItemStack {
      */
     public String getStringFlag(String key) {
         NamespacedKey nbtKey = new NamespacedKey(Bloons.getInstance(), key);
-        PersistentDataContainer container = item.getItemMeta().getPersistentDataContainer();
+        PersistentDataContainer container = this.getItem().getItemMeta().getPersistentDataContainer();
 
         if (!container.has(nbtKey, PersistentDataType.STRING)) return null;
 
@@ -74,10 +74,10 @@ public class NBTItem extends ItemStack {
     public void setIntegerFlag(String key, int value) {
         NamespacedKey nbtKey = new NamespacedKey(Bloons.getInstance(), key);
 
-        ItemMeta meta = item.getItemMeta();
+        ItemMeta meta = this.getItem().getItemMeta();
         meta.getPersistentDataContainer().set(nbtKey, PersistentDataType.INTEGER, value);
 
-        this.item.setItemMeta(meta);
+        this.getItem().setItemMeta(meta);
     }
 
     /**
@@ -87,7 +87,7 @@ public class NBTItem extends ItemStack {
      */
     public int getIntegerFlag(String key) {
         NamespacedKey nbtKey = new NamespacedKey(Bloons.getInstance(), key);
-        PersistentDataContainer container = item.getItemMeta().getPersistentDataContainer();
+        PersistentDataContainer container = this.getItem().getItemMeta().getPersistentDataContainer();
 
         if (!container.has(nbtKey, PersistentDataType.INTEGER)) return 0;
 
@@ -102,10 +102,10 @@ public class NBTItem extends ItemStack {
     public void setDoubleFlag(String key, double value) {
         NamespacedKey nbtKey = new NamespacedKey(Bloons.getInstance(), key);
 
-        ItemMeta meta = item.getItemMeta();
+        ItemMeta meta = this.getItem().getItemMeta();
         meta.getPersistentDataContainer().set(nbtKey, PersistentDataType.DOUBLE, value);
 
-        this.item.setItemMeta(meta);
+        this.getItem().setItemMeta(meta);
     }
 
     /**
@@ -115,7 +115,7 @@ public class NBTItem extends ItemStack {
      */
     public double getDoubleFlag(String key) {
         NamespacedKey nbtKey = new NamespacedKey(Bloons.getInstance(), key);
-        PersistentDataContainer container = item.getItemMeta().getPersistentDataContainer();
+        PersistentDataContainer container = this.getItem().getItemMeta().getPersistentDataContainer();
 
         if (!container.has(nbtKey, PersistentDataType.DOUBLE)) return 0.0;
 
@@ -130,10 +130,10 @@ public class NBTItem extends ItemStack {
     public void setBooleanFlag(String key, boolean value) {
         NamespacedKey nbtKey = new NamespacedKey(Bloons.getInstance(), key);
 
-        ItemMeta meta = item.getItemMeta();
+        ItemMeta meta = this.getItem().getItemMeta();
         meta.getPersistentDataContainer().set(nbtKey, PersistentDataType.BOOLEAN, value);
 
-        this.item.setItemMeta(meta);
+        this.getItem().setItemMeta(meta);
     }
 
     /**
@@ -143,7 +143,7 @@ public class NBTItem extends ItemStack {
      */
     public boolean getBooleanFlag(String key) {
         NamespacedKey nbtKey = new NamespacedKey(Bloons.getInstance(), key);
-        PersistentDataContainer container = item.getItemMeta().getPersistentDataContainer();
+        PersistentDataContainer container = this.getItem().getItemMeta().getPersistentDataContainer();
 
         if (!container.has(nbtKey, PersistentDataType.BOOLEAN)) return false;
 

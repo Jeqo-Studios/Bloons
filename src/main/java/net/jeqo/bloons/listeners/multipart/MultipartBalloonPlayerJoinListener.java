@@ -4,12 +4,17 @@ import net.jeqo.bloons.balloon.multipart.balloon.MultipartBalloon;
 import net.jeqo.bloons.balloon.multipart.balloon.MultipartBalloonBuilder;
 import net.jeqo.bloons.balloon.multipart.MultipartBalloonType;
 import net.jeqo.bloons.events.balloon.multipart.MultipartBalloonEquipEvent;
-import net.jeqo.bloons.utils.MultipartBalloonManagement;
+import net.jeqo.bloons.utils.management.MultipartBalloonManagement;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 public class MultipartBalloonPlayerJoinListener implements Listener {
+
+    /**
+     * Checks if a multipart balloon needs to be added to the player joining
+     * @param event The event that is called when a player joins the server
+     */
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         MultipartBalloon equippedBalloon = MultipartBalloonManagement.getPlayerBalloon(event.getPlayer().getUniqueId());

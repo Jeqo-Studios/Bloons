@@ -11,9 +11,9 @@ import net.jeqo.bloons.configuration.ConfigConfiguration;
 import net.jeqo.bloons.events.balloon.multipart.MultipartBalloonEquipEvent;
 import net.jeqo.bloons.events.balloon.multipart.MultipartBalloonUnequipEvent;
 import net.jeqo.bloons.events.balloon.single.SingleBalloonEquipEvent;
-import net.jeqo.bloons.utils.BalloonManagement;
+import net.jeqo.bloons.utils.management.SingleBalloonManagement;
 import net.jeqo.bloons.utils.MessageTranslations;
-import net.jeqo.bloons.utils.MultipartBalloonManagement;
+import net.jeqo.bloons.utils.management.MultipartBalloonManagement;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
@@ -75,7 +75,7 @@ public class CommandEquip extends Command {
             if (multipartBalloonEquipEvent.isCancelled()) return false;
 
             MultipartBalloonBuilder builder = new MultipartBalloonBuilder(type, player);
-            BalloonManagement.removeBalloon(player, Bloons.getPlayerSingleBalloons().get(player.getUniqueId()));
+            SingleBalloonManagement.removeBalloon(player, Bloons.getPlayerSingleBalloons().get(player.getUniqueId()));
             MultipartBalloon balloon = builder.build();
             balloon.initialize();
             balloon.run();
@@ -94,7 +94,7 @@ public class CommandEquip extends Command {
             if (singleBalloonEquipEvent.isCancelled()) return false;
 
             // Check if a balloon needs to be added or removed
-            BalloonManagement.removeBalloon(player, Bloons.getPlayerSingleBalloons().get(player.getUniqueId()));
+            SingleBalloonManagement.removeBalloon(player, Bloons.getPlayerSingleBalloons().get(player.getUniqueId()));
             SingleBalloon.checkBalloonRemovalOrAdd(player, balloonID);
 
             String balloonName = messageTranslations.getString(ConfigConfiguration.SINGLE_BALLOON_SECTION + balloonID + ".name");

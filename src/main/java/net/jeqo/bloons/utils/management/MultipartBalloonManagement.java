@@ -1,4 +1,4 @@
-package net.jeqo.bloons.utils;
+package net.jeqo.bloons.utils.management;
 
 import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.balloon.multipart.balloon.MultipartBalloon;

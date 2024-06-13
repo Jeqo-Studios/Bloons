@@ -5,12 +5,11 @@ import net.jeqo.bloons.balloon.multipart.balloon.MultipartBalloon;
 import net.jeqo.bloons.balloon.single.SingleBalloon;
 import net.jeqo.bloons.commands.manager.Command;
 import net.jeqo.bloons.commands.manager.enums.CommandPermission;
-import net.jeqo.bloons.events.balloon.multipart.MultipartBalloonEquipEvent;
 import net.jeqo.bloons.events.balloon.multipart.MultipartBalloonUnequipEvent;
 import net.jeqo.bloons.events.balloon.single.SingleBalloonUnequipEvent;
-import net.jeqo.bloons.utils.BalloonManagement;
+import net.jeqo.bloons.utils.management.SingleBalloonManagement;
 import net.jeqo.bloons.utils.MessageTranslations;
-import net.jeqo.bloons.utils.MultipartBalloonManagement;
+import net.jeqo.bloons.utils.management.MultipartBalloonManagement;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -52,7 +51,7 @@ public class CommandForceUnequip extends Command {
 
             if (singleBalloonUnequipEvent.isCancelled()) return false;
 
-            BalloonManagement.removeBalloon(player, singleBalloon);
+            SingleBalloonManagement.removeBalloon(player, singleBalloon);
         }
 
         if (multipartBalloon != null) {
