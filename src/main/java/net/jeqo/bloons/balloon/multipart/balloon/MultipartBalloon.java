@@ -19,7 +19,9 @@ import java.util.List;
  */
 @Getter
 public class MultipartBalloon {
+    @Setter
     private MultipartBalloonType balloonType;
+    @Setter
     private Player balloonOwner;
 
     private final List<ModelNode> modelNodes = new ArrayList<>();
@@ -136,7 +138,7 @@ public class MultipartBalloon {
     }
 
     MultipartBalloon(MultipartBalloonBuilder builder) {
-        this.balloonType = builder.balloonType;
-        this.balloonOwner = builder.balloonOwner;
+        this.setBalloonType(builder.balloonType);
+        this.setBalloonOwner(builder.balloonOwner);
     }
 }

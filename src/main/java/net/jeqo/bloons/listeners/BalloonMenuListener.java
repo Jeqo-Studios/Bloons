@@ -55,12 +55,12 @@ public class BalloonMenuListener implements Listener {
 //            BalloonManagement.removeBalloon(player, Bloons.getPlayerSingleBalloons().get(player.getUniqueId()));
 //            SingleBalloon.checkBalloonRemovalOrAdd(player, localizedName);
             MultipartBalloonType type = Bloons.getBalloonCore().getBalloon(localizedName);
+            MultipartBalloon previousBalloon = MultipartBalloonManagement.getPlayerBalloon(player.getUniqueId());
+            if (previousBalloon != null) {
+                previousBalloon.destroy();
+                MultipartBalloonManagement.removePlayerBalloon(player.getUniqueId());
+            }
             if (type != null) {
-                MultipartBalloon previousBalloon = Bloons.getPlayerBalloon(player.getUniqueId());
-                if (previousBalloon != null) {
-                    previousBalloon.destroy();
-                    Bloons.removePlayerBalloon(player.getUniqueId());
-                }
 
                 MultipartBalloonBuilder builder = new MultipartBalloonBuilder(type, player);
                 BalloonManagement.removeBalloon(player, Bloons.getPlayerSingleBalloons().get(player.getUniqueId()));
@@ -68,13 +68,8 @@ public class BalloonMenuListener implements Listener {
                 balloon.initialize();
                 balloon.run();
 
-                Bloons.setPlayerBalloon(player.getUniqueId(), balloon);
+                MultipartBalloonManagement.setPlayerBalloon(player.getUniqueId(), balloon);
             } else {
-                MultipartBalloon previousBalloon = Bloons.getPlayerBalloon(player.getUniqueId());
-                if (previousBalloon != null) {
-                    previousBalloon.destroy();
-                    Bloons.removePlayerBalloon(player.getUniqueId());
-                }
 
                 // Check if a balloon needs to be added or removed
                 BalloonManagement.removeBalloon(player, Bloons.getPlayerSingleBalloons().get(player.getUniqueId()));

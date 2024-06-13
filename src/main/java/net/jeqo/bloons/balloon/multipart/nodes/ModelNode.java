@@ -17,18 +17,14 @@ import static java.lang.Math.sin;
 /**
  * Handles the movement and functionality of a single node, model, or armor stand in a multipart balloon
  */
-@Getter
+@Getter @Setter
 public class ModelNode {
-
-    @Setter
     public ModelNodeVector pointA;
-    @Setter
     public ModelNodeVector pointB = new ModelNodeVector();
 
     public ModelNode parent = null;
     public ModelNode child = null;
 
-    @Setter
     ArmorStand balloonArmorStand;
 
     float index;
@@ -47,14 +43,14 @@ public class ModelNode {
      * @param index Index number of segment.
      */
     public ModelNode(float x, float y, float z, float length, int index, MultipartBalloonType balloonType, Player balloonOwner, double maxNodeJointAngle, double yAxisInterpolation, double turningSplineInterpolation) {
-        this.length = length;
-        this.index = index;
-        this.balloonType = balloonType;
-        this.balloonOwner = balloonOwner;
-        this.pointA = new ModelNodeVector(x, y, z);
-        this.maxNodeJointAngle = maxNodeJointAngle;
-        this.yAxisInterpolation = yAxisInterpolation;
-        this.turningSplineInterpolation = turningSplineInterpolation;
+        this.setLength(length);
+        this.setIndex(index);
+        this.setBalloonType(balloonType);
+        this.setBalloonOwner(balloonOwner);
+        this.setPointA(new ModelNodeVector(x, y, z));
+        this.setMaxNodeJointAngle(maxNodeJointAngle);
+        this.setYAxisInterpolation(yAxisInterpolation);
+        this.setTurningSplineInterpolation(turningSplineInterpolation);
 
         this.setBalloonArmorStand(this.getBalloonOwner().getWorld().spawn(new Location(this.getBalloonOwner().getWorld(), x, balloonOwner.getLocation().getY() + 2, z), ArmorStand.class)); // Change Y value to the right height
         this.getBalloonArmorStand().setVisible(false);
@@ -72,15 +68,15 @@ public class ModelNode {
      * @param index Index number.
      */
     public ModelNode(ModelNode parent, float length, int index, MultipartBalloonType balloonType, Player balloonOwner, double maxNodeJointAngle, double yAxisInterpolation, double turningSplineInterpolation) {
-        this.parent = parent;
-        this.pointA = parent.pointB.copy();
-        this.length = length;
-        this.index = index;
-        this.balloonType = balloonType;
-        this.balloonOwner = balloonOwner;
-        this.maxNodeJointAngle = maxNodeJointAngle;
-        this.yAxisInterpolation = yAxisInterpolation;
-        this.turningSplineInterpolation = turningSplineInterpolation;
+        this.setParent(parent);
+        this.setPointA(parent.getPointB().copy());
+        this.setLength(length);
+        this.setIndex(index);
+        this.setBalloonType(balloonType);
+        this.setBalloonOwner(balloonOwner);
+        this.setMaxNodeJointAngle(maxNodeJointAngle);
+        this.setYAxisInterpolation(yAxisInterpolation);
+        this.setTurningSplineInterpolation(turningSplineInterpolation);
 
         this.setBalloonArmorStand(this.getBalloonOwner().getWorld().spawn(new Location(this.getBalloonOwner().getWorld(), this.getPointA().x, balloonOwner.getLocation().getY() + 2, this.getPointA().z), ArmorStand.class)); // Change Y value to the right height
         this.getBalloonArmorStand().setVisible(false);

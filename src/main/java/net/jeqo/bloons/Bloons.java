@@ -85,12 +85,12 @@ public final class Bloons extends JavaPlugin {
         }
 
         // Unregister all multipart balloons
-        for (MultipartBalloon owner : playerMultipartBalloons.values()) {
+        for (MultipartBalloon owner : getPlayerMultipartBalloons().values()) {
             owner.destroy();
         }
 
         // Clear all balloon data
-        playerMultipartBalloons.clear();
+        getPlayerMultipartBalloons().clear();
 
         // Unregister all listeners in the manager
         getListenerCore().unregisterListeners();
@@ -107,23 +107,5 @@ public final class Bloons extends JavaPlugin {
                 Logger.logUpdateNotificationConsole();
             }
         });
-    }
-
-    // Add a method to set a player's balloon
-    public static void setPlayerBalloon(UUID playerId, MultipartBalloon balloon) {
-        playerMultipartBalloons.put(playerId, balloon);
-    }
-
-    // Add a method to get a player's balloon
-    public static MultipartBalloon getPlayerBalloon(UUID playerId) {
-        return playerMultipartBalloons.get(playerId);
-    }
-
-    // Add a method to remove a player's balloon
-    public static void removePlayerBalloon(UUID playerId) {
-        MultipartBalloon balloon = playerMultipartBalloons.remove(playerId);
-        if (balloon != null) {
-            balloon.destroy();
-        }
     }
 }

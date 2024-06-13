@@ -15,17 +15,16 @@ import org.bukkit.inventory.ItemStack;
  */
 @Getter @Setter
 public class MultipartBalloonModel {
-
-    private final BalloonModelType modelType;
-    private final String material;
-    private final String color;
-    private Integer customModelData = null;
+    private BalloonModelType modelType;
+    private String material;
+    private String color;
+    private Integer customModelData;
 
     public MultipartBalloonModel(BalloonModelType modelType, String material, String color, int customModelData) {
-        this.modelType = modelType;
-        this.material = material;
-        this.color = color;
-        this.customModelData = customModelData;
+        this.setModelType(modelType);
+        this.setMaterial(material);
+        this.setColor(color);
+        this.setCustomModelData(customModelData);
     }
 
     /**
