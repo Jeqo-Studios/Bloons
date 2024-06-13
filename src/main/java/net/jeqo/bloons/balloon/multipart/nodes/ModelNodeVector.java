@@ -2,6 +2,9 @@ package net.jeqo.bloons.balloon.multipart.nodes;
 
 import java.io.Serializable;
 
+/**
+ * A custom vector to store the axis of a balloon node
+ */
 public class ModelNodeVector implements Serializable {
     /**
      * Segment vector axis.

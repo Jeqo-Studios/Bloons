@@ -36,13 +36,13 @@ public class CommandEquip extends Command {
         String balloonID = args[0];
         MessageTranslations messageTranslations = new MessageTranslations(this.getPlugin());
 
-        if (!this.getPlugin().getConfig().contains("balloons." + balloonID)) {
+        if (!this.getPlugin().getConfig().contains("single-balloons." + balloonID)) {
             Component balloonNotFoundMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("balloon-not-found"));
             player.sendMessage(balloonNotFoundMessage);
             return false;
         }
 
-        if (!player.hasPermission(this.getPlugin().getConfig().getString("balloons." + balloonID + ".permission", "balloons." + balloonID))) {
+        if (!player.hasPermission(this.getPlugin().getConfig().getString("single-balloons." + balloonID + ".permission", "single-balloons." + balloonID))) {
             Component noPermissionMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("no-permission"));
             player.sendMessage(noPermissionMessage);
             return false;
@@ -58,7 +58,7 @@ public class CommandEquip extends Command {
         SingleBalloon.checkBalloonRemovalOrAdd(player, balloonID);
         player.playSound(player.getLocation(), Sound.ENTITY_CHICKEN_EGG, 1, 1);
 
-        String balloonName = messageTranslations.getString("balloons." + balloonID + ".name");
+        String balloonName = messageTranslations.getString("single-balloons." + balloonID + ".name");
         Component equippedMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("equipped", balloonName));
         player.sendMessage(equippedMessage);
 

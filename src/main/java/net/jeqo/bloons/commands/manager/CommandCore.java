@@ -174,7 +174,7 @@ public class CommandCore implements CommandExecutor {
      */
     private boolean shouldAddBalloon(Player player, String key) {
         if (this.getMessageTranslations().getString("hide-balloons-without-permission").equalsIgnoreCase("true")) {
-            return player.hasPermission(this.getMessageTranslations().getString("balloons." + key + ".permission"));
+            return player.hasPermission(this.getMessageTranslations().getString("single-balloons." + key + ".permission"));
         }
         return true;
     }
@@ -200,7 +200,7 @@ public class CommandCore implements CommandExecutor {
         ItemMeta meta = item.getItemMeta();
         if (meta == null) return null;
 
-        meta.setLocalizedName(this.getMessageTranslations().getString("balloons." + key + ".id"));
+        meta.setLocalizedName(this.getMessageTranslations().getString("single-balloons." + key + ".id"));
         setBalloonLore(meta, keySection);
         setBalloonDisplayName(meta, keySection);
         meta.setCustomModelData(keySection.getInt("custom-model-data"));

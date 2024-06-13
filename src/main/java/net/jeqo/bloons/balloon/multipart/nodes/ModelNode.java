@@ -1,6 +1,7 @@
 package net.jeqo.bloons.balloon.multipart.nodes;
 
-import net.jeqo.bloons.Bloons;
+import lombok.Getter;
+import lombok.Setter;
 import net.jeqo.bloons.balloon.multipart.MultipartBalloonType;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -10,19 +11,24 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.util.EulerAngle;
 import org.bukkit.util.Vector;
 
-import java.util.Objects;
-
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 
+/**
+ * Handles the movement and functionality of a single node, model, or armor stand in a multipart balloon
+ */
+@Getter
 public class ModelNode {
 
-    ModelNodeVector pointA;
-    ModelNodeVector pointB = new ModelNodeVector();
+    @Setter
+    public ModelNodeVector pointA;
+    @Setter
+    public ModelNodeVector pointB = new ModelNodeVector();
 
     public ModelNode parent = null;
     public ModelNode child = null;
 
+    @Setter
     ArmorStand balloonArmorStand;
 
     float index;
@@ -50,18 +56,13 @@ public class ModelNode {
         this.yAxisInterpolation = yAxisInterpolation;
         this.turningSplineInterpolation = turningSplineInterpolation;
 
-        balloonArmorStand = Objects.requireNonNull(Bloons.getInstance().getServer().getWorld("world")).spawn(new Location(Bloons.getInstance().getServer().getWorld("world"), x, balloonOwner.getLocation().getY() + 2, z), ArmorStand.class); // Change Y value to the right height
-        balloonArmorStand.setVisible(false);
-
-        // set leadh holder to balloon owner after a 5 second delay
-        Bukkit.getScheduler().runTaskLater(Bloons.getInstance(), () -> {
-            balloonArmorStand.setLeashHolder(balloonOwner);
-        }, 100L);
-//        balloonArmorStand.setLeashHolder(balloonOwner);
+        this.setBalloonArmorStand(this.getBalloonOwner().getWorld().spawn(new Location(this.getBalloonOwner().getWorld(), x, balloonOwner.getLocation().getY() + 2, z), ArmorStand.class)); // Change Y value to the right height
+        this.getBalloonArmorStand().setVisible(false);
+        this.getBalloonArmorStand().setLeashHolder(balloonOwner);
 
         float dx = length * (float)cos(0);
         float dz = length * (float)sin(0);
-        this.pointB.set(this.pointA.x + dx, this.pointA.y, this.pointA.z + dz);
+        this.getPointB().set(this.getPointA().x + dx, this.getPointA().y, this.getPointA().z + dz);
     }
 
     /**
@@ -81,22 +82,23 @@ public class ModelNode {
         this.yAxisInterpolation = yAxisInterpolation;
         this.turningSplineInterpolation = turningSplineInterpolation;
 
-        balloonArmorStand = Objects.requireNonNull(Bloons.getInstance().getServer().getWorld("world")).spawn(new Location(Bloons.getInstance().getServer().getWorld("world"), this.pointA.x, balloonOwner.getLocation().getY() + 2, this.pointA.z), ArmorStand.class); // Change Y value to the right height
-        balloonArmorStand.setVisible(false);
+        this.setBalloonArmorStand(this.getBalloonOwner().getWorld().spawn(new Location(this.getBalloonOwner().getWorld(), this.getPointA().x, balloonOwner.getLocation().getY() + 2, this.getPointA().z), ArmorStand.class)); // Change Y value to the right height
+        this.getBalloonArmorStand().setVisible(false);
+        this.getBalloonArmorStand().setLeashHolder(balloonOwner);
 
         float dx = length * (float)cos(0);
         float dz = length * (float)sin(0);
-        this.pointB.set(this.pointA.x + dx, this.pointA.z, this.pointA.z + dz);
+        this.getPointB().set(this.getPointA().x + dx, this.getPointA().z, this.getPointA().z + dz);
     }
 
     /**
      * Follows to the child's point A location.
      */
     public void follow() {
-        float targetX = this.child.pointB.x;
-        float targetY = this.child.pointB.y;
-        float targetZ = this.child.pointB.z;
-        follow(targetX, targetY, targetZ);
+        float targetX = this.getChild().getPointB().x;
+        float targetY = this.getChild().getPointB().y;
+        float targetZ = this.getChild().getPointB().z;
+        this.follow(targetX, targetY, targetZ);
     }
 
     /**
@@ -107,11 +109,11 @@ public class ModelNode {
      */
     public void follow(float targetX, float targetY, float targetZ) {
         ModelNodeVector target = new ModelNodeVector(targetX, targetY, targetZ);
-        ModelNodeVector dir = ModelNodeVector.subtract(target, pointB);
+        ModelNodeVector dir = ModelNodeVector.subtract(target, this.getPointB());
 
         double targetAngle = dir.heading();
-        if (this.child != null){
-            double childAngle = child.heading();
+        if (this.getChild() != null){
+            double childAngle = this.getChild().heading();
 
             double difference = Math.abs(targetAngle - childAngle);
 
@@ -121,25 +123,25 @@ public class ModelNode {
 
             int sign = (targetAngle - childAngle >= 0 && targetAngle - childAngle <= Math.toRadians(180)) || (targetAngle - childAngle <= Math.toRadians(-180) && targetAngle - childAngle >= Math.toRadians(-360)) ? 1 : -1;
 
-            double maxAngle = Math.toRadians(this.maxNodeJointAngle); // Change this based on how much freedom you want (35 is a good number)
+            double maxAngle = Math.toRadians(this.getMaxNodeJointAngle()); // Change this based on how much freedom you want (35 is a good number)
 
             if (difference > maxAngle){
                 targetAngle = (childAngle + (maxAngle * sign)) % (Math.PI * 2.0);
             }
         }
 
-        pointA = target;
+        this.setPointA(target);
 
         // Smoothly interpolate the angle
         double currentAngle = this.heading();
-        double interpolatedAngle = lerpAngle(currentAngle, targetAngle, this.turningSplineInterpolation); // Higher = snappier Lower = less snappy
+        double interpolatedAngle = lerpAngle(currentAngle, targetAngle, this.getTurningSplineInterpolation()); // Higher = snappier Lower = less snappy
 
-        double interpolatedDx = length * cos((float) interpolatedAngle);
-        double interpolatedDz = length * sin((float) interpolatedAngle);
+        double interpolatedDx = this.getLength() * cos((float) interpolatedAngle);
+        double interpolatedDz = this.getLength() * sin((float) interpolatedAngle);
 
-        double interpolatedY = lerpVal(this.pointB.y, this.pointA.y, this.yAxisInterpolation); // Change this to make it smoother or to make it more sudden, this seems to be the sweet spot
+        double interpolatedY = lerpVal(this.getPointB().y, this.getPointA().y, this.getYAxisInterpolation()); // Change this to make it smoother or to make it more sudden, this seems to be the sweet spot
 
-        pointB.set((float) (pointA.x - interpolatedDx), (float) interpolatedY, (float) (pointA.z - interpolatedDz));
+        this.getPointB().set((float) (this.getPointA().x - interpolatedDx), (float) interpolatedY, (float) (this.getPointA().z - interpolatedDz));
     }
 
     /**
@@ -172,7 +174,7 @@ public class ModelNode {
     }
 
     public float heading(){
-        return ModelNodeVector.subtract(pointA, pointB).heading();
+        return ModelNodeVector.subtract(this.getPointA(), this.getPointB()).heading();
     }
 
     /**
@@ -200,26 +202,26 @@ public class ModelNode {
         /*
          * This will set the head of the armor stand based on the balloon type
          */
-        if (index == this.balloonType.getNodeCount() - 1) {
-            this.balloonArmorStand.setItem(EquipmentSlot.HEAD, this.balloonType.getHeadModel().getFinalizedModel());
-        } else if (index == 0) {
-            this.balloonArmorStand.setItem(EquipmentSlot.HEAD, this.balloonType.getTailModel().getFinalizedModel());
+        if (this.getIndex() == this.getBalloonType().getNodeCount() - 1) {
+            this.getBalloonArmorStand().setItem(EquipmentSlot.HEAD, this.getBalloonType().getHeadModel().getFinalizedModel());
+        } else if (this.getIndex() == 0) {
+            this.getBalloonArmorStand().setItem(EquipmentSlot.HEAD, this.getBalloonType().getTailModel().getFinalizedModel());
         } else {
-            this.balloonArmorStand.setItem(EquipmentSlot.HEAD, this.balloonType.getBodyModel().getFinalizedModel());
+            this.getBalloonArmorStand().setItem(EquipmentSlot.HEAD, this.getBalloonType().getBodyModel().getFinalizedModel());
         }
 
-        Vector pointAVector = new Vector(this.pointA.x, this.pointA.y, this.pointA.z);
-        Vector pointBVector = new Vector(this.pointB.x, this.pointB.y, this.pointB.z);
+        Vector pointAVector = new Vector(this.getPointA().x, this.getPointA().y, this.getPointA().z);
+        Vector pointBVector = new Vector(this.getPointB().x, this.getPointB().y, this.getPointB().z);
 
         // Set the direction for the armor stand to face
-        this.balloonArmorStand.setHeadPose(calculateHeadPose(pointAVector, pointBVector));
+        this.getBalloonArmorStand().setHeadPose(calculateHeadPose(pointAVector, pointBVector));
         // Teleport it to the correct location
-        this.balloonArmorStand.teleport(new Location(this.balloonArmorStand.getWorld(), (pointA.x + pointB.x) / 2.0, (pointA.y + pointB.y) / 2.0, (pointA.z + pointB.z) / 2.0)); // Change Y value to the right height
+        this.getBalloonArmorStand().teleport(new Location(this.getBalloonArmorStand().getWorld(), (this.getPointA().x + this.getPointB().x) / 2.0, (this.getPointA().y + this.getPointB().y) / 2.0, (this.getPointA().z + this.getPointB().z) / 2.0)); // Change Y value to the right height
     }
 
     public void destroy() {
-        if (balloonArmorStand != null && !balloonArmorStand.isDead()) {
-            balloonArmorStand.remove();
+        if (this.getBalloonArmorStand() != null && !this.getBalloonArmorStand().isDead()) {
+            this.getBalloonArmorStand().remove();
         }
     }
 }

@@ -1,12 +1,12 @@
 package net.jeqo.bloons.listeners;
 
 import net.jeqo.bloons.Bloons;
+import net.jeqo.bloons.balloon.multipart.balloon.MultipartBalloon;
+import net.jeqo.bloons.balloon.multipart.balloon.MultipartBalloonBuilder;
+import net.jeqo.bloons.balloon.multipart.MultipartBalloonType;
 import net.jeqo.bloons.balloon.single.SingleBalloon;
 import net.jeqo.bloons.gui.menus.BalloonMenu;
-import net.jeqo.bloons.utils.BalloonManagement;
-import net.jeqo.bloons.utils.ColorCodeConverter;
-import net.jeqo.bloons.utils.ColorManagement;
-import net.jeqo.bloons.utils.MessageTranslations;
+import net.jeqo.bloons.utils.*;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -50,9 +50,36 @@ public class BalloonMenuListener implements Listener {
             if (displayName.equals(ColorCodeConverter.adventureToColorCode(messageTranslations.getString("buttons.next-page.name")))) event.setCancelled(true);
             if (displayName.equals(ColorCodeConverter.adventureToColorCode(messageTranslations.getString("buttons.unequip.name")))) event.setCancelled(true);
 
-            // Check if a balloon needs to be added or removed
-            BalloonManagement.removeBalloon(player, Bloons.getPlayerSingleBalloons().get(player.getUniqueId()));
-            SingleBalloon.checkBalloonRemovalOrAdd(player, localizedName);
+//            if ((NBTItem) event.getCurrentItem().get
+//            // Check if a balloon needs to be added or removed
+//            BalloonManagement.removeBalloon(player, Bloons.getPlayerSingleBalloons().get(player.getUniqueId()));
+//            SingleBalloon.checkBalloonRemovalOrAdd(player, localizedName);
+            MultipartBalloonType type = Bloons.getBalloonCore().getBalloon(localizedName);
+            if (type != null) {
+                MultipartBalloon previousBalloon = Bloons.getPlayerBalloon(player.getUniqueId());
+                if (previousBalloon != null) {
+                    previousBalloon.destroy();
+                    Bloons.removePlayerBalloon(player.getUniqueId());
+                }
+
+                MultipartBalloonBuilder builder = new MultipartBalloonBuilder(type, player);
+                BalloonManagement.removeBalloon(player, Bloons.getPlayerSingleBalloons().get(player.getUniqueId()));
+                MultipartBalloon balloon = builder.build();
+                balloon.initialize();
+                balloon.run();
+
+                Bloons.setPlayerBalloon(player.getUniqueId(), balloon);
+            } else {
+                MultipartBalloon previousBalloon = Bloons.getPlayerBalloon(player.getUniqueId());
+                if (previousBalloon != null) {
+                    previousBalloon.destroy();
+                    Bloons.removePlayerBalloon(player.getUniqueId());
+                }
+
+                // Check if a balloon needs to be added or removed
+                BalloonManagement.removeBalloon(player, Bloons.getPlayerSingleBalloons().get(player.getUniqueId()));
+                SingleBalloon.checkBalloonRemovalOrAdd(player, localizedName);
+            }
 
             // Send equipped message and play sound
             player.playSound(player.getLocation(), Sound.ENTITY_CHICKEN_EGG, 1, 1);

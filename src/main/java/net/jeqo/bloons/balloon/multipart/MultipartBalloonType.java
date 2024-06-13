@@ -3,8 +3,11 @@ package net.jeqo.bloons.balloon.multipart;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * An object to store the data of a balloon created in the config.yml file
+ */
 @Getter @Setter
-public abstract class MultipartBalloonType {
+public class MultipartBalloonType {
 
     private final String id;
     private final String permission;

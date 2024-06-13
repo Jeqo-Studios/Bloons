@@ -39,7 +39,7 @@ public class CommandForceEquip extends Command {
         }
 
         String balloonID = args[1];
-        if (!this.getPlugin().getConfig().contains("balloons." + balloonID)) {
+        if (!this.getPlugin().getConfig().contains("single-balloons." + balloonID)) {
             Component balloonNotFoundMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("balloon-not-found"));
             sender.sendMessage(balloonNotFoundMessage);
             return false;
@@ -51,7 +51,7 @@ public class CommandForceEquip extends Command {
         if (singleBalloonForceEquipEvent.isCancelled()) return false;
 
         SingleBalloon.checkBalloonRemovalOrAdd(player.getPlayer(), balloonID);
-        String balloonName = messageTranslations.getString("balloons." + balloonID + ".name");
+        String balloonName = messageTranslations.getString("single-balloons." + balloonID + ".name");
         Component equippedMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("equipped", balloonName));
         player.sendMessage(equippedMessage);
         return false;

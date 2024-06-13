@@ -1,8 +1,8 @@
 package net.jeqo.bloons.listeners.multipart;
 
 import net.jeqo.bloons.Bloons;
-import net.jeqo.bloons.balloon.multipart.MultipartBalloon;
-import net.jeqo.bloons.balloon.multipart.MultipartBalloonBuilder;
+import net.jeqo.bloons.balloon.multipart.balloon.MultipartBalloon;
+import net.jeqo.bloons.balloon.multipart.balloon.MultipartBalloonBuilder;
 import net.jeqo.bloons.balloon.multipart.MultipartBalloonType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

@@ -15,7 +15,7 @@ public class CommandTabCompleter implements TabCompleter {
         if (sender.hasPermission("bloons.reload")) {
             if (args.length == 3) {
                 if (args[0].equalsIgnoreCase("fequip")) {
-                    return Objects.requireNonNull(Bloons.getInstance().getConfig().getConfigurationSection("balloons")).getKeys(false).stream().toList();
+                    return Objects.requireNonNull(Bloons.getInstance().getConfig().getConfigurationSection("single-balloons")).getKeys(false).stream().toList();
                 } else {
                     return List.of("");
                 }
@@ -27,7 +27,7 @@ public class CommandTabCompleter implements TabCompleter {
                 } else if (args[0].equalsIgnoreCase("funequip")) {
                     return null;
                 } else if (args[0].equalsIgnoreCase("equip")) {
-                    return Objects.requireNonNull(Bloons.getInstance().getConfig().getConfigurationSection("balloons")).getKeys(false).stream().toList();
+                    return Objects.requireNonNull(Bloons.getInstance().getConfig().getConfigurationSection("single-balloons")).getKeys(false).stream().toList();
                 } else if (args[0].equalsIgnoreCase("fequip")) {
                     return null;
                 }
@@ -46,7 +46,7 @@ public class CommandTabCompleter implements TabCompleter {
                 if (args[0].equalsIgnoreCase("unequip")) {
                     return List.of("");
                 }
-                return Objects.requireNonNull(Bloons.getInstance().getConfig().getConfigurationSection("balloons")).getKeys(false).stream().toList();
+                return Objects.requireNonNull(Bloons.getInstance().getConfig().getConfigurationSection("single-balloons")).getKeys(false).stream().toList();
             }
             return List.of("equip", "unequip");
         }

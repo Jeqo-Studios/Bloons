@@ -137,7 +137,7 @@ public class SingleBalloon extends BukkitRunnable {
     public ItemStack getConfiguredBalloonVisual(String balloonID) {
         MessageTranslations messageTranslations = new MessageTranslations(Bloons.getInstance());
 
-        ConfigurationSection balloonConfiguration = Bloons.getInstance().getConfig().getConfigurationSection("balloons." + balloonID);
+        ConfigurationSection balloonConfiguration = Bloons.getInstance().getConfig().getConfigurationSection("single-balloons." + balloonID);
 
         if (balloonConfiguration == null) {
             Logger.logWarning("The balloon " + balloonID + " is not set in the configuration!");
@@ -153,10 +153,10 @@ public class SingleBalloon extends BukkitRunnable {
         ItemMeta meta = item.getItemMeta();
         meta.setCustomModelData(balloonConfiguration.getInt("custom-model-data"));
 
-        if (messageTranslations.getString("balloons." + balloonID + ".color") != null) {
-            if (!messageTranslations.getString("balloons." + balloonID + ".color").equalsIgnoreCase("potion")) {
+        if (messageTranslations.getString("single-balloons." + balloonID + ".color") != null) {
+            if (!messageTranslations.getString("single-balloons." + balloonID + ".color").equalsIgnoreCase("potion")) {
                 LeatherArmorMeta leatherArmorMeta = (LeatherArmorMeta) meta;
-                leatherArmorMeta.setColor(ColorManagement.hexToColor(messageTranslations.getString("balloons." + balloonID + ".color")));
+                leatherArmorMeta.setColor(ColorManagement.hexToColor(messageTranslations.getString("single-balloons." + balloonID + ".color")));
             } else {
                 Logger.logWarning("The color of the balloonVisual " + balloonID + " is set, but the material is not a leather item!");
             }

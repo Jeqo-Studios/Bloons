@@ -2,7 +2,8 @@ package net.jeqo.bloons;
 
 import lombok.Getter;
 import lombok.Setter;
-import net.jeqo.bloons.balloon.multipart.MultipartBalloon;
+import net.jeqo.bloons.balloon.BalloonCore;
+import net.jeqo.bloons.balloon.multipart.balloon.MultipartBalloon;
 import net.jeqo.bloons.balloon.single.SingleBalloon;
 import net.jeqo.bloons.commands.manager.CommandCore;
 import net.jeqo.bloons.listeners.*;
@@ -24,6 +25,8 @@ public final class Bloons extends JavaPlugin {
     private static CommandCore commandCore;
     @Getter @Setter
     private static ListenerCore listenerCore;
+    @Getter @Setter
+    private static BalloonCore balloonCore;
 
     @Getter @Setter
     public static HashMap<UUID, SingleBalloon> playerSingleBalloons = new HashMap<>();
@@ -44,6 +47,10 @@ public final class Bloons extends JavaPlugin {
         // Register core managers within the plugin
         setCommandCore(new CommandCore(getInstance()));
         setListenerCore(new ListenerCore(getInstance()));
+        setBalloonCore(new BalloonCore(getInstance()));
+
+        // Initialize multipart balloons
+        getBalloonCore().initialize();
 
         // Stage listeners
         getListenerCore().stageListener(new BalloonPlayerListener());
