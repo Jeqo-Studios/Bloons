@@ -35,6 +35,14 @@ public class ColorManagement {
     }
 
     /**
+     * Checks if a string is a valid hex code
+     * @param string The string to check
+     */
+    public static boolean isHexCode(String string) {
+        return string.matches("#[a-fA-F0-9]{6}");
+    }
+
+    /**
      * Converts a hex string to a Bukkit color
      * @param string The hex string to convert
      * @return The Bukkit color

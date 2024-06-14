@@ -1,12 +1,17 @@
 package net.jeqo.bloons.listeners;
 
 import net.jeqo.bloons.Bloons;
-import net.jeqo.bloons.balloon.SingleBalloon;
+import net.jeqo.bloons.balloon.multipart.balloon.MultipartBalloon;
+import net.jeqo.bloons.balloon.multipart.balloon.MultipartBalloonBuilder;
+import net.jeqo.bloons.balloon.multipart.MultipartBalloonType;
+import net.jeqo.bloons.balloon.single.SingleBalloon;
+import net.jeqo.bloons.events.balloon.multipart.MultipartBalloonEquipEvent;
+import net.jeqo.bloons.events.balloon.multipart.MultipartBalloonUnequipEvent;
+import net.jeqo.bloons.events.balloon.single.SingleBalloonEquipEvent;
 import net.jeqo.bloons.gui.menus.BalloonMenu;
-import net.jeqo.bloons.utils.BalloonManagement;
-import net.jeqo.bloons.utils.ColorCodeConverter;
-import net.jeqo.bloons.utils.ColorManagement;
-import net.jeqo.bloons.utils.MessageTranslations;
+import net.jeqo.bloons.utils.*;
+import net.jeqo.bloons.utils.management.MultipartBalloonManagement;
+import net.jeqo.bloons.utils.management.SingleBalloonManagement;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -25,10 +30,10 @@ public class BalloonMenuListener implements Listener {
 
         if (!event.getView().getTitle().equals(ColorManagement.fromHex(messageTranslations.getString("menu-title")))) return;
         if(!(event.getWhoClicked() instanceof Player player)) return;
-        if(!BalloonMenu.users.containsKey(player.getUniqueId())) return;
+        if(!BalloonMenu.getUsers().containsKey(player.getUniqueId())) return;
 
         // The users inside the GUI
-        BalloonMenu inventory = BalloonMenu.users.get(player.getUniqueId());
+        BalloonMenu inventory = BalloonMenu.getUsers().get(player.getUniqueId());
 
         // If the current item is null and has no meta, return
         if(event.getCurrentItem() == null) return;
@@ -50,9 +55,44 @@ public class BalloonMenuListener implements Listener {
             if (displayName.equals(ColorCodeConverter.adventureToColorCode(messageTranslations.getString("buttons.next-page.name")))) event.setCancelled(true);
             if (displayName.equals(ColorCodeConverter.adventureToColorCode(messageTranslations.getString("buttons.unequip.name")))) event.setCancelled(true);
 
-            // Check if a balloon needs to be added or removed
-            BalloonManagement.removeBalloon(player, Bloons.getPlayerBalloons().get(player.getUniqueId()));
-            SingleBalloon.checkBalloonRemovalOrAdd(player, localizedName);
+            // Spawn the proper type of balloon (either single or multipart)
+            MultipartBalloonType type = Bloons.getBalloonCore().getBalloon(localizedName);
+            MultipartBalloon previousBalloon = MultipartBalloonManagement.getPlayerBalloon(player.getUniqueId());
+            if (previousBalloon != null) {
+                MultipartBalloonUnequipEvent multipartBalloonEquipEvent = new MultipartBalloonUnequipEvent(player, previousBalloon);
+                multipartBalloonEquipEvent.callEvent();
+
+                if (multipartBalloonEquipEvent.isCancelled()) return;
+
+                previousBalloon.destroy();
+                MultipartBalloonManagement.removePlayerBalloon(player.getUniqueId());
+            }
+            if (type != null) {
+                MultipartBalloonBuilder builder = new MultipartBalloonBuilder(type, player);
+                SingleBalloonManagement.removeBalloon(player, Bloons.getPlayerSingleBalloons().get(player.getUniqueId()));
+                MultipartBalloon balloon = builder.build();
+
+                // Call the equip event and check if it's cancelled, if it is, don't spawn the balloon or do anything
+                MultipartBalloonEquipEvent multipartBalloonEquipEvent = new MultipartBalloonEquipEvent(player);
+                multipartBalloonEquipEvent.callEvent();
+
+                if (multipartBalloonEquipEvent.isCancelled()) return;
+
+                balloon.initialize();
+                balloon.run();
+
+                MultipartBalloonManagement.setPlayerBalloon(player.getUniqueId(), balloon);
+            } else {
+                // Call the equip event and check if it's cancelled, if it is, don't spawn the balloon or do anything
+                SingleBalloonEquipEvent singleBalloonEquipEvent = new SingleBalloonEquipEvent(player);
+                singleBalloonEquipEvent.callEvent();
+
+                if (singleBalloonEquipEvent.isCancelled()) return;
+
+                // Check if a balloon needs to be added or removed
+                SingleBalloonManagement.removeBalloon(player, Bloons.getPlayerSingleBalloons().get(player.getUniqueId()));
+                SingleBalloon.checkBalloonRemovalOrAdd(player, localizedName);
+            }
 
             // Send equipped message and play sound
             player.playSound(player.getLocation(), Sound.ENTITY_CHICKEN_EGG, 1, 1);
@@ -69,14 +109,14 @@ public class BalloonMenuListener implements Listener {
         if(displayName.equals(ColorCodeConverter.adventureToColorCode(messageTranslations.getString("buttons.next-page.name")))) {
             event.setCancelled(true);
 
-            if (inventory.currpage >= inventory.pages.size()-1) {
+            if (inventory.getCurrentPageIndex() >= inventory.getPages().size()-1) {
                 // If they're at the last page, play error sound
                 ((Player) event.getWhoClicked()).playSound(event.getWhoClicked().getLocation(), Sound.BLOCK_NOTE_BLOCK_DIDGERIDOO, 1, 1);
             } else {
                 // If they're within page bounds that can change, go to the next page
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BIT, 1, 1);
-                inventory.currpage += 1;
-                player.openInventory(inventory.pages.get(inventory.currpage));
+                inventory.currentPageIndex += 1;
+                player.openInventory(inventory.getPages().get(inventory.getCurrentPageIndex()));
             }
         }
 
@@ -84,11 +124,11 @@ public class BalloonMenuListener implements Listener {
         else if(displayName.equals(ColorCodeConverter.adventureToColorCode(messageTranslations.getString("buttons.previous-page.name")))) {
             event.setCancelled(true);
 
-            if (inventory.currpage > 0) {
+            if (inventory.getCurrentPageIndex() > 0) {
                 // If they're within page bounds that can change, go to the previous page
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BIT, 1, 1);
-                inventory.currpage -= 1;
-                player.openInventory(inventory.pages.get(inventory.currpage));
+                inventory.currentPageIndex -= 1;
+                player.openInventory(inventory.getPages().get(inventory.getCurrentPageIndex()));
             } else {
                 // If there's no pages to go to, play error sound
                 ((Player) event.getWhoClicked()).playSound(event.getWhoClicked().getLocation(), Sound.BLOCK_NOTE_BLOCK_DIDGERIDOO, 1, 1);
@@ -101,7 +141,7 @@ public class BalloonMenuListener implements Listener {
             event.setCancelled(true);
 
             if (!event.isShiftClick()) {
-                SingleBalloon balloon = Bloons.getPlayerBalloons().get(player.getUniqueId());
+                SingleBalloon balloon = Bloons.getPlayerSingleBalloons().get(player.getUniqueId());
 
                 if (balloon == null) {
                     // If no balloon equipped, play sound and send message notifying them
@@ -116,7 +156,7 @@ public class BalloonMenuListener implements Listener {
                 }
 
                 // Remove the balloon
-                BalloonManagement.removeBalloon(player, balloon);
+                SingleBalloonManagement.removeBalloon(player, balloon);
             }
 
         } else {

@@ -1,5 +1,7 @@
 package net.jeqo.bloons.gui.menus;
 
+import lombok.Getter;
+import lombok.Setter;
 import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.logger.Logger;
 import net.jeqo.bloons.utils.ColorManagement;
@@ -15,39 +17,52 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-
+@Getter
 public class BalloonMenu {
 
     public ArrayList<Inventory> pages = new ArrayList<>();
+    @Setter
     public UUID id;
-    public int currpage = 0;
+    @Setter
+    public int currentPageIndex = 0;
+    @Getter
     public static HashMap<UUID, BalloonMenu> users = new HashMap<>();
-    MessageTranslations messageTranslations = new MessageTranslations(Bloons.getInstance());
+    private final MessageTranslations messageTranslations = new MessageTranslations(Bloons.getInstance());
+
+    /**
+     * Gets a blank GUI menu with the next page, previous page, and unequip buttons
+     * @param name The name of the GUI menu
+     * @return The blank GUI menu
+     */
     private Inventory getBlankPage(String name){
-        int pageSize = messageTranslations.getInt("menu-size");
+        int pageSize = this.getMessageTranslations().getInt("menu-size");
         Inventory page = Bukkit.createInventory(null, pageSize, ColorManagement.fromHex(name));
 
-        ItemStack nextPage = new ItemStack(Material.valueOf(messageTranslations.getString("buttons.next-page.material")));
+        // Create next page button
+        ItemStack nextPage = new ItemStack(Material.valueOf(this.getMessageTranslations().getString("buttons.next-page.material")));
         ItemMeta nextMeta = nextPage.getItemMeta();
         assert nextMeta != null;
-        nextMeta.displayName(messageTranslations.getSerializedString(messageTranslations.getString("buttons.next-page.name")));
-        nextMeta.setCustomModelData(messageTranslations.getInt("buttons.next-page.custom-model-data"));
+        nextMeta.displayName(this.getMessageTranslations().getSerializedString(this.getMessageTranslations().getString("buttons.next-page.name")));
+        nextMeta.setCustomModelData(this.getMessageTranslations().getInt("buttons.next-page.custom-model-data"));
         nextPage.setItemMeta(nextMeta);
 
-        ItemStack prevPage = new ItemStack(Material.valueOf(messageTranslations.getString("buttons.previous-page.material")));
+        // Create previous page button
+        ItemStack prevPage = new ItemStack(Material.valueOf(this.getMessageTranslations().getString("buttons.previous-page.material")));
         ItemMeta prevMeta = prevPage.getItemMeta();
         assert prevMeta != null;
-        prevMeta.displayName(messageTranslations.getSerializedString(messageTranslations.getString("buttons.previous-page.name")));;
-        prevMeta.setCustomModelData(messageTranslations.getInt("buttons.previous-page.custom-model-data"));
+        prevMeta.displayName(this.getMessageTranslations().getSerializedString(this.getMessageTranslations().getString("buttons.previous-page.name")));;
+        prevMeta.setCustomModelData(this.getMessageTranslations().getInt("buttons.previous-page.custom-model-data"));
         prevPage.setItemMeta(prevMeta);
 
-        ItemStack removeBalloon = new ItemStack(Material.valueOf(messageTranslations.getString("buttons.unequip.material")));
+        // Create remove/unequip balloon button
+        ItemStack removeBalloon = new ItemStack(Material.valueOf(this.getMessageTranslations().getString("buttons.unequip.material")));
         ItemMeta removeMeta = removeBalloon.getItemMeta();
         assert removeMeta != null;
-        removeMeta.displayName(messageTranslations.getSerializedString(messageTranslations.getString("buttons.unequip.name")));;
-        removeMeta.setCustomModelData(messageTranslations.getInt("buttons.unequip.custom-model-data"));
+        removeMeta.displayName(this.getMessageTranslations().getSerializedString(this.getMessageTranslations().getString("buttons.unequip.name")));;
+        removeMeta.setCustomModelData(this.getMessageTranslations().getInt("buttons.unequip.custom-model-data"));
         removeBalloon.setItemMeta(removeMeta);
 
+        // Add buttons to GUI
         List<String> previousPageSlots = Bloons.getInstance().getConfig().getStringList("buttons.previous-page.slots");
         for (String previousPageSlot : previousPageSlots) {
             if (Integer.parseInt(previousPageSlot) < pageSize) {
@@ -74,11 +89,18 @@ public class BalloonMenu {
                 Logger.logWarning("Next page button slot(s) out of bounds!");
             }
         }
+
         return page;
     }
 
-    public BalloonMenu(ArrayList<ItemStack> items, String name, Player p){
-        this.id = UUID.randomUUID();
+    /**
+     * Creates a new balloon menu
+     * @param items The items to display in the menu
+     * @param name The name of the menu
+     * @param player The player to open the menu for
+     */
+    public BalloonMenu(ArrayList<ItemStack> items, String name, Player player){
+        this.setId(UUID.randomUUID());
         Inventory page = getBlankPage(name);
         int slot = 0;
         for (int i = -1; i < items.size(); i++) {
@@ -88,15 +110,15 @@ public class BalloonMenu {
                 page.setItem(slot, items.get(i));
                 slot++;
             }
-            if (slot == messageTranslations.getInt("balloon-slots")-1) {
-                pages.add(page);
+            if (slot == this.getMessageTranslations().getInt("balloon-slots")-1) {
+                this.getPages().add(page);
                 page = getBlankPage(name);
                 slot = 0;
             }
         }
 
-        pages.add(page);
-        p.openInventory(pages.get(currpage));
-        users.put(p.getUniqueId(), this);
+        this.getPages().add(page);
+        player.openInventory(this.getPages().get(this.getCurrentPageIndex()));
+        users.put(player.getUniqueId(), this);
     }
 }

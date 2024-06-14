@@ -19,14 +19,16 @@ public class BalloonUnleashListener implements Listener {
         }
     }
 
+    /**
+     * Prevents unleashing of chicken with the internal ID
+     * @param event The event that is called when a player unleashes an entity
+     */
     @EventHandler
     public void onUnleash(PlayerUnleashEntityEvent event) {
-        if (event.getReason() == EntityUnleashEvent.UnleashReason.PLAYER_UNLEASH) {
+        if (event.getReason() == EntityUnleashEvent.UnleashReason.PLAYER_UNLEASH || event.getReason() == EntityUnleashEvent.UnleashReason.HOLDER_GONE) {
             if (event.getEntity().getCustomName() != null && event.getEntity().getCustomName().contains(BalloonConfiguration.BALLOON_CHICKEN_ID)) {
                 event.setCancelled(true);
             }
         }
     }
-
-
 }

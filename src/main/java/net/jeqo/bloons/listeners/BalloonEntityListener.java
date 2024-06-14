@@ -17,5 +17,4 @@ public class BalloonEntityListener implements Listener {
             event.setCancelled(true);
         }
     }
-
 }

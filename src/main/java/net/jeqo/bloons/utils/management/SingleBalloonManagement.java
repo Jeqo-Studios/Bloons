@@ -1,15 +1,15 @@
-package net.jeqo.bloons.utils;
+package net.jeqo.bloons.utils.management;
 
 import net.jeqo.bloons.Bloons;
-import net.jeqo.bloons.balloon.SingleBalloon;
-import net.jeqo.bloons.events.balloon.SingleBalloonStoreEvent;
-import net.jeqo.bloons.events.balloon.SingleBalloonUnequipEvent;
+import net.jeqo.bloons.balloon.single.SingleBalloon;
+import net.jeqo.bloons.events.balloon.single.SingleBalloonStoreEvent;
+import net.jeqo.bloons.events.balloon.single.SingleBalloonUnequipEvent;
 import org.bukkit.entity.Player;
 
 /**
  * A class to manage balloons and their removal
  */
-public class BalloonManagement {
+public class SingleBalloonManagement {
 
     /**
      * Remove the balloon from the player
@@ -25,8 +25,8 @@ public class BalloonManagement {
 
             owner.spawnRemoveParticle();
             owner.cancel();
-            Bloons.getPlayerBalloons().remove(player.getUniqueId());
-            Bloons.getPlayerBalloonID().remove(player.getUniqueId());
+            Bloons.getPlayerSingleBalloons().remove(player.getUniqueId());
+            Bloons.getPlayerSingleBalloonID().remove(player.getUniqueId());
         }
     }
 
@@ -43,8 +43,8 @@ public class BalloonManagement {
             if (event.isCancelled()) return;
 
             owner.cancel();
-            Bloons.getPlayerBalloons().remove(player.getUniqueId());
-            Bloons.getPlayerBalloonID().remove(player.getUniqueId());
+            Bloons.getPlayerSingleBalloons().remove(player.getUniqueId());
+            Bloons.getPlayerSingleBalloonID().remove(player.getUniqueId());
         }
     }
 

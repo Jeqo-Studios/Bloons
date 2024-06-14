@@ -4,6 +4,7 @@ import lombok.Getter;
 import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.commands.*;
 import net.jeqo.bloons.commands.manager.enums.CommandAccess;
+import net.jeqo.bloons.configuration.ConfigConfiguration;
 import net.jeqo.bloons.gui.menus.BalloonMenu;
 import net.jeqo.bloons.logger.Logger;
 import net.jeqo.bloons.utils.ColorManagement;
@@ -97,15 +98,26 @@ public class CommandCore implements CommandExecutor {
             }
 
             ArrayList<ItemStack> items = new ArrayList<>();
-            ConfigurationSection balloonsSection = Bloons.getInstance().getConfig().getConfigurationSection("balloons");
+            ConfigurationSection balloonsSection = Bloons.getInstance().getConfig().getConfigurationSection("single-balloons");
+            ConfigurationSection multipartBalloonsSection = Bloons.getInstance().getConfig().getConfigurationSection("multipart-balloons");
 
-            if (balloonsSection != null) {
+            if (balloonsSection != null && multipartBalloonsSection != null) {
                 for (String key : balloonsSection.getKeys(false)) {
                     ConfigurationSection keySection = balloonsSection.getConfigurationSection(key);
                     if (keySection == null) continue;
 
                     if (shouldAddBalloon(player, key)) {
                         ItemStack item = createBalloonItem(keySection, key);
+                        items.add(item);
+                    }
+                }
+
+                for (String key : multipartBalloonsSection.getKeys(false)) {
+                    ConfigurationSection keySection = multipartBalloonsSection.getConfigurationSection(key);
+                    if (keySection == null) continue;
+
+                    if (shouldAddMultipartBalloon(player, key)) {
+                        ItemStack item = createMultipartBalloonItem(keySection, key);
                         items.add(item);
                     }
                 }
@@ -163,7 +175,14 @@ public class CommandCore implements CommandExecutor {
      */
     private boolean shouldAddBalloon(Player player, String key) {
         if (this.getMessageTranslations().getString("hide-balloons-without-permission").equalsIgnoreCase("true")) {
-            return player.hasPermission(this.getMessageTranslations().getString("balloons." + key + ".permission"));
+            return player.hasPermission(this.getMessageTranslations().getString(ConfigConfiguration.SINGLE_BALLOON_SECTION + key + ".permission"));
+        }
+        return true;
+    }
+
+    private boolean shouldAddMultipartBalloon(Player player, String key) {
+        if (this.getMessageTranslations().getString("hide-balloons-without-permission").equalsIgnoreCase("true")) {
+            return player.hasPermission(this.getMessageTranslations().getString(ConfigConfiguration.MULTIPART_BALLOON_SECTION + key + ".permission"));
         }
         return true;
     }
@@ -182,11 +201,32 @@ public class CommandCore implements CommandExecutor {
         ItemMeta meta = item.getItemMeta();
         if (meta == null) return null;
 
-        meta.setLocalizedName(this.getMessageTranslations().getString("balloons." + key + ".id"));
+        meta.setLocalizedName(this.getMessageTranslations().getString(ConfigConfiguration.SINGLE_BALLOON_SECTION + key + ".id"));
         setBalloonLore(meta, keySection);
         setBalloonDisplayName(meta, keySection);
         meta.setCustomModelData(keySection.getInt("custom-model-data"));
         setBalloonColor(meta, key, keySection);
+
+        item.setItemMeta(meta);
+        return item;
+    }
+
+    private ItemStack createMultipartBalloonItem(ConfigurationSection keySection, String key) {
+        Material material = Material.matchMaterial(Objects.requireNonNull(keySection.getString("head.material")));
+        if (material == null) return null;
+
+        ItemStack item = new ItemStack(material);
+        ItemMeta meta = item.getItemMeta();
+        if (meta == null) return null;
+
+        meta.setLocalizedName(this.getMessageTranslations().getString(ConfigConfiguration.MULTIPART_BALLOON_SECTION + key + ".id"));
+        setBalloonLore(meta, keySection);
+        setBalloonDisplayName(meta, keySection);
+        meta.setCustomModelData(keySection.getInt("head.custom-model-data"));
+
+        if (keySection.getString("head.color") != null) {
+            setBalloonColor(meta, key, keySection);
+        }
 
         item.setItemMeta(meta);
         return item;
