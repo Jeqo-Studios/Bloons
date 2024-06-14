@@ -147,13 +147,13 @@ multipart-balloons:
     turning-spline-interpolation: 0.5 # The amount of interpolation for the spline when turning
     head: # Head must be supplied for a balloon of this kind
       material: LEATHER_HORSE_ARMOR # The material of the head
-      color: '#ffffff' # The color of the head item, this is optional
+      color: '#FF0000' # The color of the head item, this is optional
       custom-model-data: 10280 # The custom model data of the head, this is not required but is recommended for use of models
     body: # Body must be supplied for a balloon of this kind
-        material: LEATHER_HORSE_ARMOR # The material of the body
-        color: '#ffffff' # The color of the body, this is optional
-        custom-model-data: 10281 # The custom model data of the body, this is not required but is recommended for use of models
+      material: LEATHER_HORSE_ARMOR # The material of the body
+      color: '#ffffff' # The color of the body, this is optional
+      custom-model-data: 10281 # The custom model data of the body, this is not required but is recommended for use of models
     tail: # Tail must be supplied for a balloon of this kind
-        material: LEATHER_HORSE_ARMOR # The material of the tail
-        color: '#ffffff' # The color of the tail, this is optional
-        custom-model-data: 10282 # The custom model data of the tail, this is not required but is recommended for use of models
+      material: LEATHER_HORSE_ARMOR # The material of the tail
+      color: '#ffffff' # The color of the tail, this is optional
+      custom-model-data: 10282 # The custom model data of the tail, this is not required but is recommended for use of models
