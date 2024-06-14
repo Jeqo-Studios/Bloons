@@ -104,7 +104,7 @@ public class Logger {
      */
     public static void logUpdateNotificationConsole() {
         logInfo("A new update is available for " + PluginConfiguration.getName() + " plugin");
-        logInfo("You can find the update at: https://jeqo.net/spigot/bloons");
+        logInfo("You can find the update at: https://jeqo.net/bloons");
     }
 
     /**
@@ -112,7 +112,7 @@ public class Logger {
      */
     public static void logUpdateNotificationPlayer(Player player) {
         logToPlayer(player, "A new update is available for " + PluginConfiguration.getName() + " plugin");
-        logToPlayer(player, "You can find the update at: https://jeqo.net/spigot/bloons");
+        logToPlayer(player, "You can find the update at: https://jeqo.net/bloons");
     }
 
 
