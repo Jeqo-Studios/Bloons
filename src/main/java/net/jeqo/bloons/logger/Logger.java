@@ -37,7 +37,7 @@ public class Logger {
      */
     public static void logToPlayer(Player player, String message) {
         MessageTranslations messageTranslations = new MessageTranslations(Bloons.getInstance());
-        Component component = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix") + " " + message);
+        Component component = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix") + message);
         player.sendMessage(component);
     }
 

@@ -30,6 +30,9 @@ public class CommandReload extends Command {
         if (bloonsConfigReloadEvent.isCancelled()) return false;
 
         Bloons.getInstance().reloadConfig();
+        Bloons.getInstance().getConfig().options().copyDefaults();
+        Bloons.getInstance().saveDefaultConfig();
+
         Component configReloadedMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("config-reloaded"));
         sender.sendMessage(configReloadedMessage);
 
