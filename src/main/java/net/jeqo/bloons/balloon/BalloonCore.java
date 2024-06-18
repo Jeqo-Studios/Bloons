@@ -44,6 +44,8 @@ public class BalloonCore {
     public void initialize() {
         ConfigurationSection multipartBalloonsSection = Bloons.getInstance().getConfig().getConfigurationSection("multipart-balloons");
 
+        this.getBalloons().clear();
+
         if (multipartBalloonsSection == null) {
             return;
         }
@@ -68,6 +70,9 @@ public class BalloonCore {
                     keySection.getDouble("max-node-joint-angle"),
                     keySection.getDouble("y-axis-interpolation"),
                     keySection.getDouble("turning-spline-interpolation"),
+                    keySection.getDouble("passive-sine-wave-speed"),
+                    keySection.getDouble("passive-sine-wave-amplitude"),
+                    keySection.getDouble("passive-nose-sine-wave-amplitude"),
                     new MultipartBalloonModel(BalloonModelType.HEAD, keySection.getString("head.material"), keySection.getString("head.color"), keySection.getInt("head.custom-model-data")),
                     new MultipartBalloonModel(BalloonModelType.BODY, keySection.getString("body.material"), keySection.getString("body.color"), keySection.getInt("body.custom-model-data")),
                     new MultipartBalloonModel(BalloonModelType.TAIL, keySection.getString("tail.material"), keySection.getString("tail.color"), keySection.getInt("tail.custom-model-data")));

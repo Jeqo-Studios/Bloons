@@ -145,6 +145,9 @@ multipart-balloons:
     max-joint-angle: 35.0 # The max angle in degrees of freedom for each joint between nodes
     y-axis-interpolation: 0.2 # The amount of interpolation between nodes on the Y axis (must be between 0.0 and 1.0)
     turning-spline-interpolation: 0.5 # The amount of interpolation for the spline when turning
+    passive-sine-wave-speed: 0.05
+    passive-sine-wave-amplitude: 0.5
+    passive-nose-sine-wave-amplitude: 0.5
     head: # Head must be supplied for a balloon of this kind
       material: LEATHER_HORSE_ARMOR # The material of the head
       color: '#FF0000' # The color of the head item, this is optional

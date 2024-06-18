@@ -94,9 +94,9 @@ public class MultipartBalloon {
         }
 
         long timeInTicks = 1;
-        double speed = 0.05; // Adjust the speed of the sine wave
-        double amplitude = 0.5; // Adjust the amplitude of the sine wave
-        double noseAmplitude = 0.5; // Adjust how much the nose of the first node goes up and down
+        double speed = this.getBalloonType().getPassiveSineWaveSpeed(); // Adjust the speed of the sine wave
+        double amplitude = this.getBalloonType().getPassiveSineWaveAmplitude(); // Adjust the amplitude of the sine wave
+        double noseAmplitude = this.getBalloonType().getPassiveNoseSineWaveAmplitude(); // Adjust how much the nose of the first node goes up and down
 
         this.setRunnable(new BukkitRunnable() {
             double yOffset = 0; // Initial offset for the sine curve

@@ -21,9 +21,72 @@ public class MultipartBalloonType {
     private double maxNodeJointAngle = 35.0;
     private double yAxisInterpolation = 0.35;
     private double turningSplineInterpolation = 0.35;
+    private double passiveSineWaveSpeed = 0.05;
+    private double passiveSineWaveAmplitude = 0.5;
+    private double passiveNoseSineWaveAmplitude = 0.5;
     private MultipartBalloonModel headModel;
     private MultipartBalloonModel bodyModel;
     private MultipartBalloonModel tailModel;
+
+    public MultipartBalloonType(String id, String permission, String name, String[] lore, int nodeCount, double distanceBetweenNodes, double headNodeOffset, double bodyNodeOffset, double tailNodeOffset, double maxNodeJointAngle, double yAxisInterpolation, double turningSplineInterpolation, double passiveSineWaveSpeed, double passiveSineWaveAmplitude, double passiveNoseSineWaveAmplitude, MultipartBalloonModel headModel, MultipartBalloonModel bodyModel, MultipartBalloonModel tailModel) {
+        this.setId(id);
+        this.setPermission(permission);
+        this.setName(name);
+        this.setLore(lore);
+        this.setNodeCount(nodeCount);
+        this.setDistanceBetweenNodes(distanceBetweenNodes);
+        this.setHeadNodeOffset(headNodeOffset);
+        this.setBodyNodeOffset(bodyNodeOffset);
+        this.setTailNodeOffset(tailNodeOffset);
+        this.setMaxNodeJointAngle(maxNodeJointAngle);
+        this.setYAxisInterpolation(yAxisInterpolation);
+        this.setTurningSplineInterpolation(turningSplineInterpolation);
+        this.setPassiveSineWaveSpeed(passiveSineWaveSpeed);
+        this.setPassiveSineWaveAmplitude(passiveSineWaveAmplitude);
+        this.setPassiveNoseSineWaveAmplitude(passiveNoseSineWaveAmplitude);
+        this.setHeadModel(headModel);
+        this.setBodyModel(bodyModel);
+        this.setTailModel(tailModel);
+    }
+
+    public MultipartBalloonType(String id, String permission, String name, String[] lore, int nodeCount, double distanceBetweenNodes, double headNodeOffset, double bodyNodeOffset, double tailNodeOffset, double maxNodeJointAngle, double yAxisInterpolation, double turningSplineInterpolation, double passiveSineWaveSpeed, double passiveSineWaveAmplitude, MultipartBalloonModel headModel, MultipartBalloonModel bodyModel, MultipartBalloonModel tailModel) {
+        this.setId(id);
+        this.setPermission(permission);
+        this.setName(name);
+        this.setLore(lore);
+        this.setNodeCount(nodeCount);
+        this.setDistanceBetweenNodes(distanceBetweenNodes);
+        this.setHeadNodeOffset(headNodeOffset);
+        this.setBodyNodeOffset(bodyNodeOffset);
+        this.setTailNodeOffset(tailNodeOffset);
+        this.setMaxNodeJointAngle(maxNodeJointAngle);
+        this.setYAxisInterpolation(yAxisInterpolation);
+        this.setTurningSplineInterpolation(turningSplineInterpolation);
+        this.setPassiveSineWaveSpeed(passiveSineWaveSpeed);
+        this.setPassiveSineWaveAmplitude(passiveSineWaveAmplitude);
+        this.setHeadModel(headModel);
+        this.setBodyModel(bodyModel);
+        this.setTailModel(tailModel);
+    }
+
+    public MultipartBalloonType(String id, String permission, String name, String[] lore, int nodeCount, double distanceBetweenNodes, double headNodeOffset, double bodyNodeOffset, double tailNodeOffset, double maxNodeJointAngle, double yAxisInterpolation, double turningSplineInterpolation, double passiveSineWaveSpeed, MultipartBalloonModel headModel, MultipartBalloonModel bodyModel, MultipartBalloonModel tailModel) {
+        this.setId(id);
+        this.setPermission(permission);
+        this.setName(name);
+        this.setLore(lore);
+        this.setNodeCount(nodeCount);
+        this.setDistanceBetweenNodes(distanceBetweenNodes);
+        this.setHeadNodeOffset(headNodeOffset);
+        this.setBodyNodeOffset(bodyNodeOffset);
+        this.setTailNodeOffset(tailNodeOffset);
+        this.setMaxNodeJointAngle(maxNodeJointAngle);
+        this.setYAxisInterpolation(yAxisInterpolation);
+        this.setTurningSplineInterpolation(turningSplineInterpolation);
+        this.setPassiveSineWaveSpeed(passiveSineWaveSpeed);
+        this.setHeadModel(headModel);
+        this.setBodyModel(bodyModel);
+        this.setTailModel(tailModel);
+    }
 
     public MultipartBalloonType(String id, String permission, String name, String[] lore, int nodeCount, double distanceBetweenNodes, double headNodeOffset, double bodyNodeOffset, double tailNodeOffset, double maxNodeJointAngle, double yAxisInterpolation, double turningSplineInterpolation, MultipartBalloonModel headModel, MultipartBalloonModel bodyModel, MultipartBalloonModel tailModel) {
         this.setId(id);
