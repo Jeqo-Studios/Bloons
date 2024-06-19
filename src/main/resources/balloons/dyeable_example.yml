@@ -1,0 +1,14 @@
+# This is an example of a singular balloon config, this is a dyeable balloon that
+# can be dyed to any color in the game. This is a very simple example of a balloon
+# that contains just one segment.
+dyeable_example:
+  id: dyeable_example
+  permission: balloon.dyeable
+  material: LEATHER_HORSE_ARMOR
+  color: '#ffffff'
+  custom-model-data: 1
+  name: '<white>Dyeable Balloon'
+  lore:
+    - '&8Bloons Example Balloon'
+    - ''
+    - '&eᴄʟɪᴄᴋ ᴛᴏ ᴇǫᴜɪᴘ'

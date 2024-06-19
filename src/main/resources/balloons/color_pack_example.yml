@@ -1,0 +1,43 @@
+# A configuration like this is expressed as a balloon "pack" internally
+# It can contain all the way from one balloon to technically an infinite
+# amount of balloons, as long as the server can handle it.
+blue:
+  id: blue
+  permission: balloon.blue
+  material: FLINT
+  custom-model-data: 4
+  name: '<blue>Blue <white>Balloon'
+  lore:
+    - '&8Bloons Default Balloon'
+    - ''
+    - '&eᴄʟɪᴄᴋ ᴛᴏ ᴇǫᴜɪᴘ'
+green:
+  id: green
+  permission: balloon.green
+  material: FLINT
+  custom-model-data: 5
+  name: '<green>Green <white>Balloon'
+  lore:
+    - '&8Bloons Default Balloon'
+    - ''
+    - '&eᴄʟɪᴄᴋ ᴛᴏ ᴇǫᴜɪᴘ'
+pink:
+  id: pink
+  permission: balloon.pink
+  material: FLINT
+  custom-model-data: 6
+  name: '<light_purple>Pink <white>Balloon'
+  lore:
+    - '&8Bloons Default Balloon'
+    - ''
+    - '&eᴄʟɪᴄᴋ ᴛᴏ ᴇǫᴜɪᴘ'
+yellow:
+  id: yellow
+  permission: balloon.yellow
+  material: FLINT
+  custom-model-data: 7
+  name: '<yellow>Yellow <white>Balloon'
+  lore:
+    - '&8Bloons Default Balloon'
+    - ''
+    - '&eᴄʟɪᴄᴋ ᴛᴏ ᴇǫᴜɪᴘ'
