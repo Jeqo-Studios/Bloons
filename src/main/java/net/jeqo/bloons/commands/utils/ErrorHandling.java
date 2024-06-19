@@ -8,6 +8,11 @@ import org.bukkit.command.CommandSender;
 
 public class ErrorHandling {
 
+    /**
+     *                  Sends a message to the sender that the command was not found.
+     *                  Based on the commands the player has access to, it will also send a list of available commands
+     * @param sender    The sender of the command, type org.bukkit.command.CommandSender
+     */
     public static void usage(CommandSender sender) {
         MessageTranslations messageTranslations = new MessageTranslations(Bloons.getInstance());
 
@@ -39,6 +44,7 @@ public class ErrorHandling {
             sender.sendMessage(reloadMessage);
         }
 
+        // Send the credits no matter what at the end of the help section
         sender.sendMessage(Component.text(""));
         Component creditsMessage = messageTranslations.getSerializedString("   <gradient:#ff00cc:#5555ff>Bloons " + PluginConfiguration.getVersion() + "</gradient> <gray>- <white>Made by " + PluginConfiguration.DEVELOPER_CREDITS);
         sender.sendMessage(creditsMessage);

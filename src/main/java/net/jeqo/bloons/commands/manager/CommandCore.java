@@ -3,7 +3,7 @@ package net.jeqo.bloons.commands.manager;
 import lombok.Getter;
 import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.commands.*;
-import net.jeqo.bloons.commands.manager.enums.CommandAccess;
+import net.jeqo.bloons.commands.manager.types.CommandAccess;
 import net.jeqo.bloons.configuration.ConfigConfiguration;
 import net.jeqo.bloons.gui.menus.BalloonMenu;
 import net.jeqo.bloons.logger.Logger;
