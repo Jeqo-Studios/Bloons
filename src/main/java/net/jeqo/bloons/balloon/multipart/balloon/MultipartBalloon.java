@@ -28,8 +28,6 @@ public class MultipartBalloon {
     @Setter
     private Player balloonOwner;
 
-    private final List<ModelNode> modelNodes = new ArrayList<>();
-
     @Setter
     private Chicken balloonChicken;
 
@@ -37,6 +35,8 @@ public class MultipartBalloon {
     private ModelNode tentacle;
     @Setter
     private BukkitRunnable runnable;
+
+    private final List<ModelNode> modelNodes = new ArrayList<>();
 
     /**
      * Initializes the balloons functionality
@@ -47,6 +47,7 @@ public class MultipartBalloon {
                                          (float) ((float) this.getBalloonType().getDistanceBetweenNodes() + this.getBalloonType().getTailNodeOffset()), 0, getBalloonType(), this.getBalloonOwner(),
                                          this.getBalloonType().getMaxNodeJointAngle(), this.getBalloonType().getYAxisInterpolation(), this.getBalloonType().getTurningSplineInterpolation());
 
+        // Add the current node to the list of model nodes
         this.getModelNodes().add(current);
 
         // Create a new node for each node in the balloon type
@@ -56,8 +57,17 @@ public class MultipartBalloon {
             current.child = next;
             current = next;
         }
+
         this.setTentacle(current);
 
+        // Finally, attach a lead from the player to the balloon front node
+        this.initializeBalloonLead();
+    }
+
+    /**
+     * Initializes the balloon lead, which is a chicken entity that holds the leash for the balloon to the player
+     */
+    public void initializeBalloonLead() {
         this.setBalloonChicken(this.getBalloonOwner().getWorld().spawn(new Location(this.getBalloonOwner().getWorld(), this.getBalloonOwner().getLocation().getX(), this.getBalloonOwner().getLocation().getY() + 2, this.getBalloonOwner().getLocation().getZ()), Chicken.class));
         this.getBalloonChicken().setInvulnerable(true);
         this.getBalloonChicken().setInvisible(true);
@@ -69,16 +79,22 @@ public class MultipartBalloon {
         this.getBalloonChicken().customName(Component.text(BalloonConfiguration.BALLOON_CHICKEN_ID));
     }
 
-    private @NotNull ModelNode getModelNode(int i, ModelNode current) {
+    /**
+     *                  Gets the next model node in the balloon based on the current node and the index
+     * @param index     The index of the node, type int
+     * @param current   The current node, type net.jeqo.bloons.balloon.multipart.nodes.ModelNode
+     * @return          The next model node, type net.jeqo.bloons.balloon.multipart.nodes.ModelNode
+     */
+    private @NotNull ModelNode getModelNode(int index, ModelNode current) {
         ModelNode next;
-        if (i == this.getBalloonType().getNodeCount() - 1) {
+        if (index == this.getBalloonType().getNodeCount() - 1) {
             next = new ModelNode(current, (float) ((float) this.getBalloonType().getDistanceBetweenNodes() + this.getBalloonType().getHeadNodeOffset()),
-                    i, getBalloonType(), this.getBalloonOwner(), this.getBalloonType().getMaxNodeJointAngle(), this.getBalloonType().getYAxisInterpolation(),
+                    index, getBalloonType(), this.getBalloonOwner(), this.getBalloonType().getMaxNodeJointAngle(), this.getBalloonType().getYAxisInterpolation(),
                     this.getBalloonType().getTurningSplineInterpolation());
 
         } else {
             next = new ModelNode(current, (float) ((float) this.getBalloonType().getDistanceBetweenNodes() + this.getBalloonType().getBodyNodeOffset()),
-                    i, getBalloonType(), this.getBalloonOwner(), this.getBalloonType().getMaxNodeJointAngle(), this.getBalloonType().getYAxisInterpolation(),
+                    index, getBalloonType(), this.getBalloonOwner(), this.getBalloonType().getMaxNodeJointAngle(), this.getBalloonType().getYAxisInterpolation(),
                     this.getBalloonType().getTurningSplineInterpolation());
         }
         return next;
@@ -93,7 +109,8 @@ public class MultipartBalloon {
             this.getRunnable().cancel();
         }
 
-        long timeInTicks = 1;
+        long timeInTicks = 1; // Internally, this stays at one tick to ensure constant updating of positioning
+
         double speed = this.getBalloonType().getPassiveSineWaveSpeed(); // Adjust the speed of the sine wave
         double amplitude = this.getBalloonType().getPassiveSineWaveAmplitude(); // Adjust the amplitude of the sine wave
         double noseAmplitude = this.getBalloonType().getPassiveNoseSineWaveAmplitude(); // Adjust how much the nose of the first node goes up and down
@@ -139,6 +156,7 @@ public class MultipartBalloon {
             }
         });
 
+        // Constantly run the runnable with the specified time in ticks
         this.getRunnable().runTaskTimer(Bloons.getInstance(), timeInTicks, timeInTicks);
     }
 
@@ -147,19 +165,22 @@ public class MultipartBalloon {
      * This should be initiated with the removal of the player from the balloons array
      */
     public void destroy() {
+        // If the runnable is running, cancel it and nullify it
         if (this.getRunnable() != null) {
             this.getRunnable().cancel();
 
             this.setRunnable(null);
         }
 
+        // Remove the chicken first to reduce lead dropping on armor stand clears
         this.getBalloonChicken().remove();
 
+        // Loop through every node and destroy it (remove the armor stand mainly)
         for (ModelNode modelNode : this.getModelNodes()) {
             modelNode.destroy();
         }
 
-
+        // Clear the model nodes list to prevent memory leaks
         this.getModelNodes().clear();
     }
 
