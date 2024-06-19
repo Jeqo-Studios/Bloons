@@ -149,7 +149,7 @@ public class SingleBalloon extends BukkitRunnable {
      */
     public ItemStack getConfiguredBalloonVisual(String balloonID) {
         MessageTranslations messageTranslations = new MessageTranslations(Bloons.getInstance());
-        SingleBalloonType singleBalloonType = BalloonCore.getSingleBalloonByID(balloonID);
+        SingleBalloonType singleBalloonType = Bloons.getBalloonCore().getSingleBalloonByID(balloonID);
 
         // If there isn't a configuration for the balloon, log an error and return null
         if (singleBalloonType == null) {

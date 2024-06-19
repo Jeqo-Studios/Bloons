@@ -102,7 +102,7 @@ public class BalloonCore {
      * @param ID        The ID of the balloon, type java.lang.String
      * @return          The balloon with the specified name, type net.jeqo.bloons.balloon.multipart.MultipartBalloonType/null
      */
-    public static MultipartBalloonType getMultipartBalloonByID(String ID) {
+    public MultipartBalloonType getMultipartBalloonByID(String ID) {
         // Loop over every balloon in the registered balloons list
         for (MultipartBalloonType balloon : getMultipartBalloonTypes()) {
             // Check if the balloon's name matches the specified name
@@ -120,7 +120,7 @@ public class BalloonCore {
      * @param ID        The ID of the balloon, type java.lang.String
      * @return          The single balloon with the specified ID, type net.jeqo.bloons.balloon.single.SingleBalloonType/null
      */
-    public static SingleBalloonType getSingleBalloonByID(String ID) {
+    public SingleBalloonType getSingleBalloonByID(String ID) {
         // Loop over every single balloon in the registered balloons list
         for (SingleBalloonType balloon : getSingleBalloonTypes()) {
             // Check if the single balloon's name matches the specified name
@@ -131,5 +131,23 @@ public class BalloonCore {
 
         // Return null if the single balloon is not found
         return null;
+    }
+
+    /**
+     *                 Checks if the registered balloons list contains a balloon with the specified ID
+     * @param ID       The ID of the balloon, type java.lang.String
+     * @return         Whether the balloon is in the registered balloons list, type boolean
+     */
+    public boolean containsMultipartBalloon(String ID) {
+        return getMultipartBalloonByID(ID) != null;
+    }
+
+    /**
+     *                Checks if the registered balloons list contains a single balloon with the specified ID
+     * @param ID      The ID of the balloon, type java.lang.String
+     * @return        Whether the single balloon is in the registered balloons list, type boolean
+     */
+    public boolean containsSingleBalloon(String ID) {
+        return getSingleBalloonByID(ID) != null;
     }
 }

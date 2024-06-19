@@ -117,7 +117,10 @@ public class CommandCore implements CommandExecutor {
             ArrayList<SingleBalloonType> singleBalloonTypes = BalloonCore.getSingleBalloonTypes();
             ArrayList<MultipartBalloonType> multipartBalloonTypes = BalloonCore.getMultipartBalloonTypes();
 
-            if (singleBalloonTypes == null && multipartBalloonTypes == null) return false;
+            if (singleBalloonTypes == null || multipartBalloonTypes == null) {
+                Logger.logError("Single balloon types or multipart balloon types are null.");
+                return false;
+            }
 
             for (SingleBalloonType singleBalloon : singleBalloonTypes) {
                 if (singleBalloon == null) continue;
