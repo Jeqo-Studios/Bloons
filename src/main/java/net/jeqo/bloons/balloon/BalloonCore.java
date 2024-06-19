@@ -13,13 +13,11 @@ import java.util.ArrayList;
 /**
  * The core class to handle the registering of multipart balloons
  */
+@Setter @Getter
 public class BalloonCore {
-    @Setter @Getter
     private JavaPlugin plugin;
-    @Setter @Getter
-    public static ArrayList<MultipartBalloonType> multipartBalloonTypes = new ArrayList<>();
-    @Setter @Getter
-    public static ArrayList<SingleBalloonType> singleBalloonTypes = new ArrayList<>();
+    public ArrayList<MultipartBalloonType> multipartBalloonTypes = new ArrayList<>();
+    public ArrayList<SingleBalloonType> singleBalloonTypes = new ArrayList<>();
 
     /**
      *                          Creates a new instance of the balloon core manager with preset registered balloons
@@ -104,7 +102,7 @@ public class BalloonCore {
      */
     public MultipartBalloonType getMultipartBalloonByID(String ID) {
         // Loop over every balloon in the registered balloons list
-        for (MultipartBalloonType balloon : getMultipartBalloonTypes()) {
+        for (MultipartBalloonType balloon : this.getMultipartBalloonTypes()) {
             // Check if the balloon's name matches the specified name
             if (balloon.getId().equalsIgnoreCase(ID)) {
                 return balloon;
@@ -122,7 +120,7 @@ public class BalloonCore {
      */
     public SingleBalloonType getSingleBalloonByID(String ID) {
         // Loop over every single balloon in the registered balloons list
-        for (SingleBalloonType balloon : getSingleBalloonTypes()) {
+        for (SingleBalloonType balloon : this.getSingleBalloonTypes()) {
             // Check if the single balloon's name matches the specified name
             if (balloon.getId().equalsIgnoreCase(ID)) {
                 return balloon;
@@ -139,7 +137,7 @@ public class BalloonCore {
      * @return         Whether the balloon is in the registered balloons list, type boolean
      */
     public boolean containsMultipartBalloon(String ID) {
-        return getMultipartBalloonByID(ID) != null;
+        return getMultipartBalloonByID(ID) == null;
     }
 
     /**
@@ -148,6 +146,6 @@ public class BalloonCore {
      * @return        Whether the single balloon is in the registered balloons list, type boolean
      */
     public boolean containsSingleBalloon(String ID) {
-        return getSingleBalloonByID(ID) != null;
+        return getSingleBalloonByID(ID) == null;
     }
 }

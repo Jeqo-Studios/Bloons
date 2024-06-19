@@ -11,7 +11,7 @@ import org.bukkit.inventory.meta.LeatherArmorMeta;
  * A class to handle the creation of balloon models with custom model data and color metadata
  */
 public class BalloonModel {
-    private static final String leatherMaterialPrefix = "LEATHER_"; // A constant to define a dyable material
+    private static final String leatherMaterialPrefix = "LEATHER_"; // A constant to define a dyeable material
 
     /**
      *                          Generates a coloured model with the specified colour and custom model data
@@ -21,9 +21,9 @@ public class BalloonModel {
      * @return                  The generated item created with the corresponding metadata, type org.bukkit.inventory.ItemStack.
      */
     public static ItemStack createColouredModel(Material material, Color colour, int customModelData) {
-        // Check if the material is dyable and contains leather attributes
+        // Check if the material is dyeable and contains leather attributes
         if (!material.name().contains(leatherMaterialPrefix)) {
-            Logger.logError("Material " + material.name() + " is not a dyable material.");
+            Logger.logError("Material " + material.name() + " is not a dyeable material.");
             return null;
         }
 
@@ -46,13 +46,13 @@ public class BalloonModel {
      * @param colourBlue        The blue colour value in the RGB, within the range of 0-255, type int
      * @param customModelData   The custom model data value attached to the item metadata, type int
      * @return                  The generated item created with the corresponding metadata, type org.bukkit.inventory.ItemStack.
-     *                          If the RGB values are not within the valid range of 0-255, or if the provided material is not dyable,
+     *                          If the RGB values are not within the valid range of 0-255, or if the provided material is not dyeable,
      *                          the method will return null.
      */
     public static ItemStack createColouredModel(Material material, int colourRed, int colourGreen, int colourBlue, int customModelData) {
-        // Check if the material is dyable and contains leather attributes
+        // Check if the material is dyeable and contains leather attributes
         if (!material.name().contains(leatherMaterialPrefix)) {
-            Logger.logError("Material " + material.name() + " is not a dyable material.");
+            Logger.logError("Material " + material.name() + " is not a dyeable material.");
             return null;
         }
 

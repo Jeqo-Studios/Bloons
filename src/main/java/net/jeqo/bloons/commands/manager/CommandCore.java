@@ -2,12 +2,10 @@ package net.jeqo.bloons.commands.manager;
 
 import lombok.Getter;
 import net.jeqo.bloons.Bloons;
-import net.jeqo.bloons.balloon.BalloonCore;
 import net.jeqo.bloons.balloon.multipart.MultipartBalloonType;
 import net.jeqo.bloons.balloon.single.SingleBalloonType;
 import net.jeqo.bloons.commands.*;
 import net.jeqo.bloons.commands.manager.types.CommandAccess;
-import net.jeqo.bloons.configuration.ConfigConfiguration;
 import net.jeqo.bloons.configuration.PluginConfiguration;
 import net.jeqo.bloons.gui.menus.BalloonMenu;
 import net.jeqo.bloons.logger.Logger;
@@ -18,7 +16,6 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -114,8 +111,8 @@ public class CommandCore implements CommandExecutor {
             }
 
             ArrayList<ItemStack> items = new ArrayList<>();
-            ArrayList<SingleBalloonType> singleBalloonTypes = BalloonCore.getSingleBalloonTypes();
-            ArrayList<MultipartBalloonType> multipartBalloonTypes = BalloonCore.getMultipartBalloonTypes();
+            ArrayList<SingleBalloonType> singleBalloonTypes = Bloons.getBalloonCore().getSingleBalloonTypes();
+            ArrayList<MultipartBalloonType> multipartBalloonTypes = Bloons.getBalloonCore().getMultipartBalloonTypes();
 
             if (singleBalloonTypes == null || multipartBalloonTypes == null) {
                 Logger.logError("Single balloon types or multipart balloon types are null.");

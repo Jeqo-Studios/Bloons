@@ -8,7 +8,6 @@ import net.jeqo.bloons.balloon.single.SingleBalloon;
 import net.jeqo.bloons.balloon.single.SingleBalloonType;
 import net.jeqo.bloons.commands.manager.Command;
 import net.jeqo.bloons.commands.manager.types.CommandPermission;
-import net.jeqo.bloons.configuration.ConfigConfiguration;
 import net.jeqo.bloons.events.balloon.multipart.MultipartBalloonEquipEvent;
 import net.jeqo.bloons.events.balloon.multipart.MultipartBalloonUnequipEvent;
 import net.jeqo.bloons.events.balloon.single.SingleBalloonEquipEvent;
@@ -44,7 +43,7 @@ public class CommandEquip extends Command {
         String balloonID = args[0];
         MessageTranslations messageTranslations = new MessageTranslations(this.getPlugin());
 
-        if (!Bloons.getBalloonCore().containsSingleBalloon(balloonID) && !Bloons.getBalloonCore().containsMultipartBalloon(balloonID)) {
+        if (Bloons.getBalloonCore().containsSingleBalloon(balloonID) && Bloons.getBalloonCore().containsMultipartBalloon(balloonID)) {
             Component balloonNotFoundMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("balloon-not-found"));
             player.sendMessage(balloonNotFoundMessage);
             return false;
