@@ -16,8 +16,8 @@ public class BloonsEvent extends Event implements Cancellable {
     private boolean cancelled;
 
     /**
-     * Gets all listeners that are listening to this event
-     * @return a list of handlers
+     *          Gets all listeners that are listening to this event
+     * @return  A list of handlers, type org.bukkit.event.HandlerList
      */
     @Override
     public @NotNull HandlerList getHandlers() {
@@ -25,8 +25,8 @@ public class BloonsEvent extends Event implements Cancellable {
     }
 
     /**
-     * Returns whether the event is cancelled.
-     * @return true if the event is cancelled, false otherwise
+     *          Returns whether the event is cancelled.
+     * @return  true if the event is cancelled, false otherwise, type boolean
      */
     @Override
     public boolean isCancelled() {
@@ -34,8 +34,8 @@ public class BloonsEvent extends Event implements Cancellable {
     }
 
     /**
-     * Sets whether the event is cancelled.
-     * @param cancel true if you wish to cancel this event
+     *                  Sets whether the event is cancelled.
+     * @param cancel    true if you wish to cancel this event, false otherwise, type boolean
      */
     @Override
     public void setCancelled(boolean cancel) {
@@ -50,8 +50,8 @@ public class BloonsEvent extends Event implements Cancellable {
     }
 
     /**
-     * Unregisters the listener
-     * @param plugin the plugin to unregister the event from
+     *                  Unregisters the listener
+     * @param plugin    the plugin to unregister the event from, type org.bukkit.plugin.Plugin
      */
     public void unregister(Plugin plugin) {
         this.getHandlers().unregister(plugin);
