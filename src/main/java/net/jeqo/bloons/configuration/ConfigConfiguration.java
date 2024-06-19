@@ -83,7 +83,6 @@ public class ConfigConfiguration {
                     String type = config.getString(key + ".type", "single");
                     if (type.equals("single")) {
                         try {
-                            Logger.logInfo("Processing single balloon type for section: " + key + " in file: " + fileName + "Permission required: " + config.getString(key + ".permission"));
                             // Add the single balloon type to the array list
                             singleBalloons.add(new SingleBalloonType(
                                     key,

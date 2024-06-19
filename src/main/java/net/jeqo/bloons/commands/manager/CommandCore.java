@@ -114,16 +114,12 @@ public class CommandCore implements CommandExecutor {
             ArrayList<SingleBalloonType> singleBalloonTypes = Bloons.getBalloonCore().getSingleBalloonTypes();
             ArrayList<MultipartBalloonType> multipartBalloonTypes = Bloons.getBalloonCore().getMultipartBalloonTypes();
 
-            Logger.logInfo("Single Balloon Types: " + singleBalloonTypes.size());
-            Logger.logInfo("Multipart Balloon Types: " + multipartBalloonTypes.size());
-
             if (singleBalloonTypes == null || multipartBalloonTypes == null) {
                 Logger.logError("Single balloon types or multipart balloon types are null.");
                 return false;
             }
 
             for (SingleBalloonType singleBalloon : singleBalloonTypes) {
-                Logger.logInfo(singleBalloon.getId());
                 if (singleBalloon == null) continue;
 
                 if (shouldAddSingleBalloon(player, singleBalloon)) {
@@ -224,7 +220,7 @@ public class CommandCore implements CommandExecutor {
         ItemMeta meta = item.getItemMeta();
         if (meta == null) return null;
 
-        meta.setLocalizedName(this.getMessageTranslations().getString(singleBalloonType.getKey()));
+        meta.setLocalizedName(singleBalloonType.getKey());
         setBalloonLore(meta, singleBalloonType);
         setBalloonDisplayName(meta, singleBalloonType);
         meta.setCustomModelData(singleBalloonType.getCustomModelData());
@@ -247,7 +243,7 @@ public class CommandCore implements CommandExecutor {
         ItemMeta meta = item.getItemMeta();
         if (meta == null) return null;
 
-        meta.setLocalizedName(this.getMessageTranslations().getString(multipartBalloonType.getId()));
+        meta.setLocalizedName(multipartBalloonType.getId());
         setBalloonLore(meta, multipartBalloonType);
         setBalloonDisplayName(meta, multipartBalloonType);
         meta.setCustomModelData(multipartBalloonType.getHeadModel().getCustomModelData());

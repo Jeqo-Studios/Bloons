@@ -145,7 +145,6 @@ public class SingleBalloon extends BukkitRunnable {
      * @return              The item object that contains the configured balloon model, type org.bukkit.inventory.ItemStack
      */
     public ItemStack getConfiguredBalloonVisual(String balloonID) {
-        MessageTranslations messageTranslations = new MessageTranslations(Bloons.getInstance());
         SingleBalloonType singleBalloonType = Bloons.getBalloonCore().getSingleBalloonByID(balloonID);
 
         // If there isn't a configuration for the balloon, log an error and return null
@@ -173,23 +172,21 @@ public class SingleBalloon extends BukkitRunnable {
         ItemMeta meta = item.getItemMeta();
         meta.setCustomModelData(singleBalloonType.getCustomModelData());
 
-        String colorConfiguration = messageTranslations.getString(singleBalloonType.getColor());
-
         // If the color of the balloon is not set, log an error and return null
-        if (colorConfiguration == null) {
+        if (singleBalloonType.getColor() == null) {
             Logger.logError("The color of the balloon " + balloonID + " is not set!");
             return null;
         }
 
         // If the color of the balloon is set to potion, log a warning and return null
-        if (colorConfiguration.equalsIgnoreCase("potion")) {
+        if (singleBalloonType.getColor().equalsIgnoreCase("potion")) {
             Logger.logWarning("The color of the balloon " + balloonID + " is set, but the material is not a leather item!");
             return null;
         }
 
         // Finally, set the color of the item and set the item meta because we can assume it's a leather item
         LeatherArmorMeta leatherArmorMeta = (LeatherArmorMeta) meta;
-        leatherArmorMeta.setColor(ColorManagement.hexToColor(colorConfiguration));
+        leatherArmorMeta.setColor(ColorManagement.hexToColor(singleBalloonType.getColor()));
         item.setItemMeta(meta);
 
         return item;
