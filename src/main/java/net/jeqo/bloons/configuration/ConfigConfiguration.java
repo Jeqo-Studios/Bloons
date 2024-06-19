@@ -23,7 +23,7 @@ public class ConfigConfiguration {
      *          Gets the number of configuration files currently in the balloon configuration folder
      * @return  The number of configuration files in the balloon configuration folder. Returns 0 upon none found. type long
      */
-    public long getBalloonConfigurationCount() {
+    public static long getBalloonConfigurationCount() {
         try {
             //
             Path path = Path.of(Bloons.getInstance().getDataFolder() + File.separator + BALLOON_CONFIGURATION_FOLDER);
@@ -40,7 +40,7 @@ public class ConfigConfiguration {
      * @return The single balloon types from the configuration files,
      *         returns an empty array list if no single balloons are found, type java.util.ArrayList<net.jeqo.bloons.balloon.single.SingleBalloonType>
      */
-    public ArrayList<SingleBalloonType> getSingleBalloons() {
+    public static ArrayList<SingleBalloonType> getSingleBalloons() {
         ArrayList<SingleBalloonType> singleBalloons = new ArrayList<>();
 
         // For every file in the balloon configuration folder, if a configuration type is single, add it to an array list
@@ -71,7 +71,7 @@ public class ConfigConfiguration {
      * @return  The multipart balloon types from the configuration files,
      *          returns an empty array list if no multipart balloons are found, type java.util.ArrayList<net.jeqo.bloons.balloon.multipart.MultipartBalloonType>
      */
-    public ArrayList<MultipartBalloonType> getMultipartBalloons() {
+    public static ArrayList<MultipartBalloonType> getMultipartBalloons() {
         ArrayList<MultipartBalloonType> multipartBalloons = new ArrayList<>();
 
         // For every file in the balloon configuration folder, if a configuration type is multipart, add it to an array list

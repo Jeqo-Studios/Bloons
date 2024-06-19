@@ -6,6 +6,7 @@ import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.balloon.model.BalloonModelType;
 import net.jeqo.bloons.balloon.multipart.MultipartBalloonModel;
 import net.jeqo.bloons.balloon.multipart.MultipartBalloonType;
+import net.jeqo.bloons.configuration.ConfigConfiguration;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 @Setter @Getter
 public class BalloonCore {
     private JavaPlugin plugin;
-    private ArrayList<MultipartBalloonType> balloons = new ArrayList<>();
+    private ArrayList<MultipartBalloonType> multipartBalloonTypes = new ArrayList<>();
 
     /**
      *                  Creates a new instance of the balloon core manager with preset registered balloons
@@ -26,7 +27,7 @@ public class BalloonCore {
      */
     public BalloonCore(JavaPlugin plugin, ArrayList<MultipartBalloonType> balloons) {
         this.setPlugin(plugin);
-        this.setBalloons(balloons);
+        this.setMultipartBalloonTypes(balloons);
     }
 
     /**
@@ -48,7 +49,7 @@ public class BalloonCore {
         if (multipartBalloonsSection == null) return;
 
         // Clear the current balloons list to reduce memory usage
-        this.getBalloons().clear();
+        this.getMultipartBalloonTypes().clear();
 
         // Loop over every key in the multipart balloons section
         for (String key : multipartBalloonsSection.getKeys(false)) {
@@ -90,7 +91,7 @@ public class BalloonCore {
      */
     public void copyExampleBalloons() {
         // Copy the entire example balloons folder to the plugin's data folder if it doesn't exist
-        Bloons.getInstance().saveResource("balloons", false);
+        Bloons.getInstance().saveResource(ConfigConfiguration.BALLOON_CONFIGURATION_FOLDER, false);
     }
 
     /**
@@ -98,7 +99,7 @@ public class BalloonCore {
      * @param balloon   The balloon to add, type net.jeqo.bloons.balloon.multipart.MultipartBalloonType
      */
     public void addBalloon(MultipartBalloonType balloon) {
-        this.getBalloons().add(balloon);
+        this.getMultipartBalloonTypes().add(balloon);
     }
 
     /**
@@ -106,7 +107,7 @@ public class BalloonCore {
      * @param balloon   The balloon to remove, type net.jeqo.bloons.balloon.multipart.MultipartBalloonType
      */
     public void removeBalloon(MultipartBalloonType balloon) {
-        this.getBalloons().remove(balloon);
+        this.getMultipartBalloonTypes().remove(balloon);
     }
 
     /**
@@ -114,9 +115,9 @@ public class BalloonCore {
      * @param name      The name of the balloon, type java.lang.String
      * @return          The balloon with the specified name, type net.jeqo.bloons.balloon.multipart.MultipartBalloonType/null
      */
-    public MultipartBalloonType getBalloon(String name) {
+    public MultipartBalloonType getMultipartBalloon(String name) {
         // Loop over every balloon in the registered balloons list
-        for (MultipartBalloonType balloon : this.getBalloons()) {
+        for (MultipartBalloonType balloon : this.getMultipartBalloonTypes()) {
             // Check if the balloon's name matches the specified name
             if (balloon.getId().equalsIgnoreCase(name)) {
                 return balloon;

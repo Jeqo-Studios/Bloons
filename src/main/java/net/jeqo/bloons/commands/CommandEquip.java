@@ -55,7 +55,7 @@ public class CommandEquip extends Command {
             return false;
         }
 
-        MultipartBalloonType type = Bloons.getBalloonCore().getBalloon(balloonID);
+        MultipartBalloonType type = Bloons.getBalloonCore().getMultipartBalloon(balloonID);
         MultipartBalloon previousBalloon = MultipartBalloonManagement.getPlayerBalloon(player.getUniqueId());
         if (previousBalloon != null) {
             MultipartBalloonUnequipEvent multipartBalloonUnequipEvent = new MultipartBalloonUnequipEvent(player, previousBalloon);
