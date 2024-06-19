@@ -13,18 +13,18 @@ import java.util.ArrayList;
  */
 @Setter @Getter
 public class ListenerCore {
-    private final Bloons plugin;
+    private Bloons plugin;
     private ArrayList<Listener> listeners;
 
     public ListenerCore(Bloons plugin) {
-        this.plugin = plugin;
+        this.setPlugin(plugin);
 
         this.setListeners(new ArrayList<>());
     }
 
     /**
-     * Adds a listener to the list of listeners
-     * @param listener The listener to add
+     *                  Adds a listener to the list of listeners
+     * @param listener  The listener to add, type org.bukkit.event.Listener
      */
     public void stageListener(Listener listener) {
         this.getListeners().add(listener);

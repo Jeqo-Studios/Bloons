@@ -12,8 +12,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 public class MultipartBalloonPlayerJoinListener implements Listener {
 
     /**
-     * Checks if a multipart balloon needs to be added to the player joining
-     * @param event The event that is called when a player joins the server
+     *              Checks if a multipart balloon needs to be added to the player joining
+     * @param event The event that is called when a player joins the server, type org.bukkit.event.player.PlayerJoinEvent
      */
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {

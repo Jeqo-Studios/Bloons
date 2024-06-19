@@ -19,7 +19,8 @@ import java.util.Objects;
 public class MultipartBalloonPlayerListener implements Listener {
 
     /**
-     * When they die, remove their balloon
+     *              When they die, remove the balloon they had equipped
+     * @param event The event that is called when a player dies, type org.bukkit.event.entity.PlayerDeathEvent
      */
     @EventHandler
     public void onDeath(PlayerDeathEvent event) {
@@ -35,31 +36,33 @@ public class MultipartBalloonPlayerListener implements Listener {
     }
 
     /**
-     * When they respawn, add the balloon they back that they died with
+     *              When they respawn, add the balloon they back that they died with
+     * @param event The event that is called when a player respawns, type org.bukkit.event.player.PlayerRespawnEvent
      */
     @EventHandler
     public void onRespawn(PlayerRespawnEvent event) {
         MultipartBalloon previousBalloon = Bloons.getPlayerMultipartBalloons().get(event.getPlayer().getPlayer().getUniqueId());
         MultipartBalloonType type = previousBalloon.getBalloonType();
 
-        if (previousBalloon != null) {
-            MultipartBalloonForceEquipEvent multipartBalloonEquipEvent = new MultipartBalloonForceEquipEvent(event.getPlayer(), previousBalloon);
-            multipartBalloonEquipEvent.callEvent();
+        if (previousBalloon == null) return;
 
-            if (multipartBalloonEquipEvent.isCancelled()) return;
+        MultipartBalloonForceEquipEvent multipartBalloonEquipEvent = new MultipartBalloonForceEquipEvent(event.getPlayer(), previousBalloon);
+        multipartBalloonEquipEvent.callEvent();
 
-            MultipartBalloonBuilder builder = new MultipartBalloonBuilder(type, event.getPlayer());
-            SingleBalloonManagement.removeBalloon(event.getPlayer(), Bloons.getPlayerSingleBalloons().get(event.getPlayer().getUniqueId()));
-            MultipartBalloon balloon = builder.build();
-            balloon.initialize();
-            balloon.run();
+        if (multipartBalloonEquipEvent.isCancelled()) return;
 
-            MultipartBalloonManagement.setPlayerBalloon(event.getPlayer().getUniqueId(), balloon);
-        }
+        MultipartBalloonBuilder builder = new MultipartBalloonBuilder(type, event.getPlayer());
+        SingleBalloonManagement.removeBalloon(event.getPlayer(), Bloons.getPlayerSingleBalloons().get(event.getPlayer().getUniqueId()));
+        MultipartBalloon balloon = builder.build();
+        balloon.initialize();
+        balloon.run();
+
+        MultipartBalloonManagement.setPlayerBalloon(event.getPlayer().getUniqueId(), balloon);
     }
 
     /**
-     * When they change worlds, store their balloon and move the balloon armor stand over
+     *              When they change worlds, store their balloon and move the balloon armor stand over
+     * @param event The event that is called when a player changes worlds, type org.bukkit.event.player.PlayerChangedWorldEvent
      */
     @EventHandler
     public void onWorldChange(PlayerChangedWorldEvent event) {

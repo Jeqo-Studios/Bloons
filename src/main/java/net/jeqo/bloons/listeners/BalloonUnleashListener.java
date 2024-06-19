@@ -10,7 +10,8 @@ import org.bukkit.event.player.PlayerUnleashEntityEvent;
 public class BalloonUnleashListener implements Listener {
 
     /**
-     * Used to check if player tries to unleash from their balloon, if they do then cancel it
+     *              Used to check if player tries to unleash from their balloon, if they do then cancel it
+     * @param event The event that is called when a player leashes an entity
      */
     @EventHandler
     public void onLeash(PlayerLeashEntityEvent event) {
@@ -20,8 +21,8 @@ public class BalloonUnleashListener implements Listener {
     }
 
     /**
-     * Prevents unleashing of chicken with the internal ID
-     * @param event The event that is called when a player unleashes an entity
+     *              Prevents unleashing of chicken with the internal ID
+     * @param event The event that is called when a player unleashes an entity, type org.bukkit.event.entity.PlayerUnleashEntityEvent
      */
     @EventHandler
     public void onUnleash(PlayerUnleashEntityEvent event) {
