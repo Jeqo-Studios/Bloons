@@ -10,6 +10,9 @@ public class PluginConfiguration {
     // This is a constant because it should not be changed unless otherwise requested by Jeqo
     public static final String DEVELOPER_CREDITS = "Jeqo and Gucci Fox";
 
+    // The base prefix to all commands within the plugin
+    public static final String COMMAND_BASE = "bloons";
+
     /**
      *          Get the version of the plugin from the pom.xml file
      * @return  The version of the plugin, type java.lang.String

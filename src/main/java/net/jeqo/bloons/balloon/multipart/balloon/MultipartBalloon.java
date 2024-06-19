@@ -57,6 +57,7 @@ public class MultipartBalloon {
             current = next;
         }
 
+        // Set the tentacle to the current node
         this.setTentacle(current);
 
         // Finally, attach a lead from the player to the balloon front node
@@ -67,7 +68,10 @@ public class MultipartBalloon {
      * Initializes the balloon lead, which is a chicken entity that holds the leash for the balloon to the player
      */
     public void initializeBalloonLead() {
-        this.setBalloonChicken(this.getBalloonOwner().getWorld().spawn(new Location(this.getBalloonOwner().getWorld(), this.getBalloonOwner().getLocation().getX(), this.getBalloonOwner().getLocation().getY() + 2, this.getBalloonOwner().getLocation().getZ()), Chicken.class));
+        // Location to spawn the lead holder at
+        Location location = new Location(this.getBalloonOwner().getWorld(), this.getBalloonOwner().getLocation().getX(), this.getBalloonOwner().getLocation().getY() + 2, this.getBalloonOwner().getLocation().getZ());
+
+        this.setBalloonChicken(this.getBalloonOwner().getWorld().spawn(location, Chicken.class));
         this.getBalloonChicken().setInvulnerable(true);
         this.getBalloonChicken().setInvisible(true);
         this.getBalloonChicken().setBaby();
@@ -86,16 +90,20 @@ public class MultipartBalloon {
      */
     private @NotNull ModelNode getModelNode(int index, ModelNode current) {
         ModelNode next;
+
+        // If the index is the last node, create a head node
         if (index == this.getBalloonType().getNodeCount() - 1) {
             next = new ModelNode(current, (float) ((float) this.getBalloonType().getDistanceBetweenNodes() + this.getBalloonType().getHeadNodeOffset()),
                     index, getBalloonType(), this.getBalloonOwner(), this.getBalloonType().getMaxNodeJointAngle(), this.getBalloonType().getYAxisInterpolation(),
                     this.getBalloonType().getTurningSplineInterpolation());
 
+        // Otherwise, create a body node
         } else {
             next = new ModelNode(current, (float) ((float) this.getBalloonType().getDistanceBetweenNodes() + this.getBalloonType().getBodyNodeOffset()),
                     index, getBalloonType(), this.getBalloonOwner(), this.getBalloonType().getMaxNodeJointAngle(), this.getBalloonType().getYAxisInterpolation(),
                     this.getBalloonType().getTurningSplineInterpolation());
         }
+
         return next;
     }
 
@@ -104,9 +112,7 @@ public class MultipartBalloon {
      */
     public void run() {
         // Ensure the previous runnable is canceled before creating a new one
-        if (this.getRunnable() != null) {
-            this.getRunnable().cancel();
-        }
+        if (this.getRunnable() != null) this.getRunnable().cancel();
 
         long timeInTicks = 1; // Internally, this stays at one tick to ensure constant updating of positioning
 
@@ -134,7 +140,8 @@ public class MultipartBalloon {
                 double midpointZ = (getTentacle().getPointA().z + getTentacle().getPointA().z) / 2.0;
 
                 // Teleport the chicken holding the leash constantly
-                getBalloonChicken().teleport(new Location(getBalloonOwner().getWorld(), midpointX, getTentacle().getPointA().y + 1.5, midpointZ));
+                Location leadTeleportPoint = new Location(getBalloonOwner().getWorld(), midpointX, getTentacle().getPointA().y + 1.5, midpointZ);
+                getBalloonChicken().teleport(leadTeleportPoint);
                 getBalloonChicken().setLeashHolder(getBalloonOwner());
 
                 // Constantly teleport the balloons

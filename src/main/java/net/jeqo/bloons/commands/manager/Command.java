@@ -58,36 +58,10 @@ public abstract class Command {
      * @return              Whether the command meets the requirements, type boolean
      */
     public boolean hasRequirement(CommandSender sender, CommandPermission permission) {
-        switch (permission) {
-            case EQUIP -> {
-                if (sender instanceof Player) {
-                    if (!sender.hasPermission("bloons.equip")) {
-                        return false;
-                    }
-                }
-            }
-            case UNEQUIP -> {
-                if (sender instanceof Player) {
-                    if (!sender.hasPermission("bloons.unequip")) {
-                        return false;
-                    }
-                }
-            }
-            case FORCE -> {
-                if (sender instanceof Player) {
-                    if (!sender.hasPermission("bloons.force")) {
-                        return false;
-                    }
-                }
-            }
-            case RELOAD -> {
-                if (sender instanceof Player) {
-                    if (!sender.hasPermission("bloons.reload")) {
-                        return false;
-                    }
-                }
-            }
+        if (sender instanceof Player) {
+            return sender.hasPermission(permission.getPermission());
         }
+
         return true;
     }
 }

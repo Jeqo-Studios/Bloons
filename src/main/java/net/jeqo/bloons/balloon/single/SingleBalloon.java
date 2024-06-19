@@ -90,6 +90,7 @@ public class SingleBalloon extends BukkitRunnable {
         double vectorX = vector.getX() * 50.0D * -1.0D;
         this.getBalloonArmorStand().setHeadPose(new EulerAngle(Math.toRadians(vectorZ), Math.toRadians(playerLocation.getYaw()), Math.toRadians(vectorX)));
 
+        // Teleport the balloon to the move location and set the player location yaw
         this.teleport(this.getMoveLocation());
         this.setPlayerLocation(this.getPlayer().getLocation());
         this.getPlayerLocation().setYaw(playerLocation.getYaw());

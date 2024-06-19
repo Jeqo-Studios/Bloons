@@ -5,6 +5,7 @@ import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.commands.*;
 import net.jeqo.bloons.commands.manager.types.CommandAccess;
 import net.jeqo.bloons.configuration.ConfigConfiguration;
+import net.jeqo.bloons.configuration.PluginConfiguration;
 import net.jeqo.bloons.gui.menus.BalloonMenu;
 import net.jeqo.bloons.logger.Logger;
 import net.jeqo.bloons.utils.ColorManagement;
@@ -50,14 +51,14 @@ public class CommandCore implements CommandExecutor {
         // Register all commands staged
         registerCommands();
 
-        Objects.requireNonNull(this.getPlugin().getCommand("bloons")).setTabCompleter(new CommandTabCompleter());
+        Objects.requireNonNull(this.getPlugin().getCommand(PluginConfiguration.COMMAND_BASE)).setTabCompleter(new CommandTabCompleter());
     }
 
     /**
      * Registers all commands in the commands list
      */
     public void registerCommands() {
-        Objects.requireNonNull(this.getPlugin().getCommand("bloons")).setExecutor(this);
+        Objects.requireNonNull(this.getPlugin().getCommand(PluginConfiguration.COMMAND_BASE)).setExecutor(this);
     }
 
     /**

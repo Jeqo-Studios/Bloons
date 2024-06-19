@@ -137,6 +137,8 @@ public class ModelNode {
                 difference = 2 * Math.PI - difference;
             }
 
+            // Check if the difference is greater than the max angle
+            // If it is, set the target angle to the max angle
             int sign = (targetAngle - childAngle >= 0 && targetAngle - childAngle <= Math.toRadians(180)) || (targetAngle - childAngle <= Math.toRadians(-180) && targetAngle - childAngle >= Math.toRadians(-360)) ? 1 : -1;
 
             double maxAngle = Math.toRadians(this.getMaxNodeJointAngle()); // Change this based on how much freedom you want (35 is a good number)
@@ -232,10 +234,13 @@ public class ModelNode {
         EquipmentSlot slot = EquipmentSlot.HEAD;
         // Sets the segments finalized models based on their position in the balloon
         if (this.getIndex() == this.getBalloonType().getNodeCount() - 1) {
+            // Set the head model
             this.getBalloonArmorStand().setItem(slot, this.getBalloonType().getHeadModel().getFinalizedModel());
         } else if (this.getIndex() == 0) {
+            // Set the tail model
             this.getBalloonArmorStand().setItem(slot, this.getBalloonType().getTailModel().getFinalizedModel());
         } else {
+            // Set the body model
             this.getBalloonArmorStand().setItem(slot, this.getBalloonType().getBodyModel().getFinalizedModel());
         }
 
