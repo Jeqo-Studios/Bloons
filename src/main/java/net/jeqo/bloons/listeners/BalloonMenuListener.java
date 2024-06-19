@@ -57,7 +57,7 @@ public class BalloonMenuListener implements Listener {
             if (displayName.equals(ColorCodeConverter.adventureToColorCode(messageTranslations.getString("buttons.unequip.name")))) event.setCancelled(true);
 
             // Spawn the proper type of balloon (either single or multipart)
-            MultipartBalloonType type = Bloons.getBalloonCore().getMultipartBalloon(localizedName);
+            MultipartBalloonType type = Bloons.getBalloonCore().getMultipartBalloonByName(localizedName);
             MultipartBalloon previousBalloon = MultipartBalloonManagement.getPlayerBalloon(player.getUniqueId());
             if (previousBalloon != null) {
                 MultipartBalloonUnequipEvent multipartBalloonEquipEvent = new MultipartBalloonUnequipEvent(player, previousBalloon);
