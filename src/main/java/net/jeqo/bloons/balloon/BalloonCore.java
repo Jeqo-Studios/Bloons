@@ -13,11 +13,13 @@ import java.util.ArrayList;
 /**
  * The core class to handle the registering of multipart balloons
  */
-@Setter @Getter
 public class BalloonCore {
+    @Setter @Getter
     private JavaPlugin plugin;
-    private ArrayList<MultipartBalloonType> multipartBalloonTypes = new ArrayList<>();
-    private ArrayList<SingleBalloonType> singleBalloonTypes = new ArrayList<>();
+    @Setter @Getter
+    public static ArrayList<MultipartBalloonType> multipartBalloonTypes = new ArrayList<>();
+    @Setter @Getter
+    public static ArrayList<SingleBalloonType> singleBalloonTypes = new ArrayList<>();
 
     /**
      *                          Creates a new instance of the balloon core manager with preset registered balloons
@@ -46,7 +48,7 @@ public class BalloonCore {
 
         // Clear the current balloons list to reduce memory usage
         this.getMultipartBalloonTypes().clear();
-        this.getSingleBalloonTypes().clear();
+        getSingleBalloonTypes().clear();
 
         // Set the array to be full of all multipart balloons
         this.setMultipartBalloonTypes(ConfigConfiguration.getMultipartBalloons());
@@ -96,15 +98,15 @@ public class BalloonCore {
     }
 
     /**
-     *                  Retrieves a balloon by its name from the registered balloons list
-     * @param name      The name of the balloon, type java.lang.String
+     *                  Retrieves a balloon by its ID from the registered balloons list
+     * @param ID        The ID of the balloon, type java.lang.String
      * @return          The balloon with the specified name, type net.jeqo.bloons.balloon.multipart.MultipartBalloonType/null
      */
-    public MultipartBalloonType getMultipartBalloonByName(String name) {
+    public static MultipartBalloonType getMultipartBalloonByID(String ID) {
         // Loop over every balloon in the registered balloons list
-        for (MultipartBalloonType balloon : this.getMultipartBalloonTypes()) {
+        for (MultipartBalloonType balloon : getMultipartBalloonTypes()) {
             // Check if the balloon's name matches the specified name
-            if (balloon.getId().equalsIgnoreCase(name)) {
+            if (balloon.getId().equalsIgnoreCase(ID)) {
                 return balloon;
             }
         }
@@ -114,15 +116,15 @@ public class BalloonCore {
     }
 
     /**
-     *                  Retrieves a single balloon by its name from the registered balloons list
-     * @param name      The name of the balloon, type java.lang.String
-     * @return          The single balloon with the specified name, type net.jeqo.bloons.balloon.single.SingleBalloonType/null
+     *                  Retrieves a single balloon by its ID from the registered balloons list
+     * @param ID        The ID of the balloon, type java.lang.String
+     * @return          The single balloon with the specified ID, type net.jeqo.bloons.balloon.single.SingleBalloonType/null
      */
-    public SingleBalloonType getSingleBalloonByName(String name) {
+    public static SingleBalloonType getSingleBalloonByID(String ID) {
         // Loop over every single balloon in the registered balloons list
-        for (SingleBalloonType balloon : this.getSingleBalloonTypes()) {
+        for (SingleBalloonType balloon : getSingleBalloonTypes()) {
             // Check if the single balloon's name matches the specified name
-            if (balloon.getId().equalsIgnoreCase(name)) {
+            if (balloon.getId().equalsIgnoreCase(ID)) {
                 return balloon;
             }
         }

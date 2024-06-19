@@ -3,6 +3,7 @@ package net.jeqo.bloons.balloon.single;
 import lombok.Getter;
 import lombok.Setter;
 import net.jeqo.bloons.Bloons;
+import net.jeqo.bloons.balloon.BalloonCore;
 import net.jeqo.bloons.configuration.BalloonConfiguration;
 import net.jeqo.bloons.configuration.ConfigConfiguration;
 import net.jeqo.bloons.events.balloon.single.SingleBalloonEquipEvent;
@@ -148,22 +149,21 @@ public class SingleBalloon extends BukkitRunnable {
      */
     public ItemStack getConfiguredBalloonVisual(String balloonID) {
         MessageTranslations messageTranslations = new MessageTranslations(Bloons.getInstance());
-        // Retrieves the configuration data for the balloon
-        ConfigurationSection balloonConfiguration = Bloons.getInstance().getConfig().getConfigurationSection(ConfigConfiguration.SINGLE_BALLOON_SECTION + balloonID);
+        SingleBalloonType singleBalloonType = BalloonCore.getSingleBalloonByID(balloonID);
 
         // If there isn't a configuration for the balloon, log an error and return null
-        if (balloonConfiguration == null) {
+        if (singleBalloonType == null) {
             Logger.logError("The balloon " + balloonID + " is not set in the configuration!");
             return null;
         }
 
         // If the material of the balloon is not set, log an error and return null
-        if (balloonConfiguration.getString("material") == null) {
+        if (singleBalloonType.getMaterial() == null) {
             Logger.logError("The material of the balloon " + balloonID + " is not set!");
             return null;
         }
 
-        Material material = Material.getMaterial(balloonConfiguration.getString("material"));
+        Material material = Material.getMaterial(singleBalloonType.getMaterial());
 
         // If the material is not valid, log an error and return null
         if (material == null) {
@@ -174,9 +174,9 @@ public class SingleBalloon extends BukkitRunnable {
         // Generate the item and set the custom model data meta
         ItemStack item = new ItemStack(material);
         ItemMeta meta = item.getItemMeta();
-        meta.setCustomModelData(balloonConfiguration.getInt("custom-model-data"));
+        meta.setCustomModelData(singleBalloonType.getCustomModelData());
 
-        String colorConfiguration = messageTranslations.getString(ConfigConfiguration.SINGLE_BALLOON_SECTION + balloonID + ".color");
+        String colorConfiguration = messageTranslations.getString(singleBalloonType.getColor());
 
         // If the color of the balloon is not set, log an error and return null
         if (colorConfiguration == null) {

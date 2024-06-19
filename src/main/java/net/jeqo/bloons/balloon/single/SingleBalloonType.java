@@ -8,6 +8,7 @@ import lombok.Setter;
  */
 @Getter @Setter
 public class SingleBalloonType {
+    private String key;
     private String id;
     private String permission;
     private String material;
@@ -18,6 +19,7 @@ public class SingleBalloonType {
 
     /**
      *                          Creates a new single balloon type configuration
+     * @param key               The key of the balloon type in the configuration, type java.lang.String
      * @param id                The unique identifier for the balloon type, type java.lang.String
      * @param permission        The permission required to use the balloon type, type java.lang.String
      * @param material          The name of the Bukkit Material used to create the item, type java.lang.String
@@ -26,7 +28,8 @@ public class SingleBalloonType {
      * @param name              The name of the balloon, type java.lang.String
      * @param lore              The lore of the balloon, type java.lang.String[]
      */
-    public SingleBalloonType(String id, String permission, String material, String color, int customModelData, String name, String[] lore) {
+    public SingleBalloonType(String key, String id, String permission, String material, String color, int customModelData, String name, String[] lore) {
+        this.setKey(key);
         this.setId(id);
         this.setPermission(permission);
         this.setMaterial(material);
