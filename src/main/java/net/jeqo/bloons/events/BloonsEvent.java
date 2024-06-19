@@ -1,6 +1,5 @@
 package net.jeqo.bloons.events;
 
-import lombok.Getter;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;

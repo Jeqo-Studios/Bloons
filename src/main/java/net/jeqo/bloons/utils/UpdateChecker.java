@@ -1,6 +1,5 @@
 package net.jeqo.bloons.utils;
 
-import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import java.io.IOException;
