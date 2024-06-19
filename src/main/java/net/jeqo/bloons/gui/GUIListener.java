@@ -11,21 +11,19 @@ import org.bukkit.event.inventory.InventoryClickEvent;
  */
 public class GUIListener implements Listener {
 
+    /**
+     *              Handles the inventory click event of a GUI
+     * @param event The event that is fired when an item is clicked in an inventory, type org.bukkit.event.inventory.InventoryClickEvent
+     */
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
-        if (event.getCurrentItem() == null) {
-            return;
-        }
+        if (event.getCurrentItem() == null) return;
 
         NBTItem item = (NBTItem) event.getCurrentItem();
 
-        if (item.getType() != Material.AIR) {
-            return;
-        }
+        if (item.getType() != Material.AIR) return;
 
-        if (!item.hasKey(GUIHelpers.getClickableItemFlag())) {
-            return;
-        }
+        if (!item.hasKey(GUIHelpers.getClickableItemFlag())) return;
 
         // Get the clickable item and run it, and/or cancel it if it can't be picked up
         GUIClickableItem clickableItem = GUIClickableItem.itemData.get(item.getStringFlag(GUIHelpers.getClickableItemFlag()));
