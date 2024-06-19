@@ -31,34 +31,38 @@ import java.util.concurrent.ThreadLocalRandom;
 
 @Getter @Setter
 public class SingleBalloon extends BukkitRunnable {
-    /** Al physical elements of balloon **/
     private Player player;
     private ItemStack balloonVisual;
     private ArmorStand balloonArmorStand;
     public Chicken balloonChicken;
 
-    /** Location Data **/
     private Location playerLocation;
     private Location moveLocation;
 
-    /** Movement Data **/
     private int ticks = 0;
     private float targetYaw = 0.0F;
 
+    /**
+     *                      Constructor for the SingleBalloon class
+     * @param player        The player to attach the balloon to, type org.bukkit.entity.Player
+     * @param balloonID     The ID of the balloon to attach to the player, type java.lang.String
+     */
     public SingleBalloon(Player player, String balloonID) {
         this.setPlayer(player);
 
         // Configure the balloon visual elements
-        this.setBalloonVisual(getConfiguredBalloonVisual(balloonID));
+        this.setBalloonVisual(this.getConfiguredBalloonVisual(balloonID));
     }
 
     /**
-     * What runs inside the extended bukkit runnable
-     * Core functionality of how the balloon moves
+     * What runs inside the extended bukkit runnable, it's
+     * the control center of the core functionality of how the balloon moves
      */
     public void run() {
+        // If the balloon armor stand is null, initialize the balloon
         if (this.getBalloonArmorStand() == null) initializeBalloon();
 
+        // Every tick, retrieve the updated player location
         Location playerLocation = this.getPlayerLocation();
         playerLocation.setYaw(this.getPlayerLocation().getYaw());
 
@@ -68,14 +72,17 @@ public class SingleBalloon extends BukkitRunnable {
             this.setTicks(0);
         }
 
+        // If the target yaw is greater than the player location yaw, add 0.2 to the yaw
         if (this.getTargetYaw() > playerLocation.getYaw()) {
             playerLocation.setYaw(playerLocation.getYaw() + 0.2F);
         } else if (this.getTargetYaw() < playerLocation.getYaw()) {
             playerLocation.setYaw(playerLocation.getYaw() - 0.2F);
         }
 
+        // Set the move location to the armor stand location minus 2 on the Y axis
         this.setMoveLocation(this.getBalloonArmorStand().getLocation().subtract(0.0D, 2.0D, 0.0D).clone());
 
+        // Set the vector to the player location minus the move location
         Vector vector = playerLocation.toVector().subtract(this.getMoveLocation().toVector());
         vector.multiply(0.3D);
         this.setMoveLocation(this.getMoveLocation().add(vector));
@@ -90,8 +97,8 @@ public class SingleBalloon extends BukkitRunnable {
     }
 
     /**
-     * Cancels the current bukkit runnable instance and kills off the entities
-     * @throws IllegalStateException If the task has already been cancelled
+     *                                  Cancels the current bukkit runnable instance and kills off the entities
+     * @throws IllegalStateException    If the task has already been cancelled
      */
     public synchronized void cancel() throws IllegalStateException {
         this.getBalloonArmorStand().remove();
@@ -107,8 +114,8 @@ public class SingleBalloon extends BukkitRunnable {
     }
 
     /**
-     * Teleports the balloon's entities to a specific location
-     * @param location The location to teleport the balloon to
+     *                  Teleports the balloon's entities to a specified location
+     * @param location  The location to teleport the balloon to, type org.bukkit.Location
      */
     private void teleport(Location location) {
         this.getBalloonArmorStand().teleport(location.add(0.0D, 2.0D, 0.0D));
@@ -116,59 +123,82 @@ public class SingleBalloon extends BukkitRunnable {
     }
 
     /**
-     * Initializes the balloon. Sets the current players location, and initializes the armor stand, and chicken entities
+     * Initializes the balloon and its subcomponents.
+     * Sets the current players location, and initializes the armor stand, and chicken entities
      */
     private void initializeBalloon() {
         this.setPlayerLocation(this.getPlayer().getLocation());
         this.getPlayerLocation().setYaw(0.0F);
 
+        // Create and set the balloons visual appearance/model
         ItemMeta meta = this.getBalloonVisual().getItemMeta();
         meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
         this.getBalloonVisual().setItemMeta(meta);
 
+        // Initialize the armor stand and lead to the player
         this.initializeBalloonArmorStand();
-        this.initializeBalloonChicken();
+        this.initializeBalloonLead();
     }
 
     /**
-     * Gets the item stack object of the visual appearance of the balloon
-     * @param balloonID The balloon ID to get the visual appearance of
-     * @return The item stack object of the visual appearance of the balloon
+     *                      Retrieves the item stack object of the visual appearance of the balloon
+     * @param balloonID     The balloon ID to get the visual appearance of, type java.lang.String
+     * @return              The item object that contains the configured balloon model, type org.bukkit.inventory.ItemStack
      */
     public ItemStack getConfiguredBalloonVisual(String balloonID) {
         MessageTranslations messageTranslations = new MessageTranslations(Bloons.getInstance());
-
+        // Retrieves the configuration data for the balloon
         ConfigurationSection balloonConfiguration = Bloons.getInstance().getConfig().getConfigurationSection(ConfigConfiguration.SINGLE_BALLOON_SECTION + balloonID);
 
+        // If there isn't a configuration for the balloon, log an error and return null
         if (balloonConfiguration == null) {
-            Logger.logWarning("The balloon " + balloonID + " is not set in the configuration!");
+            Logger.logError("The balloon " + balloonID + " is not set in the configuration!");
             return null;
         }
 
+        // If the material of the balloon is not set, log an error and return null
         if (balloonConfiguration.getString("material") == null) {
-            Logger.logWarning("The material of the balloon " + balloonID + " is not set!");
+            Logger.logError("The material of the balloon " + balloonID + " is not set!");
             return null;
         }
 
-        ItemStack item = new ItemStack(Material.valueOf(balloonConfiguration.getString("material")));
+        Material material = Material.getMaterial(balloonConfiguration.getString("material"));
+
+        // If the material is not valid, log an error and return null
+        if (material == null) {
+            Logger.logError("The material of the balloon " + balloonID + " is not a valid material!");
+            return null;
+        }
+
+        // Generate the item and set the custom model data meta
+        ItemStack item = new ItemStack(material);
         ItemMeta meta = item.getItemMeta();
         meta.setCustomModelData(balloonConfiguration.getInt("custom-model-data"));
 
-        if (messageTranslations.getString(ConfigConfiguration.SINGLE_BALLOON_SECTION + balloonID + ".color") != null) {
-            if (!messageTranslations.getString(ConfigConfiguration.SINGLE_BALLOON_SECTION + balloonID + ".color").equalsIgnoreCase("potion")) {
-                LeatherArmorMeta leatherArmorMeta = (LeatherArmorMeta) meta;
-                leatherArmorMeta.setColor(ColorManagement.hexToColor(messageTranslations.getString(ConfigConfiguration.SINGLE_BALLOON_SECTION + balloonID + ".color")));
-            } else {
-                Logger.logWarning("The color of the balloonVisual " + balloonID + " is set, but the material is not a leather item!");
-            }
+        String colorConfiguration = messageTranslations.getString(ConfigConfiguration.SINGLE_BALLOON_SECTION + balloonID + ".color");
+
+        // If the color of the balloon is not set, log an error and return null
+        if (colorConfiguration == null) {
+            Logger.logError("The color of the balloon " + balloonID + " is not set!");
+            return null;
         }
+
+        // If the color of the balloon is set to potion, log a warning and return null
+        if (colorConfiguration.equalsIgnoreCase("potion")) {
+            Logger.logWarning("The color of the balloon " + balloonID + " is set, but the material is not a leather item!");
+            return null;
+        }
+
+        // Finally, set the color of the item and set the item meta because we can assume it's a leather item
+        LeatherArmorMeta leatherArmorMeta = (LeatherArmorMeta) meta;
+        leatherArmorMeta.setColor(ColorManagement.hexToColor(colorConfiguration));
         item.setItemMeta(meta);
 
         return item;
     }
 
     /**
-     * Initializes the balloon's armor stand entity
+     * Initializes the balloon's armor stand entity with the proper configurations
      */
     public void initializeBalloonArmorStand() {
         this.setBalloonArmorStand(this.getPlayerLocation().getWorld().spawn(this.getPlayerLocation(), ArmorStand.class));
@@ -185,9 +215,9 @@ public class SingleBalloon extends BukkitRunnable {
     }
 
     /**
-     * Initializes the balloon's chicken entity
+     * Initializes the balloon's lead to the player (chicken entity)
      */
-    public void initializeBalloonChicken() {
+    public void initializeBalloonLead() {
         this.setBalloonChicken(this.getPlayerLocation().getWorld().spawn(this.getPlayerLocation(), Chicken.class));
         this.getBalloonChicken().setInvulnerable(true);
         this.getBalloonChicken().setInvisible(true);
@@ -201,28 +231,33 @@ public class SingleBalloon extends BukkitRunnable {
     }
 
     /**
-     * Checks if a balloon needs to be removed or added
-     * @param player The player to check
-     * @param balloonID The balloon ID to check
+     *                  Checks if a balloon needs to be removed or added
+     * @param player    The player to check, type org.bukkit.entity.Player
+     * @param balloonID The balloon ID to check, type java.lang.String
      */
     public static void checkBalloonRemovalOrAdd(final Player player, final String balloonID) {
         new BukkitRunnable() {
             public void run() {
+                // Gets and checks if the player has a balloon already
                 SingleBalloon initialBalloon = Bloons.getPlayerSingleBalloons().get(player.getUniqueId());
                 if (initialBalloon != null) return;
 
+                // Call the unequip event and check if it's cancelled
                 SingleBalloonForceUnequipEvent unequipEvent = new SingleBalloonForceUnequipEvent(player, null);
                 unequipEvent.callEvent();
 
                 if (unequipEvent.isCancelled()) return;
 
+                // Remove the balloon from the player
                 SingleBalloonManagement.removeBalloon(player, null);
 
+                // Call the equip event and check if it's cancelled
                 SingleBalloonEquipEvent equipEvent = new SingleBalloonEquipEvent(player, balloonID);
                 equipEvent.callEvent();
 
                 if (equipEvent.isCancelled()) return;
 
+                // Create a new balloon and add it to the player/start the runnables and add the player to the maps
                 SingleBalloon balloon = new SingleBalloon(player, balloonID);
                 balloon.runTaskTimer(Bloons.getInstance(), 0L, 1L);
                 Bloons.getPlayerSingleBalloons().put(player.getUniqueId(), balloon);
