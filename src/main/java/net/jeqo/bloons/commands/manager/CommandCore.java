@@ -36,6 +36,10 @@ public class CommandCore implements CommandExecutor {
     private final JavaPlugin plugin;
     private final MessageTranslations messageTranslations;
 
+    /**
+     *                          Creates a new instance of the command core
+     * @param providedPlugin    The plugin instance, type org.bukkit.plugin.java.JavaPlugin
+     */
     public CommandCore(JavaPlugin providedPlugin) {
         this.plugin = providedPlugin;
         this.commands = new ArrayList<>();
@@ -62,9 +66,9 @@ public class CommandCore implements CommandExecutor {
     }
 
     /**
-     * Gets a commands description by its alias
-     * @param commandAlias The alias of the command
-     * @return The description of the command
+     *                      Gets a commands description by its alias
+     * @param commandAlias  The alias of the command, type java.lang.String
+     * @return              The description of the command, type java.lang.String
      */
     public String getCommandDescription(String commandAlias) {
         for (Command command : this.getCommands()) {
@@ -76,13 +80,21 @@ public class CommandCore implements CommandExecutor {
     }
 
     /**
-     * Adds a command to the commands list
-     * @param command The command to add
+     *                  Adds a command to the commands list
+     * @param command   The command to add, type net.jeqo.bloons.commands.manager.Command
      */
     public void addCommand(Command command) {
         this.getCommands().add(command);
     }
 
+    /**
+     *                  Executes the command
+     * @param sender    Source of the command, type org.bukkit.command.CommandSender
+     * @param command   Command which was executed, type org.bukkit.command.Command
+     * @param label     Alias of the command which was used, type java.lang.String
+     * @param args      Passed command arguments, type java.lang.String[]
+     * @return          Whether the command was executed successfully, type boolean
+     */
     @Override
     public boolean onCommand(@NotNull CommandSender sender, org.bukkit.command.@NotNull Command command, @NotNull String label, String[] args) {
         if (args.length < 1) {
@@ -99,28 +111,28 @@ public class CommandCore implements CommandExecutor {
             }
 
             ArrayList<ItemStack> items = new ArrayList<>();
-            ConfigurationSection balloonsSection = Bloons.getInstance().getConfig().getConfigurationSection("single-balloons");
-            ConfigurationSection multipartBalloonsSection = Bloons.getInstance().getConfig().getConfigurationSection("multipart-balloons");
+            ConfigurationSection singleBalloonsSection = Bloons.getInstance().getConfig().getConfigurationSection(ConfigConfiguration.SINGLE_BALLOON_SECTION.replace(".", ""));
+            ConfigurationSection multipartBalloonsSection = Bloons.getInstance().getConfig().getConfigurationSection(ConfigConfiguration.MULTIPART_BALLOON_SECTION.replace(".", ""));
 
-            if (balloonsSection != null && multipartBalloonsSection != null) {
-                for (String key : balloonsSection.getKeys(false)) {
-                    ConfigurationSection keySection = balloonsSection.getConfigurationSection(key);
-                    if (keySection == null) continue;
+            if (singleBalloonsSection == null && multipartBalloonsSection == null) return false;
 
-                    if (shouldAddBalloon(player, key)) {
-                        ItemStack item = createBalloonItem(keySection, key);
-                        items.add(item);
-                    }
+            for (String key : singleBalloonsSection.getKeys(false)) {
+                ConfigurationSection keySection = singleBalloonsSection.getConfigurationSection(key);
+                if (keySection == null) continue;
+
+                if (shouldAddBalloon(player, key)) {
+                    ItemStack item = createBalloonItem(keySection, key);
+                    items.add(item);
                 }
+            }
 
-                for (String key : multipartBalloonsSection.getKeys(false)) {
-                    ConfigurationSection keySection = multipartBalloonsSection.getConfigurationSection(key);
-                    if (keySection == null) continue;
+            for (String key : multipartBalloonsSection.getKeys(false)) {
+                ConfigurationSection keySection = multipartBalloonsSection.getConfigurationSection(key);
+                if (keySection == null) continue;
 
-                    if (shouldAddMultipartBalloon(player, key)) {
-                        ItemStack item = createMultipartBalloonItem(keySection, key);
-                        items.add(item);
-                    }
+                if (shouldAddMultipartBalloon(player, key)) {
+                    ItemStack item = createMultipartBalloonItem(keySection, key);
+                    items.add(item);
                 }
             }
 
@@ -159,20 +171,20 @@ public class CommandCore implements CommandExecutor {
     }
 
     /**
-     * Checks if the player sending the command meets the requirements to execute the command
-     * @param command The command to check
-     * @param sender The sender of the command
-     * @return Whether the user meets the requirements
+     *                  Checks if the player sending the command meets the requirements to execute the command
+     * @param command   The command to check, type net.jeqo.bloons.commands.manager.Command
+     * @param sender    The sender of the command, type org.bukkit.command.CommandSender
+     * @return          Whether the user meets the requirements, type boolean
      */
     public boolean meetsRequirements(Command command, CommandSender sender) {
         return command.hasRequirement(sender, command.getRequiredPermission());
     }
 
     /**
-     * Checks if we should add the balloon to the menu
-     * @param player The player to check
-     * @param key The key of the balloon
-     * @return Whether we should add the balloon to the menu
+     *                  Checks if we should add the balloon to the menu
+     * @param player    The player to check, type org.bukkit.entity.Player
+     * @param key       The key of the balloon, type java.lang.String
+     * @return          Whether we should add the balloon to the menu, type boolean
      */
     private boolean shouldAddBalloon(Player player, String key) {
         if (this.getMessageTranslations().getString("hide-balloons-without-permission").equalsIgnoreCase("true")) {
@@ -181,6 +193,12 @@ public class CommandCore implements CommandExecutor {
         return true;
     }
 
+    /**
+     *                 Checks if we should add the multipart balloon to the menu
+     * @param player   The player to check, type org.bukkit.entity.Player
+     * @param key      The key of the balloon, type java.lang.String
+     * @return         Whether we should add the balloon to the menu, type boolean
+     */
     private boolean shouldAddMultipartBalloon(Player player, String key) {
         if (this.getMessageTranslations().getString("hide-balloons-without-permission").equalsIgnoreCase("true")) {
             return player.hasPermission(this.getMessageTranslations().getString(ConfigConfiguration.MULTIPART_BALLOON_SECTION + key + ".permission"));
@@ -189,10 +207,10 @@ public class CommandCore implements CommandExecutor {
     }
 
     /**
-     * Creates an ItemStack for a balloon
-     * @param keySection The configuration section of the balloon
-     * @param key The key of the balloon
-     * @return The ItemStack of the balloon
+     *                      Creates an ItemStack for a balloon
+     * @param keySection    The configuration section of the balloon, type org.bukkit.configuration.ConfigurationSection
+     * @param key           The key of the balloon, type java.lang.String
+     * @return              The ItemStack of the balloon, type org.bukkit.inventory.ItemStack
      */
     private ItemStack createBalloonItem(ConfigurationSection keySection, String key) {
         Material material = Material.matchMaterial(Objects.requireNonNull(keySection.getString("material")));
@@ -212,6 +230,12 @@ public class CommandCore implements CommandExecutor {
         return item;
     }
 
+    /**
+     *                      Creates an ItemStack for a multipart balloon
+     * @param keySection    The configuration section of the balloon, type org.bukkit.configuration.ConfigurationSection
+     * @param key           The key of the balloon, type java.lang.String
+     * @return              The ItemStack of the balloon, type org.bukkit.inventory.ItemStack
+     */
     private ItemStack createMultipartBalloonItem(ConfigurationSection keySection, String key) {
         Material material = Material.matchMaterial(Objects.requireNonNull(keySection.getString("head.material")));
         if (material == null) return null;
@@ -234,9 +258,9 @@ public class CommandCore implements CommandExecutor {
     }
 
     /**
-     * Sets the lore of the balloon
-     * @param meta The ItemMeta of the balloon
-     * @param keySection The configuration section of the balloon
+     *                      Sets the lore of the balloon
+     * @param meta          The ItemMeta of the balloon, type org.bukkit.inventory.meta.ItemMeta
+     * @param keySection    The configuration section of the balloon, type org.bukkit.configuration.ConfigurationSection
      */
     private void setBalloonLore(ItemMeta meta, ConfigurationSection keySection) {
         if (keySection.contains("lore")) {
@@ -247,9 +271,9 @@ public class CommandCore implements CommandExecutor {
     }
 
     /**
-     * Sets the display name of the balloon
-     * @param meta The ItemMeta of the balloon
-     * @param keySection The configuration section of the balloon
+     *                      Sets the display name of the balloon
+     * @param meta          The ItemMeta of the balloon, type org.bukkit.inventory.meta.ItemMeta
+     * @param keySection    The configuration section of the balloon, type org.bukkit.configuration.ConfigurationSection
      */
     private void setBalloonDisplayName(ItemMeta meta, ConfigurationSection keySection) {
         String name = keySection.getString("name");
@@ -260,13 +284,14 @@ public class CommandCore implements CommandExecutor {
     }
 
     /**
-     * Sets the color of the balloon
-     * @param meta The ItemMeta of the balloon
-     * @param key The key of the balloon
-     * @param keySection The configuration section of the balloon
+     *                      Sets the color of the balloon
+     * @param meta          The ItemMeta of the balloon, type org.bukkit.inventory.meta.ItemMeta
+     * @param key           The key of the balloon, type java.lang.String
+     * @param keySection    The configuration section of the balloon, type org.bukkit.configuration.ConfigurationSection
      */
     private void setBalloonColor(ItemMeta meta, String key, ConfigurationSection keySection) {
         String color = keySection.getString("color");
+
         if (color != null && !color.equalsIgnoreCase("potion")) {
             if (meta instanceof LeatherArmorMeta) {
                 ((LeatherArmorMeta) meta).setColor(ColorManagement.hexToColor(color));
