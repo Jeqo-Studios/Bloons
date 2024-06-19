@@ -10,13 +10,15 @@ import org.bukkit.entity.Player;
 @Setter
 public class MultipartBalloonBuilder {
 
+    // Both of these have attached lombok setters to
+    // allow for easy setting of the values in the instance
     MultipartBalloonType balloonType;
     Player balloonOwner;
 
     /**
-     * Constructs a balloon via an easy-to-use builder
-     * @param balloonType The type of balloon to create
-     * @param balloonOwner The player that owns the balloon
+     *                      Constructs a balloon via an easy-to-use builder
+     * @param balloonType   The type of balloon to create, type net.jeqo.bloons.balloon.multipart.MultipartBalloonType
+     * @param balloonOwner  The player that owns the balloon, type org.bukkit.entity.Player
      */
     public MultipartBalloonBuilder(MultipartBalloonType balloonType, Player balloonOwner) {
         this.setBalloonType(balloonType);
@@ -24,8 +26,8 @@ public class MultipartBalloonBuilder {
     }
 
     /**
-     * Builds the balloon to a MultipartBalloon instance
-     * @return The balloon that was built
+     *                      Builds the balloon to a MultipartBalloon instance
+     * @return              The balloon that was built, type net.jeqo.bloons.balloon.multipart.balloon.MultipartBalloon
      */
     public MultipartBalloon build() {
         return new MultipartBalloon(this);

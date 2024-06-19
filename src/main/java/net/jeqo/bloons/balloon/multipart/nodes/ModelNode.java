@@ -3,7 +3,6 @@ package net.jeqo.bloons.balloon.multipart.nodes;
 import lombok.Getter;
 import lombok.Setter;
 import net.jeqo.bloons.balloon.multipart.MultipartBalloonType;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
@@ -36,11 +35,11 @@ public class ModelNode {
     double turningSplineInterpolation;
 
     /**
-     * Builder for creating lead segment.
-     * @param x X axis position.
-     * @param z Z axis position.
-     * @param length Length of segment.
-     * @param index Index number of segment.
+         *              Builder for creating lead segment.
+     * @param x         X-axis position, type float
+     * @param z         Z-axis position, type float
+     * @param length    Length of segment in blocks, type float
+     * @param index     Index number of segment, type int
      */
     public ModelNode(float x, float y, float z, float length, int index, MultipartBalloonType balloonType, Player balloonOwner, double maxNodeJointAngle, double yAxisInterpolation, double turningSplineInterpolation) {
         this.setLength(length);
@@ -52,24 +51,21 @@ public class ModelNode {
         this.setYAxisInterpolation(yAxisInterpolation);
         this.setTurningSplineInterpolation(turningSplineInterpolation);
 
-        this.setBalloonArmorStand(this.getBalloonOwner().getWorld().spawn(new Location(this.getBalloonOwner().getWorld(), x, balloonOwner.getLocation().getY() + 2, z), ArmorStand.class)); // Change Y value to the right height
-        this.getBalloonArmorStand().setVisible(false);
-        this.getBalloonArmorStand().setInvulnerable(true);
-        this.getBalloonArmorStand().setInvisible(true);
-        this.getBalloonArmorStand().setSilent(true);
-        this.getBalloonArmorStand().setCollidable(false);
-        this.getBalloonArmorStand().setLeashHolder(balloonOwner);
+        // Spawn an armor stand at the provided coordinates and with the players height + 2
+        this.initializeArmorStand(x, this.getBalloonOwner().getLocation().getY() + 2, z);
 
         float dx = length * (float)cos(0);
         float dz = length * (float)sin(0);
+
+        // Calculate the point B location based on the angle and length
         this.getPointB().set(this.getPointA().x + dx, this.getPointA().y, this.getPointA().z + dz);
     }
 
     /**
-     * Builder for following segments.
-     * @param parent Leading segment.
-     * @param length Length of segment.
-     * @param index Index number.
+     *                  Builder for following segments.
+     * @param parent    Leading segment, type net.jeqo.bloons.balloon.multipart.nodes.ModelNode
+     * @param length    Length of segment in blocks, type float
+     * @param index     Index number in the balloon, type int
      */
     public ModelNode(ModelNode parent, float length, int index, MultipartBalloonType balloonType, Player balloonOwner, double maxNodeJointAngle, double yAxisInterpolation, double turningSplineInterpolation) {
         this.setParent(parent);
@@ -82,21 +78,35 @@ public class ModelNode {
         this.setYAxisInterpolation(yAxisInterpolation);
         this.setTurningSplineInterpolation(turningSplineInterpolation);
 
-        this.setBalloonArmorStand(this.getBalloonOwner().getWorld().spawn(new Location(this.getBalloonOwner().getWorld(), this.getPointA().x, balloonOwner.getLocation().getY() + 2, this.getPointA().z), ArmorStand.class)); // Change Y value to the right height
+        // Spawn an armor stand at the point A location with the height of the player + 2
+        this.initializeArmorStand(this.getPointA().x, this.getBalloonOwner().getLocation().getY() + 2, this.getPointA().z);
+
+        float dx = length * (float)cos(0);
+        float dz = length * (float)sin(0);
+
+        // Calculate the point B location based on the angle and length
+        this.getPointB().set(this.getPointA().x + dx, this.getPointA().z, this.getPointA().z + dz);
+    }
+
+    /**
+     *              Initializes the armor stand with the correct settings for a balloon node.
+     * @param x     X-axis position, type double
+     * @param y     Y-axis position, type double
+     * @param z     Z-axis position, type double
+     */
+    public void initializeArmorStand(double x, double y, double z) {
+        this.setBalloonArmorStand(this.getBalloonOwner().getWorld().spawn(new Location(this.getBalloonOwner().getWorld(), x, y, z), ArmorStand.class));
+
         this.getBalloonArmorStand().setVisible(false);
         this.getBalloonArmorStand().setInvulnerable(true);
         this.getBalloonArmorStand().setInvisible(true);
         this.getBalloonArmorStand().setSilent(true);
         this.getBalloonArmorStand().setCollidable(false);
-        this.getBalloonArmorStand().setLeashHolder(balloonOwner);
-
-        float dx = length * (float)cos(0);
-        float dz = length * (float)sin(0);
-        this.getPointB().set(this.getPointA().x + dx, this.getPointA().z, this.getPointA().z + dz);
+        this.getBalloonArmorStand().setLeashHolder(this.getBalloonOwner());
     }
 
     /**
-     * Follows to the child's point A location.
+     * Follows to the child's, also known as the previous nodes, point A location.
      */
     public void follow() {
         float targetX = this.getChild().getPointB().x;
@@ -106,10 +116,10 @@ public class ModelNode {
     }
 
     /**
-     * Makes point A follow to the desired location.
-     * @param targetX Target X axis.
-     * @param targetY Target Y axis.
-     * @param targetZ Target Z axis.
+     *                  Makes point A follow to the desired location.
+     * @param targetX   Target X-axis, type float
+     * @param targetY   Target Y axis, type float
+     * @param targetZ   Target Z axis, type float
      */
     public void follow(float targetX, float targetY, float targetZ) {
         ModelNodeVector target = new ModelNodeVector(targetX, targetY, targetZ);
@@ -149,47 +159,47 @@ public class ModelNode {
     }
 
     /**
-     * Linear interpolation function for angles.
-     * @param startAngle The starting angle in radians.
-     * @param endAngle The ending angle in radians.
-     * @param t The interpolation factor, ranging from 0 to 1.
-     * @return The interpolated angle between startAngle and endAngle.
+     *                              Linear interpolation function for angles.
+     * @param startAngle            The starting angle in radians, type double
+     * @param endAngle              The ending angle in radians, type double
+     * @param interpolationFactor   The interpolation factor, ranging from 0 to 1, type double
+     * @return                      The interpolated angle between startAngle and endAngle, type double
      */
-    private double lerpAngle(double startAngle, double endAngle, double t) {
+    private double lerpAngle(double startAngle, double endAngle, double interpolationFactor) {
         double difference = endAngle - startAngle;
         if (difference > Math.PI) {
             difference -= 2 * Math.PI;
         } else if (difference < -Math.PI) {
             difference += 2 * Math.PI;
         }
-        return startAngle + t * difference;
+        return startAngle + interpolationFactor * difference;
     }
 
     /**
-     * Linear interpolation function for values.
-     * @param startVal The starting value.
-     * @param endVal The ending value.
-     * @param t The interpolation factor, ranging from 0 to 1.
-     * @return The interpolated value between startVal and endVal.
+     *                              Linear interpolation function for values.
+     * @param startVal              The starting value. type double
+     * @param endVal                The ending value, type double
+     * @param interpolationFactor   The interpolation factor, ranging from 0 to 1, type double
+     * @return                      The interpolated value between startVal and endVal, type double
      */
-    private double lerpVal(double startVal, double endVal, double t) {
+    private double lerpVal(double startVal, double endVal, double interpolationFactor) {
         double difference = endVal - startVal;
-        return startVal + t * difference;
+        return startVal + interpolationFactor * difference;
     }
 
     /**
-     * Gets the heading of two node vectors
-     * @return The heading of the two node vectors as a float
+     *          Gets the heading of two node vectors
+     * @return  The heading of the two node vectors, type float
      */
     public float heading(){
         return ModelNodeVector.subtract(this.getPointA(), this.getPointB()).heading();
     }
 
     /**
-     * Calculates the head pose of the armor stand.
-     * @param pointA The first point.
-     * @param pointB The second point.
-     * @return The Euler angle of the armor stand.
+     *                  Calculates the head pose of the armor stand.
+     * @param pointA    The first point, type org.bukkit.util.Vector
+     * @param pointB    The second point, type org.bukkit.util.Vector
+     * @return          The Euler angle of the armor stand, type org.bukkit.util.EulerAngle
      */
     public EulerAngle calculateHeadPose(Vector pointA, Vector pointB) {
         Location loc = new Location(this.getBalloonOwner().getWorld(), pointA.getX(), pointA.getY(), pointA.getZ());
@@ -206,18 +216,18 @@ public class ModelNode {
     /**
      * Sets the correct position and item in the armor stand.
      */
-    public void show() {
-        /*
-         * This will set the head of the armor stand based on the balloon type
-         */
+    public void display() {
+        EquipmentSlot slot = EquipmentSlot.HEAD;
+        // Sets the segments finalized models based on their position in the balloon
         if (this.getIndex() == this.getBalloonType().getNodeCount() - 1) {
-            this.getBalloonArmorStand().setItem(EquipmentSlot.HEAD, this.getBalloonType().getHeadModel().getFinalizedModel());
+            this.getBalloonArmorStand().setItem(slot, this.getBalloonType().getHeadModel().getFinalizedModel());
         } else if (this.getIndex() == 0) {
-            this.getBalloonArmorStand().setItem(EquipmentSlot.HEAD, this.getBalloonType().getTailModel().getFinalizedModel());
+            this.getBalloonArmorStand().setItem(slot, this.getBalloonType().getTailModel().getFinalizedModel());
         } else {
-            this.getBalloonArmorStand().setItem(EquipmentSlot.HEAD, this.getBalloonType().getBodyModel().getFinalizedModel());
+            this.getBalloonArmorStand().setItem(slot, this.getBalloonType().getBodyModel().getFinalizedModel());
         }
 
+        // Creates a new Bukkit vector based on the position of the two points
         Vector pointAVector = new Vector(this.getPointA().x, this.getPointA().y, this.getPointA().z);
         Vector pointBVector = new Vector(this.getPointB().x, this.getPointB().y, this.getPointB().z);
 
@@ -227,6 +237,9 @@ public class ModelNode {
         this.getBalloonArmorStand().teleport(new Location(this.getBalloonOwner().getWorld(), (this.getPointA().x + this.getPointB().x) / 2.0, (this.getPointA().y + this.getPointB().y) / 2.0, (this.getPointA().z + this.getPointB().z) / 2.0)); // Change Y value to the right height
     }
 
+    /**
+     * Destroys the armor stand and removes it from the world
+     */
     public void destroy() {
         if (this.getBalloonArmorStand() != null && !this.getBalloonArmorStand().isDead()) {
             this.getBalloonArmorStand().remove();

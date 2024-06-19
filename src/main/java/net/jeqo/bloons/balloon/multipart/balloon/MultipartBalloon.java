@@ -5,7 +5,6 @@ import lombok.Setter;
 import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.balloon.multipart.MultipartBalloonType;
 import net.jeqo.bloons.balloon.multipart.nodes.ModelNode;
-import net.jeqo.bloons.balloon.multipart.nodes.ModelNodeVector;
 import net.jeqo.bloons.configuration.BalloonConfiguration;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
@@ -140,13 +139,13 @@ public class MultipartBalloon {
 
                 // Constantly teleport the balloons
                 getTentacle().follow((float) balloonOwnerLocation.getX(), (float) (newY + noseOffset), (float) balloonOwnerLocation.getZ());
-                getTentacle().show();
+                getTentacle().display();
 
                 // Make the other segments follow
                 ModelNode next = getTentacle().getParent();
                 while (next != null) {
                     next.follow();
-                    next.show();
+                    next.display();
 
                     next = next.getParent();
                 }
