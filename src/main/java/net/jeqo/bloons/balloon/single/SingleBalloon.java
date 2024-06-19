@@ -40,6 +40,8 @@ public class SingleBalloon extends BukkitRunnable {
     private int ticks = 0;
     private float targetYaw = 0.0F;
 
+    private static final String leatherMaterialPrefix = "LEATHER_"; // A constant to define a dyeable material
+
     /**
      *                      Constructor for the SingleBalloon class
      * @param player        The player to attach the balloon to, type org.bukkit.entity.Player
@@ -173,9 +175,9 @@ public class SingleBalloon extends BukkitRunnable {
         meta.setCustomModelData(singleBalloonType.getCustomModelData());
 
         // If the color of the balloon is not set, log an error and return null
-        if (singleBalloonType.getColor() == null) {
-            Logger.logError("The color of the balloon " + balloonID + " is not set!");
-            return null;
+        if (singleBalloonType.getColor() != null && singleBalloonType.getMaterial().startsWith(leatherMaterialPrefix)) {
+            LeatherArmorMeta leatherArmorMeta = (LeatherArmorMeta) meta;
+            leatherArmorMeta.setColor(ColorManagement.hexToColor(singleBalloonType.getColor()));
         }
 
         // If the color of the balloon is set to potion, log a warning and return null
@@ -184,9 +186,7 @@ public class SingleBalloon extends BukkitRunnable {
             return null;
         }
 
-        // Finally, set the color of the item and set the item meta because we can assume it's a leather item
-        LeatherArmorMeta leatherArmorMeta = (LeatherArmorMeta) meta;
-        leatherArmorMeta.setColor(ColorManagement.hexToColor(singleBalloonType.getColor()));
+        // Finally, set the item meta
         item.setItemMeta(meta);
 
         return item;
