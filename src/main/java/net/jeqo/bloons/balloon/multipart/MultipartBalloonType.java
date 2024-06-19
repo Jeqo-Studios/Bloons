@@ -30,11 +30,11 @@ public class MultipartBalloonType {
     /**
      *                                      Creates a new multipart balloon type which contains
      *                                      the data in the configuration for the balloon
-     * @param id                            The id of the balloon, type java.lang.String
+     * @param id                            The ID of the balloon, type java.lang.String
      * @param permission                    The permission required to use the balloon (i.e. blue.jeqo), type java.lang.String
      * @param name                          The name of the balloon, type java.lang.String
      * @param lore                          The lore lines of the balloon in the balloon GUI, type java.lang.String[]
-     * @param nodeCount                     The number of nodes, or model, in the balloon, type int
+     * @param nodeCount                     The number of nodes, or models, in the balloon, type int
      * @param distanceBetweenNodes          The distance between each node in the balloon measured as blocks, type double
      * @param headNodeOffset                The offset of the head node from its 0 position measured as blocks, type double
      * @param bodyNodeOffset                The offset of the body node from its 0 position measured as blocks, type double
@@ -73,11 +73,11 @@ public class MultipartBalloonType {
     /**
      *                                     Creates a new multipart balloon type which contains
      *                                     the data in the configuration for the balloon
-     * @param id                           The id of the balloon, type java.lang.String
+     * @param id                           The ID of the balloon, type java.lang.String
      * @param permission                   The permission required to use the balloon (i.e. blue.jeqo), type java.lang.String
      * @param name                         The name of the balloon, type java.lang.String
      * @param lore                         The lore lines of the balloon in the balloon GUI, type java.lang.String[]
-     * @param nodeCount                    The number of nodes, or model, in the balloon, type int
+     * @param nodeCount                    The number of nodes, or models, in the balloon, type int
      * @param distanceBetweenNodes         The distance between each node in the balloon measured as blocks, type double
      * @param headNodeOffset               The offset of the head node from its 0 position measured as blocks, type double
      * @param bodyNodeOffset               The offset of the body node from its 0 position measured as blocks, type double
@@ -114,11 +114,11 @@ public class MultipartBalloonType {
     /**
      *                                    Creates a new multipart balloon type which contains
      *                                    the data in the configuration for the balloon
-     * @param id                          The id of the balloon, type java.lang.String
+     * @param id                          The ID of the balloon, type java.lang.String
      * @param permission                  The permission required to use the balloon (i.e. blue.jeqo), type java.lang.String
      * @param name                        The name of the balloon, type java.lang.String
      * @param lore                        The lore lines of the balloon in the balloon GUI, type java.lang.String[]
-     * @param nodeCount                   The number of nodes, or model, in the balloon, type int
+     * @param nodeCount                   The number of nodes, or models, in the balloon, type int
      * @param distanceBetweenNodes        The distance between each node in the balloon measured as blocks, type double
      * @param headNodeOffset              The offset of the head node from its 0 position measured as blocks, type double
      * @param bodyNodeOffset              The offset of the body node from its 0 position measured as blocks, type double
@@ -153,11 +153,11 @@ public class MultipartBalloonType {
     /**
      *                                   Creates a new multipart balloon type which contains
      *                                   the data in the configuration for the balloon
-     * @param id                         The id of the balloon, type java.lang.String
+     * @param id                         The ID of the balloon, type java.lang.String
      * @param permission                 The permission required to use the balloon (i.e. blue.jeqo), type java.lang.String
      * @param name                       The name of the balloon, type java.lang.String
      * @param lore                       The lore lines of the balloon in the balloon GUI, type java.lang.String[]
-     * @param nodeCount                  The number of nodes, or model, in the balloon, type int
+     * @param nodeCount                  The number of nodes, or models, in the balloon, type int
      * @param distanceBetweenNodes       The distance between each node in the balloon measured as blocks, type double
      * @param headNodeOffset             The offset of the head node from its 0 position measured as blocks, type double
      * @param bodyNodeOffset             The offset of the body node from its 0 position measured as blocks, type double
@@ -190,11 +190,11 @@ public class MultipartBalloonType {
     /**
      *                                    Creates a new multipart balloon type which contains
      *                                    the data in the configuration for the balloon
-     * @param id                          The id of the balloon, type java.lang.String
+     * @param id                          The ID of the balloon, type java.lang.String
      * @param permission                  The permission required to use the balloon (i.e. blue.jeqo), type java.lang.String
      * @param name                        The name of the balloon, type java.lang.String
      * @param lore                        The lore lines of the balloon in the balloon GUI, type java.lang.String[]
-     * @param nodeCount                   The number of nodes, or model, in the balloon, type int
+     * @param nodeCount                   The number of nodes, or models, in the balloon, type int
      * @param distanceBetweenNodes        The distance between each node in the balloon measured as blocks, type double
      * @param headModel                   The model used for the head node, type net.jeqo.bloons.balloon.multipart.MultipartBalloonModel
      * @param bodyModel                   The model used for the body node, type net.jeqo.bloons.balloon.multipart.MultipartBalloonModel
@@ -215,11 +215,11 @@ public class MultipartBalloonType {
     /**
      *                               Creates a new multipart balloon type which contains
      *                               the data in the configuration for the balloon
-     * @param id                     The id of the balloon, type java.lang.String
+     * @param id                     The ID of the balloon, type java.lang.String
      * @param permission             The permission required to use the balloon (i.e. blue.jeqo), type java.lang.String
      * @param name                   The name of the balloon, type java.lang.String
      * @param lore                   The lore lines of the balloon in the balloon GUI, type java.lang.String[]
-     * @param nodeCount              The number of nodes, or model, in the balloon, type int
+     * @param nodeCount              The number of nodes, or models, in the balloon, type int
      * @param distanceBetweenNodes   The distance between each node in the balloon measured as blocks, type double
      * @param headNodeOffset         The offset of the head node from its 0 position measured as blocks, type double
      * @param bodyNodeOffset         The offset of the body node from its 0 position measured as blocks, type double
@@ -246,11 +246,11 @@ public class MultipartBalloonType {
     /**
      *                                 Creates a new multipart balloon type which contains
      *                                 the data in the configuration for the balloon
-     * @param id                       The id of the balloon, type java.lang.String
+     * @param id                       The ID of the balloon, type java.lang.String
      * @param permission               The permission required to use the balloon (i.e. blue.jeqo), type java.lang.String
      * @param name                     The name of the balloon, type java.lang.String
      * @param lore                     The lore lines of the balloon in the balloon GUI, type java.lang.String[]
-     * @param nodeCount                The number of nodes, or model, in the balloon, type int
+     * @param nodeCount                The number of nodes, or models, in the balloon, type int
      * @param distanceBetweenNodes     The distance between each node in the balloon measured as blocks, type double
      * @param headNodeOffset           The offset of the head node from its 0 position measured as blocks, type double
      * @param bodyNodeOffset           The offset of the body node from its 0 position measured as blocks, type double
@@ -279,11 +279,11 @@ public class MultipartBalloonType {
     /**
      *                                   Creates a new multipart balloon type which contains
      *                                   the data in the configuration for the balloon
-     * @param id                         The id of the balloon, type java.lang.String
+     * @param id                         The ID of the balloon, type java.lang.String
      * @param permission                 The permission required to use the balloon (i.e. blue.jeqo), type java.lang.String
      * @param name                       The name of the balloon, type java.lang.String
      * @param lore                       The lore lines of the balloon in the balloon GUI, type java.lang.String[]
-     * @param nodeCount                  The number of nodes, or model, in the balloon, type int
+     * @param nodeCount                  The number of nodes, or models, in the balloon, type int
      * @param distanceBetweenNodes       The distance between each node in the balloon measured as blocks, type double
      * @param headNodeOffset             The offset of the head node from its 0 position measured as blocks, type double
      * @param bodyNodeOffset             The offset of the body node from its 0 position measured as blocks, type double
