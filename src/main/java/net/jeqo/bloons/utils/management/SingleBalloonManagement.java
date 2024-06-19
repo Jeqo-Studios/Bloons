@@ -12,54 +12,54 @@ import org.bukkit.entity.Player;
 public class SingleBalloonManagement {
 
     /**
-     * Remove the balloon from the player
-     * @param player The player to remove the balloon from
-     * @param owner The balloon
+     *                  Remove the balloon from the player
+     * @param player    The player to remove the balloon from, type org.bukkit.entity.Player
+     * @param owner     The balloon, type net.jeqo.bloons.balloon.single.SingleBalloon
      */
     public static void removeBalloon(Player player, SingleBalloon owner) {
-        if (owner != null) {
-            SingleBalloonUnequipEvent event = new SingleBalloonUnequipEvent(player, owner);
-            event.callEvent();
+        if (owner == null) return;
 
-            if (event.isCancelled()) return;
+        SingleBalloonUnequipEvent event = new SingleBalloonUnequipEvent(player, owner);
+        event.callEvent();
 
-            owner.spawnRemoveParticle();
-            owner.cancel();
-            Bloons.getPlayerSingleBalloons().remove(player.getUniqueId());
-            Bloons.getPlayerSingleBalloonID().remove(player.getUniqueId());
-        }
+        if (event.isCancelled()) return;
+
+        owner.spawnRemoveParticle();
+        owner.cancel();
+        Bloons.getPlayerSingleBalloons().remove(player.getUniqueId());
+        Bloons.getPlayerSingleBalloonID().remove(player.getUniqueId());
     }
 
     /**
-     * Remove the balloon from the player quickly
-     * @param player The player to remove the balloon from
-     * @param owner The balloon
+     *                  Remove the balloon from the player quickly
+     * @param player    The player to remove the balloon from, type org.bukkit.entity.Player
+     * @param owner     The balloon, type net.jeqo.bloons.balloon.single.SingleBalloon
      */
     public static void quickRemoveBalloon(Player player, SingleBalloon owner) {
-        if (owner != null) {
-            SingleBalloonUnequipEvent event = new SingleBalloonUnequipEvent(player, owner);
-            event.callEvent();
+        if (owner == null) return;
 
-            if (event.isCancelled()) return;
+        SingleBalloonUnequipEvent event = new SingleBalloonUnequipEvent(player, owner);
+        event.callEvent();
 
-            owner.cancel();
-            Bloons.getPlayerSingleBalloons().remove(player.getUniqueId());
-            Bloons.getPlayerSingleBalloonID().remove(player.getUniqueId());
-        }
+        if (event.isCancelled()) return;
+
+        owner.cancel();
+        Bloons.getPlayerSingleBalloons().remove(player.getUniqueId());
+        Bloons.getPlayerSingleBalloonID().remove(player.getUniqueId());
     }
 
     /**
-     * Store the balloon in storage and just cancel the runnable
-     * @param balloon The balloon
+     *                  Store the balloon in storage and just cancel the runnable
+     * @param balloon   The balloon, type net.jeqo.bloons.balloon.single.SingleBalloon
      */
     public static void storeBalloon(SingleBalloon balloon) {
-        if (balloon != null) {
-            SingleBalloonStoreEvent event = new SingleBalloonStoreEvent(balloon.getPlayer(), balloon);
-            event.callEvent();
+        if (balloon == null) return;
 
-            if (event.isCancelled()) return;
+        SingleBalloonStoreEvent event = new SingleBalloonStoreEvent(balloon.getPlayer(), balloon);
+        event.callEvent();
 
-            balloon.cancel();
-        }
+        if (event.isCancelled()) return;
+
+        balloon.cancel();
     }
 }

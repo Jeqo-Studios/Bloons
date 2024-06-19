@@ -6,30 +6,52 @@ import net.jeqo.bloons.balloon.multipart.balloon.MultipartBalloon;
 import net.jeqo.bloons.events.BloonsEvent;
 import org.bukkit.entity.Player;
 
-@Getter
-@Setter
+/**
+ * An event that is called when a player force equips a multipart balloon
+ */
+@Getter @Setter
 public class MultipartBalloonForceEquipEvent extends BloonsEvent {
     private Player player;
     private MultipartBalloon balloon;
     private String balloonID;
 
+    /**
+     *                  Constructor to trigger the MultipartBalloonForceEquipEvent
+     * @param player    The player that is equipping the balloon, type org.bukkit.entity.Player
+     * @param balloon   The balloon that is being equipped, type net.jeqo.bloons.balloon.multipart.balloon.MultipartBalloon
+     * @param balloonID The ID of the balloon that is being force equipped, type java.lang.String
+     */
     public MultipartBalloonForceEquipEvent(Player player, MultipartBalloon balloon, String balloonID) {
-        this.player = player;
-        this.balloon = balloon;
-        this.balloonID = balloonID;
+        this.setPlayer(player);
+        this.setBalloon(balloon);
+        this.setBalloonID(balloonID);
     }
 
+    /**
+     *                Constructor to trigger the MultipartBalloonForceEquipEvent
+     * @param player  The player that is equipping the balloon, type org.bukkit.entity.Player
+     * @param balloon The balloon that is being force equipped, type net.jeqo.bloons.balloon.multipart.balloon.MultipartBalloon
+     */
     public MultipartBalloonForceEquipEvent(Player player, MultipartBalloon balloon) {
-        this.player = player;
-        this.balloon = balloon;
+        this.setPlayer(player);
+        this.setBalloon(balloon);
     }
 
+    /**
+     *                  Constructor to trigger the MultipartBalloonForceEquipEvent
+     * @param player    The player that is equipping the balloon, type org.bukkit.entity.Player
+     * @param balloonID The ID of the balloon that is being force equipped, type java.lang.String
+     */
     public MultipartBalloonForceEquipEvent(Player player, String balloonID) {
-        this.player = player;
-        this.balloonID = balloonID;
+        this.setPlayer(player);
+        this.setBalloonID(balloonID);
     }
 
+    /**
+     *               Constructor to trigger the MultipartBalloonForceEquipEvent
+     * @param player The player that is equipping the balloon, type org.bukkit.entity.Player
+     */
     public MultipartBalloonForceEquipEvent(Player player) {
-        this.player = player;
+        this.setPlayer(player);
     }
 }

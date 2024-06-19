@@ -13,23 +13,22 @@ import org.bukkit.persistence.PersistentDataType;
  * An extension of an Item with the utilities to manage NBT
  * data easier and more efficiently
  */
-@Getter
-@Setter
+@Getter @Setter
 public class NBTItem extends ItemStack {
     private ItemStack item;
 
     /**
-     * Creates a new NBTItem with NBT data from an existing ItemStack
-     * @param item The item to create the NBTItem from
+     *              Creates a new NBTItem with NBT data from an existing ItemStack
+     * @param item  The item to derive the NBTItem from, type org.bukkit.inventory.ItemStack
      */
     public NBTItem(ItemStack item) {
         this.setItem(item);
     }
 
     /**
-     * Checks if the item has a key in its NBT data
-     * @param key The key to check for
-     * @return Whether the key exists in the NBT data
+     *              Checks if the item has a key in its NBT data
+     * @param key   The key to check for, type java.lang.String
+     * @return      Whether the key exists in the NBT data, type boolean
      */
     public boolean hasKey(String key) {
         NamespacedKey nbtKey = new NamespacedKey(Bloons.getInstance(), key);
@@ -39,9 +38,9 @@ public class NBTItem extends ItemStack {
     }
 
     /**
-     * Sets a string flag in the NBT data of the item
-     * @param key The key to set
-     * @param value The value to set the key to
+     *              Sets a string flag in the NBT data of the item
+     * @param key   The key to set, type java.lang.String
+     * @param value The value to set the key to, type java.lang.String
      */
     public void setStringFlag(String key, String value) {
         NamespacedKey nbtKey = new NamespacedKey(Bloons.getInstance(), key);
@@ -53,9 +52,9 @@ public class NBTItem extends ItemStack {
     }
 
     /**
-     * Gets a string flag from the NBT data of the item
-     * @param key The key to get
-     * @return The value of the key
+     *              Gets a string flag from the NBT data of the item
+     * @param key   The key to get, type java.lang.String
+     * @return      The value of the key, type java.lang.String
      */
     public String getStringFlag(String key) {
         NamespacedKey nbtKey = new NamespacedKey(Bloons.getInstance(), key);
@@ -67,9 +66,9 @@ public class NBTItem extends ItemStack {
     }
 
     /**
-     * Sets an integer flag in the NBT data of the item
-     * @param key The key to set
-     * @param value The value to set the key to
+     *              Sets an integer flag in the NBT data of the item
+     * @param key   The key to set, type java.lang.String
+     * @param value The value to set the key to, type int
      */
     public void setIntegerFlag(String key, int value) {
         NamespacedKey nbtKey = new NamespacedKey(Bloons.getInstance(), key);
@@ -81,9 +80,9 @@ public class NBTItem extends ItemStack {
     }
 
     /**
-     * Gets an integer flag from the NBT data of the item
-     * @param key The key to get
-     * @return The value of the key
+     *              Gets an integer flag from the NBT data of the item
+     * @param key   The key to get, type java.lang.String
+     * @return      The value of the key, type int
      */
     public int getIntegerFlag(String key) {
         NamespacedKey nbtKey = new NamespacedKey(Bloons.getInstance(), key);
@@ -95,9 +94,9 @@ public class NBTItem extends ItemStack {
     }
 
     /**
-     * Sets a double flag in the NBT data of the item
-     * @param key The key to set
-     * @param value The value to set the key to
+     *              Sets a double flag in the NBT data of the item
+     * @param key   The key to set, type java.lang.String
+     * @param value The value to set the key to, type double
      */
     public void setDoubleFlag(String key, double value) {
         NamespacedKey nbtKey = new NamespacedKey(Bloons.getInstance(), key);
@@ -109,9 +108,9 @@ public class NBTItem extends ItemStack {
     }
 
     /**
-     * Gets a double flag from the NBT data of the item
-     * @param key The key to get
-     * @return The value of the key
+     *              Gets a double flag from the NBT data of the item
+     * @param key   The key to get, type java.lang.String
+     * @return      The value of the key, type double
      */
     public double getDoubleFlag(String key) {
         NamespacedKey nbtKey = new NamespacedKey(Bloons.getInstance(), key);
@@ -123,9 +122,9 @@ public class NBTItem extends ItemStack {
     }
 
     /**
-     * Sets a boolean flag in the NBT data of the item
-     * @param key The key to set
-     * @param value The value to set the key to
+     *              Sets a boolean flag in the NBT data of the item
+     * @param key   The key to set, type java.lang.String
+     * @param value The value to set the key to, type boolean
      */
     public void setBooleanFlag(String key, boolean value) {
         NamespacedKey nbtKey = new NamespacedKey(Bloons.getInstance(), key);
@@ -137,9 +136,9 @@ public class NBTItem extends ItemStack {
     }
 
     /**
-     * Gets a boolean flag from the NBT data of the item
-     * @param key The key to get
-     * @return The value of the key
+     *              Gets a boolean flag from the NBT data of the item
+     * @param key   The key to get, type java.lang.String
+     * @return      The value of the key, type boolean
      */
     public boolean getBooleanFlag(String key) {
         NamespacedKey nbtKey = new NamespacedKey(Bloons.getInstance(), key);

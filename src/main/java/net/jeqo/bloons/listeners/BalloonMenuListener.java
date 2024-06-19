@@ -22,7 +22,8 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 public class BalloonMenuListener implements Listener {
 
     /**
-     * When a player interacts with the GUI menu, do the action required accordingly
+     *              When a player interacts with the GUI menu, do the action required accordingly
+     * @param event The event that is called when a player interacts with the GUI menu, type org.bukkit.event.inventory.InventoryClickEvent
      */
     @EventHandler
     public void onClick(InventoryClickEvent event){

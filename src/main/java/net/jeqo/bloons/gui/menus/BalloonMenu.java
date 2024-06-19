@@ -19,7 +19,6 @@ import java.util.UUID;
 
 @Getter
 public class BalloonMenu {
-
     public ArrayList<Inventory> pages = new ArrayList<>();
     @Setter
     public UUID id;
@@ -30,9 +29,9 @@ public class BalloonMenu {
     private final MessageTranslations messageTranslations = new MessageTranslations(Bloons.getInstance());
 
     /**
-     * Gets a blank GUI menu with the next page, previous page, and unequip buttons
-     * @param name The name of the GUI menu
-     * @return The blank GUI menu
+     *              Gets a blank GUI menu with the next page, previous page, and unequip buttons
+     * @param name  The name of the GUI menu, type java.lang.String
+     * @return      The blank GUI menu, type org.bukkit.inventory.Inventory
      */
     private Inventory getBlankPage(String name){
         int pageSize = this.getMessageTranslations().getInt("menu-size");
@@ -94,10 +93,10 @@ public class BalloonMenu {
     }
 
     /**
-     * Creates a new balloon menu
-     * @param items The items to display in the menu
-     * @param name The name of the menu
-     * @param player The player to open the menu for
+     *                  Creates a new balloon menu
+     * @param items     The items to display in the menu, type java.util.ArrayList<org.bukkit.inventory.ItemStack>
+     * @param name      The name of the menu, type java.lang.String
+     * @param player    The player to open the menu for, type org.bukkit.entity.Player
      */
     public BalloonMenu(ArrayList<ItemStack> items, String name, Player player){
         this.setId(UUID.randomUUID());

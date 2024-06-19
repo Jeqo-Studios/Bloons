@@ -2,7 +2,7 @@ package net.jeqo.bloons.commands;
 
 import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.commands.manager.Command;
-import net.jeqo.bloons.commands.manager.enums.CommandPermission;
+import net.jeqo.bloons.commands.manager.types.CommandPermission;
 import net.jeqo.bloons.events.general.BloonsConfigReloadEvent;
 import net.jeqo.bloons.utils.MessageTranslations;
 import net.kyori.adventure.text.Component;

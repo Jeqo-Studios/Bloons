@@ -20,43 +20,46 @@ public class BalloonCore {
     private ArrayList<MultipartBalloonType> balloons = new ArrayList<>();
 
     /**
-     * Creates a new instance of the balloon core manager with preset registered balloons
-     * @param plugin The plugin instance
-     * @param balloons The balloons to register
+     *                  Creates a new instance of the balloon core manager with preset registered balloons
+     * @param plugin    The plugin instance, type org.bukkit.plugin.java.JavaPlugin
+     * @param balloons  The balloons to register, type java.util.ArrayList<net.jeqo.bloons.balloon.multipart.MultipartBalloonType>
      */
     public BalloonCore(JavaPlugin plugin, ArrayList<MultipartBalloonType> balloons) {
         this.setPlugin(plugin);
         this.setBalloons(balloons);
     }
 
-
     /**
-     * Creates a new empty balloon core
-     * @param plugin The plugin instance
+     *                  Creates a new empty balloon core instance
+     * @param plugin    The plugin instance, type org.bukkit.plugin.java.JavaPlugin
      */
     public BalloonCore(JavaPlugin plugin) {
         this.setPlugin(plugin);
     }
 
     /**
-     * Initializes the balloons from the config
+     * Initializes the balloons from the config and clears the current balloons map
      */
     public void initialize() {
+        // Retrieves the multipart balloons section from the config
         ConfigurationSection multipartBalloonsSection = Bloons.getInstance().getConfig().getConfigurationSection("multipart-balloons");
 
+        // Check if the section is null
+        if (multipartBalloonsSection == null) return;
+
+        // Clear the current balloons list to reduce memory usage
         this.getBalloons().clear();
 
-        if (multipartBalloonsSection == null) {
-            return;
-        }
-
+        // Loop over every key in the multipart balloons section
         for (String key : multipartBalloonsSection.getKeys(false)) {
+            // Get the data within the section
             ConfigurationSection keySection = multipartBalloonsSection.getConfigurationSection(key);
 
-            if (keySection == null) {
-                return;
-            }
+            // Check if the section is null, if it is then return out of the loop
+            if (keySection == null) return;
 
+            // Create a new multipart balloon type object with the data from the config
+            // TODO: Manipulate this so that configurations can be left out and will use default values
             MultipartBalloonType balloonType = new MultipartBalloonType(
                     key,
                     keySection.getString("permission"),
@@ -77,37 +80,42 @@ public class BalloonCore {
                     new MultipartBalloonModel(BalloonModelType.BODY, keySection.getString("body.material"), keySection.getString("body.color"), keySection.getInt("body.custom-model-data")),
                     new MultipartBalloonModel(BalloonModelType.TAIL, keySection.getString("tail.material"), keySection.getString("tail.color"), keySection.getInt("tail.custom-model-data")));
 
+            // Add the balloon to the registered balloons list
             this.addBalloon(balloonType);
         }
     }
 
     /**
-     * Adds a balloon to the registered balloons list
-     * @param balloon The balloon to add
+     *                  Adds a balloon to the registered balloons list
+     * @param balloon   The balloon to add, type net.jeqo.bloons.balloon.multipart.MultipartBalloonType
      */
     public void addBalloon(MultipartBalloonType balloon) {
         this.getBalloons().add(balloon);
     }
 
     /**
-     * Removes a balloon from the registered balloons list
-     * @param balloon The balloon to remove
+     *                  Removes a balloon from the registered balloons list
+     * @param balloon   The balloon to remove, type net.jeqo.bloons.balloon.multipart.MultipartBalloonType
      */
     public void removeBalloon(MultipartBalloonType balloon) {
         this.getBalloons().remove(balloon);
     }
 
     /**
-     * Gets a balloon by its name from the registered balloons list
-     * @param name The name of the balloon
-     * @return A Multipart Balloon Type object
+     *                  Retrieves a balloon by its name from the registered balloons list
+     * @param name      The name of the balloon, type java.lang.String
+     * @return          The balloon with the specified name, type net.jeqo.bloons.balloon.multipart.MultipartBalloonType/null
      */
     public MultipartBalloonType getBalloon(String name) {
+        // Loop over every balloon in the registered balloons list
         for (MultipartBalloonType balloon : this.getBalloons()) {
+            // Check if the balloon's name matches the specified name
             if (balloon.getId().equalsIgnoreCase(name)) {
                 return balloon;
             }
         }
+
+        // Return null if the balloon is not found
         return null;
     }
 }

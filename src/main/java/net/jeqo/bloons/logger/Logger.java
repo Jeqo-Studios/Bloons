@@ -12,18 +12,18 @@ import org.bukkit.entity.Player;
  */
 public class Logger {
     /**
-     * Log a message to the console with STDOUT
-     * @param message The message to log
+     *                  Log a message to the console with STDOUT
+     * @param message   The message to log, type java.lang.String
      */
     public static void logWithSTDOUT(String message) {
         System.out.println(message);
     }
 
     /**
-     * Logs a message to the specified player
-     * @param level The logging level
-     * @param player The player to log the message to
-     * @param message The message to log
+     *                  Logs a message to the specified player
+     * @param level     The logging level, type net.jeqo.bloons.logger.LoggingLevel
+     * @param player    The player to log the message to, type org.bukkit.entity.Player
+     * @param message   The message to log, type java.lang.String
      */
     public static void logToPlayer(LoggingLevel level, Player player, String message) {
         Component component = Component.text("[" + level.getName() + "] " + message).color(level.getColor());
@@ -31,9 +31,9 @@ public class Logger {
     }
 
     /**
-     * Logs a message to the specified player with the plugin prefix
-     * @param player The player to log the message to
-     * @param message The message to log
+     *                  Logs a message to the specified player with the plugin prefix
+     * @param player    The player to log the message to, type org.bukkit.entity.Player
+     * @param message   The message to log, type java.lang.String
      */
     public static void logToPlayer(Player player, String message) {
         MessageTranslations messageTranslations = new MessageTranslations(Bloons.getInstance());
@@ -42,9 +42,9 @@ public class Logger {
     }
 
     /**
-     * Log a message to the console
-     * @param level The logging level
-     * @param message The message to log
+     *                  Log a message to the console
+     * @param level     The logging level, type net.jeqo.bloons.logger.LoggingLevel
+     * @param message   The message to log, type java.lang.String
      */
     public static void log(LoggingLevel level, String message) {
         Component component = Component.text("[" + level.getName() + "] " + message).color(level.getColor());
@@ -52,39 +52,39 @@ public class Logger {
     }
 
     /**
-     * Logs a message to the console with the WARNING level
-     * @param message The message to log
+     *                  Logs a message to the console with the WARNING level
+     * @param message   The message to log, type java.lang.String
      */
     public static void logWarning(String message) {
         log(LoggingLevel.WARNING, message);
     }
 
     /**
-     * Logs a message to the console with the INFO level
-     * @param message The message to log
+     *                  Logs a message to the console with the INFO level
+     * @param message   The message to log, type java.lang.String
      */
     public static void logInfo(String message) {
         log(LoggingLevel.INFO, message);
     }
 
     /**
-     * Logs a message to the console with the ERROR level
-     * @param message The message to log
+     *                  Logs a message to the console with the ERROR level
+     * @param message   The message to log, type java.lang.String
      */
     public static void logError(String message) {
         log(LoggingLevel.ERROR, message);
     }
 
     /**
-     * Logs a message to the console with the DEBUG level
-     * @param message The message to log
+     *                  Logs a message to the console with the DEBUG level
+     * @param message   The message to log, type java.lang.String
      */
     public static void logDebug(String message) {
         log(LoggingLevel.DEBUG, message);
     }
 
     /**
-     * Logs an initialization message to the Bukkit console
+     * Logs an initialization message to the Bukkit console containing the plugin name
      */
     public static void logInitialization() {
         log(LoggingLevel.INFO, "Initializing " + PluginConfiguration.getName() + " plugin...");

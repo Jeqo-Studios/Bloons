@@ -18,9 +18,9 @@ public enum LoggingLevel {
     private final NamedTextColor color;
 
     /**
-     * Create a new logging level
-     * @param name The name of the logging level to use in the console
-     * @param color The Minecraft chat color of the logging level
+     *              Create a new logging level
+     * @param name  The name of the logging level to use in the console, type java.lang.String
+     * @param color The Minecraft chat color of the logging level, type net.kyori.adventure.text.format.NamedTextColor
      */
     LoggingLevel(String name, NamedTextColor color) {
         this.name = name;

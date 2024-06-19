@@ -19,12 +19,12 @@ public abstract class GUIClickableItem {
      */
     public GUIClickableItem() {
         this.uuid = UUID.randomUUID().toString();
-        itemData.put(uuid, this);
+        itemData.put(this.uuid, this);
     }
 
     /**
-     * Gets the finalized item with the GUI NBT data attached
-     * @return The finalized item
+     *          Gets the finalized item with the GUI NBT data attached
+     * @return  The finalized item, type net.jeqo.bloons.utils.NBTItem
      */
     public NBTItem getFinalizedItem() {
         NBTItem item = getItem();
@@ -33,26 +33,26 @@ public abstract class GUIClickableItem {
     }
 
     /**
-     * What runs when the item is clicked
-     * @param event The event that is fired when the item is clicked
+     *              What runs when the item is clicked
+     * @param event The event that is fired when the item is clicked, type org.bukkit.event.inventory.InventoryClickEvent
      */
     public abstract void run(InventoryClickEvent event);
 
     /**
-     * The slot that the item is in
-     * @return The slot that the item is in as an Integer
+     *          The slot that the item is in
+     * @return  The slot that the item is in, type int
      */
     public abstract int getSlot();
 
     /**
-     * The item that is displayed in the GUI
-     * @return The item as a WynncraftItem object
+     *          The item that is displayed in the GUI
+     * @return  The item, type net.jeqo.bloons.utils.NBTItem
      */
     public abstract NBTItem getItem();
 
     /**
-     * Whether the item can be picked up
-     * @return Whether the item can be picked up
+     *          Whether the item can be picked up
+     * @return  Whether the item can be picked up, type boolean
      */
     public boolean canPickup() {
         return false;

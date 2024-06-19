@@ -21,20 +21,22 @@ import java.util.Objects;
 public class SingleBalloonPlayerListener implements Listener {
 
     /**
-     * When a player quits, make sure to despawn and store their balloon in storage
+     *              When a player quits, make sure to despawn and store their balloon in storage
+     * @param event The event that is called when a player quits the server, type org.bukkit.event.player.PlayerQuitEvent
      */
     @EventHandler
-    public void onQuit(PlayerQuitEvent e) {
-        SingleBalloon owner = Bloons.getPlayerSingleBalloons().get(e.getPlayer().getUniqueId());
+    public void onQuit(PlayerQuitEvent event) {
+        SingleBalloon owner = Bloons.getPlayerSingleBalloons().get(event.getPlayer().getUniqueId());
 
-        SingleBalloonStoreEvent event = new SingleBalloonStoreEvent(e.getPlayer(), owner);
-        event.callEvent();
+        SingleBalloonStoreEvent storeEvent = new SingleBalloonStoreEvent(event.getPlayer(), owner);
+        storeEvent.callEvent();
 
         SingleBalloonManagement.storeBalloon(owner);
     }
 
     /**
-     * When a player joins, add the balloon back if they left with one, or just don't add anything
+     *              When a player joins, add the balloon back if they left with one, or just don't add anything
+     * @param event The event that is called when a player joins the server, type org.bukkit.event.player.PlayerJoinEvent
      */
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
@@ -64,7 +66,8 @@ public class SingleBalloonPlayerListener implements Listener {
     }
 
     /**
-     * When they die, remove their balloon
+     *              When they die, remove their balloon
+     * @param event The event that is called when a player dies, type org.bukkit.event.entity.PlayerDeathEvent
      */
     @EventHandler
     public void onDeath(PlayerDeathEvent event) {
@@ -77,7 +80,8 @@ public class SingleBalloonPlayerListener implements Listener {
     }
 
     /**
-     * When they respawn, add the balloon they back that they died with
+     *              When they respawn, add the balloon they back that they died with
+     * @param event The event that is called when a player respawns, type org.bukkit.event.player.PlayerRespawnEvent
      */
     @EventHandler
     public void onRespawn(PlayerRespawnEvent event) {
@@ -89,7 +93,8 @@ public class SingleBalloonPlayerListener implements Listener {
     }
 
     /**
-     * When they change worlds, store their balloon and move the balloon armor stand over
+     *              When they change worlds, store their balloon and move the balloon armor stand over
+     * @param event The event that is called when a player changes worlds, type org.bukkit.event.player.PlayerChangedWorldEvent
      */
     @EventHandler
     public void onWorldChange(PlayerChangedWorldEvent event) {

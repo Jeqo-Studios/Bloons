@@ -80,14 +80,18 @@ public final class Bloons extends JavaPlugin {
         // Log shutdown message
         Logger.logShutdown();
 
-        // Unregister all balloons and stop the task
-        for (SingleBalloon owner : playerSingleBalloons.values()) {
-            owner.cancel();
+        if (getPlayerSingleBalloons() != null) {
+            // Unregister all balloons and stop the task
+            for (SingleBalloon owner : getPlayerSingleBalloons().values()) {
+                owner.cancel();
+            }
         }
 
-        // Unregister all multipart balloons
-        for (MultipartBalloon owner : getPlayerMultipartBalloons().values()) {
-            owner.destroy();
+        if (getPlayerMultipartBalloons() != null) {
+            // Unregister all multipart balloons
+            for (MultipartBalloon owner : getPlayerMultipartBalloons().values()) {
+                owner.destroy();
+            }
         }
 
         // Clear all balloon data

@@ -6,8 +6,8 @@ package net.jeqo.bloons.gui;
 public class GUIHelpers {
 
     /**
-     * Gets the flag that is used to identify clickable item
-     * @return The flag that is used to identify clickable item
+     *          Gets the flag that is used to identify clickable item
+     * @return  The flag that is used to identify clickable item, type java.lang.String
      */
     public static String getClickableItemFlag() {
         return "GUIClickableItem";

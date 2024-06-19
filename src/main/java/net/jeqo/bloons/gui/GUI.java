@@ -9,62 +9,67 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
+/**
+ * An abstract class that represents a GUI instance
+ */
 public abstract class GUI {
     BukkitTask updater;
 
     /**
-     * The inventory that is displayed to the player
-     * @return The inventory as an Inventory object
+     *          The inventory that is displayed to the player
+     * @return  The inventory, type org.bukkit.inventory.Inventory
      */
     public abstract Inventory inventory();
 
     /**
-     * The name that is displayed as the GUI title
-     * @return The name
+     *          The name that is displayed as the GUI title
+     * @return  The name, type net.kyori.adventure.text.Component
      */
     public abstract Component name();
 
     /**
-     * The number of slots that are present within the GUI
-     * It should be a multiple of 9. 27 and 54 are common values.
-     * @return The number of slots contained within the GUI
+     *          The number of slots that are present within the GUI
+     *          It should be a multiple of 9. 27 and 54 are common values.
+     * @return  The number of slots contained within the GUI, type int
      */
     public abstract int slots();
 
     /**
-     * The filler item that is used to fill empty slots in the GUI
-     * @return The filler item as a WynncraftItem object
+     *          The filler item that is used to fill empty slots in the GUI
+     * @return  The filler item, type net.jeqo.bloons.gui.GUIClickableItem
      */
     public abstract GUIClickableItem fillerItem(int slot);
 
     /**
-     * The border item that is used to create a border around the GUI
-     * @return The border item as a WynncraftItem object
+     *          The border item that is used to create a border around the GUI
+     * @return  The border item, type net.jeqo.bloons.gui.GUIClickableItem
      */
     public abstract GUIClickableItem borderItem(int slot);
 
     /**
-     * The item that is displayed in the GUI but can't be picked up
-     * @param slot The slot that the item is in
-     * @return The item as a WynncraftItem object
+     *              The item that is displayed in the GUI but can't be picked up
+     * @param slot  The slot that the item is in, type int
+     * @return      The item, type net.jeqo.bloons.gui.GUIClickableItem
      */
     public abstract GUIClickableItem cantPickup(NBTItem item, int slot);
 
     /**
-     * The event that is fired when the GUI is opened or triggered
-     * @return The event as a WynncraftEvent object
+     *          The event that is fired when the GUI is opened or triggered
+     * @return  The event, type net.jeqo.bloons.events.BloonsEvent
      */
     public BloonsEvent triggerEvent() {
         return null;
     }
 
     /**
-     * Determines what happens when the GUI is closed
+     *                  Determines what happens when the GUI is closed
+     * @param player    The player that closed the GUI, type org.bukkit.entity.Player
      */
     public abstract void onClose(Player player);
 
     /**
-     * Determines what happens when the GUI is opened
+     *                  Determines what happens when the GUI is opened
+     * @param player    The player that opened the GUI, type org.bukkit.entity.Player
      */
     public abstract void open(Player player);
 
@@ -74,8 +79,9 @@ public abstract class GUI {
     public abstract void update();
 
     /**
-     * Starts the GUI updater to update the GUI every 20 ticks
-     * This should be executed upon the opening of the GUI
+     *                  Starts the GUI updater to update the GUI every 20 ticks
+     *                  This should be executed upon the opening of the GUI
+     * @param plugin    The plugin that the GUI is being opened in
      */
     public void startUpdater(JavaPlugin plugin) {
         this.updater = Bukkit.getScheduler().runTaskTimer(plugin, this::update, 0, 20);
@@ -90,25 +96,25 @@ public abstract class GUI {
     }
 
     /**
-     * Adds an item to the GUI
-     * @param item The item to add
+     *              Adds an item to the GUI
+     * @param item  The item to add, type net.jeqo.bloons.gui.GUIClickableItem
      */
     public void addItem(GUIClickableItem item) {
         inventory().setItem(item.getSlot(), item.getFinalizedItem().getItem());
     }
 
     /**
-     * Adds an item to the GUI at a specific slot
-     * @param item The item to add
-     * @param slot The slot to add the item to
+     *              Adds an item to the GUI at a specific slot
+     * @param item  The item to add, type net.jeqo.bloons.gui.GUIClickableItem
+     * @param slot  The slot to add the item to, type int
      */
     public void addItem(GUIClickableItem item, int slot) {
         inventory().setItem(slot, item.getItem());
     }
 
     /**
-     * Gets the item in a specific slot
-     * @param slot The slot to get the item from
+     *              Gets the item in a specific slot
+     * @param slot  The slot to get the item from, type int
      */
     public void getItem(int slot) {
         inventory().getItem(slot);

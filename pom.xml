@@ -10,7 +10,7 @@
     <packaging>jar</packaging>
 
     <name>Bloons</name>
-    <description>A unique balloons plugin by Jeqo.</description>
+    <description>A unique balloons plugin.</description>
     <url>https://jeqo.net/bloons</url>
 
     <distributionManagement>
