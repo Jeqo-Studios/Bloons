@@ -144,7 +144,7 @@ public class SingleBalloon extends BukkitRunnable {
     /**
      *                      Retrieves the item stack object of the visual appearance of the balloon
      * @param balloonID     The balloon ID to get the visual appearance of, type java.lang.String
-     * @return              The item object that contains the configured balloon model, type org.bukkit.inventory.ItemStack
+     * @return              The item object that contains the configured balloon model, returns a barrier if there is an issue, type org.bukkit.inventory.ItemStack
      */
     public ItemStack getConfiguredBalloonVisual(String balloonID) {
         SingleBalloonType singleBalloonType = Bloons.getBalloonCore().getSingleBalloonByID(balloonID);
@@ -152,13 +152,13 @@ public class SingleBalloon extends BukkitRunnable {
         // If there isn't a configuration for the balloon, log an error and return null
         if (singleBalloonType == null) {
             Logger.logError("The balloon " + balloonID + " is not set in the configuration!");
-            return null;
+            return new ItemStack(Material.BARRIER);
         }
 
         // If the material of the balloon is not set, log an error and return null
         if (singleBalloonType.getMaterial() == null) {
             Logger.logError("The material of the balloon " + balloonID + " is not set!");
-            return null;
+            return new ItemStack(Material.BARRIER);
         }
 
         Material material = Material.getMaterial(singleBalloonType.getMaterial());
@@ -166,7 +166,7 @@ public class SingleBalloon extends BukkitRunnable {
         // If the material is not valid, log an error and return null
         if (material == null) {
             Logger.logError("The material of the balloon " + balloonID + " is not a valid material!");
-            return null;
+            return new ItemStack(Material.BARRIER);
         }
 
         // Generate the item and set the custom model data meta

@@ -28,8 +28,10 @@ public class CommandForceUnequip extends Command {
 
     @Override
     public boolean execute(CommandSender sender, String[] args) {
-        Player player = Bukkit.getPlayer(args[0]);
         MessageTranslations messageTranslations = new MessageTranslations(this.getPlugin());
+        Player player = Bukkit.getPlayer(args[0]);
+
+        // If the specified player doesn't exist, send a message to the sender
         if (player == null) {
             Component playerNotFoundMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("player-not-found"));
             sender.sendMessage(playerNotFoundMessage);
@@ -39,12 +41,14 @@ public class CommandForceUnequip extends Command {
         SingleBalloon singleBalloon = Bloons.getPlayerSingleBalloons().get(player.getUniqueId());
         MultipartBalloon multipartBalloon = MultipartBalloonManagement.getPlayerBalloon(player.getUniqueId());
 
+        // If the player doesn't have any balloons equipped, send a message to the sender
         if (singleBalloon == null && multipartBalloon == null) {
             Component notEquippedMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("not-equipped"));
             player.sendMessage(notEquippedMessage);
             return false;
         }
 
+        // If the player has a single balloon equipped, unequip it
         if (singleBalloon != null) {
             SingleBalloonUnequipEvent singleBalloonUnequipEvent = new SingleBalloonUnequipEvent(player, singleBalloon);
             singleBalloonUnequipEvent.callEvent();
@@ -54,6 +58,7 @@ public class CommandForceUnequip extends Command {
             SingleBalloonManagement.removeBalloon(player, singleBalloon);
         }
 
+        // If the player has a multipart balloon equipped, unequip it
         if (multipartBalloon != null) {
             MultipartBalloonUnequipEvent multipartBalloonUnequipEvent = new MultipartBalloonUnequipEvent(player, multipartBalloon);
             multipartBalloonUnequipEvent.callEvent();

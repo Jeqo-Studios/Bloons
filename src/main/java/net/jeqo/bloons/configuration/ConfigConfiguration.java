@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Objects;
 
 /**
  * A class that contains configurations for the plugin configuration file
@@ -80,8 +79,8 @@ public class ConfigConfiguration {
                 for (String key : section.getKeys(false)) {
 
                     // Determine the type of balloon
-                    String type = config.getString(key + ".type", "single");
-                    if (type.equals("single")) {
+                    String type = config.getString(key + ".type", BalloonConfiguration.SINGLE_BALLOON_TYPE_IDENTIFIER);
+                    if (type.equals(BalloonConfiguration.SINGLE_BALLOON_TYPE_IDENTIFIER)) {
                         try {
                             // Add the single balloon type to the array list
                             singleBalloons.add(new SingleBalloonType(
@@ -131,7 +130,7 @@ public class ConfigConfiguration {
         for (File file : files) {
             if (file.isFile()) {
                 String fileName = file.getName();
-                Logger.logInfo("Processing file: " + fileName);
+                Logger.logInfo("Loading balloon configuration: " + fileName);
 
                 // Load the configuration file
                 FileConfiguration config = YamlConfiguration.loadConfiguration(file);
@@ -147,8 +146,8 @@ public class ConfigConfiguration {
                 for (String key : section.getKeys(false)) {
 
                     // Determine the type of balloon
-                    String type = config.getString(key + ".type", "single");
-                    if (type.equals("multipart")) {
+                    String type = config.getString(key + ".type", BalloonConfiguration.SINGLE_BALLOON_TYPE_IDENTIFIER);
+                    if (type.equals(BalloonConfiguration.MULTIPART_BALLOON_TYPE_IDENTIFIER)) {
                         try {
                             multipartBalloons.add(new MultipartBalloonType(
                                     config.getString(key + ".id"),

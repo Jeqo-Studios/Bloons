@@ -34,13 +34,13 @@ public class CommandForceEquip extends Command {
 
     @Override
     public boolean execute(CommandSender sender, String[] args) {
-        if (args.length < 1) {
-            usage(sender);
-        }
+        // If the arguments aren't within the range of the command, send the usage message
+        if (args.length < 1) usage(sender);
 
         Player player = Bukkit.getPlayer(args[0]);
         MessageTranslations messageTranslations = new MessageTranslations(this.getPlugin());
 
+        // If the player isn't found, send a message to the sender
         if (player == null) {
             Component playerNotFoundMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("player-not-found"));
             sender.sendMessage(playerNotFoundMessage);
@@ -48,6 +48,8 @@ public class CommandForceEquip extends Command {
         }
 
         String balloonID = args[1];
+
+        // If the balloon ID isn't found in both balloon types, send a message to the sender
         if (Bloons.getBalloonCore().containsSingleBalloon(balloonID) && Bloons.getBalloonCore().containsMultipartBalloon(balloonID)) {
             Component balloonNotFoundMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("balloon-not-found"));
             sender.sendMessage(balloonNotFoundMessage);
@@ -56,6 +58,8 @@ public class CommandForceEquip extends Command {
 
         MultipartBalloonType type = Bloons.getBalloonCore().getMultipartBalloonByID(balloonID);
         MultipartBalloon previousBalloon = MultipartBalloonManagement.getPlayerBalloon(player.getUniqueId());
+
+        // If the player has a previous multipart balloon, unequip it
         if (previousBalloon != null) {
             MultipartBalloonUnequipEvent multipartBalloonUnequipEvent = new MultipartBalloonUnequipEvent(player, previousBalloon);
             multipartBalloonUnequipEvent.callEvent();
@@ -66,6 +70,7 @@ public class CommandForceEquip extends Command {
             MultipartBalloonManagement.removePlayerBalloon(player.getUniqueId());
         }
 
+        // If the balloon ID is a multipart balloon type, equip the balloon with the multipart associated methods
         if (type != null) {
             MultipartBalloonEquipEvent multipartBalloonEquipEvent = new MultipartBalloonEquipEvent(player, balloonID);
             multipartBalloonEquipEvent.callEvent();
@@ -82,6 +87,8 @@ public class CommandForceEquip extends Command {
 
             Component equippedMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("equipped", type.getName()));
             player.sendMessage(equippedMessage);
+
+        // If the balloon ID is a single balloon type, equip the balloon with the single associated methods
         } else {
             SingleBalloonType singleBalloonType = Bloons.getBalloonCore().getSingleBalloonByID(balloonID);
 

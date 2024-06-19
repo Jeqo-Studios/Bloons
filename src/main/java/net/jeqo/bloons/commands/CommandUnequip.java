@@ -28,18 +28,21 @@ public class CommandUnequip extends Command {
 
     @Override
     public boolean execute(CommandSender sender, String[] args) {
+        // If the sender isn't a player, return out of the command
         if (!(sender instanceof Player player)) return false;
 
         SingleBalloon singleBalloon = Bloons.getPlayerSingleBalloons().get(player.getUniqueId());
         MultipartBalloon multipartBalloon = MultipartBalloonManagement.getPlayerBalloon(player.getUniqueId());
         MessageTranslations messageTranslations = new MessageTranslations(this.getPlugin());
 
+        // If the player doesn't have any balloons equipped, send a message to the player
         if (singleBalloon == null && multipartBalloon == null) {
             Component notEquippedMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("not-equipped"));
             player.sendMessage(notEquippedMessage);
             return false;
         }
 
+        // If the player has a single balloon equipped, unequip it
         if (singleBalloon != null) {
             SingleBalloonUnequipEvent singleBalloonUnequipEvent = new SingleBalloonUnequipEvent(player, singleBalloon);
             singleBalloonUnequipEvent.callEvent();
@@ -49,6 +52,7 @@ public class CommandUnequip extends Command {
             SingleBalloonManagement.removeBalloon(player, singleBalloon);
         }
 
+        // If the player has a multipart balloon equipped, unequip it
         if (multipartBalloon != null) {
             MultipartBalloonUnequipEvent multipartBalloonEquipEvent = new MultipartBalloonUnequipEvent(player, multipartBalloon);
             multipartBalloonEquipEvent.callEvent();

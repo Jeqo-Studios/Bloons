@@ -36,19 +36,20 @@ public class CommandEquip extends Command {
     public boolean execute(CommandSender sender, String[] args) {
         if (!(sender instanceof Player player)) return false;
 
-        if (args.length < 1) {
-            usage(sender);
-        }
+        // If the args isn't within the range of the command, send the usage message
+        if (args.length < 1) usage(player);
 
         String balloonID = args[0];
         MessageTranslations messageTranslations = new MessageTranslations(this.getPlugin());
 
+        // If the balloon ID isn't found in both balloon types, send a message to the player
         if (Bloons.getBalloonCore().containsSingleBalloon(balloonID) && Bloons.getBalloonCore().containsMultipartBalloon(balloonID)) {
             Component balloonNotFoundMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("balloon-not-found"));
             player.sendMessage(balloonNotFoundMessage);
             return false;
         }
 
+        // If the player doesn't have the permission to equip the balloon, send a message to the player
         if (!player.hasPermission(Bloons.getBalloonCore().getSingleBalloonByID(balloonID).getPermission())|| !player.hasPermission(Bloons.getBalloonCore().getMultipartBalloonByID(balloonID).getPermission())) {
             Component noPermissionMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("no-permission"));
             player.sendMessage(noPermissionMessage);
@@ -57,6 +58,8 @@ public class CommandEquip extends Command {
 
         MultipartBalloonType type = Bloons.getBalloonCore().getMultipartBalloonByID(balloonID);
         MultipartBalloon previousBalloon = MultipartBalloonManagement.getPlayerBalloon(player.getUniqueId());
+
+        // If they have a previous multipart balloon equipped, unequip it
         if (previousBalloon != null) {
             MultipartBalloonUnequipEvent multipartBalloonUnequipEvent = new MultipartBalloonUnequipEvent(player, previousBalloon);
             multipartBalloonUnequipEvent.callEvent();
@@ -66,6 +69,8 @@ public class CommandEquip extends Command {
             previousBalloon.destroy();
             MultipartBalloonManagement.removePlayerBalloon(player.getUniqueId());
         }
+
+        // If it's a multipart balloon type, equip the balloon with the multipart associated methods
         if (type != null) {
 
             // Call the equip event and check if it's cancelled, if it is, don't spawn the balloon or do anything
@@ -84,6 +89,8 @@ public class CommandEquip extends Command {
 
             Component equippedMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("equipped", type.getName()));
             player.sendMessage(equippedMessage);
+
+        // If it's a single balloon type, equip the balloon with the single balloon associated methods
         } else {
             SingleBalloonType singleBalloonType = Bloons.getBalloonCore().getSingleBalloonByID(balloonID);
 
@@ -101,6 +108,7 @@ public class CommandEquip extends Command {
             player.sendMessage(equippedMessage);
         }
 
+        // Play a sound regardless of the balloon type and when it executes successfully
         player.playSound(player.getLocation(), Sound.ENTITY_CHICKEN_EGG, 1, 1);
 
         return false;
