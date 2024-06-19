@@ -114,12 +114,16 @@ public class CommandCore implements CommandExecutor {
             ArrayList<SingleBalloonType> singleBalloonTypes = Bloons.getBalloonCore().getSingleBalloonTypes();
             ArrayList<MultipartBalloonType> multipartBalloonTypes = Bloons.getBalloonCore().getMultipartBalloonTypes();
 
+            Logger.logInfo("Single Balloon Types: " + singleBalloonTypes.size());
+            Logger.logInfo("Multipart Balloon Types: " + multipartBalloonTypes.size());
+
             if (singleBalloonTypes == null || multipartBalloonTypes == null) {
                 Logger.logError("Single balloon types or multipart balloon types are null.");
                 return false;
             }
 
             for (SingleBalloonType singleBalloon : singleBalloonTypes) {
+                Logger.logInfo(singleBalloon.getId());
                 if (singleBalloon == null) continue;
 
                 if (shouldAddSingleBalloon(player, singleBalloon)) {
@@ -189,7 +193,7 @@ public class CommandCore implements CommandExecutor {
      */
     private boolean shouldAddSingleBalloon(Player player, SingleBalloonType singleBalloonType) {
         if (this.getMessageTranslations().getString("hide-balloons-without-permission").equalsIgnoreCase("true")) {
-            return player.hasPermission(this.getMessageTranslations().getString(singleBalloonType.getPermission()));
+            return player.hasPermission(singleBalloonType.getPermission());
         }
         return true;
     }
@@ -202,7 +206,7 @@ public class CommandCore implements CommandExecutor {
      */
     private boolean shouldAddMultipartBalloon(Player player, MultipartBalloonType multipartBalloonType) {
         if (this.getMessageTranslations().getString("hide-balloons-without-permission").equalsIgnoreCase("true")) {
-            return player.hasPermission(this.getMessageTranslations().getString(multipartBalloonType.getPermission()));
+            return player.hasPermission(multipartBalloonType.getPermission());
         }
         return true;
     }
