@@ -5,6 +5,7 @@ import net.jeqo.bloons.balloon.multipart.MultipartBalloonType;
 import net.jeqo.bloons.balloon.multipart.balloon.MultipartBalloon;
 import net.jeqo.bloons.balloon.multipart.balloon.MultipartBalloonBuilder;
 import net.jeqo.bloons.balloon.single.SingleBalloon;
+import net.jeqo.bloons.balloon.single.SingleBalloonType;
 import net.jeqo.bloons.commands.manager.Command;
 import net.jeqo.bloons.commands.manager.types.CommandPermission;
 import net.jeqo.bloons.configuration.ConfigConfiguration;
@@ -48,7 +49,7 @@ public class CommandForceEquip extends Command {
         }
 
         String balloonID = args[1];
-        if (!this.getPlugin().getConfig().contains(ConfigConfiguration.SINGLE_BALLOON_SECTION + balloonID) && !this.getPlugin().getConfig().contains(ConfigConfiguration.MULTIPART_BALLOON_SECTION + balloonID)) {
+        if (!Bloons.getBalloonCore().containsSingleBalloon(balloonID) && !Bloons.getBalloonCore().containsMultipartBalloon(balloonID)) {
             Component balloonNotFoundMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("balloon-not-found"));
             sender.sendMessage(balloonNotFoundMessage);
             return false;
@@ -80,10 +81,10 @@ public class CommandForceEquip extends Command {
 
             MultipartBalloonManagement.setPlayerBalloon(player.getUniqueId(), balloon);
 
-            String balloonName = messageTranslations.getString(ConfigConfiguration.MULTIPART_BALLOON_SECTION + balloonID + ".name");
-            Component equippedMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("equipped", balloonName));
+            Component equippedMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("equipped", type.getName()));
             player.sendMessage(equippedMessage);
         } else {
+            SingleBalloonType singleBalloonType = Bloons.getBalloonCore().getSingleBalloonByID(balloonID);
 
             // Call the equip event and check if it's cancelled, if it is, don't spawn the balloon or do anything
             SingleBalloonEquipEvent singleBalloonEquipEvent = new SingleBalloonEquipEvent(player, balloonID);
@@ -95,8 +96,7 @@ public class CommandForceEquip extends Command {
             SingleBalloonManagement.removeBalloon(player, Bloons.getPlayerSingleBalloons().get(player.getUniqueId()));
             SingleBalloon.checkBalloonRemovalOrAdd(player, balloonID);
 
-            String balloonName = messageTranslations.getString(ConfigConfiguration.SINGLE_BALLOON_SECTION + balloonID + ".name");
-            Component equippedMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("equipped", balloonName));
+            Component equippedMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("equipped", singleBalloonType.getName()));
             player.sendMessage(equippedMessage);
         }
 

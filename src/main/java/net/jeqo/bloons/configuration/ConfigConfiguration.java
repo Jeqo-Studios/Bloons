@@ -46,18 +46,19 @@ public class ConfigConfiguration {
         // For every file in the balloon configuration folder, if a configuration type is single, add it to an array list
         for (File file : Objects.requireNonNull(new File(Bloons.getInstance().getDataFolder() + File.separator + BALLOON_CONFIGURATION_FOLDER).listFiles())) {
             // For every section in the configuration file
-            for (String section : Objects.requireNonNull(Bloons.getInstance().getConfig().getConfigurationSection(file.getName())).getKeys(false)) {
+            for (String key : Objects.requireNonNull(Bloons.getInstance().getConfig().getConfigurationSection(file.getName())).getKeys(false)) {
                 // If the section is a single balloon type, add it to the array list
-                if (section.equals(BalloonConfiguration.SINGLE_BALLOON_TYPE_IDENTIFIER)) {
+                if (key.equals(BalloonConfiguration.SINGLE_BALLOON_TYPE_IDENTIFIER)) {
                     // Add the single balloon type to the array list
                     singleBalloons.add(new SingleBalloonType(
-                            Bloons.getInstance().getConfig().getString(file.getName() + "." + section + ".id"),
-                            Bloons.getInstance().getConfig().getString(file.getName() + "." + section + ".permission"),
-                            Bloons.getInstance().getConfig().getString(file.getName() + "." + section + ".material"),
-                            Bloons.getInstance().getConfig().getString(file.getName() + "." + section + ".color"),
-                            Bloons.getInstance().getConfig().getInt(file.getName() + "." + section + ".customModelData"),
-                            Bloons.getInstance().getConfig().getString(file.getName() + "." + section + ".name"),
-                            Bloons.getInstance().getConfig().getStringList(file.getName() + "." + section + ".lore").toArray(new String[0])
+                            key,
+                            Bloons.getInstance().getConfig().getString(file.getName() + "." + key + ".id"),
+                            Bloons.getInstance().getConfig().getString(file.getName() + "." + key + ".permission"),
+                            Bloons.getInstance().getConfig().getString(file.getName() + "." + key + ".material"),
+                            Bloons.getInstance().getConfig().getString(file.getName() + "." + key + ".color"),
+                            Bloons.getInstance().getConfig().getInt(file.getName() + "." + key + ".customModelData"),
+                            Bloons.getInstance().getConfig().getString(file.getName() + "." + key + ".name"),
+                            Bloons.getInstance().getConfig().getStringList(file.getName() + "." + key + ".lore").toArray(new String[0])
                     ));
                 }
             }
