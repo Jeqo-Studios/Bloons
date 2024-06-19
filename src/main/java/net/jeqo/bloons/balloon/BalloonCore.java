@@ -62,7 +62,7 @@ public class BalloonCore {
      * Copies the example balloons folder to the plugin's data folder if it doesn't exist
      */
     public void copyExampleBalloons() {
-        // Mkdir new directory in data folder
+        // Save all example files in the balloons folder in /resources
         Bloons.getInstance().saveResource("balloons/color_pack_example.yml", false);
         Bloons.getInstance().saveResource("balloons/dyeable_example.yml", false);
         Bloons.getInstance().saveResource("balloons/train.yml", false);

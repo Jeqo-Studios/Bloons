@@ -179,7 +179,7 @@ public class SingleBalloon extends BukkitRunnable {
             // If the color of the balloon is set to potion, log a warning and return null
             if (singleBalloonType.getColor().equalsIgnoreCase("potion")) {
                 Logger.logWarning("The color of the balloon " + balloonID + " is set, but the material is not a leather item!");
-                return null;
+                return item;
             }
 
             LeatherArmorMeta leatherArmorMeta = (LeatherArmorMeta) meta;

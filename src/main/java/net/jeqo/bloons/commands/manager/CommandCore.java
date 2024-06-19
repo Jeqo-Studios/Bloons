@@ -114,11 +114,13 @@ public class CommandCore implements CommandExecutor {
             ArrayList<SingleBalloonType> singleBalloonTypes = Bloons.getBalloonCore().getSingleBalloonTypes();
             ArrayList<MultipartBalloonType> multipartBalloonTypes = Bloons.getBalloonCore().getMultipartBalloonTypes();
 
-            if (singleBalloonTypes == null || multipartBalloonTypes == null) {
-                Logger.logError("Single balloon types or multipart balloon types are null.");
+            //
+            if (singleBalloonTypes == null && multipartBalloonTypes == null) {
+                Logger.logError("Single balloon types and multipart balloon types are null. Cannot create menu with items!");
                 return false;
             }
 
+            // For every single balloon registered, add it to the GUI
             for (SingleBalloonType singleBalloon : singleBalloonTypes) {
                 if (singleBalloon == null) continue;
 
@@ -128,6 +130,7 @@ public class CommandCore implements CommandExecutor {
                 }
             }
 
+            // For every multipart balloon registered, add it to the GUI
             for (MultipartBalloonType multipartBalloon : multipartBalloonTypes) {
                 if (multipartBalloon == null) continue;
 
@@ -137,6 +140,7 @@ public class CommandCore implements CommandExecutor {
                 }
             }
 
+            // Formulate a menu with the items
             new BalloonMenu(items, this.getMessageTranslations().getString("menu-title"), player);
             return true;
         }
@@ -146,19 +150,23 @@ public class CommandCore implements CommandExecutor {
         String subcommand = args[0].toLowerCase();
         String[] subcommandArgs = Arrays.copyOfRange(args, 1, args.length);
 
+        // Loop over every command registered, check the permission, and execute the command
         for (Command currentCommand : getCommands()) {
             if (currentCommand.getCommandAliases().contains(subcommand)) {
+                // Check if the sender has the permission to execute the command
                 if (!meetsRequirements(currentCommand, sender)) {
                     sender.sendMessage(this.getMessageTranslations().getSerializedString(this.getMessageTranslations().getMessage("prefix"), this.getMessageTranslations().getMessage("no-permission")));
                     return false;
                 }
 
+                // Check if the command is disabled
                 if (currentCommand.getRequiredAccess() == CommandAccess.DISABLED) {
                     Component commandDisabledMessage = Component.text("This command is currently disabled.").color(NamedTextColor.RED);
                     sender.sendMessage(commandDisabledMessage);
                     return false;
                 }
 
+                // Execute the command
                 try {
                     currentCommand.execute(sender, subcommandArgs);
                 } catch (Exception ignored) {
@@ -167,6 +175,7 @@ public class CommandCore implements CommandExecutor {
             }
         }
 
+        // If the command isn't here, show the usage menu
         usage(sender);
         return false;
     }
@@ -214,11 +223,17 @@ public class CommandCore implements CommandExecutor {
      */
     private ItemStack createBalloonItem(SingleBalloonType singleBalloonType) {
         Material material = Material.matchMaterial(singleBalloonType.getMaterial());
-        if (material == null) return null;
+        if (material == null) {
+            Logger.logError("Material " + singleBalloonType.getMaterial() + " is not a valid material.");
+            return null;
+        }
 
         ItemStack item = new ItemStack(material);
         ItemMeta meta = item.getItemMeta();
-        if (meta == null) return null;
+        if (meta == null) {
+            Logger.logError("ItemMeta is null for material " + singleBalloonType.getMaterial());
+            return null;
+        }
 
         meta.setLocalizedName(singleBalloonType.getKey());
         setBalloonLore(meta, singleBalloonType);
@@ -237,11 +252,17 @@ public class CommandCore implements CommandExecutor {
      */
     private ItemStack createBalloonItem(MultipartBalloonType multipartBalloonType) {
         Material material = Material.matchMaterial(multipartBalloonType.getHeadModel().getMaterial());
-        if (material == null) return null;
+        if (material == null) {
+            Logger.logError("Material " + multipartBalloonType.getHeadModel().getMaterial() + " is not a valid material.");
+            return null;
+        }
 
         ItemStack item = new ItemStack(material);
         ItemMeta meta = item.getItemMeta();
-        if (meta == null) return null;
+        if (meta == null) {
+            Logger.logError("ItemMeta is null for material " + multipartBalloonType.getHeadModel().getMaterial());
+            return null;
+        }
 
         meta.setLocalizedName(multipartBalloonType.getId());
         setBalloonLore(meta, multipartBalloonType);

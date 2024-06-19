@@ -24,7 +24,7 @@ public class BalloonModel {
         // Check if the material is dyeable and contains leather attributes
         if (!material.name().contains(leatherMaterialPrefix)) {
             Logger.logError("Material " + material.name() + " is not a dyeable material.");
-            return null;
+            return new ItemStack(material);
         }
 
         ItemStack generatedItem = new ItemStack(material);
@@ -53,7 +53,7 @@ public class BalloonModel {
         // Check if the material is dyeable and contains leather attributes
         if (!material.name().contains(leatherMaterialPrefix)) {
             Logger.logError("Material " + material.name() + " is not a dyeable material.");
-            return null;
+            return new ItemStack(material);
         }
 
         // Check if the provided color values are within the valid ranges of RGB

@@ -71,6 +71,7 @@ public class MultipartBalloon {
         // Location to spawn the lead holder at
         Location location = new Location(this.getBalloonOwner().getWorld(), this.getBalloonOwner().getLocation().getX(), this.getBalloonOwner().getLocation().getY() + 2, this.getBalloonOwner().getLocation().getZ());
 
+        // Configure the chicken entity properties
         this.setBalloonChicken(this.getBalloonOwner().getWorld().spawn(location, Chicken.class));
         this.getBalloonChicken().setInvulnerable(true);
         this.getBalloonChicken().setInvisible(true);
