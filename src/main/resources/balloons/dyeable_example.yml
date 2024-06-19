@@ -2,6 +2,7 @@
 # can be dyed to any color in the game. This is a very simple example of a balloon
 # that contains just one segment.
 dyeable_example:
+  type: single
   id: dyeable_example
   permission: balloon.dyeable
   material: LEATHER_HORSE_ARMOR

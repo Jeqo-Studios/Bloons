@@ -1,6 +1,7 @@
 # This is an example of a configuration which only holds the configuration data of
 # a singular multipart balloon. This is a train balloon that has a head, body, and tail.
 train:
+  type: multipart # The type of balloon, this must be multipart for multipart balloons
   id: train
   permission: balloon.train
   name: '<white>Train Balloon'

@@ -29,7 +29,6 @@ menu-size: 54
 # Amount of slots from the top that you want the balloons to appear in. Valid values: 9, 18, 27, 36, and 45.
 # This has the be at least 9 less than the menu-size!
 balloon-slots: 45
-#
 # Notice: Keep buttons in the last row of your entire menu to avoid any bugs!
 buttons:
   previous-page:

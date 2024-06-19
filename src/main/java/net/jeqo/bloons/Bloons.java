@@ -70,6 +70,9 @@ public final class Bloons extends JavaPlugin {
         new Metrics(this, pluginId);
         updateChecker();
 
+        // Copy over example balloons folder
+        getBalloonCore().copyExampleBalloons();
+
         // Generate config(s) and set defaults
         getConfig().options().copyDefaults();
         saveDefaultConfig();

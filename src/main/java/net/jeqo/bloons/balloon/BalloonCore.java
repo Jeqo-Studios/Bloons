@@ -86,6 +86,14 @@ public class BalloonCore {
     }
 
     /**
+     * Copies the example balloons folder to the plugin's data folder if it doesn't exist
+     */
+    public void copyExampleBalloons() {
+        // Copy the entire example balloons folder to the plugin's data folder if it doesn't exist
+        Bloons.getInstance().saveResource("balloons", false);
+    }
+
+    /**
      *                  Adds a balloon to the registered balloons list
      * @param balloon   The balloon to add, type net.jeqo.bloons.balloon.multipart.MultipartBalloonType
      */
