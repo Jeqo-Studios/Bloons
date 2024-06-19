@@ -31,9 +31,9 @@ public class ColorCodeConverter {
     }
 
     /**
-     * Converts all basic adventure color codes to Minecraft color codes
-     * @param message The message to convert
-     * @return The converted message
+     *                  Converts all basic adventure color codes to Minecraft color codes
+     * @param message   The message to convert to Minecraft color codes, type java.lang.String
+     * @return          The converted message with new Minecraft color codes, type java.lang.String
      */
     public static String adventureToColorCode(String message) {
         for (Map.Entry<String, String> entry : colorCodes.entrySet()) {
@@ -43,9 +43,9 @@ public class ColorCodeConverter {
     }
 
     /**
-     * Converts all Minecraft color codes to Adventure color codes
-     * @param message The message to convert
-     * @return The converted message
+     *                  Converts all Minecraft color codes to Adventure color codes
+     * @param message   The message to convert to Adventure color codes, type java.lang.String
+     * @return          The converted message with new Adventure color codes, type java.lang.String
      */
     public static String colorCodeToAdventure(String message) {
         for (Map.Entry<String, String> entry : colorCodes.entrySet()) {
