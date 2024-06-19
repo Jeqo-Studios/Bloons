@@ -15,6 +15,7 @@ import net.jeqo.bloons.logger.Logger;
 import net.jeqo.bloons.utils.Metrics;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -50,9 +51,6 @@ public final class Bloons extends JavaPlugin {
         setListenerCore(new ListenerCore(getInstance()));
         setBalloonCore(new BalloonCore(getInstance()));
 
-        // Initialize multipart balloons
-        getBalloonCore().initialize();
-
         // Stage listeners
         getListenerCore().stageListener(new SingleBalloonPlayerListener());
         getListenerCore().stageListener(new BalloonUnleashListener());
@@ -70,12 +68,15 @@ public final class Bloons extends JavaPlugin {
         new Metrics(this, pluginId);
         updateChecker();
 
-        // Copy over example balloons folder
-        getBalloonCore().copyExampleBalloons();
-
         // Generate config(s) and set defaults
         getConfig().options().copyDefaults();
         saveDefaultConfig();
+
+        // Copy over example balloons folder
+        getBalloonCore().copyExampleBalloons();
+
+        // Initialize multipart balloons
+        getBalloonCore().initialize();
     }
 
     @Override

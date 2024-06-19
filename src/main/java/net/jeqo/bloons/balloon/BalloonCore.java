@@ -7,7 +7,10 @@ import net.jeqo.bloons.balloon.multipart.MultipartBalloonType;
 import net.jeqo.bloons.balloon.single.SingleBalloonType;
 import net.jeqo.bloons.configuration.ConfigConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.codehaus.plexus.util.FileUtils;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -59,8 +62,10 @@ public class BalloonCore {
      * Copies the example balloons folder to the plugin's data folder if it doesn't exist
      */
     public void copyExampleBalloons() {
-        // Copy the entire example balloons folder to the plugin's data folder if it doesn't exist
-        Bloons.getInstance().saveResource(ConfigConfiguration.BALLOON_CONFIGURATION_FOLDER, false);
+        // Mkdir new directory in data folder
+        Bloons.getInstance().saveResource("balloons/color_pack_example.yml", false);
+        Bloons.getInstance().saveResource("balloons/dyeable_example.yml", false);
+        Bloons.getInstance().saveResource("balloons/train.yml", false);
     }
 
     /**
