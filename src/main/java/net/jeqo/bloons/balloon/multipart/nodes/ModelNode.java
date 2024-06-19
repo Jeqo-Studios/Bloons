@@ -126,7 +126,9 @@ public class ModelNode {
         ModelNodeVector dir = ModelNodeVector.subtract(target, this.getPointB());
 
         double targetAngle = dir.heading();
-        if (this.getChild() != null){
+
+        // If the node has a child, check if the angle between the child and the target angle is greater than the max angle
+        if (this.getChild() != null) {
             double childAngle = this.getChild().heading();
 
             double difference = Math.abs(targetAngle - childAngle);
@@ -144,17 +146,22 @@ public class ModelNode {
             }
         }
 
+        // Set the target point A location
         this.setPointA(target);
 
         // Smoothly interpolate the angle
         double currentAngle = this.heading();
         double interpolatedAngle = lerpAngle(currentAngle, targetAngle, this.getTurningSplineInterpolation()); // Higher = snappier Lower = less snappy
 
+        // Interpolate the x and z values based on the angle
         double interpolatedDx = this.getLength() * cos((float) interpolatedAngle);
         double interpolatedDz = this.getLength() * sin((float) interpolatedAngle);
 
-        double interpolatedY = lerpVal(this.getPointB().y, this.getPointA().y, this.getYAxisInterpolation()); // Change this to make it smoother or to make it more sudden, this seems to be the sweet spot
+        // Smoothly interpolate the y value
+        double interpolatedY = lerpVal(this.getPointB().y, this.getPointA().y, this.getYAxisInterpolation());   // Change this to make it smoother or
+                                                                                                                // to make it more sudden, this seems to be the sweet spot
 
+        // Set the new point B location
         this.getPointB().set((float) (this.getPointA().x - interpolatedDx), (float) interpolatedY, (float) (this.getPointA().z - interpolatedDz));
     }
 
@@ -167,11 +174,15 @@ public class ModelNode {
      */
     private double lerpAngle(double startAngle, double endAngle, double interpolationFactor) {
         double difference = endAngle - startAngle;
+
+        // If the difference is greater than PI, subtract 2PI from the difference
         if (difference > Math.PI) {
             difference -= 2 * Math.PI;
         } else if (difference < -Math.PI) {
             difference += 2 * Math.PI;
         }
+
+        // Return the interpolated angle
         return startAngle + interpolationFactor * difference;
     }
 
@@ -183,6 +194,7 @@ public class ModelNode {
      * @return                      The interpolated value between startVal and endVal, type double
      */
     private double lerpVal(double startVal, double endVal, double interpolationFactor) {
+        // Calculate the difference between the two values and return the interpolated value
         double difference = endVal - startVal;
         return startVal + interpolationFactor * difference;
     }
