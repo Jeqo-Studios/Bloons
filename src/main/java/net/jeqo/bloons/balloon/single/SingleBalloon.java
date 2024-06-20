@@ -221,7 +221,7 @@ public class SingleBalloon extends BukkitRunnable {
     public void initializeBalloonArmorStand() {
         this.setBalloonArmorStand(this.getPlayerLocation().getWorld().spawn(this.getPlayerLocation(), ArmorStand.class));
         this.getBalloonArmorStand().setBasePlate(false);
-        this.getBalloonArmorStand().setVisible(true);
+        this.getBalloonArmorStand().setVisible(false);
         this.getBalloonArmorStand().setInvulnerable(true);
         this.getBalloonArmorStand().setCanPickupItems(false);
         this.getBalloonArmorStand().setGravity(false);
