@@ -219,7 +219,7 @@ public class SingleBalloon extends BukkitRunnable {
             this.getBalloonArmorStand().getEquipment().setHelmet(this.getBalloonVisual());
         } else {
             this.setModeledEntity(ModelEngineAPI.createModeledEntity(this.getBalloonArmorStand()));
-            this.getModeledEntity().addModel(this.getBalloonType().getMegActiveModel(), true);
+            this.getModeledEntity().addModel(ModelEngineAPI.createActiveModel(this.getBalloonType().getMegModelID()), true);
         }
         this.getBalloonArmorStand().customName(Component.text(BalloonConfiguration.BALLOON_ARMOR_STAND_ID));
     }

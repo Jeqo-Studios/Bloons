@@ -21,7 +21,6 @@ public class SingleBalloonType {
 
     /** MEG only options **/
     private String megModelID;
-    private ActiveModel megActiveModel;
     private String displayMaterial;
     private String displayColor;
     private int displayCustomModelData;
@@ -67,7 +66,6 @@ public class SingleBalloonType {
         this.setName(name);
         this.setLore(lore);
         this.setMegModelID(megModelID);
-        this.setMegActiveModel(ModelEngineAPI.createActiveModel(this.getMegModelID()));
         this.setDisplayMaterial(displayMaterial);
         this.setDisplayColor(displayColor);
         this.setDisplayCustomModelData(displayCustomModelData);

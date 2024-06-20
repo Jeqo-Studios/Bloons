@@ -222,6 +222,30 @@ public class CommandCore implements CommandExecutor {
      * @return                      The ItemStack of the balloon, type org.bukkit.inventory.ItemStack
      */
     private ItemStack createBalloonItem(SingleBalloonType singleBalloonType) {
+        if (singleBalloonType.getMegModelID() != null) {
+            Material material = Material.matchMaterial(singleBalloonType.getDisplayMaterial());
+            if (material == null) {
+                Logger.logError("Material " + singleBalloonType.getDisplayMaterial() + " is not a valid material.");
+                return null;
+            }
+
+            ItemStack item = new ItemStack(material);
+            ItemMeta meta = item.getItemMeta();
+            if (meta == null) {
+                Logger.logError("ItemMeta is null for material " + singleBalloonType.getDisplayMaterial());
+                return null;
+            }
+
+            meta.setLocalizedName(singleBalloonType.getKey());
+            setBalloonLore(meta, singleBalloonType);
+            setBalloonDisplayName(meta, singleBalloonType);
+            meta.setCustomModelData(singleBalloonType.getDisplayCustomModelData());
+            setBalloonColor(meta, singleBalloonType);
+
+            item.setItemMeta(meta);
+            return item;
+        }
+
         Material material = Material.matchMaterial(singleBalloonType.getMaterial());
         if (material == null) {
             Logger.logError("Material " + singleBalloonType.getMaterial() + " is not a valid material.");
@@ -364,7 +388,12 @@ public class CommandCore implements CommandExecutor {
      * @param singleBalloonType    The configuration section of the balloon, type org.bukkit.configuration.ConfigurationSection
      */
     private void setBalloonColor(ItemMeta meta, SingleBalloonType singleBalloonType) {
-        String color = singleBalloonType.getColor();
+        String color;
+        if (singleBalloonType.getMegModelID() != null) {
+            color = singleBalloonType.getDisplayColor();
+        } else {
+            color = singleBalloonType.getColor();
+        }
 
         if (color != null && !color.equalsIgnoreCase("potion")) {
             if (meta instanceof LeatherArmorMeta) {
