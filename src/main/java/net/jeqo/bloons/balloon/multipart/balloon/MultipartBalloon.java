@@ -168,7 +168,7 @@ public class MultipartBalloon {
                 // not break the lead
                 if (isInitialized[0]) {
                     // Teleport the chicken holding the leash constantly
-                    Location leadTeleportPoint = new Location(getBalloonOwner().getWorld(), midpointX, getTentacle().getPointA().y + 1.5, midpointZ);
+                    Location leadTeleportPoint = new Location(getBalloonOwner().getWorld(), midpointX, getTentacle().getPointA().y + balloonType.getLeashHeightFromPlayer(), midpointZ);
                     getBalloonChicken().teleport(leadTeleportPoint);
                     getBalloonChicken().setLeashHolder(getBalloonOwner());
                 }

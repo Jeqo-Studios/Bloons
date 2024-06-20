@@ -154,6 +154,7 @@ public class ConfigConfiguration {
                                     config.getStringList(key + ".lore").toArray(new String[0]),
                                     config.getInt(key + ".node-count"),
                                     config.getInt(key + ".distance-between-nodes"),
+                                    config.getDouble(key + ".leash-height-from-player"),
                                     config.getDouble(key + ".head-node-offset"),
                                     config.getDouble(key + ".body-node-offset"),
                                     config.getDouble(key + ".tail-node-offset"),
