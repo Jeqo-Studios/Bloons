@@ -141,7 +141,7 @@ public class MultipartBalloon {
 
                 // Calculate the midpoint between Point A and Point B in the leading balloon
                 double midpointX = (getTentacle().getPointA().x + getTentacle().getPointB().x) / 2.0;
-                double midpointZ = (getTentacle().getPointA().z + getTentacle().getPointA().z) / 2.0;
+                double midpointZ = (getTentacle().getPointA().z + getTentacle().getPointB().z) / 2.0;
 
                 // Constantly teleport the balloons
                 getTentacle().follow((float) balloonOwnerLocation.getX(), (float) (newY + noseOffset), (float) balloonOwnerLocation.getZ());
