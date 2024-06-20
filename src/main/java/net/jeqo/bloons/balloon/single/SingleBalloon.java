@@ -95,22 +95,18 @@ public class SingleBalloon extends BukkitRunnable {
         this.setMoveLocation(this.getMoveLocation().add(vector));
         double vectorZ = vector.getZ() * 50.0D * -1.0D;
         double vectorX = vector.getX() * 50.0D * -1.0D;
-        // Create EulerAngles for each part of the armor stand
-        EulerAngle headPose = new EulerAngle(Math.toRadians(vectorZ), Math.toRadians(playerLocation.getYaw()), Math.toRadians(vectorX));
-        EulerAngle bodyPose = new EulerAngle(0, Math.toRadians(playerLocation.getYaw()), 0);
-        EulerAngle leftArmPose = new EulerAngle(0, 0, Math.toRadians(vectorX));
-        EulerAngle rightArmPose = new EulerAngle(0, 0, Math.toRadians(-vectorX));
-        EulerAngle leftLegPose = new EulerAngle(0, 0, Math.toRadians(vectorX / 2));
-        EulerAngle rightLegPose = new EulerAngle(0, 0, Math.toRadians(-vectorX / 2));
+
+        // Create EulerAngle to tilt the entire body
+        EulerAngle tiltAngle = new EulerAngle(Math.toRadians(vectorZ), Math.toRadians(playerLocation.getYaw()), Math.toRadians(vectorX));
 
         // Set the poses of the armor stand
         ArmorStand armorStand = this.getBalloonArmorStand();
-        armorStand.setHeadPose(headPose);
-        armorStand.setBodyPose(bodyPose);
-        armorStand.setLeftArmPose(leftArmPose);
-        armorStand.setRightArmPose(rightArmPose);
-        armorStand.setLeftLegPose(leftLegPose);
-        armorStand.setRightLegPose(rightLegPose);
+        armorStand.setHeadPose(tiltAngle);
+        armorStand.setBodyPose(tiltAngle);
+        armorStand.setLeftArmPose(tiltAngle);
+        armorStand.setRightArmPose(tiltAngle);
+        armorStand.setLeftLegPose(tiltAngle);
+        armorStand.setRightLegPose(tiltAngle);
 
         // Teleport the balloon to the move location and set the player location yaw
         this.teleport(this.getMoveLocation());
@@ -225,7 +221,7 @@ public class SingleBalloon extends BukkitRunnable {
     public void initializeBalloonArmorStand() {
         this.setBalloonArmorStand(this.getPlayerLocation().getWorld().spawn(this.getPlayerLocation(), ArmorStand.class));
         this.getBalloonArmorStand().setBasePlate(false);
-        this.getBalloonArmorStand().setVisible(false);
+        this.getBalloonArmorStand().setVisible(true);
         this.getBalloonArmorStand().setInvulnerable(true);
         this.getBalloonArmorStand().setCanPickupItems(false);
         this.getBalloonArmorStand().setGravity(false);
