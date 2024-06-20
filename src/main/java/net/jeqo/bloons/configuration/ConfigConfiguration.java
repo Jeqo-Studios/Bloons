@@ -63,7 +63,6 @@ public class ConfigConfiguration {
         for (File file : files) {
             if (file.isFile()) {
                 String fileName = file.getName();
-                Logger.logInfo("Loading single balloon configuration: " + fileName);
 
                 // Load the configuration file
                 FileConfiguration config = YamlConfiguration.loadConfiguration(file);
@@ -130,7 +129,6 @@ public class ConfigConfiguration {
         for (File file : files) {
             if (file.isFile()) {
                 String fileName = file.getName();
-                Logger.logInfo("Loading multipart balloon configuration: " + fileName);
 
                 // Load the configuration file
                 FileConfiguration config = YamlConfiguration.loadConfiguration(file);

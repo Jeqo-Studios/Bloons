@@ -143,7 +143,6 @@ public class MultipartBalloon {
                 // Teleport the chicken holding the leash constantly
                 Location leadTeleportPoint = new Location(getBalloonOwner().getWorld(), midpointX, getTentacle().getPointA().y + 1.5, midpointZ);
                 getBalloonChicken().teleport(leadTeleportPoint);
-                getBalloonChicken().setLeashHolder(getBalloonOwner());
 
                 // Constantly teleport the balloons
                 getTentacle().follow((float) balloonOwnerLocation.getX(), (float) (newY + noseOffset), (float) balloonOwnerLocation.getZ());
@@ -160,6 +159,8 @@ public class MultipartBalloon {
 
                 // Increment the yOffset based on the speed for the next iteration
                 yOffset += speed; // Adjust the speed of the sine wave as needed
+
+                getBalloonChicken().setLeashHolder(getBalloonOwner()); // Set the leash holder to the player at end to prevent weird leash issues
             }
         });
 
