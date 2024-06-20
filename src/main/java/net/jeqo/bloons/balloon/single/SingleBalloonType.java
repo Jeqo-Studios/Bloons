@@ -1,7 +1,5 @@
 package net.jeqo.bloons.balloon.single;
 
-import com.ticxo.modelengine.api.ModelEngineAPI;
-import com.ticxo.modelengine.api.model.ActiveModel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,11 +11,13 @@ public class SingleBalloonType {
     private String key;
     private String id;
     private String permission;
+    private String[] lore;
+
+    /** Options for a non-MEG balloon **/
     private String material;
     private String color;
     private int customModelData;
     private String name;
-    private String[] lore;
 
     /** MEG only options **/
     private String megModelID;

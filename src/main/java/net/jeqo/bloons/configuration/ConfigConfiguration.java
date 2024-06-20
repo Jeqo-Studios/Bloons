@@ -202,6 +202,7 @@ public class ConfigConfiguration {
                                             config.getInt(key + ".tail.display-custom-model-data")
                                     )
                             ));
+                        // If it doesn't have meg support, create a model without meg support
                         } else {
                             try {
                                 multipartBalloons.add(new MultipartBalloonType(
