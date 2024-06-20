@@ -1,6 +1,5 @@
 package net.jeqo.bloons.commands.manager;
 
-import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.commands.manager.types.CommandPermission;
 import net.jeqo.bloons.configuration.ConfigConfiguration;
 import org.bukkit.command.Command;
@@ -10,7 +9,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 public class CommandTabCompleter implements TabCompleter {
 

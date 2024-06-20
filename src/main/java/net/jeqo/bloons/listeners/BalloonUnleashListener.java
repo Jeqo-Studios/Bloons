@@ -1,12 +1,9 @@
 package net.jeqo.bloons.listeners;
 
 import net.jeqo.bloons.configuration.BalloonConfiguration;
-import org.bukkit.entity.LeashHitch;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityUnleashEvent;
 import org.bukkit.event.entity.PlayerLeashEntityEvent;
-import org.bukkit.event.hanging.HangingBreakEvent;
 import org.bukkit.event.player.PlayerUnleashEntityEvent;
 
 public class BalloonUnleashListener implements Listener {

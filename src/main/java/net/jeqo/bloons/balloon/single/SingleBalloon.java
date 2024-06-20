@@ -9,7 +9,6 @@ import net.jeqo.bloons.events.balloon.single.SingleBalloonForceUnequipEvent;
 import net.jeqo.bloons.logger.Logger;
 import net.jeqo.bloons.utils.management.SingleBalloonManagement;
 import net.jeqo.bloons.utils.ColorManagement;
-import net.jeqo.bloons.utils.MessageTranslations;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.Material;
