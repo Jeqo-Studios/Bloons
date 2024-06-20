@@ -8,6 +8,7 @@ import net.jeqo.bloons.balloon.single.SingleBalloon;
 import net.jeqo.bloons.events.balloon.multipart.MultipartBalloonEquipEvent;
 import net.jeqo.bloons.events.balloon.multipart.MultipartBalloonUnequipEvent;
 import net.jeqo.bloons.events.balloon.single.SingleBalloonEquipEvent;
+import net.jeqo.bloons.events.balloon.single.SingleBalloonUnequipEvent;
 import net.jeqo.bloons.gui.menus.BalloonMenu;
 import net.jeqo.bloons.utils.*;
 import net.jeqo.bloons.utils.management.MultipartBalloonManagement;
@@ -142,22 +143,45 @@ public class BalloonMenuListener implements Listener {
             event.setCancelled(true);
 
             if (!event.isShiftClick()) {
-                SingleBalloon balloon = Bloons.getPlayerSingleBalloons().get(player.getUniqueId());
+                SingleBalloon singleBalloon = Bloons.getPlayerSingleBalloons().get(player.getUniqueId());
+                MultipartBalloon multipartBalloon = Bloons.getPlayerMultipartBalloons().get(player.getUniqueId());
 
-                if (balloon == null) {
+                if (singleBalloon == null && multipartBalloon == null) {
                     // If no balloon equipped, play sound and send message notifying them
                     player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_DIDGERIDOO, 1, 1);
                     player.sendMessage(messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("not-equipped")));
                 } else {
-                    if (messageTranslations.getString("close-on-unequip").equals("true")) player.closeInventory();
+                    if (singleBalloon != null) {
+                        if (messageTranslations.getString("close-on-unequip").equals("true")) player.closeInventory();
 
-                    // Play sound and send message saying the balloon is unequipped
-                    player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_HURT_SWEET_BERRY_BUSH, 1, 1);
-                    player.sendMessage(messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("unequipped")));
+                        SingleBalloonUnequipEvent singleBalloonUnequipEvent = new SingleBalloonUnequipEvent(player, singleBalloon);
+                        singleBalloonUnequipEvent.callEvent();
+
+                        if (singleBalloonUnequipEvent.isCancelled()) return;
+
+                        SingleBalloonManagement.removeBalloon(player, singleBalloon);
+
+                        // Play sound and send message saying the balloon is unequipped
+                        player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_HURT_SWEET_BERRY_BUSH, 1, 1);
+                        player.sendMessage(messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("unequipped")));
+                    }
+
+                    if (multipartBalloon != null) {
+                        if (messageTranslations.getString("close-on-unequip").equals("true")) player.closeInventory();
+
+                        MultipartBalloonUnequipEvent multipartBalloonEquipEvent = new MultipartBalloonUnequipEvent(player, multipartBalloon);
+                        multipartBalloonEquipEvent.callEvent();
+
+                        if (multipartBalloonEquipEvent.isCancelled()) return;
+
+                        multipartBalloon.destroy();
+                        MultipartBalloonManagement.removePlayerBalloon(player.getUniqueId());
+
+                        // Play sound and send message saying the balloon is unequipped
+                        player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_HURT_SWEET_BERRY_BUSH, 1, 1);
+                        player.sendMessage(messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("unequipped")));
+                    }
                 }
-
-                // Remove the balloon
-                SingleBalloonManagement.removeBalloon(player, balloon);
             }
 
         } else {
