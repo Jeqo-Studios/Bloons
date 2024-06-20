@@ -218,8 +218,13 @@ public class SingleBalloon extends BukkitRunnable {
         if (this.getBalloonType().getMegModelID() == null) {
             this.getBalloonArmorStand().getEquipment().setHelmet(this.getBalloonVisual());
         } else {
-            this.setModeledEntity(ModelEngineAPI.createModeledEntity(this.getBalloonArmorStand()));
-            this.getModeledEntity().addModel(ModelEngineAPI.createActiveModel(this.getBalloonType().getMegModelID()), true);
+            try {
+                this.setModeledEntity(ModelEngineAPI.createModeledEntity(this.getBalloonArmorStand()));
+                this.getModeledEntity().addModel(ModelEngineAPI.createActiveModel(this.getBalloonType().getMegModelID()), true);
+            } catch (Exception e) {
+                Logger.logError("An error occurred while creating the MEG model for the balloon " + this.getBalloonType().getId() + "! This is most likely because the ID of the model doesn't exist.");
+                e.printStackTrace();
+            }
         }
         this.getBalloonArmorStand().customName(Component.text(BalloonConfiguration.BALLOON_ARMOR_STAND_ID));
     }
