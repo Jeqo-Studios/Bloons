@@ -7,10 +7,7 @@ import net.jeqo.bloons.balloon.multipart.MultipartBalloonType;
 import net.jeqo.bloons.balloon.single.SingleBalloonType;
 import net.jeqo.bloons.configuration.ConfigConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.codehaus.plexus.util.FileUtils;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -65,7 +62,7 @@ public class BalloonCore {
         // Save all example files in the balloons folder in /resources
         Bloons.getInstance().saveResource("balloons/color_pack_example.yml", false);
         Bloons.getInstance().saveResource("balloons/dyeable_example.yml", false);
-        Bloons.getInstance().saveResource("balloons/train.yml", false);
+        Bloons.getInstance().saveResource("balloons/multipart_example.yml", false);
     }
 
     /**

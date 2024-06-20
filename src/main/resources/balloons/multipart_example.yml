@@ -1,10 +1,10 @@
 # This is an example of a configuration which only holds the configuration data of
 # a singular multipart balloon. This is a train balloon that has a head, body, and tail.
-train:
+multipart_example:
   type: multipart # The type of balloon, this must be multipart for multipart balloons
-  id: train
-  permission: balloon.train
-  name: '<white>Train Balloon'
+  id: multipart_example # The id of the balloon, this must be unique
+  permission: balloon.multipart_example
+  name: '<white>Multipart Balloon'
   lore:
     - '&8Bloons Default Balloon'
     - ''
