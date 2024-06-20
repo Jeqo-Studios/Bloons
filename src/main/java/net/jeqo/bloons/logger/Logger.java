@@ -1,6 +1,7 @@
 package net.jeqo.bloons.logger;
 
 import net.jeqo.bloons.Bloons;
+import net.jeqo.bloons.configuration.ConfigConfiguration;
 import net.jeqo.bloons.configuration.PluginConfiguration;
 import net.jeqo.bloons.utils.MessageTranslations;
 import net.kyori.adventure.text.Component;
@@ -86,17 +87,27 @@ public class Logger {
     /**
      * Logs an initialization message to the Bukkit console containing the plugin name
      */
-    public static void logInitialization() {
+    public static void logInitialStartup() {
         log(LoggingLevel.INFO, "Initializing " + PluginConfiguration.getName() + " plugin...");
     }
 
     /**
-     * Logs a startup message to the Bukkit console containing plugin information
+     * Logs a final startup message to the Bukkit console containing plugin information
      */
-    public static void logStartup() {
-        log(LoggingLevel.INFO, PluginConfiguration.getName() + " plugin has initialized");
+    public static void logFinalStartup() {
+        // Calculate basic stats for final startup
+        int totalConfigurationCount = Bloons.getBalloonCore().getMultipartBalloonTypes().size() + Bloons.getBalloonCore().getSingleBalloonTypes().size();
+        long totalConfigurationFileCount = ConfigConfiguration.getBalloonConfigurationCount();
+
+        // Log info messages with the plugin information
+        log(LoggingLevel.INFO, PluginConfiguration.getName() + " plugin has initialized!");
         log(LoggingLevel.INFO, "Version: " + PluginConfiguration.getVersion());
         log(LoggingLevel.INFO, "Developers: " + PluginConfiguration.DEVELOPER_CREDITS);
+        log(LoggingLevel.INFO, "Website: " + PluginConfiguration.getURL());
+        log(LoggingLevel.INFO, "Total Balloon Configurations: " + totalConfigurationCount);
+        log(LoggingLevel.INFO, "Total Configuration Files: " + totalConfigurationFileCount);
+        log(LoggingLevel.INFO, "Single Balloons Loaded: " + Bloons.getBalloonCore().getSingleBalloonTypes().size());
+        log(LoggingLevel.INFO, "Multipart Balloons Loaded: " + Bloons.getBalloonCore().getMultipartBalloonTypes().size());
     }
 
     /**
@@ -115,11 +126,17 @@ public class Logger {
         logToPlayer(player, "You can find the update at: https://jeqo.net/bloons");
     }
 
+    /**
+     * Logs an initial shutdown message to the Bukkit console
+     */
+    public static void logInitialShutdown() {
+        log(LoggingLevel.INFO, "Shutting down " + PluginConfiguration.getName() + " plugin...");
+    }
 
     /**
-     * Logs a shutdown message to the Bukkit console
+     * Logs a final shutdown message to the Bukkit console
      */
-    public static void logShutdown() {
+    public static void logFinalShutdown() {
         log(LoggingLevel.INFO, PluginConfiguration.getName() + " plugin has been shutdown gracefully");
     }
 }

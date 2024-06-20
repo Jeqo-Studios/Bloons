@@ -15,7 +15,6 @@ import net.jeqo.bloons.logger.Logger;
 import net.jeqo.bloons.utils.Metrics;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -43,8 +42,8 @@ public final class Bloons extends JavaPlugin {
         // Create an instance of the plugin
         setInstance(this);
 
-        // Send startup message
-        Logger.logStartup();
+        // Send initial startup message
+        Logger.logInitialStartup();
 
         // Register core managers within the plugin
         setCommandCore(new CommandCore(getInstance()));
@@ -77,12 +76,15 @@ public final class Bloons extends JavaPlugin {
 
         // Initialize multipart balloons
         getBalloonCore().initialize();
+
+        // Send final startup message
+        Logger.logFinalStartup();
     }
 
     @Override
     public void onDisable() {
-        // Log shutdown message
-        Logger.logShutdown();
+        // Log an initial shutdown message
+        Logger.logInitialShutdown();
 
         if (getPlayerSingleBalloons() != null) {
             // Unregister all balloons and stop the task
@@ -98,11 +100,16 @@ public final class Bloons extends JavaPlugin {
             }
         }
 
-        // Clear all balloon data
-        getPlayerMultipartBalloons().clear();
+        // Clear all balloon data if it exists
+        if (getPlayerSingleBalloons() != null) {
+            getPlayerSingleBalloons().clear();
+        }
 
         // Unregister all listeners in the manager
         getListenerCore().unregisterListeners();
+
+        // Send final shutdown message
+        Logger.logFinalShutdown();
     }
 
     /**
