@@ -23,7 +23,7 @@ close-on-unequip: true
 # Do you want to hide balloons that the player does not have permission for?
 hide-balloons-without-permission: true
 # Title for the balloons menu.
-menu-title: "<white>"
+menu-title: "&f"
 # Amount of slots per page. Valid values: 27, 36, 45, and 54. 9 of these slots will be used for the menu buttons.
 menu-size: 54
 # Amount of slots from the top that you want the balloons to appear in. Valid values: 9, 18, 27, 36, and 45.
@@ -33,19 +33,19 @@ balloon-slots: 45
 buttons:
   previous-page:
     material: FLINT
-    custom-model-data: 2
+    custom-model-data: 1
     name: '<gray>← ᴘʀᴇᴠɪᴏᴜs ᴘᴀɢᴇ'
     slots:
       - 48
   unequip:
     material: FLINT
-    custom-model-data: 3
+    custom-model-data: 2
     name: '<gray>ᴜɴᴇǫᴜɪᴘ ʙᴀʟʟᴏᴏɴ'
     slots:
       - 49
   next-page:
     material: FLINT
-    custom-model-data: 4
+    custom-model-data: 3
     name: '<gray>ɴᴇxᴛ ᴘᴀɢᴇ →'
     slots:
       - 50
