@@ -1,5 +1,7 @@
 package net.jeqo.bloons.balloon.single;
 
+import com.ticxo.modelengine.api.ModelEngineAPI;
+import com.ticxo.modelengine.api.model.ModeledEntity;
 import lombok.Getter;
 import lombok.Setter;
 import net.jeqo.bloons.Bloons;
@@ -28,10 +30,13 @@ import java.util.concurrent.ThreadLocalRandom;
 
 @Getter @Setter
 public class SingleBalloon extends BukkitRunnable {
+    private SingleBalloonType balloonType;
     private Player player;
     private ItemStack balloonVisual;
     private ArmorStand balloonArmorStand;
     public Chicken balloonChicken;
+
+    private ModeledEntity modeledEntity;
 
     private Location playerLocation;
     private Location moveLocation;
@@ -48,9 +53,12 @@ public class SingleBalloon extends BukkitRunnable {
      */
     public SingleBalloon(Player player, String balloonID) {
         this.setPlayer(player);
+        this.setBalloonType(Bloons.getBalloonCore().getSingleBalloonByID(balloonID));
 
-        // Configure the balloon visual elements
-        this.setBalloonVisual(this.getConfiguredBalloonVisual(balloonID));
+        if (this.getBalloonType().getMegModelID() == null) {
+            // Configure the balloon visual elements
+            this.setBalloonVisual(this.getConfiguredBalloonVisual(balloonID));
+        }
     }
 
     /**
@@ -101,6 +109,7 @@ public class SingleBalloon extends BukkitRunnable {
      * @throws IllegalStateException    If the task has already been cancelled
      */
     public synchronized void cancel() throws IllegalStateException {
+        this.getModeledEntity().removeModel(this.getBalloonType().getMegModelID()); // Remove the MEG model
         this.getBalloonArmorStand().remove();
         this.getBalloonChicken().remove();
         super.cancel();
@@ -130,10 +139,12 @@ public class SingleBalloon extends BukkitRunnable {
         this.setPlayerLocation(this.getPlayer().getLocation());
         this.getPlayerLocation().setYaw(0.0F);
 
-        // Create and set the balloons visual appearance/model
-        ItemMeta meta = this.getBalloonVisual().getItemMeta();
-        meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-        this.getBalloonVisual().setItemMeta(meta);
+        if (this.getBalloonType().getMegModelID() == null) {
+            // Create and set the balloons visual appearance/model
+            ItemMeta meta = this.getBalloonVisual().getItemMeta();
+            meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+            this.getBalloonVisual().setItemMeta(meta);
+        }
 
         // Initialize the armor stand and lead to the player
         this.initializeBalloonArmorStand();
@@ -204,7 +215,12 @@ public class SingleBalloon extends BukkitRunnable {
         this.getBalloonArmorStand().setSmall(false);
         this.getBalloonArmorStand().setMarker(true);
         this.getBalloonArmorStand().setCollidable(false);
-        this.getBalloonArmorStand().getEquipment().setHelmet(this.getBalloonVisual());
+        if (this.getBalloonType().getMegModelID() == null) {
+            this.getBalloonArmorStand().getEquipment().setHelmet(this.getBalloonVisual());
+        } else {
+            this.setModeledEntity(ModelEngineAPI.createModeledEntity(this.getBalloonArmorStand()));
+            this.getModeledEntity().addModel(this.getBalloonType().getMegActiveModel(), true);
+        }
         this.getBalloonArmorStand().customName(Component.text(BalloonConfiguration.BALLOON_ARMOR_STAND_ID));
     }
 
