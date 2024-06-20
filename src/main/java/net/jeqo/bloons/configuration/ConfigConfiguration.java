@@ -90,7 +90,7 @@ public class ConfigConfiguration {
                                     config.getString(key + ".color"),
                                     config.getInt(key + ".custom-model-data"),
                                     config.getString(key + ".name"),
-                                    config.getStringList(file.getName() + "." + key + ".lore").toArray(new String[0])
+                                    config.getStringList(key + ".lore").toArray(new String[0])
                             ));
                         } catch (Exception e) {
                             Logger.logWarning("Error processing multipart balloon type for section: " + key + " in file: " + fileName + " - " + e.getMessage());
