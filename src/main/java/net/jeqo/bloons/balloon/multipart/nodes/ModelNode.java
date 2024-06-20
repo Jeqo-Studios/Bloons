@@ -102,7 +102,6 @@ public class ModelNode {
         this.getBalloonArmorStand().setInvisible(true);
         this.getBalloonArmorStand().setSilent(true);
         this.getBalloonArmorStand().setCollidable(false);
-        this.getBalloonArmorStand().setLeashHolder(this.getBalloonOwner());
     }
 
     /**
