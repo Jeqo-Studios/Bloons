@@ -95,7 +95,22 @@ public class SingleBalloon extends BukkitRunnable {
         this.setMoveLocation(this.getMoveLocation().add(vector));
         double vectorZ = vector.getZ() * 50.0D * -1.0D;
         double vectorX = vector.getX() * 50.0D * -1.0D;
-        this.getBalloonArmorStand().setHeadPose(new EulerAngle(Math.toRadians(vectorZ), Math.toRadians(playerLocation.getYaw()), Math.toRadians(vectorX)));
+        // Create EulerAngles for each part of the armor stand
+        EulerAngle headPose = new EulerAngle(Math.toRadians(vectorZ), Math.toRadians(playerLocation.getYaw()), Math.toRadians(vectorX));
+        EulerAngle bodyPose = new EulerAngle(0, Math.toRadians(playerLocation.getYaw()), 0);
+        EulerAngle leftArmPose = new EulerAngle(0, 0, Math.toRadians(vectorX));
+        EulerAngle rightArmPose = new EulerAngle(0, 0, Math.toRadians(-vectorX));
+        EulerAngle leftLegPose = new EulerAngle(0, 0, Math.toRadians(vectorX / 2));
+        EulerAngle rightLegPose = new EulerAngle(0, 0, Math.toRadians(-vectorX / 2));
+
+        // Set the poses of the armor stand
+        ArmorStand armorStand = this.getBalloonArmorStand();
+        armorStand.setHeadPose(headPose);
+        armorStand.setBodyPose(bodyPose);
+        armorStand.setLeftArmPose(leftArmPose);
+        armorStand.setRightArmPose(rightArmPose);
+        armorStand.setLeftLegPose(leftLegPose);
+        armorStand.setRightLegPose(rightLegPose);
 
         // Teleport the balloon to the move location and set the player location yaw
         this.teleport(this.getMoveLocation());
@@ -109,7 +124,9 @@ public class SingleBalloon extends BukkitRunnable {
      * @throws IllegalStateException    If the task has already been cancelled
      */
     public synchronized void cancel() throws IllegalStateException {
-        this.getModeledEntity().removeModel(this.getBalloonType().getMegModelID()); // Remove the MEG model
+        if (this.getModeledEntity() != null) {
+            this.getModeledEntity().removeModel(this.getBalloonType().getMegModelID()); // Remove the MEG model if it exists
+        }
         this.getBalloonArmorStand().remove();
         this.getBalloonChicken().remove();
         super.cancel();
