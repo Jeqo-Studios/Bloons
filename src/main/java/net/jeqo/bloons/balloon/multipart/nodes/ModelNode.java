@@ -234,13 +234,13 @@ public class ModelNode {
         // Sets the segments finalized models based on their position in the balloon
         if (this.getIndex() == this.getBalloonType().getNodeCount() - 1) {
             // Set the head model
-            this.getBalloonArmorStand().setItem(slot, this.getBalloonType().getHeadModel().getFinalizedModel());
+            this.getBalloonArmorStand().setItem(slot, this.getBalloonType().getHeadModel().getFinalizedNonMEGModel());
         } else if (this.getIndex() == 0) {
             // Set the tail model
-            this.getBalloonArmorStand().setItem(slot, this.getBalloonType().getTailModel().getFinalizedModel());
+            this.getBalloonArmorStand().setItem(slot, this.getBalloonType().getTailModel().getFinalizedNonMEGModel());
         } else {
             // Set the body model
-            this.getBalloonArmorStand().setItem(slot, this.getBalloonType().getBodyModel().getFinalizedModel());
+            this.getBalloonArmorStand().setItem(slot, this.getBalloonType().getBodyModel().getFinalizedNonMEGModel());
         }
 
         // Creates a new Bukkit vector based on the position of the two points

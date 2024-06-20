@@ -251,6 +251,35 @@ public class CommandCore implements CommandExecutor {
      * @return                        The ItemStack of the balloon, type org.bukkit.inventory.ItemStack
      */
     private ItemStack createBalloonItem(MultipartBalloonType multipartBalloonType) {
+        // If the model uses MEG, create the item with the display model properties
+        if (multipartBalloonType.getHeadModel().getMegModelID() != null) {
+            Material material = Material.matchMaterial(multipartBalloonType.getHeadModel().getDisplayMaterial());
+            if (material == null) {
+                Logger.logError("Material " + multipartBalloonType.getHeadModel().getDisplayMaterial() + " is not a valid material.");
+                return null;
+            }
+
+            ItemStack item = new ItemStack(material);
+            ItemMeta meta = item.getItemMeta();
+            if (meta == null) {
+                Logger.logError("ItemMeta is null for material " + multipartBalloonType.getHeadModel().getDisplayMaterial());
+                return null;
+            }
+
+            meta.setLocalizedName(multipartBalloonType.getId());
+            setBalloonLore(meta, multipartBalloonType);
+            setBalloonDisplayName(meta, multipartBalloonType);
+            meta.setCustomModelData(multipartBalloonType.getHeadModel().getDisplayCustomModelData());
+
+            if (multipartBalloonType.getHeadModel().getDisplayColor() != null) {
+                setBalloonColor(meta, multipartBalloonType);
+            }
+
+            item.setItemMeta(meta);
+            return item;
+        }
+
+        // Otherwise if the head doesn't use meg, create the item with the head model
         Material material = Material.matchMaterial(multipartBalloonType.getHeadModel().getMaterial());
         if (material == null) {
             Logger.logError("Material " + multipartBalloonType.getHeadModel().getMaterial() + " is not a valid material.");

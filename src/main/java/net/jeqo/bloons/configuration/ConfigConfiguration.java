@@ -146,7 +146,8 @@ public class ConfigConfiguration {
                     // Determine the type of balloon
                     String type = config.getString(key + ".type", BalloonConfiguration.SINGLE_BALLOON_TYPE_IDENTIFIER);
                     if (type.equals(BalloonConfiguration.MULTIPART_BALLOON_TYPE_IDENTIFIER)) {
-                        try {
+                        // If it has meg support, create a model with meg support
+                        if (config.getString(key + ".head.meg-model-id") != null || config.getString(key + ".body.meg-model-id") != null || config.getString(key + ".tail.meg-model-id") != null) {
                             multipartBalloons.add(new MultipartBalloonType(
                                     config.getString(key + ".id"),
                                     config.getString(key + ".permission"),
@@ -166,25 +167,67 @@ public class ConfigConfiguration {
                                     config.getDouble(key + ".passive-nose-sine-wave-amplitude"),
                                     new MultipartBalloonModel(
                                             BalloonModelType.HEAD,
-                                            config.getString(key + ".head.material"),
-                                            config.getString(key + ".head.color"),
-                                            config.getInt(key + ".head.custom-model-data")
+                                            config.getString(key + ".head.meg-model-id"),
+                                            config.getString(key + ".head.display-material"),
+                                            config.getString(key + ".head.display-color"),
+                                            config.getInt(key + ".head.display-custom-model-data")
                                     ),
                                     new MultipartBalloonModel(
                                             BalloonModelType.BODY,
-                                            config.getString(key + ".body.material"),
-                                            config.getString(key + ".body.color"),
-                                            config.getInt(key + ".body.custom-model-data")
+                                            config.getString(key + ".body.meg-model-id"),
+                                            config.getString(key + ".body.display-material"),
+                                            config.getString(key + ".body.display-color"),
+                                            config.getInt(key + ".body.display-custom-model-data")
                                     ),
                                     new MultipartBalloonModel(
                                             BalloonModelType.TAIL,
-                                            config.getString(key + ".tail.material"),
-                                            config.getString(key + ".tail.color"),
-                                            config.getInt(key + ".tail.custom-model-data")
+                                            config.getString(key + ".tail.meg-model-id"),
+                                            config.getString(key + ".tail.display-material"),
+                                            config.getString(key + ".tail.display-color"),
+                                            config.getInt(key + ".tail.display-custom-model-data")
                                     )
                             ));
-                        } catch (Exception e) {
-                            Logger.logWarning("Error processing multipart balloon type for section: " + key + " in file: " + fileName + " - " + e.getMessage());
+                        } else {
+                            try {
+                                multipartBalloons.add(new MultipartBalloonType(
+                                        config.getString(key + ".id"),
+                                        config.getString(key + ".permission"),
+                                        config.getString(key + ".name"),
+                                        config.getStringList(key + ".lore").toArray(new String[0]),
+                                        config.getInt(key + ".node-count"),
+                                        config.getInt(key + ".distance-between-nodes"),
+                                        config.getDouble(key + ".leash-height"),
+                                        config.getDouble(key + ".head-node-offset"),
+                                        config.getDouble(key + ".body-node-offset"),
+                                        config.getDouble(key + ".tail-node-offset"),
+                                        config.getDouble(key + ".max-joint-angle"),
+                                        config.getDouble(key + ".y-axis-interpolation"),
+                                        config.getDouble(key + ".turning-spline-interpolation"),
+                                        config.getDouble(key + ".passive-sine-wave-speed"),
+                                        config.getDouble(key + ".passive-sine-wave-amplitude"),
+                                        config.getDouble(key + ".passive-nose-sine-wave-amplitude"),
+                                        new MultipartBalloonModel(
+                                                BalloonModelType.HEAD,
+                                                config.getString(key + ".head.material"),
+                                                config.getString(key + ".head.color"),
+                                                config.getInt(key + ".head.custom-model-data")
+                                        ),
+                                        new MultipartBalloonModel(
+                                                BalloonModelType.BODY,
+                                                config.getString(key + ".body.material"),
+                                                config.getString(key + ".body.color"),
+                                                config.getInt(key + ".body.custom-model-data")
+                                        ),
+                                        new MultipartBalloonModel(
+                                                BalloonModelType.TAIL,
+                                                config.getString(key + ".tail.material"),
+                                                config.getString(key + ".tail.color"),
+                                                config.getInt(key + ".tail.custom-model-data")
+                                        )
+                                ));
+                            } catch (Exception e) {
+                                Logger.logWarning("Error processing multipart balloon type for section: " + key + " in file: " + fileName + " - " + e.getMessage());
+                            }
                         }
                     }
                 }

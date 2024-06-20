@@ -1,5 +1,7 @@
 package net.jeqo.bloons.balloon.multipart;
 
+import com.ticxo.modelengine.api.ModelEngineAPI;
+import com.ticxo.modelengine.api.model.ActiveModel;
 import lombok.Getter;
 import lombok.Setter;
 import net.jeqo.bloons.balloon.model.BalloonModel;
@@ -15,13 +17,23 @@ import org.bukkit.inventory.ItemStack;
  */
 @Getter @Setter
 public class MultipartBalloonModel {
+    // This is able to be used for both MEG supported models and non MEG supported models
     private BalloonModelType modelType;
+
+    /** For non MEG supported models **/
     private String material;
     private String color;
     private Integer customModelData;
 
+    /** For MEG supported models **/
+    private String megModelID;
+    private ActiveModel megActiveModel;
+    private String displayMaterial;
+    private String displayColor;
+    private Integer displayCustomModelData;
+
     /**
-     *                          Creates a new model for a multipart balloon
+     *                          Creates a new model for a multipart balloon without MEG support
      * @param modelType         The type of model (head, body, tail), type net.jeqo.bloons.balloon.model.BalloonModelType
      * @param material          The name of the Bukkit Material used to create the item, type java.lang.String
      * @param color             The color of the model as a hex color code value, type java.lang.String
@@ -35,10 +47,27 @@ public class MultipartBalloonModel {
     }
 
     /**
-     *              Gets the finalized item of a multipart balloon model with the specified metadata
+     *                                  Creates a new model for a multipart balloon with MEG support
+     * @param modelType                 The type of model (head, body, tail), type net.jeqo.bloons.balloon.model.BalloonModelType
+     * @param megModelID                The ID of the MEG model, type java.lang.String
+     * @param displayMaterial           The name of the Bukkit Material used to create the item, type java.lang.String
+     * @param displayColor              The color of the model as a hex color code value, type java.lang.String
+     * @param displayCustomModelData    The custom model data value stored in the item metadata, type int
+     */
+    public MultipartBalloonModel(BalloonModelType modelType, String megModelID, String displayMaterial, String displayColor, int displayCustomModelData) {
+        this.setModelType(modelType);
+        this.setMegModelID(megModelID);
+        this.setMegActiveModel(ModelEngineAPI.createActiveModel(this.getMegModelID()));
+        this.setDisplayMaterial(displayMaterial);
+        this.setDisplayColor(displayColor);
+        this.setDisplayCustomModelData(displayCustomModelData);
+    }
+
+    /**
+     *              Gets the finalized item of a multipart balloon model without MEG support and with the specified metadata
      * @return      The finalized item model with the specified metadata, type org.bukkit.inventory.ItemStack
      */
-    public ItemStack getFinalizedModel() {
+    public ItemStack getFinalizedNonMEGModel() {
         // Gets the Bukkit Material type from the string
         Material material = Material.getMaterial(this.getMaterial().toUpperCase());
 
