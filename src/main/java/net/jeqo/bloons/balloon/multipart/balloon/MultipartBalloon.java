@@ -6,7 +6,6 @@ import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.balloon.multipart.MultipartBalloonType;
 import net.jeqo.bloons.balloon.multipart.nodes.ModelNode;
 import net.jeqo.bloons.configuration.BalloonConfiguration;
-import net.jeqo.bloons.logger.Logger;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.entity.Chicken;
@@ -168,7 +167,7 @@ public class MultipartBalloon {
                 // not break the lead
                 if (isInitialized[0]) {
                     // Teleport the chicken holding the leash constantly
-                    Location leadTeleportPoint = new Location(getBalloonOwner().getWorld(), midpointX, getTentacle().getPointA().y + balloonType.getLeashHeightFromPlayer(), midpointZ);
+                    Location leadTeleportPoint = new Location(getBalloonOwner().getWorld(), midpointX, getTentacle().getPointA().y + balloonType.getLeashHeight(), midpointZ);
                     getBalloonChicken().teleport(leadTeleportPoint);
                     getBalloonChicken().setLeashHolder(getBalloonOwner());
                 }

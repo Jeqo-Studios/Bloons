@@ -11,7 +11,7 @@ train:
     - '&eᴄʟɪᴄᴋ ᴛᴏ ᴇǫᴜɪᴘ'
   node-count: 5 # The amount of nodes/models in the balloon including the head and tail
   distance-between-nodes: 2.0 # The distance between nodes/models in blocks
-  leash-height-from-player: 1.2 # The height of the leash from the zero relative to the balloon
+  leash-height: 1.2 # The height of the leash from the zero relative to the balloon
   head-node-offset: 0.0 # The offset of length of head node segments in blocks
   body-node-offset: 0.0 # The offset of length of body node segments in blocks
   tail-node-offset: 0.0 # The offset of length of tail node segments in blocks

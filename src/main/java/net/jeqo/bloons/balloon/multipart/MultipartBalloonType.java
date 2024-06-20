@@ -14,7 +14,7 @@ public class MultipartBalloonType {
     private String[] lore;
     private int nodeCount;
     private double distanceBetweenNodes;
-    private double leashHeightFromPlayer;
+    private double leashHeight;
     private double headNodeOffset = 0.0;
     private double bodyNodeOffset = 0.0;
     private double tailNodeOffset = 0.0;
@@ -37,7 +37,7 @@ public class MultipartBalloonType {
      * @param lore                          The lore lines of the balloon in the balloon GUI, type java.lang.String[]
      * @param nodeCount                     The number of nodes, or models, in the balloon, type int
      * @param distanceBetweenNodes          The distance between each node in the balloon measured as blocks, type double
-     * @param leashHeightFromPlayer         The height of the leash from the player to the lead node, type double
+     * @param leashHeight                   The height of the leash from the player to the lead node, type double
      * @param headNodeOffset                The offset of the head node from its 0 position measured as blocks, type double
      * @param bodyNodeOffset                The offset of the body node from its 0 position measured as blocks, type double
      * @param tailNodeOffset                The offset of the tail node from its 0 position measured as blocks, type double
@@ -51,14 +51,14 @@ public class MultipartBalloonType {
      * @param bodyModel                     The model used for the body node, type net.jeqo.bloons.balloon.multipart.MultipartBalloonModel
      * @param tailModel                     The model used for the tail node, type net.jeqo.bloons.balloon.multipart.MultipartBalloonModel
      */
-    public MultipartBalloonType(String id, String permission, String name, String[] lore, int nodeCount, double distanceBetweenNodes, double leashHeightFromPlayer, double headNodeOffset, double bodyNodeOffset, double tailNodeOffset, double maxNodeJointAngle, double yAxisInterpolation, double turningSplineInterpolation, double passiveSineWaveSpeed, double passiveSineWaveAmplitude, double passiveNoseSineWaveAmplitude, MultipartBalloonModel headModel, MultipartBalloonModel bodyModel, MultipartBalloonModel tailModel) {
+    public MultipartBalloonType(String id, String permission, String name, String[] lore, int nodeCount, double distanceBetweenNodes, double leashHeight, double headNodeOffset, double bodyNodeOffset, double tailNodeOffset, double maxNodeJointAngle, double yAxisInterpolation, double turningSplineInterpolation, double passiveSineWaveSpeed, double passiveSineWaveAmplitude, double passiveNoseSineWaveAmplitude, MultipartBalloonModel headModel, MultipartBalloonModel bodyModel, MultipartBalloonModel tailModel) {
         this.setId(id);
         this.setPermission(permission);
         this.setName(name);
         this.setLore(lore);
         this.setNodeCount(nodeCount);
         this.setDistanceBetweenNodes(distanceBetweenNodes);
-        this.setLeashHeightFromPlayer(leashHeightFromPlayer);
+        this.setLeashHeight(leashHeight);
         this.setHeadNodeOffset(headNodeOffset);
         this.setBodyNodeOffset(bodyNodeOffset);
         this.setTailNodeOffset(tailNodeOffset);
