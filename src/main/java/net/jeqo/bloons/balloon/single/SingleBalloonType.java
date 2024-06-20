@@ -1,5 +1,7 @@
 package net.jeqo.bloons.balloon.single;
 
+import com.ticxo.modelengine.api.ModelEngineAPI;
+import com.ticxo.modelengine.api.model.ActiveModel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,8 +19,15 @@ public class SingleBalloonType {
     private String name;
     private String[] lore;
 
+    /** MEG only options **/
+    private String megModelID;
+    private ActiveModel megActiveModel;
+    private String displayMaterial;
+    private String displayColor;
+    private int displayCustomModelData;
+
     /**
-     *                          Creates a new single balloon type configuration
+     *                          Creates a new single balloon type configuration without the use of MEG
      * @param key               The key of the balloon type in the configuration, type java.lang.String
      * @param id                The unique identifier for the balloon type, type java.lang.String
      * @param permission        The permission required to use the balloon type, type java.lang.String
@@ -37,5 +46,30 @@ public class SingleBalloonType {
         this.setCustomModelData(customModelData);
         this.setName(name);
         this.setLore(lore);
+    }
+
+    /**
+     *                                  Creates a new single balloon type configuration with the use of MEG
+     * @param key                       The key of the balloon type in the configuration, type java.lang.String
+     * @param id                        The unique identifier for the balloon type, type java.lang.String
+     * @param permission                The permission required to use the balloon type, type java.lang.String
+     * @param name                      The name of the balloon, type java.lang.String
+     * @param lore                      The lore of the balloon, type java.lang.String[]
+     * @param megModelID                The ID of the MEG model, type java.lang.String
+     * @param displayMaterial           The name of the Bukkit Material used to create the item, type java.lang.String
+     * @param displayColor              The color of the model as a hex color code value, type java.lang.String
+     * @param displayCustomModelData    The custom model data value stored in the item metadata, type int
+     */
+    public SingleBalloonType(String key, String id, String permission, String name, String[] lore, String megModelID, String displayMaterial, String displayColor, int displayCustomModelData) {
+        this.setKey(key);
+        this.setId(id);
+        this.setPermission(permission);
+        this.setName(name);
+        this.setLore(lore);
+        this.setMegModelID(megModelID);
+        this.setMegActiveModel(ModelEngineAPI.createActiveModel(this.getMegModelID()));
+        this.setDisplayMaterial(displayMaterial);
+        this.setDisplayColor(displayColor);
+        this.setDisplayCustomModelData(displayCustomModelData);
     }
 }

@@ -13,3 +13,15 @@ dyeable_example:
     - '&8Bloons Example Balloon'
     - ''
     - '&eᴄʟɪᴄᴋ ᴛᴏ ᴇǫᴜɪᴘ'
+single_meg_example:
+  id: single_meg_example
+  permission: balloon.single_meg_example
+  meg-model-id: single_meg_example
+  display-color: '#ffffff'
+  display-material: FLINT
+  display-custom-model-data: 7
+  name: '<white>Single MEG Balloon'
+  lore:
+    - '&8Bloons Default Balloon'
+    - ''
+    - '&eᴄʟɪᴄᴋ ᴛᴏ ᴇǫᴜɪᴘ'
