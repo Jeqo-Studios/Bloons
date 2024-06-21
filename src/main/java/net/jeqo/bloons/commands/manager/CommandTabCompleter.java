@@ -81,7 +81,6 @@ public class CommandTabCompleter implements TabCompleter {
 
     public List<String> getBalloonTabComplete() {
         List<String> singleBalloons = ConfigConfiguration.getSingleBalloons().stream().map(singleBalloonType -> singleBalloonType.getId().toLowerCase()).toList();
-        List<String> multipartBalloons = ConfigConfiguration.getMultipartBalloons().stream().map(multipartBalloonType -> multipartBalloonType.getId().toLowerCase()).toList();
-        return List.of(singleBalloons, multipartBalloons).stream().flatMap(List::stream).toList();
+        return List.of(singleBalloons).stream().flatMap(List::stream).toList();
     }
 }

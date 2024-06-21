@@ -1,4 +1,4 @@
-package net.jeqo.bloons.events.balloon.single;
+package net.jeqo.bloons.events.balloon;
 
 import lombok.Getter;
 import lombok.Setter;

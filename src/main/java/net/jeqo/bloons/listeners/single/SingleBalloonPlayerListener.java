@@ -2,8 +2,8 @@ package net.jeqo.bloons.listeners.single;
 
 import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.balloon.single.SingleBalloon;
-import net.jeqo.bloons.events.balloon.single.SingleBalloonForceUnequipEvent;
-import net.jeqo.bloons.events.balloon.single.SingleBalloonStoreEvent;
+import net.jeqo.bloons.events.balloon.SingleBalloonForceUnequipEvent;
+import net.jeqo.bloons.events.balloon.SingleBalloonStoreEvent;
 import net.jeqo.bloons.utils.UpdateChecker;
 import net.jeqo.bloons.logger.Logger;
 import net.jeqo.bloons.utils.management.SingleBalloonManagement;

@@ -96,7 +96,7 @@ public class Logger {
      */
     public static void logFinalStartup() {
         // Calculate basic stats for final startup
-        int totalConfigurationCount = Bloons.getBalloonCore().getMultipartBalloonTypes().size() + Bloons.getBalloonCore().getSingleBalloonTypes().size();
+        int totalConfigurationCount = Bloons.getBalloonCore().getSingleBalloonTypes().size();
         long totalConfigurationFileCount = ConfigConfiguration.getBalloonConfigurationCount();
 
         // Log info messages with the plugin information
@@ -106,8 +106,6 @@ public class Logger {
         log(LoggingLevel.INFO, "Website: " + PluginConfiguration.getURL());
         log(LoggingLevel.INFO, "Total Balloon Configurations: " + totalConfigurationCount);
         log(LoggingLevel.INFO, "Total Configuration Files: " + totalConfigurationFileCount);
-        log(LoggingLevel.INFO, "Single Balloons Loaded: " + Bloons.getBalloonCore().getSingleBalloonTypes().size());
-        log(LoggingLevel.INFO, "Multipart Balloons Loaded: " + Bloons.getBalloonCore().getMultipartBalloonTypes().size());
     }
 
     /**

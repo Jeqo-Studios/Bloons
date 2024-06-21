@@ -3,12 +3,9 @@ package net.jeqo.bloons;
 import lombok.Getter;
 import lombok.Setter;
 import net.jeqo.bloons.balloon.BalloonCore;
-import net.jeqo.bloons.balloon.multipart.balloon.MultipartBalloon;
 import net.jeqo.bloons.balloon.single.SingleBalloon;
 import net.jeqo.bloons.commands.manager.CommandCore;
 import net.jeqo.bloons.listeners.*;
-import net.jeqo.bloons.listeners.multipart.MultipartBalloonPlayerJoinListener;
-import net.jeqo.bloons.listeners.multipart.MultipartBalloonPlayerLeaveListener;
 import net.jeqo.bloons.listeners.single.SingleBalloonPlayerListener;
 import net.jeqo.bloons.utils.UpdateChecker;
 import net.jeqo.bloons.logger.Logger;
@@ -16,7 +13,6 @@ import net.jeqo.bloons.utils.Metrics;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 public final class Bloons extends JavaPlugin {
@@ -33,9 +29,6 @@ public final class Bloons extends JavaPlugin {
     public static HashMap<UUID, SingleBalloon> playerSingleBalloons = new HashMap<>();
     @Getter @Setter
     public static HashMap<UUID, String> playerSingleBalloonID = new HashMap<>();
-
-    @Getter
-    public static final Map<UUID, MultipartBalloon> playerMultipartBalloons = new HashMap<>();
 
     @Override
     public void onEnable() {
@@ -55,9 +48,6 @@ public final class Bloons extends JavaPlugin {
         getListenerCore().stageListener(new BalloonUnleashListener());
         getListenerCore().stageListener(new BalloonMenuListener());
         getListenerCore().stageListener(new BalloonEntityListener());
-
-        getListenerCore().stageListener(new MultipartBalloonPlayerJoinListener());
-        getListenerCore().stageListener(new MultipartBalloonPlayerLeaveListener());
 
         // Register all handlers
         getListenerCore().registerListeners();
@@ -90,13 +80,6 @@ public final class Bloons extends JavaPlugin {
             // Unregister all balloons and stop the task
             for (SingleBalloon owner : getPlayerSingleBalloons().values()) {
                 owner.cancel();
-            }
-        }
-
-        if (getPlayerMultipartBalloons() != null) {
-            // Unregister all multipart balloons
-            for (MultipartBalloon owner : getPlayerMultipartBalloons().values()) {
-                owner.destroy();
             }
         }
 

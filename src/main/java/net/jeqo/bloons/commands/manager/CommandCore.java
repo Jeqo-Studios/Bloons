@@ -2,7 +2,6 @@ package net.jeqo.bloons.commands.manager;
 
 import lombok.Getter;
 import net.jeqo.bloons.Bloons;
-import net.jeqo.bloons.balloon.multipart.MultipartBalloonType;
 import net.jeqo.bloons.balloon.single.SingleBalloonType;
 import net.jeqo.bloons.commands.*;
 import net.jeqo.bloons.commands.manager.types.CommandAccess;
@@ -112,11 +111,9 @@ public class CommandCore implements CommandExecutor {
 
             ArrayList<ItemStack> items = new ArrayList<>();
             ArrayList<SingleBalloonType> singleBalloonTypes = Bloons.getBalloonCore().getSingleBalloonTypes();
-            ArrayList<MultipartBalloonType> multipartBalloonTypes = Bloons.getBalloonCore().getMultipartBalloonTypes();
 
-            //
-            if (singleBalloonTypes == null && multipartBalloonTypes == null) {
-                Logger.logError("Single balloon types and multipart balloon types are null. Cannot create menu with items!");
+            if (singleBalloonTypes == null) {
+                Logger.logError("Single balloon types are null. Cannot create menu with items!");
                 return false;
             }
 
@@ -126,16 +123,6 @@ public class CommandCore implements CommandExecutor {
 
                 if (shouldAddSingleBalloon(player, singleBalloon)) {
                     ItemStack item = createBalloonItem(singleBalloon);
-                    items.add(item);
-                }
-            }
-
-            // For every multipart balloon registered, add it to the GUI
-            for (MultipartBalloonType multipartBalloon : multipartBalloonTypes) {
-                if (multipartBalloon == null) continue;
-
-                if (shouldAddMultipartBalloon(player, multipartBalloon)) {
-                    ItemStack item = createBalloonItem(multipartBalloon);
                     items.add(item);
                 }
             }
@@ -204,19 +191,6 @@ public class CommandCore implements CommandExecutor {
     }
 
     /**
-     *                              Checks if we should add the multipart balloon to the menu
-     * @param player                The player to check, type org.bukkit.entity.Player
-     * @param multipartBalloonType  The key of the balloon, type java.lang.String
-     * @return                      Whether we should add the balloon to the menu, type boolean
-     */
-    private boolean shouldAddMultipartBalloon(Player player, MultipartBalloonType multipartBalloonType) {
-        if (this.getMessageTranslations().getString("hide-balloons-without-permission").equalsIgnoreCase("true")) {
-            return player.hasPermission(multipartBalloonType.getPermission());
-        }
-        return true;
-    }
-
-    /**
      *                              Creates an ItemStack for a balloon
      * @param singleBalloonType     The instance of the object which contains the balloon's configuration, type net.jeqo.bloons.balloon.single.SingleBalloonType
      * @return                      The ItemStack of the balloon, type org.bukkit.inventory.ItemStack
@@ -246,38 +220,6 @@ public class CommandCore implements CommandExecutor {
     }
 
     /**
-     *                                Creates an ItemStack for a multipart balloon
-     * @param multipartBalloonType    The instance of the object which contains the balloon's configuration, type org.bukkit.configuration.ConfigurationSection
-     * @return                        The ItemStack of the balloon, type org.bukkit.inventory.ItemStack
-     */
-    private ItemStack createBalloonItem(MultipartBalloonType multipartBalloonType) {
-        Material material = Material.matchMaterial(multipartBalloonType.getHeadModel().getMaterial());
-        if (material == null) {
-            Logger.logError("Material " + multipartBalloonType.getHeadModel().getMaterial() + " is not a valid material.");
-            return null;
-        }
-
-        ItemStack item = new ItemStack(material);
-        ItemMeta meta = item.getItemMeta();
-        if (meta == null) {
-            Logger.logError("ItemMeta is null for material " + multipartBalloonType.getHeadModel().getMaterial());
-            return null;
-        }
-
-        meta.setLocalizedName(multipartBalloonType.getId());
-        setBalloonLore(meta, multipartBalloonType);
-        setBalloonDisplayName(meta, multipartBalloonType);
-        meta.setCustomModelData(multipartBalloonType.getHeadModel().getCustomModelData());
-
-        if (multipartBalloonType.getHeadModel().getColor() != null) {
-            setBalloonColor(meta, multipartBalloonType);
-        }
-
-        item.setItemMeta(meta);
-        return item;
-    }
-
-    /**
      *                              Sets the lore of the balloon
      * @param meta                  The ItemMeta of the balloon, type org.bukkit.inventory.meta.ItemMeta
      * @param singleBalloonType     The instance of the object which contains the balloon's configuration, type net.jeqo.bloons.balloon.single.SingleBalloonType
@@ -285,19 +227,6 @@ public class CommandCore implements CommandExecutor {
     private void setBalloonLore(ItemMeta meta, SingleBalloonType singleBalloonType) {
         if (singleBalloonType.getLore() != null) {
             List<String> lore = new ArrayList<>(List.of(singleBalloonType.getLore()));
-            lore.replaceAll(ColorManagement::fromHex);
-            meta.setLore(lore);
-        }
-    }
-
-    /**
-     *                              Sets the lore of the balloon
-     * @param meta                  The ItemMeta of the balloon, type org.bukkit.inventory.meta.ItemMeta
-     * @param multipartBalloonType  The instance of the object which contains the balloon's configuration, type org.bukkit.configuration.ConfigurationSection
-     */
-    private void setBalloonLore(ItemMeta meta, MultipartBalloonType multipartBalloonType) {
-        if (multipartBalloonType.getLore() != null) {
-            List<String> lore = new ArrayList<>(List.of(multipartBalloonType.getLore()));
             lore.replaceAll(ColorManagement::fromHex);
             meta.setLore(lore);
         }
@@ -317,19 +246,6 @@ public class CommandCore implements CommandExecutor {
     }
 
     /**
-     *                             Sets the display name of the balloon
-     * @param meta                 The ItemMeta of the balloon, type org.bukkit.inventory.meta.ItemMeta
-     * @param multipartBalloonType The instance of the object which contains the balloon's configuration, type org.bukkit.configuration.ConfigurationSection
-     */
-    private void setBalloonDisplayName(ItemMeta meta, MultipartBalloonType multipartBalloonType) {
-        String name = multipartBalloonType.getName();
-        MessageTranslations messageTranslations = new MessageTranslations(this.getPlugin());
-        if (name != null) {
-            meta.displayName(messageTranslations.getSerializedString(name));
-        }
-    }
-
-    /**
      *                             Sets the color of the balloon
      * @param meta                 The ItemMeta of the balloon, type org.bukkit.inventory.meta.ItemMeta
      * @param singleBalloonType    The configuration section of the balloon, type org.bukkit.configuration.ConfigurationSection
@@ -342,23 +258,6 @@ public class CommandCore implements CommandExecutor {
                 ((LeatherArmorMeta) meta).setColor(ColorManagement.hexToColor(color));
             } else {
                 Logger.logWarning("The color of the balloon " + singleBalloonType.getId() + " is set, but the material is not a leather item!");
-            }
-        }
-    }
-
-    /**
-     *                             Sets the color of the balloon
-     * @param meta                 The ItemMeta of the balloon, type org.bukkit.inventory.meta.ItemMeta
-     * @param multipartBalloonType The configuration section of the balloon, type org.bukkit.configuration.ConfigurationSection
-     */
-    private void setBalloonColor(ItemMeta meta, MultipartBalloonType multipartBalloonType) {
-        String color = multipartBalloonType.getHeadModel().getColor();
-
-        if (color != null && !color.equalsIgnoreCase("potion")) {
-            if (meta instanceof LeatherArmorMeta) {
-                ((LeatherArmorMeta) meta).setColor(ColorManagement.hexToColor(color));
-            } else {
-                Logger.logWarning("The color of the balloon " + multipartBalloonType.getId() + " is set, but the material is not a leather item!");
             }
         }
     }
