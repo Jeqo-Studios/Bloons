@@ -31,7 +31,7 @@ public class CommandForceUnequip extends Command {
 
         // If the specified player doesn't exist, send a message to the sender
         if (player == null) {
-            Component playerNotFoundMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), LanguageManagement.getMessage("player-not-found"));
+            Component playerNotFoundMessage = messageTranslations.getSerializedString(LanguageManagement.getMessage("prefix"), LanguageManagement.getMessage("player-not-found"));
             sender.sendMessage(playerNotFoundMessage);
             return false;
         }
@@ -40,7 +40,7 @@ public class CommandForceUnequip extends Command {
 
         // If the player doesn't have any balloons equipped, send a message to the sender
         if (singleBalloon == null) {
-            Component notEquippedMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), LanguageManagement.getMessage("not-equipped"));
+            Component notEquippedMessage = messageTranslations.getSerializedString(LanguageManagement.getMessage("prefix"), LanguageManagement.getMessage("not-equipped"));
             player.sendMessage(notEquippedMessage);
             return false;
         }
@@ -53,7 +53,7 @@ public class CommandForceUnequip extends Command {
 
         SingleBalloonManagement.removeBalloon(player, singleBalloon);
 
-        Component unequipSuccessfulMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("unequipped"));
+        Component unequipSuccessfulMessage = messageTranslations.getSerializedString(LanguageManagement.getMessage("prefix"), LanguageManagement.getMessage("unequipped"));
         sender.sendMessage(unequipSuccessfulMessage);
         return false;
     }

@@ -58,6 +58,7 @@ public final class Bloons extends JavaPlugin {
         new Metrics(this, pluginId);
         updateChecker();
 
+        // Copy over the language files
         LanguageManagement.copyLanguageFiles();
 
         // Generate config(s) and set defaults

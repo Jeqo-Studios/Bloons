@@ -39,7 +39,7 @@ public class CommandEquip extends Command {
 
         // If the balloon ID isn't found in both balloon types, send a message to the player
         if (Bloons.getBalloonCore().containsSingleBalloon(balloonID)) {
-            Component balloonNotFoundMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), LanguageManagement.getMessage("balloon-not-found"));
+            Component balloonNotFoundMessage = messageTranslations.getSerializedString(LanguageManagement.getMessage("prefix"), LanguageManagement.getMessage("balloon-not-found"));
             player.sendMessage(balloonNotFoundMessage);
             return false;
         }
@@ -48,7 +48,7 @@ public class CommandEquip extends Command {
 
         if (singleBalloonType != null) {
             if (!player.hasPermission(singleBalloonType.getPermission())) {
-                Component noPermissionMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), LanguageManagement.getMessage("no-permission"));
+                Component noPermissionMessage = messageTranslations.getSerializedString(LanguageManagement.getMessage("prefix"), LanguageManagement.getMessage("no-permission"));
                 player.sendMessage(noPermissionMessage);
                 return false;
             }
@@ -64,7 +64,7 @@ public class CommandEquip extends Command {
             SingleBalloonManagement.removeBalloon(player, Bloons.getPlayerSingleBalloons().get(player.getUniqueId()));
             SingleBalloon.checkBalloonRemovalOrAdd(player, balloonID);
 
-            Component equippedMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), String.format(LanguageManagement.getMessage("equipped"), singleBalloonType.getName()));
+            Component equippedMessage = messageTranslations.getSerializedString(LanguageManagement.getMessage("prefix"), String.format(LanguageManagement.getMessage("equipped"), singleBalloonType.getName()));
             player.sendMessage(equippedMessage);
 
         // Play a sound regardless of the balloon type and when it executes successfully
