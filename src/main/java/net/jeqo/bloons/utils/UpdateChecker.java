@@ -9,7 +9,9 @@ import java.util.Scanner;
 import java.util.function.Consumer;
 
 /**
- * A utility class intended to check for updates on the SpigotMC website
+ *                      A utility class intended to check for updates on the SpigotMC website
+ * @param plugin        The plugin instance, type org.bukkit.plugin.java.JavaPlugin
+ * @param resourceId    The resource ID of the plugin on SpigotMC, type int
  */
 public record UpdateChecker(JavaPlugin plugin, int resourceId) {
 

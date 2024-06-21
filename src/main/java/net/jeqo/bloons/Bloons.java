@@ -46,6 +46,11 @@ public final class Bloons extends JavaPlugin {
         // Send initial startup message
         Logger.logInitialStartup();
 
+        /*
+         * KEEP CONFIGURATION INITIALIZATION AT THE TOP TO PREVENT
+         * INITIAL LOADING OF THE PLUGIN AND ITS ISSUES
+         */
+
         // Copy over language files
         LanguageManagement.copyLanguageFiles();
 
@@ -71,6 +76,7 @@ public final class Bloons extends JavaPlugin {
         getListenerCore().registerListeners();
 
         // Startup the metrics and update checker
+        // This is the ID of the plugin on bStats, this should be kept as a constant
         int pluginId = 16872;
         new Metrics(this, pluginId);
         updateChecker();
@@ -97,8 +103,8 @@ public final class Bloons extends JavaPlugin {
             }
         }
 
+        // Unregister all balloons and stop the task if it exists
         if (getPlayerMultipartBalloons() != null) {
-            // Unregister all multipart balloons
             for (MultipartBalloon owner : getPlayerMultipartBalloons().values()) {
                 owner.destroy();
             }
@@ -122,7 +128,9 @@ public final class Bloons extends JavaPlugin {
      * Not planned to change
      */
     public void updateChecker() {
-        new UpdateChecker(this, 106243).getVersion(version -> {
+        // Resource ID for the plugin on SpigotMC
+        int resourceId = 106243;
+        new UpdateChecker(this, resourceId).getVersion(version -> {
             if (!this.getDescription().getVersion().equals(version)) {
                 Logger.logUpdateNotificationConsole();
             }

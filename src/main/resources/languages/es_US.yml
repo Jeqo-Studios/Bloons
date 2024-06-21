@@ -1,15 +1,10 @@
-#
-# --------------------------------------------------#
-#                     MESSAGES                      #
-# --------------------------------------------------#
-#
 messages:
   prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
   no-permission: '<#fc1c1c>Acceso denegado.'
   player-not-found: '<#fc1c1c>Jugador no encontrado.'
   config-reloaded: '<green>Configuración recargada.'
   command-disabled: '<#fc1c1c>¡Este comando está actualmente deshabilitado!'
-  # Balloon related messages.
+
   equipped: '%s <green>equipado!'
   unequipped: '<green>Su globo ha sido almacenado de forma segura.'
   balloon-not-found: '<#fc1c1c>Globo no encontrado.'

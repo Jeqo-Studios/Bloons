@@ -46,7 +46,7 @@ public class BalloonCore {
 
         // Clear the current balloons list to reduce memory usage
         this.getMultipartBalloonTypes().clear();
-        getSingleBalloonTypes().clear();
+        this.getSingleBalloonTypes().clear();
 
         // Set the array to be full of all multipart balloons
         this.setMultipartBalloonTypes(ConfigConfiguration.getMultipartBalloons());
@@ -60,9 +60,9 @@ public class BalloonCore {
      */
     public void copyExampleBalloons() {
         // Save all example files in the balloons folder in /resources
-        Bloons.getInstance().saveResource("balloons/color_pack_example.yml", false);
-        Bloons.getInstance().saveResource("balloons/dyeable_example.yml", false);
-        Bloons.getInstance().saveResource("balloons/multipart_example.yml", false);
+        Bloons.getInstance().saveResource(ConfigConfiguration.BALLOON_CONFIGURATION_FOLDER + "/color_pack_example.yml", false);
+        Bloons.getInstance().saveResource(ConfigConfiguration.BALLOON_CONFIGURATION_FOLDER + "/dyeable_example.yml", false);
+        Bloons.getInstance().saveResource(ConfigConfiguration.BALLOON_CONFIGURATION_FOLDER + "/multipart_example.yml", false);
     }
 
     /**

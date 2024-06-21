@@ -21,7 +21,10 @@ import java.util.ArrayList;
  * A class that contains configurations for the plugin configuration file
  */
 public class ConfigConfiguration {
-    public static final String BALLOON_CONFIGURATION_FOLDER = "balloons"; // The folder that stores the balloons to be loaded
+    // The folder that stores the balloons to be loaded
+    public static final String BALLOON_CONFIGURATION_FOLDER = "balloons";
+    // The folder that stores the languages to be loaded
+    public static final String LANGUAGES_CONFIGURATION_FOLDER = "languages";
 
     /**
      *          Gets the number of configuration files currently in the balloon configuration folder
@@ -44,6 +47,7 @@ public class ConfigConfiguration {
      *         returns an empty array list if no single balloons are found, type java.util.ArrayList<net.jeqo.bloons.balloon.single.SingleBalloonType>
      */
     public static ArrayList<SingleBalloonType> getSingleBalloons() {
+        // Start an array of single balloon types that's empty
         ArrayList<SingleBalloonType> singleBalloons = new ArrayList<>();
         File folder = new File(Bloons.getInstance().getDataFolder() + File.separator + BALLOON_CONFIGURATION_FOLDER);
 
@@ -60,7 +64,7 @@ public class ConfigConfiguration {
             return singleBalloons;
         }
 
-        // Process each file
+        // Loop through each file in the balloons directory
         for (File file : files) {
             if (file.isFile()) {
                 String fileName = file.getName();
@@ -86,9 +90,7 @@ public class ConfigConfiguration {
                         continue;
                     }
 
-                    if (!type.equals(BalloonConfiguration.SINGLE_BALLOON_TYPE_IDENTIFIER)) {
-                        continue;
-                    }
+                    if (!type.equals(BalloonConfiguration.SINGLE_BALLOON_TYPE_IDENTIFIER)) continue;
 
                     try {
                         // Add the single balloon type to the array list
@@ -118,6 +120,7 @@ public class ConfigConfiguration {
      *          returns an empty array list if no multipart balloons are found, type java.util.ArrayList<net.jeqo.bloons.balloon.multipart.MultipartBalloonType>
      */
     public static ArrayList<MultipartBalloonType> getMultipartBalloons() {
+        // Start an array of single balloon types that's empty
         ArrayList<MultipartBalloonType> multipartBalloons = new ArrayList<>();
         File folder = new File(Bloons.getInstance().getDataFolder() + File.separator + BALLOON_CONFIGURATION_FOLDER);
 
@@ -134,7 +137,7 @@ public class ConfigConfiguration {
             return multipartBalloons;
         }
 
-        // Process each file
+        // Loop through each file in the balloons directory
         for (File file : files) {
             if (file.isFile()) {
                 String fileName = file.getName();
@@ -160,9 +163,7 @@ public class ConfigConfiguration {
                         continue;
                     }
 
-                    if (!type.equals(BalloonConfiguration.MULTIPART_BALLOON_TYPE_IDENTIFIER)) {
-                        continue;
-                    }
+                    if (!type.equals(BalloonConfiguration.MULTIPART_BALLOON_TYPE_IDENTIFIER)) continue;
 
                     try {
                         multipartBalloons.add(new MultipartBalloonType(

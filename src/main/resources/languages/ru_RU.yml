@@ -1,0 +1,28 @@
+messages:
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
+  no-permission: '<#fc1c1c>Доступ запрещен.'
+  player-not-found: '<#fc1c1c>Игрок не найден.'
+  config-reloaded: '<green>Конфигурация перезагружена.'
+  command-disabled: '<#fc1c1c>Эта команда в данный момент отключена!'
+
+  equipped: '%s <green>экипирован!'
+  unequipped: '<green>Ваш шар успешно убран.'
+  balloon-not-found: '<#fc1c1c>Шар не найден.'
+  not-equipped: '<#fc1c1c>У вас нет экипированного шара.'
+
+  material-not-dyeable: 'Материал %s не является окрашиваемым.'
+  invalid-rgb-values: 'Значения RGB должны быть в диапазоне от 0 до 255.'
+  balloon-not-set: 'Шар %s не задан в конфигурации!'
+  material-not-set: 'Материал шара %s не задан в конфигурации!'
+  material-not-valid: 'Материал шара %s не является допустимым материалом! Материал: %s'
+  invalid-item-meta: 'ItemMeta недействителен для материала: %s'
+
+  no-balloons-registered: 'Не найдено ни одного шара! Невозможно создать меню без шаров.'
+
+  configuration-folder-not-found: 'Папка конфигурации не найдена: %s'
+  no-configuration-files-found: 'В папке не найдено конфигурационных файлов: %s'
+  configuration-section-not-found: 'Не найдена конфигурационная секция для файла: %s'
+  balloon-type-not-found: 'Ошибка обработки типа шара для секции: %s в файле: %s. Тип шара не существует или равен null.'
+  balloon-process-error: 'Ошибка обработки шара для секции: %s в файле: %s. Ошибка: %s'
+
+  menu-slot-out-of-bounds: 'Слот(ы) кнопки страницы меню %s вне допустимых границ!'
