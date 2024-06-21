@@ -18,7 +18,10 @@ import java.util.ArrayList;
  * A class that contains configurations for the plugin configuration file
  */
 public class ConfigConfiguration {
-    public static final String BALLOON_CONFIGURATION_FOLDER = "balloons"; // The folder that stores the balloons to be loaded
+    // The folder that stores the balloons to be loaded
+    public static final String BALLOON_CONFIGURATION_FOLDER = "balloons";
+    // The folder that stores the languages to be loaded
+    public static final String LANGUAGE_CONFIGURATION_FOLDER = "languages";
 
     /**
      *          Gets the number of configuration files currently in the balloon configuration folder
