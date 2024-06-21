@@ -11,10 +11,9 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     permissions:
-      permissions:
-        contents: read
-        pages: write
-        id-token: write
+      contents: read
+      pages: write
+      id-token: write
     steps:
       - name: Deploy JavaDoc 🚀
         uses: MathieuSoysal/Javadoc-publisher.yml@v2.5.0
