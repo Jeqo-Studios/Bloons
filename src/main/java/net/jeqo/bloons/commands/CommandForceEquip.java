@@ -51,20 +51,20 @@ public class CommandForceEquip extends Command {
             return false;
         }
 
-            SingleBalloonType singleBalloonType = Bloons.getBalloonCore().getSingleBalloonByID(balloonID);
+        SingleBalloonType singleBalloonType = Bloons.getBalloonCore().getSingleBalloonByID(balloonID);
 
-            // Call the equip event and check if it's cancelled, if it is, don't spawn the balloon or do anything
-            SingleBalloonEquipEvent singleBalloonEquipEvent = new SingleBalloonEquipEvent(player, balloonID);
-            singleBalloonEquipEvent.callEvent();
+        // Call the equip event and check if it's cancelled, if it is, don't spawn the balloon or do anything
+        SingleBalloonEquipEvent singleBalloonEquipEvent = new SingleBalloonEquipEvent(player, balloonID);
+        singleBalloonEquipEvent.callEvent();
 
-            if (singleBalloonEquipEvent.isCancelled()) return false;
+        if (singleBalloonEquipEvent.isCancelled()) return false;
 
-            // Check if a balloon needs to be added or removed
-            SingleBalloonManagement.removeBalloon(player, Bloons.getPlayerSingleBalloons().get(player.getUniqueId()));
-            SingleBalloon.checkBalloonRemovalOrAdd(player, balloonID);
+        // Check if a balloon needs to be added or removed
+        SingleBalloonManagement.removeBalloon(player, Bloons.getPlayerSingleBalloons().get(player.getUniqueId()));
+        SingleBalloon.checkBalloonRemovalOrAdd(player, balloonID);
 
-            Component equippedMessage = messageTranslations.getSerializedString(LanguageManagement.getMessage("prefix"), String.format(LanguageManagement.getMessage("equipped"), singleBalloonType.getName()));
-            player.sendMessage(equippedMessage);
+        Component equippedMessage = messageTranslations.getSerializedString(LanguageManagement.getMessage("prefix"), String.format(LanguageManagement.getMessage("equipped"), singleBalloonType.getName()));
+        player.sendMessage(equippedMessage);
 
         return false;
     }

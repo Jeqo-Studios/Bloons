@@ -39,9 +39,8 @@ public class BalloonCore {
      * Initializes the balloons from the config and clears the current balloons map
      */
     public void initialize() {
-
         // Clear the current balloons list to reduce memory usage
-        getSingleBalloonTypes().clear();
+        this.getSingleBalloonTypes().clear();
 
         // Set the array to be full of all single balloons
         this.setSingleBalloonTypes(ConfigConfiguration.getSingleBalloons());
