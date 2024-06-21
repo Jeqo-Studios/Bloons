@@ -1,0 +1,28 @@
+messages:
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
+  no-permission: '<#fc1c1c>アクセスが拒否されました。'
+  player-not-found: '<#fc1c1c>プレイヤーが見つかりません。'
+  config-reloaded: '<green>設定がリロードされました。'
+  command-disabled: '<#fc1c1c>このコマンドは現在無効です！'
+
+  equipped: '%s <green>装備されました！'
+  unequipped: '<green>バルーンが安全に保管されました。'
+  balloon-not-found: '<#fc1c1c>バルーンが見つかりません。'
+  not-equipped: '<#fc1c1c>現在、装備しているバルーンはありません。'
+
+  material-not-dyeable: '材料 %s は染色可能な材料ではありません。'
+  invalid-rgb-values: 'RGB値は0から255の間でなければなりません。'
+  balloon-not-set: '設定にバルーン %s が設定されていません！'
+  material-not-set: 'バルーン %s の材料が設定にありません！'
+  material-not-valid: 'バルーン %s の材料は有効な材料ではありません！ 材料: %s'
+  invalid-item-meta: '材料 %s に対してItemMetaが無効です。'
+
+  no-balloons-registered: 'バルーンが見つかりません！ バルーンなしでメニューを作成することはできません。'
+
+  configuration-folder-not-found: '設定フォルダが見つかりません: %s'
+  no-configuration-files-found: 'フォルダに設定ファイルが見つかりません: %s'
+  configuration-section-not-found: 'ファイル %s の設定セクションが見つかりません。'
+  balloon-type-not-found: 'ファイル %s のセクション %s のバルーンタイプを処理中にエラーが発生しました。バルーンタイプが存在しないか、nullです。'
+  balloon-process-error: 'ファイル %s のセクション %s のバルーンを処理中にエラーが発生しました。エラー: %s'
+
+  menu-slot-out-of-bounds: '%s メニューページのボタンスロットが範囲外です！'
