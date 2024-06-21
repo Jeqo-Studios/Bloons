@@ -82,7 +82,6 @@ public class ConfigConfiguration {
                     String type = config.getString(key + ".type", BalloonConfiguration.SINGLE_BALLOON_TYPE_IDENTIFIER);
 
                     if (type.isBlank() || !type.equals(BalloonConfiguration.SINGLE_BALLOON_TYPE_IDENTIFIER)) {
-                        Logger.logError("Error processing balloon type for section: " + key + " in file: " + fileName + ". Balloon type does not exist or is null.");
                         Logger.logError(String.format(LanguageManagement.getMessage("balloon-type-not-found"), key, fileName));
                         continue;
                     }
@@ -153,7 +152,6 @@ public class ConfigConfiguration {
                     String type = config.getString(key + ".type", BalloonConfiguration.MULTIPART_BALLOON_TYPE_IDENTIFIER);
 
                     if (type.isBlank() || !type.equals(BalloonConfiguration.MULTIPART_BALLOON_TYPE_IDENTIFIER)) {
-                        Logger.logError("Error processing balloon type for section: " + key + " in file: " + fileName + ". Balloon type does not exist or is null.");
                         Logger.logError(String.format(LanguageManagement.getMessage("balloon-type-not-found"), key, fileName));
                         continue;
                     }
