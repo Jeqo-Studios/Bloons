@@ -84,9 +84,15 @@
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
+        <repository>
+            <id>nexus</id>
+            <name>Lumine Public</name>
+            <url>https://mvn.lumine.io/repository/maven-public/</url>
+        </repository>
     </repositories>
 
     <pluginRepositories>
+        <!--   Used for the run-server task for PaperMC     -->
         <pluginRepository>
             <id>kiputyttö-releases</id>
             <name>Ilari's Project Repository</name>
@@ -95,6 +101,7 @@
     </pluginRepositories>
 
     <dependencies>
+        <!--   PaperMC related dependencies     -->
         <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
@@ -106,6 +113,8 @@
             <artifactId>adventure-text-minimessage</artifactId>
             <version>4.17.0</version>
         </dependency>
+
+        <!--   Java related dependencies     -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -122,6 +131,14 @@
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-model</artifactId>
             <version>3.9.7</version>
+        </dependency>
+
+        <!--   Plugin related dependencies     -->
+        <dependency>
+            <groupId>com.ticxo.modelengine</groupId>
+            <artifactId>ModelEngine</artifactId>
+            <version>R4.0.4</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>
