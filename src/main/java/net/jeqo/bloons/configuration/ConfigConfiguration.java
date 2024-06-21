@@ -6,6 +6,7 @@ import net.jeqo.bloons.balloon.multipart.MultipartBalloonModel;
 import net.jeqo.bloons.balloon.multipart.MultipartBalloonType;
 import net.jeqo.bloons.balloon.single.SingleBalloonType;
 import net.jeqo.bloons.logger.Logger;
+import net.jeqo.bloons.utils.LanguageManagement;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -48,14 +49,14 @@ public class ConfigConfiguration {
 
         // Check if the folder exists
         if (!folder.exists() || !folder.isDirectory()) {
-            Logger.logWarning("Configuration folder not found: " + folder.getPath());
+            Logger.logWarning(String.format(LanguageManagement.getMessage("configuration-folder-not-found"), folder.getPath()));
             return singleBalloons;
         }
 
         // List files in the folder
         File[] files = folder.listFiles();
         if (files == null) {
-            Logger.logWarning( "No files found in configuration folder: " + folder.getPath());
+            Logger.logWarning(String.format(LanguageManagement.getMessage("no-configuration-files-found"), folder.getPath()));
             return singleBalloons;
         }
 
@@ -70,7 +71,7 @@ public class ConfigConfiguration {
                 // Get the configuration section
                 ConfigurationSection section = config.getConfigurationSection("");
                 if (section == null) {
-                    Logger.logWarning("Configuration section not found for file: " + fileName);
+                    Logger.logWarning(String.format(LanguageManagement.getMessage("configuration-section-not-found"), folder.getPath()));
                     continue;
                 }
 
@@ -79,22 +80,27 @@ public class ConfigConfiguration {
 
                     // Determine the type of balloon
                     String type = config.getString(key + ".type", BalloonConfiguration.SINGLE_BALLOON_TYPE_IDENTIFIER);
-                    if (type.equals(BalloonConfiguration.SINGLE_BALLOON_TYPE_IDENTIFIER)) {
-                        try {
-                            // Add the single balloon type to the array list
-                            singleBalloons.add(new SingleBalloonType(
-                                    key,
-                                    config.getString(key + ".id"),
-                                    config.getString(key + ".permission"),
-                                    config.getString(key + ".material"),
-                                    config.getString(key + ".color"),
-                                    config.getInt(key + ".custom-model-data"),
-                                    config.getString(key + ".name"),
-                                    config.getStringList(key + ".lore").toArray(new String[0])
-                            ));
-                        } catch (Exception e) {
-                            Logger.logWarning("Error processing multipart balloon type for section: " + key + " in file: " + fileName + " - " + e.getMessage());
-                        }
+
+                    if (type.isBlank() || !type.equals(BalloonConfiguration.SINGLE_BALLOON_TYPE_IDENTIFIER)) {
+                        Logger.logError("Error processing balloon type for section: " + key + " in file: " + fileName + ". Balloon type does not exist or is null.");
+                        Logger.logError(String.format(LanguageManagement.getMessage("balloon-type-not-found"), key, fileName));
+                        continue;
+                    }
+
+                    try {
+                        // Add the single balloon type to the array list
+                        singleBalloons.add(new SingleBalloonType(
+                                key,
+                                config.getString(key + ".id"),
+                                config.getString(key + ".permission"),
+                                config.getString(key + ".material"),
+                                config.getString(key + ".color"),
+                                config.getInt(key + ".custom-model-data"),
+                                config.getString(key + ".name"),
+                                config.getStringList(key + ".lore").toArray(new String[0])
+                        ));
+                    } catch (Exception e) {
+                        Logger.logWarning("Error processing multipart balloon type for section: " + key + " in file: " + fileName + " - " + e.getMessage());
                     }
                 }
             }
@@ -114,14 +120,14 @@ public class ConfigConfiguration {
 
         // Check if the folder exists
         if (!folder.exists() || !folder.isDirectory()) {
-            Logger.logWarning("Configuration folder not found: " + folder.getPath());
+            Logger.logWarning(String.format(LanguageManagement.getMessage("configuration-folder-not-found"), folder.getPath()));
             return multipartBalloons;
         }
 
         // List files in the folder
         File[] files = folder.listFiles();
         if (files == null) {
-            Logger.logWarning( "No files found in configuration folder: " + folder.getPath());
+            Logger.logWarning(String.format(LanguageManagement.getMessage("no-configuration-files-found"), folder.getPath()));
             return multipartBalloons;
         }
 
@@ -136,7 +142,7 @@ public class ConfigConfiguration {
                 // Get the configuration section
                 ConfigurationSection section = config.getConfigurationSection("");
                 if (section == null) {
-                    Logger.logWarning("Configuration section not found for file: " + fileName);
+                    Logger.logWarning(String.format(LanguageManagement.getMessage("configuration-section-not-found"), folder.getPath()));
                     continue;
                 }
 
@@ -144,48 +150,53 @@ public class ConfigConfiguration {
                 for (String key : section.getKeys(false)) {
 
                     // Determine the type of balloon
-                    String type = config.getString(key + ".type", BalloonConfiguration.SINGLE_BALLOON_TYPE_IDENTIFIER);
-                    if (type.equals(BalloonConfiguration.MULTIPART_BALLOON_TYPE_IDENTIFIER)) {
-                        try {
-                            multipartBalloons.add(new MultipartBalloonType(
-                                    config.getString(key + ".id"),
-                                    config.getString(key + ".permission"),
-                                    config.getString(key + ".name"),
-                                    config.getStringList(key + ".lore").toArray(new String[0]),
-                                    config.getInt(key + ".node-count"),
-                                    config.getInt(key + ".distance-between-nodes"),
-                                    config.getDouble(key + ".leash-height"),
-                                    config.getDouble(key + ".head-node-offset"),
-                                    config.getDouble(key + ".body-node-offset"),
-                                    config.getDouble(key + ".tail-node-offset"),
-                                    config.getDouble(key + ".max-joint-angle"),
-                                    config.getDouble(key + ".y-axis-interpolation"),
-                                    config.getDouble(key + ".turning-spline-interpolation"),
-                                    config.getDouble(key + ".passive-sine-wave-speed"),
-                                    config.getDouble(key + ".passive-sine-wave-amplitude"),
-                                    config.getDouble(key + ".passive-nose-sine-wave-amplitude"),
-                                    new MultipartBalloonModel(
-                                            BalloonModelType.HEAD,
-                                            config.getString(key + ".head.material"),
-                                            config.getString(key + ".head.color"),
-                                            config.getInt(key + ".head.custom-model-data")
-                                    ),
-                                    new MultipartBalloonModel(
-                                            BalloonModelType.BODY,
-                                            config.getString(key + ".body.material"),
-                                            config.getString(key + ".body.color"),
-                                            config.getInt(key + ".body.custom-model-data")
-                                    ),
-                                    new MultipartBalloonModel(
-                                            BalloonModelType.TAIL,
-                                            config.getString(key + ".tail.material"),
-                                            config.getString(key + ".tail.color"),
-                                            config.getInt(key + ".tail.custom-model-data")
-                                    )
-                            ));
-                        } catch (Exception e) {
-                            Logger.logWarning("Error processing multipart balloon type for section: " + key + " in file: " + fileName + " - " + e.getMessage());
-                        }
+                    String type = config.getString(key + ".type", BalloonConfiguration.MULTIPART_BALLOON_TYPE_IDENTIFIER);
+
+                    if (type.isBlank() || !type.equals(BalloonConfiguration.MULTIPART_BALLOON_TYPE_IDENTIFIER)) {
+                        Logger.logError("Error processing balloon type for section: " + key + " in file: " + fileName + ". Balloon type does not exist or is null.");
+                        Logger.logError(String.format(LanguageManagement.getMessage("balloon-type-not-found"), key, fileName));
+                        continue;
+                    }
+
+                    try {
+                        multipartBalloons.add(new MultipartBalloonType(
+                                config.getString(key + ".id"),
+                                config.getString(key + ".permission"),
+                                config.getString(key + ".name"),
+                                config.getStringList(key + ".lore").toArray(new String[0]),
+                                config.getInt(key + ".node-count"),
+                                config.getInt(key + ".distance-between-nodes"),
+                                config.getDouble(key + ".leash-height"),
+                                config.getDouble(key + ".head-node-offset"),
+                                config.getDouble(key + ".body-node-offset"),
+                                config.getDouble(key + ".tail-node-offset"),
+                                config.getDouble(key + ".max-joint-angle"),
+                                config.getDouble(key + ".y-axis-interpolation"),
+                                config.getDouble(key + ".turning-spline-interpolation"),
+                                config.getDouble(key + ".passive-sine-wave-speed"),
+                                config.getDouble(key + ".passive-sine-wave-amplitude"),
+                                config.getDouble(key + ".passive-nose-sine-wave-amplitude"),
+                                new MultipartBalloonModel(
+                                        BalloonModelType.HEAD,
+                                        config.getString(key + ".head.material"),
+                                        config.getString(key + ".head.color"),
+                                        config.getInt(key + ".head.custom-model-data")
+                                ),
+                                new MultipartBalloonModel(
+                                        BalloonModelType.BODY,
+                                        config.getString(key + ".body.material"),
+                                        config.getString(key + ".body.color"),
+                                        config.getInt(key + ".body.custom-model-data")
+                                ),
+                                new MultipartBalloonModel(
+                                        BalloonModelType.TAIL,
+                                        config.getString(key + ".tail.material"),
+                                        config.getString(key + ".tail.color"),
+                                        config.getInt(key + ".tail.custom-model-data")
+                                )
+                        ));
+                    } catch (Exception e) {
+                        Logger.logWarning(String.format(LanguageManagement.getMessage("balloon-process-error"), key, fileName, e.getMessage()));
                     }
                 }
             }

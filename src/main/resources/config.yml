@@ -16,6 +16,8 @@
 #
 # Send a message to operators when they join if there is a Bloons update.
 check-for-updates: true
+# The language file to load. This will be used for all messages in the plugin.
+language: en_US
 # Do you want to close the menu when a player equips a balloon?
 close-on-equip: true
 # Do you want to close the menu when a player unequips a balloon?
@@ -49,18 +51,3 @@ buttons:
     name: '<gray>ɴᴇxᴛ ᴘᴀɢᴇ →'
     slots:
       - 50
-#
-# --------------------------------------------------#
-#                     MESSAGES                      #
-# --------------------------------------------------#
-#
-messages:
-  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
-  no-permission: '<#fc1c1c>Access denied.'
-  player-not-found: '<#fc1c1c>Player not found.'
-  config-reloaded: '<green>Config reloaded.'
-  # Balloon related messages.
-  equipped: '%s <green>equipped!'
-  unequipped: '<green>Your balloon has been stored safely.'
-  balloon-not-found: '<#fc1c1c>Balloon not found.'
-  not-equipped: '<#fc1c1c>You do not currently have a balloon equipped.'

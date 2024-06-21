@@ -4,6 +4,7 @@ import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.commands.manager.Command;
 import net.jeqo.bloons.commands.manager.types.CommandPermission;
 import net.jeqo.bloons.events.general.BloonsConfigReloadEvent;
+import net.jeqo.bloons.utils.LanguageManagement;
 import net.jeqo.bloons.utils.MessageTranslations;
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandSender;
@@ -37,7 +38,7 @@ public class CommandReload extends Command {
 
         Bloons.getBalloonCore().initialize(); // Refresh balloons and their configurations from their respective files
 
-        Component configReloadedMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("config-reloaded"));
+        Component configReloadedMessage = messageTranslations.getSerializedString(LanguageManagement.getMessage("prefix"), LanguageManagement.getMessage("config-reloaded"));
         sender.sendMessage(configReloadedMessage);
 
         return false;

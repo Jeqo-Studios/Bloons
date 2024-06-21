@@ -1,0 +1,37 @@
+#
+# --------------------------------------------------#
+#                     MESSAGES                      #
+# --------------------------------------------------#
+#
+messages:
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
+  no-permission: '<#fc1c1c>Access denied.'
+  player-not-found: '<#fc1c1c>Player not found.'
+  config-reloaded: '<green>Config reloaded.'
+  command-disabled: '<#fc1c1c>This command is currently disabled!'
+  # Balloon related messages.
+  equipped: '%s <green>equipped!'
+  unequipped: '<green>Your balloon has been stored safely.'
+  balloon-not-found: '<#fc1c1c>Balloon not found.'
+  not-equipped: '<#fc1c1c>You do not currently have a balloon equipped.'
+
+  material-not-dyeable: 'Material %s is not a dyeable material.'
+  invalid-rgb-values: 'RGB values must be between 0 and 255 to be valid.'
+  balloon-not-set: 'The balloon %s is not set in the configuration!'
+  material-not-set: 'The material of the balloon %s is not set in the configuration!'
+  material-not-valid: 'The material of the balloon %s is not a valid material! Material: %s'
+  material-is-not-valid: 'Material %s is not a valid material!'
+  invalid-item-meta: 'ItemMeta is not valid for material: %s'
+
+  no-balloons-registered: 'No balloons are found! Cannot create a menu with no balloons.'
+
+  configuration-folder-not-found: 'Configuration folder not found: %s'
+  no-configuration-files-found: 'No configuration files found in the folder: %s'
+  configuration-section-not-found: 'Configuration section not found for file: %s'
+  balloon-type-not-found: 'Error processing balloon type for section: %s in file: %s. Balloon type does not exist or is null.'
+  balloon-process-error: 'Error processing balloon for section: %s in file: %s. Error: %s'
+
+  menu-slot-out-of-bounds: '%s menu page button slot(s) out of bounds!'
+
+  invalid-hex-code: 'Invalid hex code: %s'
+
