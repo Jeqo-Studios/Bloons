@@ -16,6 +16,8 @@
 #
 # Send a message to operators when they join if there is a Bloons update.
 check-for-updates: true
+# The language file to load. This will be used for all messages in the plugin.
+language: en_US
 # Do you want to close the menu when a player equips a balloon?
 close-on-equip: true
 # Do you want to close the menu when a player unequips a balloon?
