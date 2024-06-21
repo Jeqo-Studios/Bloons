@@ -16,14 +16,6 @@ public class LanguageManagement {
      */
     public static void copyLanguageFiles() {
         Bloons.getInstance().saveResource(ConfigConfiguration.LANGUAGES_CONFIGURATION_FOLDER + "/en_US.yml", false);
-        Bloons.getInstance().saveResource(ConfigConfiguration.LANGUAGES_CONFIGURATION_FOLDER + "/es_US.yml", false);
-        Bloons.getInstance().saveResource(ConfigConfiguration.LANGUAGES_CONFIGURATION_FOLDER + "/fr_FR.yml", false);
-        Bloons.getInstance().saveResource(ConfigConfiguration.LANGUAGES_CONFIGURATION_FOLDER + "/ja_JP.yml", false);
-        Bloons.getInstance().saveResource(ConfigConfiguration.LANGUAGES_CONFIGURATION_FOLDER + "/ko_KR.yml", false);
-        Bloons.getInstance().saveResource(ConfigConfiguration.LANGUAGES_CONFIGURATION_FOLDER + "/pt_PT.yml", false);
-        Bloons.getInstance().saveResource(ConfigConfiguration.LANGUAGES_CONFIGURATION_FOLDER + "/ru_RU.yml", false);
-        Bloons.getInstance().saveResource(ConfigConfiguration.LANGUAGES_CONFIGURATION_FOLDER + "/zh_CN.yml", false);
-        Bloons.getInstance().saveResource(ConfigConfiguration.LANGUAGES_CONFIGURATION_FOLDER + "/de_DE.yml", false);
     }
 
     /**
@@ -53,7 +45,7 @@ public class LanguageManagement {
                 String fileName = file.getName();
 
                 // If the file doesn't start with the language specified in the config, skip it and continue to next in the loop
-                if (!fileName.startsWith(Objects.requireNonNull(Bloons.getInstance().getConfig().getString("language")))) continue;
+                if (!fileName.startsWith("en_US")) continue;
 
                 // Load the configuration file
                 FileConfiguration config = YamlConfiguration.loadConfiguration(file);
