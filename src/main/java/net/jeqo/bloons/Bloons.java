@@ -7,6 +7,7 @@ import net.jeqo.bloons.balloon.single.SingleBalloon;
 import net.jeqo.bloons.commands.manager.CommandCore;
 import net.jeqo.bloons.listeners.*;
 import net.jeqo.bloons.listeners.single.SingleBalloonPlayerListener;
+import net.jeqo.bloons.utils.LanguageManagement;
 import net.jeqo.bloons.utils.UpdateChecker;
 import net.jeqo.bloons.logger.Logger;
 import net.jeqo.bloons.utils.Metrics;
@@ -57,6 +58,8 @@ public final class Bloons extends JavaPlugin {
         new Metrics(this, pluginId);
         updateChecker();
 
+        LanguageManagement.copyLanguageFiles();
+
         // Generate config(s) and set defaults
         getConfig().options().copyDefaults();
         saveDefaultConfig();
@@ -101,10 +104,12 @@ public final class Bloons extends JavaPlugin {
      * Not planned to change
      */
     public void updateChecker() {
-        new UpdateChecker(this, 106243).getVersion(version -> {
-            if (!this.getDescription().getVersion().equals(version)) {
-                Logger.logUpdateNotificationConsole();
-            }
-        });
+        if (getConfig().getBoolean("check-for-updates")) {
+            new UpdateChecker(this, 106243).getVersion(version -> {
+                if (!this.getDescription().getVersion().equals(version)) {
+                    Logger.logUpdateNotificationConsole();
+                }
+            });
+        }
     }
 }

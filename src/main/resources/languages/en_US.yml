@@ -1,0 +1,15 @@
+#
+# --------------------------------------------------#
+#                     MESSAGES                      #
+# --------------------------------------------------#
+#
+messages:
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
+  no-permission: '<#fc1c1c>Access denied.'
+  player-not-found: '<#fc1c1c>Player not found.'
+  config-reloaded: '<green>Config reloaded.'
+  # Balloon related messages.
+  equipped: '%s <green>equipped!'
+  unequipped: '<green>Your balloon has been stored safely.'
+  balloon-not-found: '<#fc1c1c>Balloon not found.'
+  not-equipped: '<#fc1c1c>You do not currently have a balloon equipped.'
