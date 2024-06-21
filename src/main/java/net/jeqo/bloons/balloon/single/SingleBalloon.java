@@ -92,6 +92,12 @@ public class SingleBalloon extends BukkitRunnable {
 
         // Teleport the balloon to the move location and set the player location yaw
         this.teleport(this.getMoveLocation());
+
+        // If the balloon armor stand is more than 5 blocks away, teleport to player location
+        if (this.getBalloonArmorStand().getLocation().distance(playerLocation) > 5.0D) {
+            this.teleport(playerLocation);
+        }
+
         this.setPlayerLocation(this.getPlayer().getLocation());
         this.getPlayerLocation().setYaw(playerLocation.getYaw());
         this.setTicks(this.getTicks() + 1);
