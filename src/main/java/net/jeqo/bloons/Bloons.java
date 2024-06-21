@@ -80,8 +80,8 @@ public final class Bloons extends JavaPlugin {
         // Log an initial shutdown message
         Logger.logInitialShutdown();
 
+        // Unregister all balloons and stop the task if it exists
         if (getPlayerSingleBalloons() != null) {
-            // Unregister all balloons and stop the task
             for (SingleBalloon owner : getPlayerSingleBalloons().values()) {
                 owner.cancel();
             }
@@ -105,8 +105,9 @@ public final class Bloons extends JavaPlugin {
      * Not planned to change
      */
     public void updateChecker() {
+        int resourceId = 106243;
         if (getConfig().getBoolean("check-for-updates")) {
-            new UpdateChecker(this, 106243).getVersion(version -> {
+            new UpdateChecker(this, resourceId).getVersion(version -> {
                 if (!this.getDescription().getVersion().equals(version)) {
                     Logger.logUpdateNotificationConsole();
                 }
