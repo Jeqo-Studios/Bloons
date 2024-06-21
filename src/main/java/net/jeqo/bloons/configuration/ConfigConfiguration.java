@@ -81,8 +81,12 @@ public class ConfigConfiguration {
                     // Determine the type of balloon
                     String type = config.getString(key + ".type", BalloonConfiguration.SINGLE_BALLOON_TYPE_IDENTIFIER);
 
-                    if (type.isBlank() || !type.equals(BalloonConfiguration.SINGLE_BALLOON_TYPE_IDENTIFIER)) {
+                    if (type.isBlank()) {
                         Logger.logError(String.format(LanguageManagement.getMessage("balloon-type-not-found"), key, fileName));
+                        continue;
+                    }
+
+                    if (!type.equals(BalloonConfiguration.SINGLE_BALLOON_TYPE_IDENTIFIER)) {
                         continue;
                     }
 
@@ -151,8 +155,12 @@ public class ConfigConfiguration {
                     // Determine the type of balloon
                     String type = config.getString(key + ".type", BalloonConfiguration.MULTIPART_BALLOON_TYPE_IDENTIFIER);
 
-                    if (type.isBlank() || !type.equals(BalloonConfiguration.MULTIPART_BALLOON_TYPE_IDENTIFIER)) {
+                    if (type.isBlank()) {
                         Logger.logError(String.format(LanguageManagement.getMessage("balloon-type-not-found"), key, fileName));
+                        continue;
+                    }
+
+                    if (!type.equals(BalloonConfiguration.MULTIPART_BALLOON_TYPE_IDENTIFIER)) {
                         continue;
                     }
 
