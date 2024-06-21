@@ -39,6 +39,13 @@ public final class Bloons extends JavaPlugin {
         // Send initial startup message
         Logger.logInitialStartup();
 
+        // Copy over the language files
+        LanguageManagement.copyLanguageFiles();
+
+        // Generate config(s) and set defaults
+        getConfig().options().copyDefaults();
+        saveDefaultConfig();
+
         // Register core managers within the plugin
         setCommandCore(new CommandCore(getInstance()));
         setListenerCore(new ListenerCore(getInstance()));
@@ -57,13 +64,6 @@ public final class Bloons extends JavaPlugin {
         int pluginId = 16872;
         new Metrics(this, pluginId);
         updateChecker();
-
-        // Copy over the language files
-        LanguageManagement.copyLanguageFiles();
-
-        // Generate config(s) and set defaults
-        getConfig().options().copyDefaults();
-        saveDefaultConfig();
 
         // Copy over example balloons folder
         getBalloonCore().copyExampleBalloons();
