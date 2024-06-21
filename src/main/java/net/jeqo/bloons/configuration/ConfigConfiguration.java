@@ -153,7 +153,7 @@ public class ConfigConfiguration {
                 for (String key : section.getKeys(false)) {
 
                     // Determine the type of balloon
-                    String type = config.getString(key + ".type", BalloonConfiguration.MULTIPART_BALLOON_TYPE_IDENTIFIER);
+                    String type = config.getString(key + ".type", BalloonConfiguration.SINGLE_BALLOON_TYPE_IDENTIFIER);
 
                     if (type.isBlank()) {
                         Logger.logError(String.format(LanguageManagement.getMessage("balloon-type-not-found"), key, fileName));
