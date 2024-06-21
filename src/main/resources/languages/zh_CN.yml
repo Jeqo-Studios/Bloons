@@ -26,3 +26,5 @@ messages:
   balloon-process-error: '处理文件 %s 中部分 %s 的气球时出错。错误: %s'
 
   menu-slot-out-of-bounds: '%s 菜单页面按钮槽超出范围！'
+
+  invalid-hex-code: '無效的十六進位代碼：%s'

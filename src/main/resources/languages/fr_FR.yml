@@ -26,3 +26,5 @@ messages:
   balloon-process-error: 'Erreur de traitement du ballon pour la section: %s dans le fichier: %s. Erreur: %s'
 
   menu-slot-out-of-bounds: 'Le(s) bouton(s) de la page de menu %s sont hors limites!'
+
+  invalid-hex-code: 'Code hexadécimal invalide: %s'

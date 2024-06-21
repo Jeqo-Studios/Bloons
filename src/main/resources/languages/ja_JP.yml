@@ -26,3 +26,5 @@ messages:
   balloon-process-error: 'ファイル %s のセクション %s のバルーンを処理中にエラーが発生しました。エラー: %s'
 
   menu-slot-out-of-bounds: '%s メニューページのボタンスロットが範囲外です！'
+
+  invalid-hex-code: '無効な 16 進コード: %s'

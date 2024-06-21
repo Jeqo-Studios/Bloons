@@ -26,3 +26,5 @@ messages:
   balloon-process-error: '파일 %s 의 섹션 %s 에 대한 풍선을 처리하는 동안 오류가 발생했습니다. 오류: %s'
 
   menu-slot-out-of-bounds: '%s 메뉴 페이지 버튼 슬롯이 범위를 벗어났습니다!'
+
+  invalid-hex-code: '잘못된 16진수 코드: %s'

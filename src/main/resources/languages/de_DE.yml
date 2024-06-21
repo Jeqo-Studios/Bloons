@@ -26,3 +26,5 @@ messages:
   balloon-process-error: 'Fehler bei der Verarbeitung des Ballons für Abschnitt %s in Datei %s. Fehler: %s'
 
   menu-slot-out-of-bounds: 'Menüseitenschaltflächenslot(s) %s außerhalb der Grenzen!'
+
+  invalid-hex-code: 'Ungültiger Hex-Code: %s'

@@ -26,3 +26,5 @@ messages:
   balloon-process-error: 'Erro ao processar o balão para a seção: %s no arquivo: %s. Erro: %s'
 
   menu-slot-out-of-bounds: 'Slot(s) do botão da página de menu %s fora dos limites!'
+
+  invalid-hex-code: 'Código hexadecimal inválido: %s'
