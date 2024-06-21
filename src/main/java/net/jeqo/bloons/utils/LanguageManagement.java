@@ -50,20 +50,7 @@ public class LanguageManagement {
                 // Load the configuration file
                 FileConfiguration config = YamlConfiguration.loadConfiguration(file);
 
-                // Get the configuration section
-                ConfigurationSection section = config.getConfigurationSection("");
-
-                if (section == null) {
-                    Logger.logWarning("Configuration section not found for file: " + fileName);
-                    continue;
-                }
-
-                // Process each key in the section
-                for (String key : section.getKeys(false)) {
-                    if (key.equals(message)) {
-                        return config.getString(key);
-                    }
-                }
+                return config.getString("messages." + message);
             }
         }
 
