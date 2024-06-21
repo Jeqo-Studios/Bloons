@@ -9,7 +9,7 @@ messages:
   player-not-found: '<#fc1c1c>Player not found.'
   config-reloaded: '<green>Config reloaded.'
   command-disabled: '<#fc1c1c>This command is currently disabled!'
-  # Balloon related messages.
+
   equipped: '%s <green>equipped!'
   unequipped: '<green>Your balloon has been stored safely.'
   balloon-not-found: '<#fc1c1c>Balloon not found.'
