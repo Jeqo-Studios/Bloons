@@ -1,6 +1,7 @@
 package net.jeqo.bloons.commands.manager;
 
-import net.jeqo.bloons.Bloons;
+import net.jeqo.bloons.commands.manager.types.CommandPermission;
+import net.jeqo.bloons.configuration.ConfigConfiguration;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -8,7 +9,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 public class CommandTabCompleter implements TabCompleter {
 
@@ -24,14 +24,12 @@ public class CommandTabCompleter implements TabCompleter {
      * @return          A List of possible completions for the final argument, type java.util.List<java.lang.String> or null
      */
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
-        if (sender.hasPermission("bloons.reload")) {
+        if (sender.hasPermission(CommandPermission.RELOAD.getPermission())) {
             // If the player has the reload permission and the command has 3 arguments we can assume it's the fequip command
             if (args.length == 3) {
                 if (args[0].equalsIgnoreCase("fequip")) {
                     // Get the list of all the multipart balloons
-                    List<String> singleBalloons = Objects.requireNonNull(Bloons.getInstance().getConfig().getConfigurationSection("single-balloons")).getKeys(false).stream().toList();
-                    List<String> multipartBalloons = Objects.requireNonNull(Bloons.getInstance().getConfig().getConfigurationSection("multipart-balloons")).getKeys(false).stream().toList();
-                    return List.of(singleBalloons, multipartBalloons).stream().flatMap(List::stream).toList();
+                    return getBalloonTabComplete();
                 } else {
                     // If the command isn't fequip then return an empty list
                     return List.of("");
@@ -49,9 +47,7 @@ public class CommandTabCompleter implements TabCompleter {
                     return null;
                 } else if (args[0].equalsIgnoreCase("equip")) {
                     // Get the list of all the balloons
-                    List<String> singleBalloons = Objects.requireNonNull(Bloons.getInstance().getConfig().getConfigurationSection("single-balloons")).getKeys(false).stream().toList();
-                    List<String> multipartBalloons = Objects.requireNonNull(Bloons.getInstance().getConfig().getConfigurationSection("multipart-balloons")).getKeys(false).stream().toList();
-                    return List.of(singleBalloons, multipartBalloons).stream().flatMap(List::stream).toList();
+                    return getBalloonTabComplete();
                 } else if (args[0].equalsIgnoreCase("fequip")) {
                     return null;
                 }
@@ -75,13 +71,17 @@ public class CommandTabCompleter implements TabCompleter {
                 }
 
                 // Otherwise, we need to return all the balloons
-                List<String> singleBalloons = Objects.requireNonNull(Bloons.getInstance().getConfig().getConfigurationSection("single-balloons")).getKeys(false).stream().toList();
-                List<String> multipartBalloons = Objects.requireNonNull(Bloons.getInstance().getConfig().getConfigurationSection("multipart-balloons")).getKeys(false).stream().toList();
-                return List.of(singleBalloons, multipartBalloons).stream().flatMap(List::stream).toList();
+                return getBalloonTabComplete();
             }
 
             // If the player isn't an administrator, only show the unequip and equip commands as available
             return List.of("equip", "unequip");
         }
+    }
+
+    public List<String> getBalloonTabComplete() {
+        List<String> singleBalloons = ConfigConfiguration.getSingleBalloons().stream().map(singleBalloonType -> singleBalloonType.getId().toLowerCase()).toList();
+        List<String> multipartBalloons = ConfigConfiguration.getMultipartBalloons().stream().map(multipartBalloonType -> multipartBalloonType.getId().toLowerCase()).toList();
+        return List.of(singleBalloons, multipartBalloons).stream().flatMap(List::stream).toList();
     }
 }

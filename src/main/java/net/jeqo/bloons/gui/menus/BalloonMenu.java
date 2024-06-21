@@ -98,26 +98,43 @@ public class BalloonMenu {
      * @param name      The name of the menu, type java.lang.String
      * @param player    The player to open the menu for, type org.bukkit.entity.Player
      */
-    public BalloonMenu(ArrayList<ItemStack> items, String name, Player player){
+    public BalloonMenu(ArrayList<ItemStack> items, String name, Player player) {
         this.setId(UUID.randomUUID());
         Inventory page = getBlankPage(name);
         int slot = 0;
-        for (int i = -1; i < items.size(); i++) {
-            if (slot == 0 || slot == 8 || slot == 9 || slot == 17 || slot == 18 || slot == 26 || slot == 27 || slot == 35 || slot == 36 || slot == 44) {
-                slot++;
-            } else {
-                page.setItem(slot, items.get(i));
+
+        for (ItemStack item : items) {
+            while (isSideSlot(slot)) {
                 slot++;
             }
-            if (slot == this.getMessageTranslations().getInt("balloon-slots")-1) {
+
+            page.setItem(slot, item);
+            slot++;
+
+            // Check if we need to start a new page
+            if (slot >= this.getMessageTranslations().getInt("balloon-slots")) {
                 this.getPages().add(page);
                 page = getBlankPage(name);
                 slot = 0;
             }
         }
 
-        this.getPages().add(page);
+        // Add the last page if it has items
+        if (slot > 0) {
+            this.getPages().add(page);
+        }
+
         player.openInventory(this.getPages().get(this.getCurrentPageIndex()));
         users.put(player.getUniqueId(), this);
     }
+
+    /**
+     *                 Checks if the slot is a side slot
+     * @param slot     The slot to check, type int
+     * @return         True if the slot is a side slot, false otherwise, type boolean
+     */
+    private boolean isSideSlot(int slot) {
+        return slot == 0 || slot == 8 || slot == 9 || slot == 17 || slot == 18 || slot == 26 || slot == 27 || slot == 35 || slot == 36 || slot == 44;
+    }
+
 }

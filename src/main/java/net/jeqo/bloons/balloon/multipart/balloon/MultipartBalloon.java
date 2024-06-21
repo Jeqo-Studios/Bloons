@@ -42,7 +42,7 @@ public class MultipartBalloon {
      */
     public void initialize() {
         // Things that only need to be set up once and not looped over
-        ModelNode current = new ModelNode((float) this.getBalloonOwner().getLocation().getX(), (float) this.getBalloonOwner().getLocation().getY() + 2, (float) this.getBalloonOwner().getLocation().getZ(),
+        ModelNode current = new ModelNode((float) this.getBalloonOwner().getLocation().getX(), (float) this.getBalloonOwner().getLocation().getY(), (float) this.getBalloonOwner().getLocation().getZ(),
                                          (float) ((float) this.getBalloonType().getDistanceBetweenNodes() + this.getBalloonType().getTailNodeOffset()), 0, getBalloonType(), this.getBalloonOwner(),
                                          this.getBalloonType().getMaxNodeJointAngle(), this.getBalloonType().getYAxisInterpolation(), this.getBalloonType().getTurningSplineInterpolation());
 
@@ -71,6 +71,7 @@ public class MultipartBalloon {
         // Location to spawn the lead holder at
         Location location = new Location(this.getBalloonOwner().getWorld(), this.getBalloonOwner().getLocation().getX(), this.getBalloonOwner().getLocation().getY() + 2, this.getBalloonOwner().getLocation().getZ());
 
+        // Configure the chicken entity properties
         this.setBalloonChicken(this.getBalloonOwner().getWorld().spawn(location, Chicken.class));
         this.getBalloonChicken().setInvulnerable(true);
         this.getBalloonChicken().setInvisible(true);
@@ -120,6 +121,8 @@ public class MultipartBalloon {
         double amplitude = this.getBalloonType().getPassiveSineWaveAmplitude(); // Adjust the amplitude of the sine wave
         double noseAmplitude = this.getBalloonType().getPassiveNoseSineWaveAmplitude(); // Adjust how much the nose of the first node goes up and down
 
+        final boolean[] isInitialized = {false};
+
         this.setRunnable(new BukkitRunnable() {
             double yOffset = 0; // Initial offset for the sine curve
 
@@ -137,12 +140,7 @@ public class MultipartBalloon {
 
                 // Calculate the midpoint between Point A and Point B in the leading balloon
                 double midpointX = (getTentacle().getPointA().x + getTentacle().getPointB().x) / 2.0;
-                double midpointZ = (getTentacle().getPointA().z + getTentacle().getPointA().z) / 2.0;
-
-                // Teleport the chicken holding the leash constantly
-                Location leadTeleportPoint = new Location(getBalloonOwner().getWorld(), midpointX, getTentacle().getPointA().y + 1.5, midpointZ);
-                getBalloonChicken().teleport(leadTeleportPoint);
-                getBalloonChicken().setLeashHolder(getBalloonOwner());
+                double midpointZ = (getTentacle().getPointA().z + getTentacle().getPointB().z) / 2.0;
 
                 // Constantly teleport the balloons
                 getTentacle().follow((float) balloonOwnerLocation.getX(), (float) (newY + noseOffset), (float) balloonOwnerLocation.getZ());
@@ -159,6 +157,20 @@ public class MultipartBalloon {
 
                 // Increment the yOffset based on the speed for the next iteration
                 yOffset += speed; // Adjust the speed of the sine wave as needed
+
+                // Checks if it's done initializing the fall down/up animation and sets it to true
+                if (balloonOwnerLocation.distance(new Location(balloonOwnerLocation.getWorld(), getTentacle().getPointA().x, getTentacle().getPointA().y, getTentacle().getPointA().z)) > 2) {
+                    isInitialized[0] = true;
+                }
+
+                // If it's done initialized and isn't far away, add the lead and constantly teleport it to
+                // not break the lead
+                if (isInitialized[0]) {
+                    // Teleport the chicken holding the leash constantly
+                    Location leadTeleportPoint = new Location(getBalloonOwner().getWorld(), midpointX, getTentacle().getPointA().y + balloonType.getLeashHeight(), midpointZ);
+                    getBalloonChicken().teleport(leadTeleportPoint);
+                    getBalloonChicken().setLeashHolder(getBalloonOwner());
+                }
             }
         });
 

@@ -24,16 +24,18 @@ public class CommandReload extends Command {
     public boolean execute(CommandSender sender, String[] args) {
         MessageTranslations messageTranslations = new MessageTranslations(this.getPlugin());
 
+        // Trigger a custom event upon the reload of the config
         BloonsConfigReloadEvent bloonsConfigReloadEvent = new BloonsConfigReloadEvent();
         bloonsConfigReloadEvent.callEvent();
 
         if (bloonsConfigReloadEvent.isCancelled()) return false;
 
+        // Reload the main config.yml and its defaults
         Bloons.getInstance().reloadConfig();
         Bloons.getInstance().getConfig().options().copyDefaults();
         Bloons.getInstance().saveDefaultConfig();
 
-        Bloons.getBalloonCore().initialize(); // Refresh balloons and their configurations
+        Bloons.getBalloonCore().initialize(); // Refresh balloons and their configurations from their respective files
 
         Component configReloadedMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("config-reloaded"));
         sender.sendMessage(configReloadedMessage);

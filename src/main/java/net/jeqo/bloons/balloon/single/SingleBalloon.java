@@ -4,18 +4,15 @@ import lombok.Getter;
 import lombok.Setter;
 import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.configuration.BalloonConfiguration;
-import net.jeqo.bloons.configuration.ConfigConfiguration;
 import net.jeqo.bloons.events.balloon.single.SingleBalloonEquipEvent;
 import net.jeqo.bloons.events.balloon.single.SingleBalloonForceUnequipEvent;
 import net.jeqo.bloons.logger.Logger;
 import net.jeqo.bloons.utils.management.SingleBalloonManagement;
 import net.jeqo.bloons.utils.ColorManagement;
-import net.jeqo.bloons.utils.MessageTranslations;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Chicken;
 import org.bukkit.entity.Player;
@@ -41,6 +38,8 @@ public class SingleBalloon extends BukkitRunnable {
 
     private int ticks = 0;
     private float targetYaw = 0.0F;
+
+    private static final String leatherMaterialPrefix = "LEATHER_"; // A constant to define a dyeable material
 
     /**
      *                      Constructor for the SingleBalloon class
@@ -144,55 +143,49 @@ public class SingleBalloon extends BukkitRunnable {
     /**
      *                      Retrieves the item stack object of the visual appearance of the balloon
      * @param balloonID     The balloon ID to get the visual appearance of, type java.lang.String
-     * @return              The item object that contains the configured balloon model, type org.bukkit.inventory.ItemStack
+     * @return              The item object that contains the configured balloon model, returns a barrier if there is an issue, type org.bukkit.inventory.ItemStack
      */
     public ItemStack getConfiguredBalloonVisual(String balloonID) {
-        MessageTranslations messageTranslations = new MessageTranslations(Bloons.getInstance());
-        // Retrieves the configuration data for the balloon
-        ConfigurationSection balloonConfiguration = Bloons.getInstance().getConfig().getConfigurationSection(ConfigConfiguration.SINGLE_BALLOON_SECTION + balloonID);
+        SingleBalloonType singleBalloonType = Bloons.getBalloonCore().getSingleBalloonByID(balloonID);
 
         // If there isn't a configuration for the balloon, log an error and return null
-        if (balloonConfiguration == null) {
+        if (singleBalloonType == null) {
             Logger.logError("The balloon " + balloonID + " is not set in the configuration!");
-            return null;
+            return new ItemStack(Material.BARRIER);
         }
 
         // If the material of the balloon is not set, log an error and return null
-        if (balloonConfiguration.getString("material") == null) {
+        if (singleBalloonType.getMaterial() == null) {
             Logger.logError("The material of the balloon " + balloonID + " is not set!");
-            return null;
+            return new ItemStack(Material.BARRIER);
         }
 
-        Material material = Material.getMaterial(balloonConfiguration.getString("material"));
+        Material material = Material.getMaterial(singleBalloonType.getMaterial());
 
         // If the material is not valid, log an error and return null
         if (material == null) {
             Logger.logError("The material of the balloon " + balloonID + " is not a valid material!");
-            return null;
+            return new ItemStack(Material.BARRIER);
         }
 
         // Generate the item and set the custom model data meta
         ItemStack item = new ItemStack(material);
         ItemMeta meta = item.getItemMeta();
-        meta.setCustomModelData(balloonConfiguration.getInt("custom-model-data"));
-
-        String colorConfiguration = messageTranslations.getString(ConfigConfiguration.SINGLE_BALLOON_SECTION + balloonID + ".color");
+        meta.setCustomModelData(singleBalloonType.getCustomModelData());
 
         // If the color of the balloon is not set, log an error and return null
-        if (colorConfiguration == null) {
-            Logger.logError("The color of the balloon " + balloonID + " is not set!");
-            return null;
+        if (singleBalloonType.getColor() != null && singleBalloonType.getMaterial().startsWith(leatherMaterialPrefix)) {
+            // If the color of the balloon is set to potion, log a warning and return null
+            if (singleBalloonType.getColor().equalsIgnoreCase("potion")) {
+                Logger.logWarning("The color of the balloon " + balloonID + " is set, but the material is not a leather item!");
+                return item;
+            }
+
+            LeatherArmorMeta leatherArmorMeta = (LeatherArmorMeta) meta;
+            leatherArmorMeta.setColor(ColorManagement.hexToColor(singleBalloonType.getColor()));
         }
 
-        // If the color of the balloon is set to potion, log a warning and return null
-        if (colorConfiguration.equalsIgnoreCase("potion")) {
-            Logger.logWarning("The color of the balloon " + balloonID + " is set, but the material is not a leather item!");
-            return null;
-        }
-
-        // Finally, set the color of the item and set the item meta because we can assume it's a leather item
-        LeatherArmorMeta leatherArmorMeta = (LeatherArmorMeta) meta;
-        leatherArmorMeta.setColor(ColorManagement.hexToColor(colorConfiguration));
+        // Finally, set the item meta
         item.setItemMeta(meta);
 
         return item;

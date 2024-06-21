@@ -5,9 +5,9 @@ import net.jeqo.bloons.balloon.multipart.MultipartBalloonType;
 import net.jeqo.bloons.balloon.multipart.balloon.MultipartBalloon;
 import net.jeqo.bloons.balloon.multipart.balloon.MultipartBalloonBuilder;
 import net.jeqo.bloons.balloon.single.SingleBalloon;
+import net.jeqo.bloons.balloon.single.SingleBalloonType;
 import net.jeqo.bloons.commands.manager.Command;
 import net.jeqo.bloons.commands.manager.types.CommandPermission;
-import net.jeqo.bloons.configuration.ConfigConfiguration;
 import net.jeqo.bloons.events.balloon.multipart.MultipartBalloonEquipEvent;
 import net.jeqo.bloons.events.balloon.multipart.MultipartBalloonUnequipEvent;
 import net.jeqo.bloons.events.balloon.single.SingleBalloonEquipEvent;
@@ -36,27 +36,42 @@ public class CommandEquip extends Command {
     public boolean execute(CommandSender sender, String[] args) {
         if (!(sender instanceof Player player)) return false;
 
-        if (args.length < 1) {
-            usage(sender);
-        }
+        // If the args isn't within the range of the command, send the usage message
+        if (args.length < 1) usage(player);
 
         String balloonID = args[0];
         MessageTranslations messageTranslations = new MessageTranslations(this.getPlugin());
 
-        if (!this.getPlugin().getConfig().contains(ConfigConfiguration.SINGLE_BALLOON_SECTION + balloonID) && !this.getPlugin().getConfig().contains(ConfigConfiguration.MULTIPART_BALLOON_SECTION + balloonID)) {
+        // If the balloon ID isn't found in both balloon types, send a message to the player
+        if (Bloons.getBalloonCore().containsSingleBalloon(balloonID) && Bloons.getBalloonCore().containsMultipartBalloon(balloonID)) {
             Component balloonNotFoundMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("balloon-not-found"));
             player.sendMessage(balloonNotFoundMessage);
             return false;
         }
 
-        if (!player.hasPermission(this.getPlugin().getConfig().getString(ConfigConfiguration.SINGLE_BALLOON_SECTION + balloonID + ".permission", ConfigConfiguration.SINGLE_BALLOON_SECTION + balloonID)) || !player.hasPermission(this.getPlugin().getConfig().getString(ConfigConfiguration.MULTIPART_BALLOON_SECTION + balloonID + ".permission", ConfigConfiguration.MULTIPART_BALLOON_SECTION + balloonID))) {
-            Component noPermissionMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("no-permission"));
-            player.sendMessage(noPermissionMessage);
-            return false;
+        SingleBalloonType singleBalloonType = Bloons.getBalloonCore().getSingleBalloonByID(balloonID);
+        MultipartBalloonType multipartBalloonType = Bloons.getBalloonCore().getMultipartBalloonByID(balloonID);
+
+        if (singleBalloonType != null) {
+            if (!player.hasPermission(singleBalloonType.getPermission())) {
+                Component noPermissionMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("no-permission"));
+                player.sendMessage(noPermissionMessage);
+                return false;
+            }
         }
 
-        MultipartBalloonType type = Bloons.getBalloonCore().getBalloon(balloonID);
+        if (multipartBalloonType != null) {
+            if (!player.hasPermission(multipartBalloonType.getPermission())) {
+                Component noPermissionMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("no-permission"));
+                player.sendMessage(noPermissionMessage);
+                return false;
+            }
+        }
+
+        MultipartBalloonType type = Bloons.getBalloonCore().getMultipartBalloonByID(balloonID);
         MultipartBalloon previousBalloon = MultipartBalloonManagement.getPlayerBalloon(player.getUniqueId());
+
+        // If the player has a previous multipart balloon, unequip it
         if (previousBalloon != null) {
             MultipartBalloonUnequipEvent multipartBalloonUnequipEvent = new MultipartBalloonUnequipEvent(player, previousBalloon);
             multipartBalloonUnequipEvent.callEvent();
@@ -66,9 +81,9 @@ public class CommandEquip extends Command {
             previousBalloon.destroy();
             MultipartBalloonManagement.removePlayerBalloon(player.getUniqueId());
         }
-        if (type != null) {
 
-            // Call the equip event and check if it's cancelled, if it is, don't spawn the balloon or do anything
+        // If the balloon ID is a multipart balloon type, equip the balloon with the multipart associated methods
+        if (type != null) {
             MultipartBalloonEquipEvent multipartBalloonEquipEvent = new MultipartBalloonEquipEvent(player, balloonID);
             multipartBalloonEquipEvent.callEvent();
 
@@ -82,11 +97,11 @@ public class CommandEquip extends Command {
 
             MultipartBalloonManagement.setPlayerBalloon(player.getUniqueId(), balloon);
 
-            String balloonName = messageTranslations.getString(ConfigConfiguration.MULTIPART_BALLOON_SECTION + balloonID + ".name");
-            Component equippedMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("equipped", balloonName));
+            Component equippedMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("equipped", type.getName()));
             player.sendMessage(equippedMessage);
-        } else {
 
+            // If the balloon ID is a single balloon type, equip the balloon with the single associated methods
+        } else {
             // Call the equip event and check if it's cancelled, if it is, don't spawn the balloon or do anything
             SingleBalloonEquipEvent singleBalloonEquipEvent = new SingleBalloonEquipEvent(player, balloonID);
             singleBalloonEquipEvent.callEvent();
@@ -97,11 +112,11 @@ public class CommandEquip extends Command {
             SingleBalloonManagement.removeBalloon(player, Bloons.getPlayerSingleBalloons().get(player.getUniqueId()));
             SingleBalloon.checkBalloonRemovalOrAdd(player, balloonID);
 
-            String balloonName = messageTranslations.getString(ConfigConfiguration.SINGLE_BALLOON_SECTION + balloonID + ".name");
-            Component equippedMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("equipped", balloonName));
+            Component equippedMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("equipped", singleBalloonType.getName()));
             player.sendMessage(equippedMessage);
         }
 
+        // Play a sound regardless of the balloon type and when it executes successfully
         player.playSound(player.getLocation(), Sound.ENTITY_CHICKEN_EGG, 1, 1);
 
         return false;

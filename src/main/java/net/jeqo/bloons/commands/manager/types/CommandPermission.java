@@ -1,7 +1,6 @@
 package net.jeqo.bloons.commands.manager.types;
 
 import lombok.Getter;
-import net.kyori.adventure.text.format.NamedTextColor;
 
 /**
  * The permissions required to execute a command
