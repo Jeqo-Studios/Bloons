@@ -2,7 +2,6 @@ package net.jeqo.bloons.utils;
 
 import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.logger.Logger;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -15,6 +14,7 @@ public class LanguageManagement {
      */
     public static void copyLanguageFiles() {
         Bloons.getInstance().saveResource("languages/en_US.yml", false);
+        Bloons.getInstance().saveResource("languages/es_US.yml", false);
     }
 
     /**

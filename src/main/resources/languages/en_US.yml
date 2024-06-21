@@ -27,7 +27,7 @@ messages:
   configuration-folder-not-found: 'Configuration folder not found: %s'
   no-configuration-files-found: 'No configuration files found in the folder: %s'
   configuration-section-not-found: 'Configuration section not found for file: %s'
-  balloon-type-not-found: 'Error processing balloon type for section: % sin file: %s. Balloon type does not exist or is null.'
+  balloon-type-not-found: 'Error processing balloon type for section: %s in file: %s. Balloon type does not exist or is null.'
   balloon-process-error: 'Error processing balloon for section: %s in file: %s. Error: %s'
 
   menu-slot-out-of-bounds: '%s menu page button slot(s) out of bounds!'
