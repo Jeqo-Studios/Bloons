@@ -9,6 +9,7 @@ import net.jeqo.bloons.configuration.PluginConfiguration;
 import net.jeqo.bloons.gui.menus.BalloonMenu;
 import net.jeqo.bloons.logger.Logger;
 import net.jeqo.bloons.utils.ColorManagement;
+import net.jeqo.bloons.utils.LanguageManagement;
 import net.jeqo.bloons.utils.MessageTranslations;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -97,14 +98,10 @@ public class CommandCore implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, org.bukkit.command.@NotNull Command command, @NotNull String label, String[] args) {
         if (args.length < 1) {
-            if (!(sender instanceof Player player)) {
-                Component consoleMessage = Component.text("This command can only be executed by a player.").color(NamedTextColor.RED);
-                sender.sendMessage(consoleMessage);
-                return true;
-            }
+            Player player = (Player) sender;
 
             if (!player.hasPermission("bloons.menu")) {
-                Component noPermission = this.getMessageTranslations().getSerializedString(this.getMessageTranslations().getMessage("prefix"), this.getMessageTranslations().getMessage("no-permission"));
+                Component noPermission = this.getMessageTranslations().getSerializedString(this.getMessageTranslations().getMessage("prefix"), LanguageManagement.getMessage("no-permission"));
                 player.sendMessage(noPermission);
                 return true;
             }
@@ -113,7 +110,8 @@ public class CommandCore implements CommandExecutor {
             ArrayList<SingleBalloonType> singleBalloonTypes = Bloons.getBalloonCore().getSingleBalloonTypes();
 
             if (singleBalloonTypes == null) {
-                Logger.logError("Single balloon types are null. Cannot create menu with items!");
+                Logger.logError(LanguageManagement.getMessage("no-balloons-registered"));
+
                 return false;
             }
 
@@ -142,14 +140,13 @@ public class CommandCore implements CommandExecutor {
             if (currentCommand.getCommandAliases().contains(subcommand)) {
                 // Check if the sender has the permission to execute the command
                 if (!meetsRequirements(currentCommand, sender)) {
-                    sender.sendMessage(this.getMessageTranslations().getSerializedString(this.getMessageTranslations().getMessage("prefix"), this.getMessageTranslations().getMessage("no-permission")));
+                    sender.sendMessage(this.getMessageTranslations().getSerializedString(this.getMessageTranslations().getMessage("prefix"), LanguageManagement.getMessage("no-permission")));
                     return false;
                 }
 
                 // Check if the command is disabled
                 if (currentCommand.getRequiredAccess() == CommandAccess.DISABLED) {
-                    Component commandDisabledMessage = Component.text("This command is currently disabled.").color(NamedTextColor.RED);
-                    sender.sendMessage(commandDisabledMessage);
+                    sender.sendMessage(this.getMessageTranslations().getSerializedString(this.getMessageTranslations().getMessage("prefix"), LanguageManagement.getMessage("command-disabled")));
                     return false;
                 }
 
@@ -198,14 +195,14 @@ public class CommandCore implements CommandExecutor {
     private ItemStack createBalloonItem(SingleBalloonType singleBalloonType) {
         Material material = Material.matchMaterial(singleBalloonType.getMaterial());
         if (material == null) {
-            Logger.logError("Material " + singleBalloonType.getMaterial() + " is not a valid material.");
+            Logger.logError(String.format(LanguageManagement.getMessage("material-not-valid"), singleBalloonType.getMaterial()));
             return null;
         }
 
         ItemStack item = new ItemStack(material);
         ItemMeta meta = item.getItemMeta();
         if (meta == null) {
-            Logger.logError("ItemMeta is null for material " + singleBalloonType.getMaterial());
+            Logger.logError(String.format(LanguageManagement.getMessage("invalid-item-meta"), singleBalloonType.getMaterial()));
             return null;
         }
 
@@ -257,7 +254,7 @@ public class CommandCore implements CommandExecutor {
             if (meta instanceof LeatherArmorMeta) {
                 ((LeatherArmorMeta) meta).setColor(ColorManagement.hexToColor(color));
             } else {
-                Logger.logWarning("The color of the balloon " + singleBalloonType.getId() + " is set, but the material is not a leather item!");
+                Logger.logWarning(String.format(LanguageManagement.getMessage("material-not-dyeable"), singleBalloonType.getMaterial()));
             }
         }
     }

@@ -63,7 +63,7 @@ public class BalloonMenuListener implements Listener {
 
             // Send equipped message and play sound
             player.playSound(player.getLocation(), Sound.ENTITY_CHICKEN_EGG, 1, 1);
-            Component equippedMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("equipped", convertedColourBalloonName));
+            Component equippedMessage = messageTranslations.getSerializedString(LanguageManagement.getMessage("prefix"), String.format(LanguageManagement.getMessage("equipped"), convertedColourBalloonName));
             player.sendMessage(equippedMessage);
 
             // Close inventory if the config is set to true
@@ -113,7 +113,7 @@ public class BalloonMenuListener implements Listener {
                 if (singleBalloon == null) {
                     // If no balloon equipped, play sound and send message notifying them
                     player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_DIDGERIDOO, 1, 1);
-                    player.sendMessage(messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("not-equipped")));
+                    player.sendMessage(messageTranslations.getSerializedString(LanguageManagement.getMessage("prefix"), LanguageManagement.getMessage("not-equipped")));
                 } else {
                     if (messageTranslations.getString("close-on-unequip").equals("true")) player.closeInventory();
 
@@ -126,7 +126,7 @@ public class BalloonMenuListener implements Listener {
 
                     // Play sound and send message saying the balloon is unequipped
                     player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_HURT_SWEET_BERRY_BUSH, 1, 1);
-                    player.sendMessage(messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("unequipped")));
+                    player.sendMessage(messageTranslations.getSerializedString(LanguageManagement.getMessage("prefix"), LanguageManagement.getMessage("unequipped")));
                 }
             }
 

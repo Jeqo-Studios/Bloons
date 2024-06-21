@@ -3,6 +3,7 @@ package net.jeqo.bloons.logger;
 import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.configuration.ConfigConfiguration;
 import net.jeqo.bloons.configuration.PluginConfiguration;
+import net.jeqo.bloons.utils.LanguageManagement;
 import net.jeqo.bloons.utils.MessageTranslations;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
@@ -38,7 +39,7 @@ public class Logger {
      */
     public static void logToPlayer(Player player, String message) {
         MessageTranslations messageTranslations = new MessageTranslations(Bloons.getInstance());
-        Component component = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix") + message);
+        Component component = messageTranslations.getSerializedString(LanguageManagement.getMessage("prefix") + message);
         player.sendMessage(component);
     }
 
