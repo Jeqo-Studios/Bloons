@@ -1,6 +1,7 @@
 package net.jeqo.bloons.balloon.model;
 
 import net.jeqo.bloons.logger.Logger;
+import net.jeqo.bloons.utils.LanguageManagement;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -52,13 +53,13 @@ public class BalloonModel {
     public static ItemStack createColouredModel(Material material, int colourRed, int colourGreen, int colourBlue, int customModelData) {
         // Check if the material is dyeable and contains leather attributes
         if (!material.name().contains(leatherMaterialPrefix)) {
-            Logger.logError("Material " + material.name() + " is not a dyeable material.");
+            Logger.logWarning(String.format(LanguageManagement.getMessage("material-not-dyeable"), material));
             return new ItemStack(material);
         }
 
         // Check if the provided color values are within the valid ranges of RGB
         if (colourRed < 0 || colourRed > 255 || colourGreen < 0 || colourGreen > 255 || colourBlue < 0 || colourBlue > 255) {
-            Logger.logError("RGB values must be between 0 and 255 to be valid.");
+            Logger.logError(LanguageManagement.getMessage("invalid-rgb-values"));
             return null;
         }
 

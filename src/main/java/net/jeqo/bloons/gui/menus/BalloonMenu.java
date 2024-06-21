@@ -5,6 +5,7 @@ import lombok.Setter;
 import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.logger.Logger;
 import net.jeqo.bloons.utils.ColorManagement;
+import net.jeqo.bloons.utils.LanguageManagement;
 import net.jeqo.bloons.utils.MessageTranslations;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -67,7 +68,7 @@ public class BalloonMenu {
             if (Integer.parseInt(previousPageSlot) < pageSize) {
                 page.setItem(Integer.parseInt(previousPageSlot), prevPage);
             } else {
-                Logger.logWarning("Previous page button slot(s) out of bounds!");
+                Logger.logWarning(String.format(LanguageManagement.getMessage("menu-slot-out-of-bounds"), "Previous"));
             }
         }
 
@@ -76,7 +77,7 @@ public class BalloonMenu {
             if (Integer.parseInt(unequipSlot) < pageSize) {
                 page.setItem(Integer.parseInt(unequipSlot), removeBalloon);
             } else {
-                Logger.logWarning("Unequip button slot(s) out of bounds!");
+                Logger.logWarning(String.format(LanguageManagement.getMessage("menu-slot-out-of-bounds"), "Unequip"));
             }
         }
 
@@ -85,7 +86,7 @@ public class BalloonMenu {
             if (Integer.parseInt(nextPageSlot) < pageSize) {
                 page.setItem(Integer.parseInt(nextPageSlot), nextPage);
             } else {
-                Logger.logWarning("Next page button slot(s) out of bounds!");
+                Logger.logWarning(String.format(LanguageManagement.getMessage("menu-slot-out-of-bounds"), "Next"));
             }
         }
 

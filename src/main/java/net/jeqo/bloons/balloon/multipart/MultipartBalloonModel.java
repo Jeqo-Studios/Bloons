@@ -6,6 +6,7 @@ import net.jeqo.bloons.balloon.model.BalloonModel;
 import net.jeqo.bloons.balloon.model.BalloonModelType;
 import net.jeqo.bloons.logger.Logger;
 import net.jeqo.bloons.utils.ColorManagement;
+import net.jeqo.bloons.utils.LanguageManagement;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -44,7 +45,7 @@ public class MultipartBalloonModel {
 
         // Check if the material is valid
         if (material == null) {
-            Logger.logError("Material " + this.getMaterial() + " is not a valid material.");
+            Logger.logError(String.format(LanguageManagement.getMessage("material-is-not-valid"), this.getMaterial()));
             return null;
         }
 
@@ -60,7 +61,7 @@ public class MultipartBalloonModel {
         } else if (this.getColor().startsWith("#")) {
             // Check if valid hex code via the utility in net.jeqo.bloons.utils.ColorManagement
             if (!ColorManagement.isHexCode(this.getColor())) {
-                Logger.logError("Color " + this.getColor() + " is not a valid hex code.");
+                Logger.logError(String.format(LanguageManagement.getMessage("invalid-hex-code"), this.getColor()));
                 return null;
             }
 

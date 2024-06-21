@@ -7,6 +7,7 @@ import net.jeqo.bloons.commands.manager.Command;
 import net.jeqo.bloons.commands.manager.types.CommandPermission;
 import net.jeqo.bloons.events.balloon.multipart.MultipartBalloonUnequipEvent;
 import net.jeqo.bloons.events.balloon.single.SingleBalloonUnequipEvent;
+import net.jeqo.bloons.utils.LanguageManagement;
 import net.jeqo.bloons.utils.management.SingleBalloonManagement;
 import net.jeqo.bloons.utils.MessageTranslations;
 import net.jeqo.bloons.utils.management.MultipartBalloonManagement;
@@ -33,7 +34,7 @@ public class CommandForceUnequip extends Command {
 
         // If the specified player doesn't exist, send a message to the sender
         if (player == null) {
-            Component playerNotFoundMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("player-not-found"));
+            Component playerNotFoundMessage = messageTranslations.getSerializedString(LanguageManagement.getMessage("prefix"), LanguageManagement.getMessage("player-not-found"));
             sender.sendMessage(playerNotFoundMessage);
             return false;
         }
@@ -43,7 +44,7 @@ public class CommandForceUnequip extends Command {
 
         // If the player doesn't have any balloons equipped, send a message to the sender
         if (singleBalloon == null && multipartBalloon == null) {
-            Component notEquippedMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("not-equipped"));
+            Component notEquippedMessage = messageTranslations.getSerializedString(LanguageManagement.getMessage("prefix"), LanguageManagement.getMessage("not-equipped"));
             player.sendMessage(notEquippedMessage);
             return false;
         }
@@ -69,7 +70,7 @@ public class CommandForceUnequip extends Command {
             MultipartBalloonManagement.removePlayerBalloon(player.getUniqueId());
         }
 
-        Component unequipSuccessfulMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("unequipped"));
+        Component unequipSuccessfulMessage = messageTranslations.getSerializedString(LanguageManagement.getMessage("prefix"), LanguageManagement.getMessage("unequipped"));
         sender.sendMessage(unequipSuccessfulMessage);
         return false;
     }
