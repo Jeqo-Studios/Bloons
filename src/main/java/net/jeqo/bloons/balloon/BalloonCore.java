@@ -51,8 +51,8 @@ public class BalloonCore {
      */
     public void copyExampleBalloons() {
         // Save all example files in the balloons folder in /resources
-        Bloons.getInstance().saveResource("balloons/color_pack_example.yml", false);
-        Bloons.getInstance().saveResource("balloons/dyeable_example.yml", false);
+        Bloons.getInstance().saveResource(ConfigConfiguration.BALLOON_CONFIGURATION_FOLDER + "/color_pack_example.yml", false);
+        Bloons.getInstance().saveResource(ConfigConfiguration.BALLOON_CONFIGURATION_FOLDER + "/dyeable_example.yml", false);
     }
 
     /**
