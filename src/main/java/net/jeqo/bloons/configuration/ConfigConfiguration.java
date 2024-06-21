@@ -18,7 +18,10 @@ import java.util.ArrayList;
  * A class that contains configurations for the plugin configuration file
  */
 public class ConfigConfiguration {
-    public static final String BALLOON_CONFIGURATION_FOLDER = "balloons"; // The folder that stores the balloons to be loaded
+    // The folder that stores the balloons to be loaded
+    public static final String BALLOON_CONFIGURATION_FOLDER = "balloons";
+    // The folder that stores the languages to be loaded
+    public static final String LANGUAGES_CONFIGURATION_FOLDER = "languages";
 
     /**
      *          Gets the number of configuration files currently in the balloon configuration folder
@@ -26,12 +29,14 @@ public class ConfigConfiguration {
      */
     public static long getBalloonConfigurationCount() {
         try {
+            // Walk through the files in the balloons folder and count them/return the count
             Path path = Path.of(Bloons.getInstance().getDataFolder() + File.separator + BALLOON_CONFIGURATION_FOLDER);
             return Files.walk(path).filter(Files::isRegularFile).count();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+        // Upon an IO exception, return 0
         return 0;
     }
 
@@ -41,6 +46,7 @@ public class ConfigConfiguration {
      *         returns an empty array list if no single balloons are found, type java.util.ArrayList<net.jeqo.bloons.balloon.single.SingleBalloonType>
      */
     public static ArrayList<SingleBalloonType> getSingleBalloons() {
+        // Start an array of single balloon types that's empty
         ArrayList<SingleBalloonType> singleBalloons = new ArrayList<>();
         File folder = new File(Bloons.getInstance().getDataFolder() + File.separator + BALLOON_CONFIGURATION_FOLDER);
 
@@ -57,7 +63,7 @@ public class ConfigConfiguration {
             return singleBalloons;
         }
 
-        // Process each file
+        // Loop through each file in the balloons directory
         for (File file : files) {
             if (file.isFile()) {
                 String fileName = file.getName();
@@ -78,14 +84,13 @@ public class ConfigConfiguration {
                     // Determine the type of balloon
                     String type = config.getString(key + ".type", BalloonConfiguration.SINGLE_BALLOON_TYPE_IDENTIFIER);
 
+                    // If there is no type configuration, log an error and continue through the other iterations
                     if (type.isBlank()) {
                         Logger.logError(String.format(LanguageManagement.getMessage("balloon-type-not-found"), key, fileName));
                         continue;
                     }
 
-                    if (!type.equals(BalloonConfiguration.SINGLE_BALLOON_TYPE_IDENTIFIER)) {
-                        continue;
-                    }
+                    if (!type.equals(BalloonConfiguration.SINGLE_BALLOON_TYPE_IDENTIFIER)) continue;
 
                     try {
                         // Add the single balloon type to the array list

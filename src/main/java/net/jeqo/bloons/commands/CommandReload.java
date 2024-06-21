@@ -36,7 +36,8 @@ public class CommandReload extends Command {
         Bloons.getInstance().getConfig().options().copyDefaults();
         Bloons.getInstance().saveDefaultConfig();
 
-        Bloons.getBalloonCore().initialize(); // Refresh balloons and their configurations from their respective files
+        // Refresh balloons and their configurations from their respective files
+        Bloons.getBalloonCore().initialize();
 
         Component configReloadedMessage = messageTranslations.getSerializedString(LanguageManagement.getMessage("prefix"), LanguageManagement.getMessage("config-reloaded"));
         sender.sendMessage(configReloadedMessage);
