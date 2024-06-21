@@ -1,9 +1,8 @@
 # --------------------------------------------------#
 #
 # Bloons 2.0.0
-# Made by Jeqo
+# by Jeqo Studios
 #
-# Wiki:     https://jeqo.net/wiki/bloons
 # Discord:     https://jeqo.net/discord
 #
 # Default Assets Made by TwistedDreams
@@ -23,7 +22,7 @@ close-on-unequip: true
 # Do you want to hide balloons that the player does not have permission for?
 hide-balloons-without-permission: true
 # Title for the balloons menu.
-menu-title: "&f"
+menu-title: "<white>"
 # Amount of slots per page. Valid values: 27, 36, 45, and 54. 9 of these slots will be used for the menu buttons.
 menu-size: 54
 # Amount of slots from the top that you want the balloons to appear in. Valid values: 9, 18, 27, 36, and 45.
