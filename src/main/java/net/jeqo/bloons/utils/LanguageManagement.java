@@ -17,6 +17,13 @@ public class LanguageManagement {
     public static void copyLanguageFiles() {
         Bloons.getInstance().saveResource(ConfigConfiguration.LANGUAGES_CONFIGURATION_FOLDER + "/en_US.yml", false);
         Bloons.getInstance().saveResource(ConfigConfiguration.LANGUAGES_CONFIGURATION_FOLDER + "/es_US.yml", false);
+        Bloons.getInstance().saveResource(ConfigConfiguration.LANGUAGES_CONFIGURATION_FOLDER + "/fr_FR.yml", false);
+        Bloons.getInstance().saveResource(ConfigConfiguration.LANGUAGES_CONFIGURATION_FOLDER + "/ja_JP.yml", false);
+        Bloons.getInstance().saveResource(ConfigConfiguration.LANGUAGES_CONFIGURATION_FOLDER + "/ko_KR.yml", false);
+        Bloons.getInstance().saveResource(ConfigConfiguration.LANGUAGES_CONFIGURATION_FOLDER + "/pt_PT.yml", false);
+        Bloons.getInstance().saveResource(ConfigConfiguration.LANGUAGES_CONFIGURATION_FOLDER + "/ru_RU.yml", false);
+        Bloons.getInstance().saveResource(ConfigConfiguration.LANGUAGES_CONFIGURATION_FOLDER + "/zh_CN.yml", false);
+        Bloons.getInstance().saveResource(ConfigConfiguration.LANGUAGES_CONFIGURATION_FOLDER + "/de_DE.yml", false);
     }
 
     /**
