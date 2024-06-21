@@ -6,6 +6,7 @@ import net.jeqo.bloons.balloon.single.SingleBalloonType;
 import net.jeqo.bloons.commands.manager.Command;
 import net.jeqo.bloons.commands.manager.types.CommandPermission;
 import net.jeqo.bloons.events.balloon.SingleBalloonEquipEvent;
+import net.jeqo.bloons.utils.LanguageManagement;
 import net.jeqo.bloons.utils.management.SingleBalloonManagement;
 import net.jeqo.bloons.utils.MessageTranslations;
 import net.kyori.adventure.text.Component;
@@ -38,7 +39,7 @@ public class CommandEquip extends Command {
 
         // If the balloon ID isn't found in both balloon types, send a message to the player
         if (Bloons.getBalloonCore().containsSingleBalloon(balloonID)) {
-            Component balloonNotFoundMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("balloon-not-found"));
+            Component balloonNotFoundMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), LanguageManagement.getMessage("balloon-not-found"));
             player.sendMessage(balloonNotFoundMessage);
             return false;
         }
@@ -47,7 +48,7 @@ public class CommandEquip extends Command {
 
         if (singleBalloonType != null) {
             if (!player.hasPermission(singleBalloonType.getPermission())) {
-                Component noPermissionMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("no-permission"));
+                Component noPermissionMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), LanguageManagement.getMessage("no-permission"));
                 player.sendMessage(noPermissionMessage);
                 return false;
             }
@@ -63,7 +64,7 @@ public class CommandEquip extends Command {
             SingleBalloonManagement.removeBalloon(player, Bloons.getPlayerSingleBalloons().get(player.getUniqueId()));
             SingleBalloon.checkBalloonRemovalOrAdd(player, balloonID);
 
-            Component equippedMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), messageTranslations.getMessage("equipped", singleBalloonType.getName()));
+            Component equippedMessage = messageTranslations.getSerializedString(messageTranslations.getMessage("prefix"), String.format(LanguageManagement.getMessage("equipped"), singleBalloonType.getName()));
             player.sendMessage(equippedMessage);
 
         // Play a sound regardless of the balloon type and when it executes successfully

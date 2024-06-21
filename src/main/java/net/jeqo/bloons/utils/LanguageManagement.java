@@ -28,14 +28,14 @@ public class LanguageManagement {
         // Check if the folder exists
         if (!folder.exists() || !folder.isDirectory()) {
             Logger.logWarning("Language folder not found: " + folder.getPath());
-            return null;
+            return "";
         }
 
         // List files in the folder
         File[] files = folder.listFiles();
         if (files == null) {
             Logger.logWarning("No language files in folder folder: " + folder.getPath());
-            return null;
+            return "";
         }
 
         // Process each file
@@ -67,6 +67,6 @@ public class LanguageManagement {
             }
         }
 
-        return null;
+        return "";
     }
 }
