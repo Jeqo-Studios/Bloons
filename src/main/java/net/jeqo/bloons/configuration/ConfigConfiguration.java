@@ -21,7 +21,7 @@ public class ConfigConfiguration {
     // The folder that stores the balloons to be loaded
     public static final String BALLOON_CONFIGURATION_FOLDER = "balloons";
     // The folder that stores the languages to be loaded
-    public static final String LANGUAGE_CONFIGURATION_FOLDER = "languages";
+    public static final String LANGUAGES_CONFIGURATION_FOLDER = "languages";
 
     /**
      *          Gets the number of configuration files currently in the balloon configuration folder

@@ -15,8 +15,8 @@ public class LanguageManagement {
      * Copies all language files over from the languages directory
      */
     public static void copyLanguageFiles() {
-        Bloons.getInstance().saveResource(ConfigConfiguration.LANGUAGE_CONFIGURATION_FOLDER + "/en_US.yml", false);
-        Bloons.getInstance().saveResource(ConfigConfiguration.LANGUAGE_CONFIGURATION_FOLDER + "/es_US.yml", false);
+        Bloons.getInstance().saveResource(ConfigConfiguration.LANGUAGES_CONFIGURATION_FOLDER + "/en_US.yml", false);
+        Bloons.getInstance().saveResource(ConfigConfiguration.LANGUAGES_CONFIGURATION_FOLDER + "/es_US.yml", false);
     }
 
     /**
@@ -25,7 +25,7 @@ public class LanguageManagement {
      * @return          The message from the language file, type java.lang.String/null
      */
     public static String getMessage(String message) {
-        File folder = new File(Bloons.getInstance().getDataFolder() + File.separator + ConfigConfiguration.LANGUAGE_CONFIGURATION_FOLDER);
+        File folder = new File(Bloons.getInstance().getDataFolder() + File.separator + ConfigConfiguration.LANGUAGES_CONFIGURATION_FOLDER);
 
         // Check if the folder exists
         if (!folder.exists() || !folder.isDirectory()) {
