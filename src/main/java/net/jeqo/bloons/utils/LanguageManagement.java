@@ -6,6 +6,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
+import java.util.Objects;
 
 public class LanguageManagement {
 
@@ -31,25 +32,25 @@ public class LanguageManagement {
             return "";
         }
 
-        // List files in the folder
+        // List files in the folder, if none it will return an empty string
         File[] files = folder.listFiles();
         if (files == null) {
             Logger.logWarning("No language files in folder folder: " + folder.getPath());
             return "";
         }
 
-        // Process each file
+        // Loop through every language file to find the one specified in the config
         for (File file : files) {
             if (file.isFile()) {
                 String fileName = file.getName();
 
-                if (!fileName.startsWith(Bloons.getInstance().getConfig().getString("language"))) {
-                    continue;
-                }
+                // If the file doesn't start with the language specified in the config, skip it and continue to next in the loop
+                if (!fileName.startsWith(Objects.requireNonNull(Bloons.getInstance().getConfig().getString("language")))) continue;
 
                 // Load the configuration file
                 FileConfiguration config = YamlConfiguration.loadConfiguration(file);
 
+                // Just return the configuration message if it exists
                 return config.getString("messages." + message);
             }
         }
