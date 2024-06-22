@@ -1,0 +1,31 @@
+messages:
+  prefix: '<gradient:#ff00cc:#5555ff>[Բլունս]</gradient> <white>'
+  no-permission: '<#fc1c1c>Թույլատրելիություն չկա.'
+  player-not-found: '<#fc1c1c>Հաստատիչը չի գտնվել.'
+  config-reloaded: '<green>Կոնֆիգուրացիան վերաբեռնվել է:'
+  command-disabled: '<#fc1c1c>Այս հրամանը ներկայացնված չէ։'
+
+  equipped: '%s <green>հավաքվեց։'
+  unequipped: '<green>Ձեր բլունը անվանակում է ապակում։'
+  balloon-not-found: '<#fc1c1c>Բլունը չի գտնվել։'
+  not-equipped: '<#fc1c1c>Դուք ներկայացրել չունեք բլուն։'
+
+  material-not-dyeable: 'Մատիան %s չի կարող նվագել։'
+  invalid-rgb-values: 'RGB արժեքները պետք է լինեն 0-ից 255 միջակայքում։'
+  balloon-not-set: 'Բլունը %s չի սահմանված կոնֆիգուրացիայում։'
+  material-not-set: 'Բլունի %s մարմինը չի սահմանված կոնֆիգուրացիայում։'
+  material-not-valid: 'Բլունի %s մարմինը վավեր չէ։ Մարմինը: %s'
+  material-is-not-valid: 'Մատիան %s վավեր չէ։'
+  invalid-item-meta: 'Ապրանքի մետատվյալները չեն վավերացիայի %s համար։'
+
+  no-balloons-registered: 'Ոչ մի բլուն չի գրանցվել։ Չհաջողվեց ստեղծել ընտրացանկ առանց բլուն։'
+
+  configuration-folder-not-found: 'Կոնֆիգուրացիայի թղթապանակը չի գտնվել՝ %s'
+  no-configuration-files-found: 'Չի գտնվել կոնֆիգուրացիայի ֆայլեր %s թղթապանակում։'
+  configuration-section-not-found: 'Կոնֆիգուրացիայի բաժնի գտնվելը չհաջողվեց ֆայլում՝ %s'
+  balloon-type-not-found: 'Բլունի տեսակի սխալ մշակման համար բաժինը՝ %s, ֆայլում՝ %s։ Բլունի տեսակը չկա կամ դա դատարկ է։'
+  balloon-process-error: 'Բլունի մշակման սխալ համար բաժինը՝ %s, ֆայլում՝ %s։ Սխալ՝ %s'
+
+  menu-slot-out-of-bounds: '%s ընտրացանկի էջի կոճակի տեղերը շարունակվում են առանց պահի։'
+
+  invalid-hex-code: 'Անվավեր հեքս կոդ՝ %s'

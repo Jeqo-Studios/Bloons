@@ -1,0 +1,31 @@
+messages:
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
+  no-permission: '<#fc1c1c>مرفوض الدخول.'
+  player-not-found: '<#fc1c1c>اللاعب ماكو.'
+  config-reloaded: '<green>تم إعادة تحميل الإعدادات.'
+  command-disabled: '<#fc1c1c>هالأمر معطل حالياً!'
+
+  equipped: '%s <green>تم تجهيزه!'
+  unequipped: '<green>بالونك محفوظ بأمان.'
+  balloon-not-found: '<#fc1c1c>البالون ماكو.'
+  not-equipped: '<#fc1c1c>ما عندك بالون مجهز حالياً.'
+
+  material-not-dyeable: 'المادة %s مو قابلة للصبغ.'
+  invalid-rgb-values: 'قيم RGB لازم تكون بين 0 و 255 حتى تكون صالحة.'
+  balloon-not-set: 'البالون %s مو محدد بالإعدادات!'
+  material-not-set: 'مادة البالون %s مو محددة بالإعدادات!'
+  material-not-valid: 'مادة البالون %s مو مادة صالحة! المادة: %s'
+  material-is-not-valid: 'المادة %s مو مادة صالحة!'
+  invalid-item-meta: 'ItemMeta مو صالح للمادة: %s'
+
+  no-balloons-registered: 'ماكو بالونات! ما نقدر نسوي قائمة بدون بالونات.'
+
+  configuration-folder-not-found: 'مجلد الإعدادات مو موجود: %s'
+  no-configuration-files-found: 'ماكو ملفات إعدادات بالمجلد: %s'
+  configuration-section-not-found: 'قسم الإعدادات مو موجود للملف: %s'
+  balloon-type-not-found: 'خطأ في معالجة نوع البالون للقسم: %s بالملف: %s. نوع البالون مو موجود أو null.'
+  balloon-process-error: 'خطأ في معالجة البالون للقسم: %s بالملف: %s. الخطأ: %s'
+
+  menu-slot-out-of-bounds: 'فتحات زر صفحة القائمة %s خارج الحدود!'
+
+  invalid-hex-code: 'رمز سداسي غير صالح: %s'

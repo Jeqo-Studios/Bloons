@@ -1,0 +1,31 @@
+messages:
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
+  no-permission: '<#fc1c1c>ممنوع الوصول.'
+  player-not-found: '<#fc1c1c>اللاعب ماكاينش.'
+  config-reloaded: '<green>تم إعادة تحميل الإعدادات.'
+  command-disabled: '<#fc1c1c>هاد الأمر معطل حاليا!'
+
+  equipped: '%s <green>تم تجهيزه!'
+  unequipped: '<green>البالون ديالك محفوظ بأمان.'
+  balloon-not-found: '<#fc1c1c>البالون ماكاينش.'
+  not-equipped: '<#fc1c1c>ماعندكش بالون مجهز حاليا.'
+
+  material-not-dyeable: 'المادة %s ماشي قابلة للصبغ.'
+  invalid-rgb-values: 'قيم RGB لازم تكون بين 0 و 255 باش يكونو صالحين.'
+  balloon-not-set: 'البالون %s ماكاينش محدد في الإعدادات!'
+  material-not-set: 'مادة البالون %s ماكاينش محددة في الإعدادات!'
+  material-not-valid: 'مادة البالون %s ماشي مادة صالحة! المادة: %s'
+  material-is-not-valid: 'المادة %s ماشي مادة صالحة!'
+  invalid-item-meta: 'ItemMeta ماشي صالح للمادة: %s'
+
+  no-balloons-registered: 'ماكاينش بالونات! ماعندناش نقدرو نعملو قائمة من غير بالونات.'
+
+  configuration-folder-not-found: 'مجلد الإعدادات ماكاينش موجود: %s'
+  no-configuration-files-found: 'ماكاينش ملفات إعدادات في المجلد: %s'
+  configuration-section-not-found: 'قسم الإعدادات ماكاينش موجود للملف: %s'
+  balloon-type-not-found: 'خطأ في معالجة نوع البالون للقسم: %s في الملف: %s. نوع البالون ماشي موجود أو null.'
+  balloon-process-error: 'خطأ في معالجة البالون للقسم: %s في الملف: %s. الخطأ: %s'
+
+  menu-slot-out-of-bounds: 'فتحات زر صفحة القائمة %s خارج الحدود!'
+
+  invalid-hex-code: 'رمز سداسي ماشي صالح: %s'

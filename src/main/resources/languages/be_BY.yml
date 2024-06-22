@@ -1,0 +1,31 @@
+messages:
+  prefix: '<gradient:#ff00cc:#5555ff>[Блунс]</gradient> <white>'
+  no-permission: '<#fc1c1c>Доступ забаронены.'
+  player-not-found: '<#fc1c1c>Гульца не знойдзены.'
+  config-reloaded: '<green>Канфігурацыя перазагружана.'
+  command-disabled: '<#fc1c1c>Гэтая каманда зараз адключана!'
+
+  equipped: '%s <green>запасены!'
+  unequipped: '<green>Ваш шарік захаваны бяспечна.'
+  balloon-not-found: '<#fc1c1c>Шар не знойдзены.'
+  not-equipped: '<#fc1c1c>У вас зараз няма запасенага шара.'
+
+  material-not-dyeable: 'Матэрыял %s не можа быць пазначаны колерамі.'
+  invalid-rgb-values: 'Значэння RGB павінны быць у дыяпазоне ад 0 да 255, каб быць сапраўднымі.'
+  balloon-not-set: 'Шар %s не ўстаноўлены ў канфігурацыі!'
+  material-not-set: 'Матэрыял шара %s не ўстаноўлены ў канфігурацыі!'
+  material-not-valid: "Матэрыял шара %s не з'яўляецца сапраўдным матэрыялам! Матэрыял: %s"
+  material-is-not-valid: 'Матэрыял %s не з'яўляецца сапраўдным матэрыялам!'
+  invalid-item-meta: 'Няправільныя метаданыя элемента для матэрыялу: %s'
+
+  no-balloons-registered: 'Няма зарэгістраваных шароў! Немагчыма стварыць меню без шараў.'
+
+  configuration-folder-not-found: 'Катэгорыя канфігурацыі не знойдзена: %s'
+  no-configuration-files-found: 'Няма файлаў канфігурацыі ў тэчцы: %s'
+  configuration-section-not-found: 'Секцыя канфігурацыі не знойдзена для файла: %s'
+  balloon-type-not-found: 'Памылка пры апрацоўцы тыпу шара для раздзелу: %s у файле: %s. Тып шара не існуе або ёсць пустота.'
+  balloon-process-error: 'Памылка пры апрацоўцы шара для раздзелу: %s у файле: %s. Памылка: %s'
+
+  menu-slot-out-of-bounds: '%s кнопка(-і) старонкі меню выходзяць за межы!'
+
+  invalid-hex-code: 'Няправільны шэсцнаццатковы код: %s'

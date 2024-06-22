@@ -1,0 +1,31 @@
+messages:
+  prefix: '<gradient:#ff00cc:#5555ff>[Balloner]</gradient> <white>'
+  no-permission: '<#fc1c1c>Ingen tilladelse.'
+  player-not-found: '<#fc1c1c>Spilleren blev ikke fundet.'
+  config-reloaded: '<green>Konfiguration genindlæst.'
+  command-disabled: '<#fc1c1c>Denne kommando er i øjeblikket deaktiveret!'
+
+  equipped: '%s <green>udrustet!'
+  unequipped: '<green>Din ballon er blevet gemt sikkert.'
+  balloon-not-found: '<#fc1c1c>Ballonen blev ikke fundet.'
+  not-equipped: '<#fc1c1c>Du har i øjeblikket ikke en udstyret ballon.'
+
+  material-not-dyeable: 'Materialet %s kan ikke farves.'
+  invalid-rgb-values: 'RGB-værdier skal være mellem 0 og 255 for at være gyldige.'
+  balloon-not-set: 'Ballonen %s er ikke indstillet i konfigurationen!'
+  material-not-set: 'Materialet til ballonen %s er ikke indstillet i konfigurationen!'
+  material-not-valid: 'Materialet til ballonen %s er ikke gyldigt! Materiale: %s'
+  material-is-not-valid: 'Materialet %s er ikke gyldigt!'
+  invalid-item-meta: 'ItemMeta er ikke gyldig for materialet: %s'
+
+  no-balloons-registered: 'Ingen balloner er registreret! Kan ikke oprette en menu uden balloner.'
+
+  configuration-folder-not-found: 'Konfigurationsmappen blev ikke fundet: %s'
+  no-configuration-files-found: 'Ingen konfigurationsfiler blev fundet i mappen: %s'
+  configuration-section-not-found: 'Konfigurationssektionen blev ikke fundet for filen: %s'
+  balloon-type-not-found: 'Fejl ved behandling af ballontypen for afsnittet: %s i filen: %s. Ballontypen findes ikke eller er tom.'
+  balloon-process-error: 'Fejl ved behandling af ballonen for afsnittet: %s i filen: %s. Fejl: %s'
+
+  menu-slot-out-of-bounds: '%s menuknap(er) er uden for grænserne!'
+
+  invalid-hex-code: 'Ugyldig hexadecimal kode: %s'

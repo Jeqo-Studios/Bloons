@@ -1,0 +1,30 @@
+messages:
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
+  no-permission: '<#fc1c1c>Accès refusé.'
+  player-not-found: '<#fc1c1c>Joueur non trouvé.'
+  config-reloaded: '<green>Configuration rechargée.'
+  command-disabled: '<#fc1c1c>Cette commande est actuellement désactivée!'
+
+  equipped: '%s <green>équipé!'
+  unequipped: '<green>Votre ballon a été rangé en toute sécurité.'
+  balloon-not-found: '<#fc1c1c>Ballon non trouvé.'
+  not-equipped: '<#fc1c1c>Vous n\''avez actuellement aucun ballon équipé.'
+
+  material-not-dyeable: 'Le matériau %s n\''est pas un matériau teignable.'
+  invalid-rgb-values: 'Les valeurs RGB doivent être comprises entre 0 et 255 pour être valides.'
+  balloon-not-set: 'Le ballon %s n\''est pas défini dans la configuration!'
+  material-not-set: 'Le matériau du ballon %s n\''est pas défini dans la configuration!'
+  material-not-valid: 'Le matériau du ballon %s n\''est pas un matériau valide! Matériau: %s'
+  invalid-item-meta: 'ItemMeta n\''est pas valide pour le matériau: %s'
+
+  no-balloons-registered: 'Aucun ballon trouvé! Impossible de créer un menu sans ballons.'
+
+  configuration-folder-not-found: 'Dossier de configuration non trouvé: %s'
+  no-configuration-files-found: 'Aucun fichier de configuration trouvé dans le dossier: %s'
+  configuration-section-not-found: 'Section de configuration non trouvée pour le fichier: %s'
+  balloon-type-not-found: 'Erreur de traitement du type de ballon pour la section: %s dans le fichier: %s. Le type de ballon n\''existe pas ou est nul.'
+  balloon-process-error: 'Erreur de traitement du ballon pour la section: %s dans le fichier: %s. Erreur: %s'
+
+  menu-slot-out-of-bounds: 'Le(s) bouton(s) de la page de menu %s sont hors limites!'
+
+  invalid-hex-code: 'Code hexadécimal invalide: %s'

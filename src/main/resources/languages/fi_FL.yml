@@ -1,0 +1,31 @@
+messages:
+  prefix: '<gradient:#ff00cc:#5555ff>[Ilmapallot]</gradient> <white>'
+  no-permission: '<#fc1c1c>Ei lupaa.'
+  player-not-found: '<#fc1c1c>Pelaajaa ei löydetty.'
+  config-reloaded: '<green>Asetukset on ladattu uudelleen.'
+  command-disabled: '<#fc1c1c>Tämä komento on tällä hetkellä poistettu käytöstä!'
+
+  equipped: '%s <green>varustettu!'
+  unequipped: '<green>Ilmapallonne on turvallisesti tallennettu.'
+  balloon-not-found: '<#fc1c1c>Ilmapalloa ei löytynyt.'
+  not-equipped: '<#fc1c1c>Sinulla ei ole tällä hetkellä varustettua ilmapalloa.'
+
+  material-not-dyeable: 'Materiaalia %s ei voi värjätä.'
+  invalid-rgb-values: 'RGB-arvojen on oltava välillä 0 ja 255, jotta ne olisivat kelvollisia.'
+  balloon-not-set: 'Ilmapalloa %s ei ole asetettu asetuksissa!'
+  material-not-set: 'Ilmapallon materiaalia %s ei ole asetettu asetuksissa!'
+  material-not-valid: 'Ilmapallon materiaali %s ei ole kelvollinen materiaali! Materiaali: %s'
+  material-is-not-valid: 'Materiaali %s ei ole kelvollinen materiaali!'
+  invalid-item-meta: 'ItemMeta ei ole kelvollinen materiaalille: %s'
+
+  no-balloons-registered: 'Ei löydy rekisteröityjä ilmapalloja! Ei voida luoda valikkoa ilman ilmapalloja.'
+
+  configuration-folder-not-found: 'Asetuskansiota ei löydy: %s'
+  no-configuration-files-found: 'Asetustiedostoja ei löytynyt kansiosta: %s'
+  configuration-section-not-found: 'Asetusosaa ei löytynyt tiedostosta: %s'
+  balloon-type-not-found: 'Virhe käsiteltäessä ilmapallotyyppiä osiolle: %s tiedostossa: %s. Ilmapallotyyppiä ei ole tai se on tyhjä.'
+  balloon-process-error: 'Virhe käsiteltäessä ilmapalloa osiolle: %s tiedostossa: %s. Virhe: %s'
+
+  menu-slot-out-of-bounds: '%s valikkosivun painike(tta) on ulkona rajoista!'
+
+  invalid-hex-code: 'Virheellinen heksakoodi: %s'

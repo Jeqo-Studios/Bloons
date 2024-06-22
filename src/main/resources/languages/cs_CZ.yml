@@ -1,0 +1,31 @@
+messages:
+  prefix: '<gradient:#ff00cc:#5555ff>[Balloons]</gradient> <white>'
+  no-permission: '<#fc1c1c>Nemáte oprávnění.'
+  player-not-found: '<#fc1c1c>Hráč nebyl nalezen.'
+  config-reloaded: '<green>Konfigurace byla znovu načtena.'
+  command-disabled: '<#fc1c1c>Tento příkaz je momentálně zakázán!'
+
+  equipped: '%s <green>vybaven!'
+  unequipped: '<green>Váš balón byl uložen bezpečně.'
+  balloon-not-found: '<#fc1c1c>Balon nebyl nalezen.'
+  not-equipped: '<#fc1c1c>Nemáte momentálně vybaven žádný balón.'
+
+  material-not-dyeable: 'Materiál %s nelze obarvit.'
+  invalid-rgb-values: 'RGB hodnoty musí být mezi 0 a 255, aby byly platné.'
+  balloon-not-set: 'Balon %s není nastaven v konfiguraci!'
+  material-not-set: 'Materiál balonu %s není nastaven v konfiguraci!'
+  material-not-valid: 'Materiál balonu %s není platný materiál! Materiál: %s'
+  material-is-not-valid: 'Materiál %s není platný materiál!'
+  invalid-item-meta: 'ItemMeta není platný pro materiál: %s'
+
+  no-balloons-registered: 'Nejsou registrovány žádné balóny! Nelze vytvořit menu bez balónů.'
+
+  configuration-folder-not-found: 'Složka s konfigurací nebyla nalezena: %s'
+  no-configuration-files-found: 'V této složce nebyly nalezeny žádné konfigurační soubory: %s'
+  configuration-section-not-found: 'Sekce konfigurace nebyla nalezena pro soubor: %s'
+  balloon-type-not-found: 'Chyba při zpracování typu balónu pro sekci: %s v souboru: %s. Typ balónu neexistuje nebo je prázdný.'
+  balloon-process-error: 'Chyba při zpracování balónu pro sekci: %s v souboru: %s. Chyba: %s'
+
+  menu-slot-out-of-bounds: '%s tlačítek na stránce menu přesahuje rozsah!'
+
+  invalid-hex-code: 'Neplatný hexadecimální kód: %s'

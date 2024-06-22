@@ -1,0 +1,31 @@
+messages:
+  prefix: '<gradient:#ff00cc:#5555ff>[ბურთები]</gradient> <white>'
+  no-permission: '<#fc1c1c>არაა ნებართვა.'
+  player-not-found: '<#fc1c1c>მოთამაშე არ მოიძებნა.'
+  config-reloaded: '<green>კონფიგურაცია გადატვირთულია.'
+  command-disabled: '<#fc1c1c>ეს ბრძანება ამჟამად გამორთულია!'
+
+  equipped: '%s <green>შედეგიდან ჩამორთულია!'
+  unequipped: '<green>თქვენი ბურთი დაშენახულია უსაფრთხოდ.'
+  balloon-not-found: '<#fc1c1c>ბურთი ვერ მოიძებნა.'
+  not-equipped: '<#fc1c1c>თქვენ ამჟამად არ გაქვთ დამორჩილებული ბურთი.'
+
+  material-not-dyeable: 'მასალა %s არ შეიძლება გათვლდეს.'
+  invalid-rgb-values: 'RGB მნიშვნელობები უნდა იყოს 0-დან 255-მდე, რათა იყოს სწორი.'
+  balloon-not-set: 'ბურთი %s არ არის დაყენებული კონფიგურაციაში!'
+  material-not-set: 'ბურთის მასალა %s არ არის დაყენებული კონფიგურაციაში!'
+  material-not-valid: 'ბურთის მასალა %s არ არის მართებული! მასალა: %s'
+  material-is-not-valid: 'მასალა %s არ არის მართებული!'
+  invalid-item-meta: 'ItemMeta არ არის მასალათვის: %s'
+
+  no-balloons-registered: 'ბურთები არ მოიძებნა! მენიუ ვერ შეიქმნა ბურთების გარეშე.'
+
+  configuration-folder-not-found: 'კონფიგურაციის საქაღალდე არ მოიძებნა: %s'
+  no-configuration-files-found: 'კონფიგურაციის ფაილები არ მოიძებნა საქაღალდეში: %s'
+  configuration-section-not-found: 'კონფიგურაციის სექცია არ მოიძებნა ფაილისთვის: %s'
+  balloon-type-not-found: 'ბურთის ტიპის დამუშავების შეცდომა სექციისთვის: %s ფაილში: %s. ბურთის ტიპი არ არსებობს ან იქნა ცარიელი.'
+  balloon-process-error: 'ბურთის დამუშავების შეცდომა სექციისთვის: %s ფაილში: %s. შეცდომა: %s'
+
+  menu-slot-out-of-bounds: '%s მენიუს გვერდის ღილაკი(ები) გარეთ ზღვაში!'
+
+  invalid-hex-code: 'არასწორი hex კოდი: %s'
