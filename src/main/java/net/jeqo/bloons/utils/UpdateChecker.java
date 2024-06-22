@@ -17,7 +17,7 @@ public record UpdateChecker(JavaPlugin plugin, int resourceId) {
 
     /**
      *                  Gets the latest version of the plugin available on SpigotMC
-     * @param consumer  The consumer to accept the version, type java.util.function.Consumer<java.lang.String>
+     * @param consumer  The consumer to accept the version, type java.util.function.Consumer[java.lang.String]
      */
     public void getVersion(final Consumer<String> consumer) {
         Bukkit.getScheduler().runTaskAsynchronously(this.plugin(), () -> {

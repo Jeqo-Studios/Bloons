@@ -37,6 +37,7 @@ public class ColorManagement {
     /**
      *                  Checks if a string is a valid hex code
      * @param string    The string to check the validity of, type java.lang.String
+     * @return          Whether the string is a valid hex code, type boolean
      */
     public static boolean isHexCode(String string) {
         return string.matches("#[a-fA-F0-9]{6}");

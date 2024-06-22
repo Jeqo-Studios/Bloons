@@ -10,6 +10,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * A class used to handle the tab completion of the commands
+ */
 public class CommandTabCompleter implements TabCompleter {
 
     /**
@@ -21,7 +24,7 @@ public class CommandTabCompleter implements TabCompleter {
      * @param label     Alias of the command which was used, type java.lang.String
      * @param args      The arguments passed to the command, including final
      *                  partial argument to be completed, type java.lang.String[]
-     * @return          A List of possible completions for the final argument, type java.util.List<java.lang.String> or null
+     * @return          A List of possible completions for the final argument, type java.util.List[java.lang.String] or null
      */
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (sender.hasPermission(CommandPermission.RELOAD.getPermission())) {
@@ -79,6 +82,10 @@ public class CommandTabCompleter implements TabCompleter {
         }
     }
 
+    /**
+     *                 Get a list of all the balloons that can be tab completed
+     * @return         A list of all the balloons that can be tab completed, type java.util.List[java.lang.String]
+     */
     public List<String> getBalloonTabComplete() {
         List<String> singleBalloons = ConfigConfiguration.getSingleBalloons().stream().map(singleBalloonType -> singleBalloonType.getId().toLowerCase()).toList();
         List<String> multipartBalloons = ConfigConfiguration.getMultipartBalloons().stream().map(multipartBalloonType -> multipartBalloonType.getId().toLowerCase()).toList();

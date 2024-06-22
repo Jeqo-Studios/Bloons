@@ -18,13 +18,28 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * A class that represents a balloon menu
+ */
 @Getter
 public class BalloonMenu {
+    /**
+     * The pages of the menu
+     */
     public ArrayList<Inventory> pages = new ArrayList<>();
+    /**
+     * The unique identifier of the menu
+     */
     @Setter
     public UUID id;
+    /**
+     * The current page index
+     */
     @Setter
     public int currentPageIndex = 0;
+    /**
+     * The users that have the menu open
+     */
     @Getter
     public static HashMap<UUID, BalloonMenu> users = new HashMap<>();
     private final MessageTranslations messageTranslations = new MessageTranslations(Bloons.getInstance());
@@ -95,7 +110,7 @@ public class BalloonMenu {
 
     /**
      *                  Creates a new balloon menu
-     * @param items     The items to display in the menu, type java.util.ArrayList<org.bukkit.inventory.ItemStack>
+     * @param items     The items to display in the menu, type java.util.ArrayList[org.bukkit.inventory.ItemStack]
      * @param name      The name of the menu, type java.lang.String
      * @param player    The player to open the menu for, type org.bukkit.entity.Player
      */

@@ -23,8 +23,15 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import static net.jeqo.bloons.commands.utils.ErrorHandling.usage;
 
+/**
+ * A command used to equip a balloon
+ */
 public class CommandEquip extends Command {
 
+    /**
+     *                  Constructor for the CommandEquip class
+     * @param plugin    The instance of the plugin, type org.bukkit.plugin.java.JavaPlugin
+     */
     public CommandEquip(JavaPlugin plugin) {
         super(plugin);
         this.addCommandAlias("equip");

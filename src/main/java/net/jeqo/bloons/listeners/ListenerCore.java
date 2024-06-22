@@ -16,6 +16,10 @@ public class ListenerCore {
     private Bloons plugin;
     private ArrayList<Listener> listeners;
 
+    /**
+     *                 Creates a new instance of the listener core
+     * @param plugin   The plugin to register the listeners to, type net.jeqo.bloons.Bloons
+     */
     public ListenerCore(Bloons plugin) {
         this.setPlugin(plugin);
 

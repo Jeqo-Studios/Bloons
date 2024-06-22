@@ -35,19 +35,22 @@ public abstract class GUI {
     public abstract int slots();
 
     /**
-     *          The filler item that is used to fill empty slots in the GUI
-     * @return  The filler item, type net.jeqo.bloons.gui.GUIClickableItem
+     *              The filler item that is used to fill empty slots in the GUI
+     * @param slot  The slot that the item is in, type int
+     * @return      The filler item, type net.jeqo.bloons.gui.GUIClickableItem
      */
     public abstract GUIClickableItem fillerItem(int slot);
 
     /**
-     *          The border item that is used to create a border around the GUI
-     * @return  The border item, type net.jeqo.bloons.gui.GUIClickableItem
+     *              The border item that is used to create a border around the GUI
+     * @param slot  The slot that the item is in, type int
+     * @return      The border item, type net.jeqo.bloons.gui.GUIClickableItem
      */
     public abstract GUIClickableItem borderItem(int slot);
 
     /**
      *              The item that is displayed in the GUI but can't be picked up
+     * @param item  The item that can't be picked up, type net.jeqo.bloons.utils.NBTItem
      * @param slot  The slot that the item is in, type int
      * @return      The item, type net.jeqo.bloons.gui.GUIClickableItem
      */

@@ -11,6 +11,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 
+/**
+ * An example of a menu made with the custom GUI system
+ */
 public class ExampleMenu extends GUI {
     Inventory inventory;
 

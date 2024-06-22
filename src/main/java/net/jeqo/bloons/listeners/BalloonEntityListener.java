@@ -5,6 +5,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityPortalEvent;
 
+/**
+ * A class that listens for events related to balloon entities
+ */
 public class BalloonEntityListener implements Listener {
 
     /**

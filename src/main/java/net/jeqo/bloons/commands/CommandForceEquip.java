@@ -23,8 +23,15 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import static net.jeqo.bloons.commands.utils.ErrorHandling.usage;
 
+/**
+ * A command used to force equip a balloon to the specified player
+ */
 public class CommandForceEquip extends Command {
 
+    /**
+     *                  Constructor for the CommandForceEquip class
+     * @param plugin    The instance of the plugin, type org.bukkit.plugin.java.JavaPlugin
+     */
     public CommandForceEquip(JavaPlugin plugin) {
         super(plugin);
         this.addCommandAlias("fequip");

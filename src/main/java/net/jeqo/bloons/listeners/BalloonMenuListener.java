@@ -20,6 +20,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
+/**
+ * A class that listens for events related to the balloon menu
+ */
 public class BalloonMenuListener implements Listener {
 
     /**

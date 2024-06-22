@@ -7,9 +7,21 @@ import lombok.Getter;
  */
 @Getter
 public enum CommandPermission {
+    /**
+     * The permission required to equip a balloon
+     */
     EQUIP("bloons.equip"),
+    /**
+     * The permission required to unequip a balloon
+     */
     UNEQUIP("bloons.unequip"),
+    /**
+     * The permission required to force equip or force unequip a balloon
+     */
     FORCE("bloons.force"),
+    /**
+     * The permission required to reload the plugin
+     */
     RELOAD("bloons.reload");
 
     private final String permission;

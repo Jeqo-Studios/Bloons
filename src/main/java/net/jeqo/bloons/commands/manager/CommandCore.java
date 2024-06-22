@@ -31,6 +31,9 @@ import java.util.Objects;
 
 import static net.jeqo.bloons.commands.utils.ErrorHandling.usage;
 
+/**
+ * Handles the core functionality of commands and their restrictive access
+ */
 @Getter
 public class CommandCore implements CommandExecutor {
     private final ArrayList<Command> commands;

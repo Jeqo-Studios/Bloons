@@ -21,9 +21,13 @@ import java.util.ArrayList;
  * A class that contains configurations for the plugin configuration file
  */
 public class ConfigConfiguration {
-    // The folder that stores the balloons to be loaded
+    /**
+     * The folder that stores the balloons to be loaded
+     */
     public static final String BALLOON_CONFIGURATION_FOLDER = "balloons";
-    // The folder that stores the languages to be loaded
+    /**
+     * The folder that stores the languages to be loaded
+     */
     public static final String LANGUAGES_CONFIGURATION_FOLDER = "languages";
 
     /**
@@ -44,7 +48,7 @@ public class ConfigConfiguration {
     /**
      *         Gets all the single balloon types from the configuration files
      * @return The single balloon types from the configuration files,
-     *         returns an empty array list if no single balloons are found, type java.util.ArrayList<net.jeqo.bloons.balloon.single.SingleBalloonType>
+     *         returns an empty array list if no single balloons are found, type java.util.ArrayList[net.jeqo.bloons.balloon.single.SingleBalloonType]
      */
     public static ArrayList<SingleBalloonType> getSingleBalloons() {
         // Start an array of single balloon types that's empty
@@ -117,7 +121,7 @@ public class ConfigConfiguration {
     /**
      *          Gets all the multipart balloon types from the configuration files
      * @return  The multipart balloon types from the configuration files,
-     *          returns an empty array list if no multipart balloons are found, type java.util.ArrayList<net.jeqo.bloons.balloon.multipart.MultipartBalloonType>
+     *          returns an empty array list if no multipart balloons are found, type java.util.ArrayList[net.jeqo.bloons.balloon.multipart.MultipartBalloonType]
      */
     public static ArrayList<MultipartBalloonType> getMultipartBalloons() {
         // Start an array of single balloon types that's empty

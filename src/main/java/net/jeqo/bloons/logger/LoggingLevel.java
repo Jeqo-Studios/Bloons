@@ -9,9 +9,21 @@ import net.kyori.adventure.text.format.NamedTextColor;
  */
 @Getter
 public enum LoggingLevel {
+    /**
+     * Used in the case there is a soft error
+     */
     WARNING("WARNING", NamedTextColor.RED),
+    /**
+     * Used in the case there is an informational message
+     */
     INFO("INFO", NamedTextColor.YELLOW),
+    /**
+     * Used in the case there is a hard error
+     */
     ERROR("ERROR", NamedTextColor.DARK_RED),
+    /**
+     * Used for debugging purposes only
+     */
     DEBUG("DEBUG", NamedTextColor.WHITE);
 
     private final String name;

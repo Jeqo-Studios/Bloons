@@ -9,6 +9,9 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.util.Objects;
 
+/**
+ * A class to manage the translations and retrieving of messages
+ */
 public class LanguageManagement {
 
     /**

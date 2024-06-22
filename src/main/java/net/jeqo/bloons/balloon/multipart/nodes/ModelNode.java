@@ -35,11 +35,14 @@ public class ModelNode {
     double turningSplineInterpolation;
 
     /**
-         *              Builder for creating lead segment.
-     * @param x         X-axis position, type float
-     * @param z         Z-axis position, type float
-     * @param length    Length of segment in blocks, type float
-     * @param index     Index number of segment, type int
+         *                  Builder for creating lead segment.
+     * @param x             X-axis position, type float
+     * @param y             Y-axis position, type float
+     * @param z             Z-axis position, type float
+     * @param length        Length of segment in blocks, type float
+     * @param index         Index number of segment, type int
+     * @param balloonType   Type of balloon, type net.jeqo.bloons.balloon.multipart.MultipartBalloonType
+     * @param balloonOwner  Owner of the balloon, type org.bukkit.entity.Player
      */
     public ModelNode(float x, float y, float z, float length, int index, MultipartBalloonType balloonType, Player balloonOwner, double maxNodeJointAngle, double yAxisInterpolation, double turningSplineInterpolation) {
         this.setLength(length);

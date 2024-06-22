@@ -20,6 +20,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+/**
+ * The main class of the plugin that houses the core managers and the plugin instance
+ */
 public final class Bloons extends JavaPlugin {
     @Getter @Setter
     private static Bloons instance;
@@ -30,11 +33,20 @@ public final class Bloons extends JavaPlugin {
     @Getter @Setter
     private static BalloonCore balloonCore;
 
+    /**
+     * A map of all players with a single balloon
+     */
     @Getter @Setter
     public static HashMap<UUID, SingleBalloon> playerSingleBalloons = new HashMap<>();
+    /**
+     * A map of all players with a single balloon and its ID
+     */
     @Getter @Setter
     public static HashMap<UUID, String> playerSingleBalloonID = new HashMap<>();
 
+    /**
+     * A map of all players with a multipart balloon
+     */
     @Getter
     public static final Map<UUID, MultipartBalloon> playerMultipartBalloons = new HashMap<>();
 

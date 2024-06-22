@@ -10,8 +10,15 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
+/**
+ * A command used to reload the Bloons configurations
+ */
 public class CommandReload extends Command {
 
+    /**
+     *                 Constructor for the CommandReload class
+     * @param plugin   The instance of the plugin, type org.bukkit.plugin.java.JavaPlugin
+     */
     public CommandReload(JavaPlugin plugin) {
         super(plugin);
         this.addCommandAlias("reload");

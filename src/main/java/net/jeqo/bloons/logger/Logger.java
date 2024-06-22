@@ -120,7 +120,8 @@ public class Logger {
     }
 
     /**
-     * Logs an update notification to a player
+     *                  Logs an update notification to a player
+     * @param player    The player to log the update notification to, type org.bukkit.entity.Player
      */
     public static void logUpdateNotificationPlayer(Player player) {
         logToPlayer(player, "A new update is available for " + PluginConfiguration.getName() + " plugin");
