@@ -9,7 +9,7 @@ on:
 
 jobs:
   # Runs on Ubuntu latest (version 22.04)
-  ubunutu:
+  ubuntu:
     name: 'Build Ubuntu Latest'
     runs-on: ubuntu-latest
     environment: jdk21-building
@@ -24,7 +24,14 @@ jobs:
         with:
           java-version: ${{ vars.JAVA_VERSION }}
           distribution: ${{ vars.UBUNTU_DISTRIBUTION }}
-          cache: maven
+
+      - name: Cache Maven dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
 
       - name: Run the Maven verify phase
         run: mvn --batch-mode --update-snapshots verify
@@ -48,7 +55,14 @@ jobs:
         with:
           java-version: ${{ vars.JAVA_VERSION }}
           distribution: ${{ vars.MACOS_DISTRIBUTION }}
-          cache: maven
+
+      - name: Cache Maven dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
 
       - name: Run the Maven verify phase
         run: mvn --batch-mode --update-snapshots verify
@@ -72,7 +86,14 @@ jobs:
         with:
           java-version: ${{ vars.JAVA_VERSION }}
           distribution: ${{ vars.WINDOWS_DISTRIBUTION }}
-          cache: maven
+
+      - name: Cache Maven dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
 
       - name: Run the Maven verify phase
         run: mvn --batch-mode --update-snapshots verify
