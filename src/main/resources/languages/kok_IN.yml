@@ -1,0 +1,31 @@
+messages:
+  prefix: '<gradient:#ff00cc:#5555ff>[गुबांस]</gradient> <white>'
+  no-permission: '<#fc1c1c>परवानगी नको.'
+  player-not-found: '<#fc1c1c>खेळाडू सापडला नाही.'
+  config-reloaded: '<green>कॉनफिगरेशन पुन्हा लोड केली.'
+  command-disabled: '<#fc1c1c>हे कमांड आत्ता अक्षम आहे!'
+
+  equipped: '%s <green>थांबलेला आहे!'
+  unequipped: '<green>तुमचा गुबांस सुरक्षितरित्या जतन केला गेला आहे.'
+  balloon-not-found: '<#fc1c1c>गुबांस सापडला नाही.'
+  not-equipped: '<#fc1c1c>आत्ता तुमच्याकडे कोणतेही थांबलेले गुबांस नाही.'
+
+  material-not-dyeable: 'मटेरियल %s रंगण योग्य नाही.'
+  invalid-rgb-values: 'RGB मूल्ये 0 आणि 255 यांच्यात असाव्याचे आवश्यक आहेत.'
+  balloon-not-set: '%s गुबांस सेट केलेला नाही!'
+  material-not-set: '%s गुबांसचा सामग्री कॉनफिगरेशनमध्ये सेट केलेला नाही!'
+  material-not-valid: '%s गुबांसचा सामग्री अवैध सामग्री आहे! सामग्री: %s'
+  material-is-not-valid: '%s सामग्री अवैध सामग्री नाही!'
+  invalid-item-meta: 'आयटममेटा सामग्र्यासाठी अवैध आहे: %s'
+
+  no-balloons-registered: 'कोणत्याही गुबांस नोंदविल्या नाहीत! गुबांस बिना मेनू तयार करणे असंभव आहे.'
+
+  configuration-folder-not-found: 'कॉनफिगरेशन फोल्डर सापडला नाही: %s'
+  no-configuration-files-found: 'कॉनफिगरेशन फाइल सापडली नाही: %s'
+  configuration-section-not-found: 'फाइलसाठी कॉनफिगरेशन खंड सापडला नाही: %s'
+  balloon-type-not-found: 'विभाग: %s फाईल: %s साठी गुबांस प्रकार प्रोसेसिंग करण्यात त्रुटी आली. गुबांस प्रकार अस्तित्वात नाही किंवा रिक्त आहे.'
+  balloon-process-error: 'विभाग: %s फाईल: %s साठी गुबांस प्रोसेसिंग करण्यात त्रुटी आली. त्रुटी: %s'
+
+  menu-slot-out-of-bounds: '%s मेनू पृष्ठ बटण स्लॉट सीमेत आहेत!'
+
+  invalid-hex-code: 'अवैध हेक्स कोड: %s'

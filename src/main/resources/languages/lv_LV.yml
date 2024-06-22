@@ -1,0 +1,31 @@
+messages:
+  prefix: '<gradient:#ff00cc:#5555ff>[Gaisa baloni]</gradient> <white>'
+  no-permission: '<#fc1c1c>Piekļuve liegta.'
+  player-not-found: '<#fc1c1c>Spēlētājs nav atrasts.'
+  config-reloaded: '<green>Konfigurācija pārlādēta.'
+  command-disabled: '<#fc1c1c>Šī komanda pašlaik ir atspējota!'
+
+  equipped: '%s <green>izvēlēts!'
+  unequipped: '<green>Jūsu gaisa balons ir droši saglabāts.'
+  balloon-not-found: '<#fc1c1c>Gaisa balons nav atrasts.'
+  not-equipped: '<#fc1c1c>Jums pašlaik nav neviena gaisa balona izvēlēta.'
+
+  material-not-dyeable: 'Materiālu %s nevar nokrāsot.'
+  invalid-rgb-values: 'RGB vērtībām jābūt starp 0 un 255, lai tās būtu derīgas.'
+  balloon-not-set: '%s gaisa balons nav iestatīts konfigurācijā!'
+  material-not-set: '%s gaisa balona materiāls nav iestatīts konfigurācijā!'
+  material-not-valid: '%s gaisa balona materiāls nav derīgs! Materiāls: %s'
+  material-is-not-valid: 'Materiāls %s nav derīgs materiāls!'
+  invalid-item-meta: 'Priekšmets Meta nav derīgs materiālam: %s'
+
+  no-balloons-registered: 'Nav reģistrēts neviens gaisa balons! Nevar izveidot izvēlni bez gaisa baloniem.'
+
+  configuration-folder-not-found: 'Konfigurācijas mape nav atrasta: %s'
+  no-configuration-files-found: 'Konfigurācijas faili nav atrasti mapē: %s'
+  configuration-section-not-found: 'Konfigurācijas sadaļa nav atrasta failam: %s'
+  balloon-type-not-found: 'Kļūda apstrādājot gaisa balona veidu sadaļai: %s failā: %s. Gaisa balona tips neeksistē vai ir nulle.'
+  balloon-process-error: 'Kļūda apstrādājot gaisa balonu sadaļai: %s failā: %s. Kļūda: %s'
+
+  menu-slot-out-of-bounds: '%s izvēlnes lapas pogu slots ir ārpus robežām!'
+
+  invalid-hex-code: 'Nederīgs hex kods: %s'

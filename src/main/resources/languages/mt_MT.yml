@@ -1,0 +1,31 @@
+messages:
+  prefix: '<gradient:#ff00cc:#5555ff>[Balloons]</gradient> <white>'
+  no-permission: '<#fc1c1c>Aċċess imneħħi.'
+  player-not-found: '<#fc1c1c>Lilek ma nstabx.'
+  config-reloaded: '<green>Konfigurazzjoni riffriskata.'
+  command-disabled: '<#fc1c1c>Din il-kommanda hija disattivata bħalissa!'
+
+  equipped: '%s <green>imħallat!'
+  unequipped: '<green>Il-ballun tiegħek ġie ssalvat b'sigurtà.'
+  balloon-not-found: '<#fc1c1c>Ballun ma nstabx.'
+  not-equipped: '<#fc1c1c>Inti bħalissa ma għandekx ballun imħallat.'
+
+  material-not-dyeable: 'Il-materjal %s ma jistax jiġi maħżul.'
+  invalid-rgb-values: 'Il-valuri RGB għandhom ikunu bejn 0 u 255 biex ikunu validi.'
+  balloon-not-set: 'Il-ballun %s ma ġiex stabbilit fil-konfigurazzjoni!'
+  material-not-set: 'Il-materjal tal-ballun %s ma ġie stabbilit fil-konfigurazzjoni!'
+  material-not-valid: 'Il-materjal tal-ballun %s ma huwiex materjal validu! Materjal: %s'
+  material-is-not-valid: 'Il-materjal %s ma huwiex materjal validu!'
+  invalid-item-meta: 'ItemMeta mhix valida għal materjal: %s'
+
+  no-balloons-registered: 'L-ebda balluni mregistra! Ma tistax toħloq menu bla balluni.'
+
+  configuration-folder-not-found: 'Fowldier tal-konfigurazzjoni ma nstabx: %s'
+  no-configuration-files-found: 'Ebda fajl tal-konfigurazzjoni ma nstabx fil-fowldier: %s'
+  configuration-section-not-found: 'Seksjoni tal-konfigurazzjoni ma nstabx għall-fajl: %s'
+  balloon-type-not-found: 'Żballun tal-tip mhux matmati għas-sezzjoni: %s fil-fajl: %s. It-tip tal-ballun ma jeżistix jew huwa null.'
+  balloon-process-error: "Żballun ta' l-proċessar għas-sezzjoni: %s fil-fajl: %s. Żballun processa l-ħażin: %s"
+
+  menu-slot-out-of-bounds: '%s slot tal-paġna tal-meni huwa barra mill-limiti!'
+
+  invalid-hex-code: 'Kodiċi heksa invalidu: %s'

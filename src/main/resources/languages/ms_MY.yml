@@ -1,0 +1,31 @@
+messages:
+  prefix: '<gradient:#ff00cc:#5555ff>[Belon]</gradient> <white>'
+  no-permission: '<#fc1c1c>Akses ditolak.'
+  player-not-found: '<#fc1c1c>Pemain tidak dijumpai.'
+  config-reloaded: '<green>Konfigurasi dimuat semula.'
+  command-disabled: '<#fc1c1c>Perintah ini kini dinyahaktifkan!'
+
+  equipped: '%s <green>dilengkapi!'
+  unequipped: '<green>Belon anda telah disimpan dengan selamat.'
+  balloon-not-found: '<#fc1c1c>Belon tidak dijumpai.'
+  not-equipped: '<#fc1c1c>Anda kini tidak mempunyai belon yang dilengkapi.'
+
+  material-not-dyeable: 'Bahan %s tidak boleh diwarnakan.'
+  invalid-rgb-values: 'Nilai-nilai RGB mestilah antara 0 dan 255 untuk sah.'
+  balloon-not-set: 'Belon %s tidak ditetapkan dalam konfigurasi!'
+  material-not-set: 'Bahan belon %s tidak ditetapkan dalam konfigurasi!'
+  material-not-valid: 'Bahan belon %s tidak sah! Bahan: %s'
+  material-is-not-valid: 'Bahan %s bukan bahan yang sah!'
+  invalid-item-meta: 'ItemMeta tidak sah untuk bahan: %s'
+
+  no-balloons-registered: 'Tiada belon yang didaftarkan! Tidak dapat membuat menu tanpa belon.'
+
+  configuration-folder-not-found: 'Folder konfigurasi tidak dijumpai: %s'
+  no-configuration-files-found: 'Tiada fail konfigurasi dijumpai dalam folder: %s'
+  configuration-section-not-found: 'Seksyen konfigurasi tidak dijumpai untuk fail: %s'
+  balloon-type-not-found: 'Ralat semasa pemprosesan jenis belon untuk seksyen: %s dalam fail: %s. Jenis belon tidak wujud atau adalah null.'
+  balloon-process-error: 'Ralat semasa pemprosesan belon untuk seksyen: %s dalam fail: %s. Ralat: %s'
+
+  menu-slot-out-of-bounds: '%s slot butang halaman menu di luar batasannya!'
+
+  invalid-hex-code: 'Kod heks tidak sah: %s'

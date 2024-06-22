@@ -1,0 +1,31 @@
+messages:
+  prefix: '<gradient:#ff00cc:#5555ff>[Балони]</gradient> <white>'
+  no-permission: '<#fc1c1c>Пристапот е забранет.'
+  player-not-found: '<#fc1c1c>Играчот не е пронајден.'
+  config-reloaded: '<green>Конфигурацијата е превчитана.'
+  command-disabled: '<#fc1c1c>Оваа команда е исклучена во моментов!'
+
+  equipped: '%s <green>опремен!'
+  unequipped: '<green>Вашиот балон е безбедно зачуван.'
+  balloon-not-found: '<#fc1c1c>Балонот не е пронајден.'
+  not-equipped: '<#fc1c1c>Моментално немате опремен балон.'
+
+  material-not-dyeable: 'Материјалот %s не може да се обои.'
+  invalid-rgb-values: 'RGB вредностите мора да бидат помеѓу 0 и 255 за да бидат валидни.'
+  balloon-not-set: 'Балонот %s не е поставен во конфигурацијата!'
+  material-not-set: 'Материјалот на балонот %s не е поставен во конфигурацијата!'
+  material-not-valid: 'Материјалот на балонот %s не е валиден! Материјал: %s'
+  material-is-not-valid: 'Материјалот %s не е валиден материјал!'
+  invalid-item-meta: 'ItemMeta не е валиден за материјалот: %s'
+
+  no-balloons-registered: 'Не се регистрирани балони! Не може да се создаде мени без балони.'
+
+  configuration-folder-not-found: 'Папката за конфигурација не е пронајдена: %s'
+  no-configuration-files-found: 'Не се пронајдени конфигурациски датотеки во папката: %s'
+  configuration-section-not-found: 'Секцијата за конфигурација не е пронајдена за датотеката: %s'
+  balloon-type-not-found: 'Грешка при процесирањето на типот на балон за секцијата: %s во датотеката: %s. Типот на балон не постои или е нула.'
+  balloon-process-error: 'Грешка при процесирањето на балон за секцијата: %s во датотеката: %s. Грешка: %s'
+
+  menu-slot-out-of-bounds: '%s копчиња на страната на мениот се надвор од опсегот!'
+
+  invalid-hex-code: 'Невалиден хекс код: %s'
