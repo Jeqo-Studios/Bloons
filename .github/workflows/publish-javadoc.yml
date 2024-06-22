@@ -8,17 +8,18 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    environment: jdk21-flat
     permissions:
       contents: write  # if you have a protection rule on your repository, you'll need to give write permission to the workflow.
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Set up JDK 17
+      - name: Set up JDK ${{ vars.JAVA_VERSION }}
         uses: actions/setup-java@v2
         with:
-          distribution: 'adopt'
-          java-version: '17'
+          java-version: ${{ vars.JAVA_VERSION }}
+          distribution: ${{ vars.JAVA_DISTRIBUTION }}
 
       - name: Cache Maven dependencies
         uses: actions/cache@v3
@@ -36,6 +37,6 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           javadoc-branch: javadoc
-          java-version: 17
+          java-version: ${{ vars.JAVA_VERSION }}
           target-folder: javadoc # url will be https://<username>.github.io/<repo>/javadoc, This can be left as nothing to generate javadocs in the root folder.
           project: maven # or gradle
