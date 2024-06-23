@@ -18,13 +18,11 @@ public class SingleBalloonType {
 
     /** Options for a non-MEG balloon **/
     private String material;
-    private String color;
+    private String color = "#ffffff";
     private int customModelData;
 
     /** MEG only options **/
     private String megModelID;
-    private String iconMaterial = "#ffffff";
-    private int iconCustomModelData;
 
     /**
      *                          Creates a new single balloon type configuration for a non-MEG balloon
