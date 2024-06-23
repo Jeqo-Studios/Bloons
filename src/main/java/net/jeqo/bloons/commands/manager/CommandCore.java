@@ -101,7 +101,7 @@ public class CommandCore implements CommandExecutor {
             Player player = (Player) sender;
 
             if (!player.hasPermission("bloons.menu")) {
-                Component noPermission = this.getMessageTranslations().getSerializedString(this.getMessageTranslations().getMessage("prefix"), LanguageManagement.getMessage("no-permission"));
+                Component noPermission = this.getMessageTranslations().getSerializedString(LanguageManagement.getMessage("prefix"), LanguageManagement.getMessage("no-permission"));
                 player.sendMessage(noPermission);
                 return true;
             }
@@ -140,13 +140,13 @@ public class CommandCore implements CommandExecutor {
             if (currentCommand.getCommandAliases().contains(subcommand)) {
                 // Check if the sender has the permission to execute the command
                 if (!meetsRequirements(currentCommand, sender)) {
-                    sender.sendMessage(this.getMessageTranslations().getSerializedString(this.getMessageTranslations().getMessage("prefix"), LanguageManagement.getMessage("no-permission")));
+                    sender.sendMessage(this.getMessageTranslations().getSerializedString(LanguageManagement.getMessage("prefix"), LanguageManagement.getMessage("no-permission")));
                     return false;
                 }
 
                 // Check if the command is disabled
                 if (currentCommand.getRequiredAccess() == CommandAccess.DISABLED) {
-                    sender.sendMessage(this.getMessageTranslations().getSerializedString(this.getMessageTranslations().getMessage("prefix"), LanguageManagement.getMessage("command-disabled")));
+                    sender.sendMessage(this.getMessageTranslations().getSerializedString(LanguageManagement.getMessage("prefix"), LanguageManagement.getMessage("command-disabled")));
                     return false;
                 }
 
