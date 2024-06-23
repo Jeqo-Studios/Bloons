@@ -34,6 +34,7 @@ public class BalloonCore {
     private final String[] exampleBalloons = new String[] {
             "color_pack_example.yml",
             "dyeable_example.yml",
+            "meg_example.yml",
             "multipart_example.yml"
     };
 

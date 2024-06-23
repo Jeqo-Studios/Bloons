@@ -1,0 +1,13 @@
+# An example of a MEG balloon which utilizes custom models from ModelEngine
+meg_example:
+  id: meg_example
+  permission: balloon.meg_example
+  meg-model-id: meg_example
+  icon:
+    material: FLINT
+    custom-model-data: 7
+    name: '<white>MEG Balloon'
+    lore:
+      - '&8Bloons Default Balloon'
+      - ''
+      - '&eᴄʟɪᴄᴋ ᴛᴏ ᴇǫᴜɪᴘ'

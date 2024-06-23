@@ -5,25 +5,13 @@ dyeable_example:
   type: single
   id: dyeable_example
   permission: balloon.dyeable
-  leash-height: 1.2 # The height of the balloon leash from about the players head
-  balloon-height: 2.0 # The height of the balloon from about the players head
+  leash-height: 1.2
+  balloon-height: 2.0
   material: LEATHER_HORSE_ARMOR
   color: '#ffffff'
   custom-model-data: 1
   name: '<white>Dyeable Balloon'
   lore:
     - '&8Bloons Example Balloon'
-    - ''
-    - '&eᴄʟɪᴄᴋ ᴛᴏ ᴇǫᴜɪᴘ'
-single_meg_example:
-  id: single_meg_example
-  permission: balloon.single_meg_example
-  meg-model-id: single_meg_example
-  icon:
-    material: FLINT
-    custom-model-data: 7
-    name: '<white>Single MEG Balloon'
-    lore:
-    - '&8Bloons Default Balloon'
     - ''
     - '&eᴄʟɪᴄᴋ ᴛᴏ ᴇǫᴜɪᴘ'

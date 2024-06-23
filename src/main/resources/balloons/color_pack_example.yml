@@ -2,7 +2,7 @@
 # It can contain all the way from one balloon to technically an infinite
 # amount of balloons, as long as the server can handle it.
 blue:
-  type: single # The type of balloon, this must be single for single balloons
+  type: single
   id: blue
   permission: balloon.blue
   material: FLINT
