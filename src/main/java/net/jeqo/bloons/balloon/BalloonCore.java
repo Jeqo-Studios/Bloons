@@ -8,6 +8,7 @@ import net.jeqo.bloons.balloon.single.SingleBalloonType;
 import net.jeqo.bloons.configuration.ConfigConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -65,10 +66,20 @@ public class BalloonCore {
      * Copies the example balloons folder to the plugin's data folder if it doesn't exist
      */
     public void copyExampleBalloons() {
+        // List of example balloon files
+        String[] exampleBalloons = new String[] {
+                "/color_pack_example.yml",
+                "/dyeable_example.yml",
+                "/multipart_example.yml"
+        };
+
         // Save all example files in the balloons folder in /resources
-        Bloons.getInstance().saveResource(ConfigConfiguration.BALLOON_CONFIGURATION_FOLDER + "/color_pack_example.yml", false);
-        Bloons.getInstance().saveResource(ConfigConfiguration.BALLOON_CONFIGURATION_FOLDER + "/dyeable_example.yml", false);
-        Bloons.getInstance().saveResource(ConfigConfiguration.BALLOON_CONFIGURATION_FOLDER + "/multipart_example.yml", false);
+        for (String example : exampleBalloons) {
+            File file = new File(Bloons.getInstance().getDataFolder() + File.separator + ConfigConfiguration.BALLOON_CONFIGURATION_FOLDER + example);
+            if (file.exists()) continue;
+
+            Bloons.getInstance().saveResource(ConfigConfiguration.BALLOON_CONFIGURATION_FOLDER + example, false);
+        }
     }
 
     /**
