@@ -13,11 +13,9 @@ public class SingleBalloonType {
     private String permission;
     private String name;
 
-    /** Also called icon.lore for MEG balloons **/
     private String[] lore;
-
-    /** Options for a non-MEG balloon **/
     private String material;
+    // Not used by MEG balloons
     private String color = "#ffffff";
     private int customModelData;
 
