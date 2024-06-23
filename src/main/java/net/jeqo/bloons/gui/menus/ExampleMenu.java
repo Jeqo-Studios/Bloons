@@ -4,7 +4,7 @@ import net.jeqo.bloons.gui.GUI;
 import net.jeqo.bloons.gui.GUIClickableItem;
 import net.jeqo.bloons.gui.item.border.BlackGlassPaneBorder;
 import net.jeqo.bloons.gui.item.filler.BlackGlassPaneFillerItem;
-import net.jeqo.bloons.utils.NBTItem;
+import net.jeqo.bloons.item.NBTItem;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

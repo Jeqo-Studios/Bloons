@@ -1,7 +1,7 @@
 package net.jeqo.bloons.balloon.model;
 
 import net.jeqo.bloons.logger.Logger;
-import net.jeqo.bloons.utils.Languages;
+import net.jeqo.bloons.message.Languages;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
