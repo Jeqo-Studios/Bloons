@@ -1,6 +1,8 @@
 package net.jeqo.bloons.balloon.single;
 
 import com.ticxo.modelengine.api.ModelEngineAPI;
+import com.ticxo.modelengine.api.animation.handler.AnimationHandler;
+import com.ticxo.modelengine.api.model.ActiveModel;
 import com.ticxo.modelengine.api.model.ModeledEntity;
 import lombok.Getter;
 import lombok.Setter;
@@ -37,7 +39,11 @@ public class SingleBalloon extends BukkitRunnable {
     private ArmorStand balloonArmorStand;
     public Chicken balloonChicken;
 
+    /** MEG related variables **/
     private ModeledEntity modeledEntity;
+    private ActiveModel activeModel;
+    private AnimationHandler animationHandler;
+    private final String defaultIdleAnimationID = "idle";
 
     private Location playerLocation;
     private Location moveLocation;
@@ -122,6 +128,15 @@ public class SingleBalloon extends BukkitRunnable {
             this.teleport(playerLocation);
         }
 
+        // If all parts of a MEG balloon exist and the idle animation exists and it isn't playing, play it
+        if (this.getAnimationHandler() != null) {
+            if (this.getAnimationHandler().getAnimation(this.getDefaultIdleAnimationID()) != null) {
+                if (!this.getAnimationHandler().isPlayingAnimation(this.getDefaultIdleAnimationID())) {
+                    this.getAnimationHandler().playAnimation(this.getDefaultIdleAnimationID(), 0.3, 0.3, 1,true);
+                }
+            }
+        }
+
         this.setPlayerLocation(this.getPlayer().getLocation());
         this.getPlayerLocation().setYaw(playerLocation.getYaw());
         this.setTicks(this.getTicks() + 1);
@@ -134,7 +149,8 @@ public class SingleBalloon extends BukkitRunnable {
     public synchronized void cancel() throws IllegalStateException {
         if (this.getModeledEntity() != null) {
             // Remove the MEG model if it exists
-            this.getModeledEntity().removeModel(this.getBalloonType().getMegModelID());
+            ModeledEntity modeledEntity = ModelEngineAPI.getModeledEntity(this.getBalloonArmorStand());
+            modeledEntity.removeModel(this.getBalloonType().getMegModelID());
         }
         this.getBalloonArmorStand().remove();
         this.getBalloonChicken().remove();
@@ -234,7 +250,7 @@ public class SingleBalloon extends BukkitRunnable {
     public void initializeBalloonArmorStand() {
         this.setBalloonArmorStand(this.getPlayerLocation().getWorld().spawn(this.getPlayerLocation(), ArmorStand.class));
         this.getBalloonArmorStand().setBasePlate(false);
-        this.getBalloonArmorStand().setVisible(false);
+        this.getBalloonArmorStand().setVisible(true);
         this.getBalloonArmorStand().setInvulnerable(true);
         this.getBalloonArmorStand().setCanPickupItems(false);
         this.getBalloonArmorStand().setGravity(false);
@@ -245,10 +261,20 @@ public class SingleBalloon extends BukkitRunnable {
             this.getBalloonArmorStand().getEquipment().setHelmet(this.getBalloonVisual());
         } else {
             try {
-                this.setModeledEntity(ModelEngineAPI.createModeledEntity(this.getBalloonArmorStand()));
-                this.getModeledEntity().addModel(ModelEngineAPI.createActiveModel(this.getBalloonType().getMegModelID()), true);
+                // Create the entity and tag it onto the armor stand
+                ModeledEntity modeledEntity = ModelEngineAPI.createModeledEntity(this.getBalloonArmorStand());
+                ActiveModel activeModel = ModelEngineAPI.createActiveModel(this.getBalloonType().getMegModelID());
+
+                modeledEntity.addModel(activeModel, true);
+
+                // Set the animation handler to the one of the active model
+                this.setAnimationHandler(activeModel.getAnimationHandler());
+
+                // If an idle animation exists, play it initially
+                this.getAnimationHandler().playAnimation(this.getDefaultIdleAnimationID(), 0.3, 0.3, 1,true);
             } catch (Exception e) {
-                Logger.logError("An error occurred while creating the MEG model for the balloon " + this.getBalloonType().getId() + "! This is most likely because the ID of the model doesn't exist in the meg-model-id field.");
+                Logger.logError("An error occurred while creating the MEG model for the balloon " + this.getBalloonType().getId() + "! This is because a MEG model error occurred.");
+                e.printStackTrace();
             }
         }
         this.getBalloonArmorStand().customName(Component.text(BalloonConfiguration.BALLOON_ARMOR_STAND_ID));
