@@ -25,6 +25,14 @@ public class BalloonCore {
      * Contains all valid and loaded single balloon types/configurations
      */
     public ArrayList<SingleBalloonType> singleBalloonTypes = new ArrayList<>();
+    /**
+     * Contains all example balloon files to copy to the plugin's data folder
+     */
+    private final String[] exampleBalloons = new String[] {
+            "color_pack_example.yml",
+            "dyeable_example.yml",
+            "multipart_example.yml"
+    };
 
     /**
      *                          Creates a new instance of the balloon core manager with preset registered balloons
@@ -66,16 +74,9 @@ public class BalloonCore {
      * Copies the example balloons folder to the plugin's data folder if it doesn't exist
      */
     public void copyExampleBalloons() {
-        // List of example balloon files
-        String[] exampleBalloons = new String[] {
-                "/color_pack_example.yml",
-                "/dyeable_example.yml",
-                "/multipart_example.yml"
-        };
-
         // Save all example files in the balloons folder in /resources
-        for (String example : exampleBalloons) {
-            File file = new File(Bloons.getInstance().getDataFolder() + File.separator + ConfigConfiguration.BALLOON_CONFIGURATION_FOLDER + example);
+        for (String example : this.getExampleBalloons()) {
+            File file = new File(Bloons.getInstance().getDataFolder() + File.separator + ConfigConfiguration.BALLOON_CONFIGURATION_FOLDER + File.separator + example);
             if (file.exists()) continue;
 
             Bloons.getInstance().saveResource(ConfigConfiguration.BALLOON_CONFIGURATION_FOLDER + example, false);
