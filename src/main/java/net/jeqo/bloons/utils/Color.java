@@ -1,7 +1,6 @@
 package net.jeqo.bloons.utils;
 
 import org.bukkit.ChatColor;
-import org.bukkit.Color;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -9,7 +8,7 @@ import java.util.regex.Pattern;
 /**
  * A class to convert messages with hex codes, and hex strings to Bukkit colors
  */
-public class ColorManagement {
+public class Color {
 
     /**
      *                  Converts a message with hex codes to a Bukkit color
@@ -48,7 +47,7 @@ public class ColorManagement {
      * @param string    The hex string to convert, type java.lang.String
      * @return          The Bukkit color, type org.bukkit.Color
      */
-    public static Color hexToColor(String string) {
-        return Color.fromRGB(Integer.parseInt(string.substring(1), 16));
+    public static org.bukkit.Color hexToColor(String string) {
+        return org.bukkit.Color.fromRGB(Integer.parseInt(string.substring(1), 16));
     }
 }

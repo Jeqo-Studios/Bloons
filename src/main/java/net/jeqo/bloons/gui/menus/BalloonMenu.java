@@ -4,8 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.logger.Logger;
-import net.jeqo.bloons.utils.ColorManagement;
-import net.jeqo.bloons.utils.LanguageManagement;
+import net.jeqo.bloons.utils.Color;
+import net.jeqo.bloons.utils.Languages;
 import net.jeqo.bloons.utils.MessageTranslations;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -51,7 +51,7 @@ public class BalloonMenu {
      */
     private Inventory getBlankPage(String name){
         int pageSize = this.getMessageTranslations().getInt("menu-size");
-        Inventory page = Bukkit.createInventory(null, pageSize, ColorManagement.fromHex(name));
+        Inventory page = Bukkit.createInventory(null, pageSize, Color.fromHex(name));
 
         // Create next page button
         ItemStack nextPage = new ItemStack(Material.valueOf(this.getMessageTranslations().getString("buttons.next-page.material")));
@@ -83,7 +83,7 @@ public class BalloonMenu {
             if (Integer.parseInt(previousPageSlot) < pageSize) {
                 page.setItem(Integer.parseInt(previousPageSlot), prevPage);
             } else {
-                Logger.logWarning(String.format(LanguageManagement.getMessage("menu-slot-out-of-bounds"), "Previous"));
+                Logger.logWarning(String.format(Languages.getMessage("menu-slot-out-of-bounds"), "Previous"));
             }
         }
 
@@ -92,7 +92,7 @@ public class BalloonMenu {
             if (Integer.parseInt(unequipSlot) < pageSize) {
                 page.setItem(Integer.parseInt(unequipSlot), removeBalloon);
             } else {
-                Logger.logWarning(String.format(LanguageManagement.getMessage("menu-slot-out-of-bounds"), "Unequip"));
+                Logger.logWarning(String.format(Languages.getMessage("menu-slot-out-of-bounds"), "Unequip"));
             }
         }
 
@@ -101,7 +101,7 @@ public class BalloonMenu {
             if (Integer.parseInt(nextPageSlot) < pageSize) {
                 page.setItem(Integer.parseInt(nextPageSlot), nextPage);
             } else {
-                Logger.logWarning(String.format(LanguageManagement.getMessage("menu-slot-out-of-bounds"), "Next"));
+                Logger.logWarning(String.format(Languages.getMessage("menu-slot-out-of-bounds"), "Next"));
             }
         }
 

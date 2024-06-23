@@ -19,7 +19,7 @@ import java.util.Set;
 /**
  * A class to manage the translations and retrieving of messages
  */
-public class LanguageManagement {
+public class Languages {
 
     /**
      * Create a new set/hashmap to store the locales to ensure that they're unique
