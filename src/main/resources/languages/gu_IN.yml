@@ -1,5 +1,5 @@
 messages:
-  prefix: '<gradient:#ff00cc:#5555ff>[બલૂન્સ]</gradient> <white>'
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
   no-permission: '<#fc1c1c>કોઈ પરવાનગી નથી.'
   player-not-found: '<#fc1c1c>ખેલાડી મળી નથી.'
   config-reloaded: '<green>રૂપરેખાંકન પુનઃલોડ થયો.'

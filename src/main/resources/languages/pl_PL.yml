@@ -1,5 +1,5 @@
 messages:
-  prefix: '<gradient:#ff00cc:#5555ff>[Balony]</gradient> <white>'
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
   no-permission: '<#fc1c1c>Brak uprawnień.'
   player-not-found: '<#fc1c1c>Nie znaleziono gracza.'
   config-reloaded: '<green>Konfiguracja została ponownie załadowana.'

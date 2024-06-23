@@ -1,5 +1,5 @@
 messages:
-  prefix: '<gradient:#ff00cc:#5555ff>[गुब्बारे]</gradient> <white>'
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
   no-permission: '<#fc1c1c>पहुंच निषेध।'
   player-not-found: '<#fc1c1c>खिलाड़ी नहीं मिला।'
   config-reloaded: '<green>कॉन्फ़िगरेशन पुनः लोड किया गया।'

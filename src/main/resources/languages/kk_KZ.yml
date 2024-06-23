@@ -1,5 +1,5 @@
 messages:
-  prefix: '<gradient:#ff00cc:#5555ff>[Шарлар]</gradient> <white>'
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
   no-permission: '<#fc1c1c>Кіру расталған жоқ.'
   player-not-found: '<#fc1c1c>Ойыншы табылмады.'
   config-reloaded: '<green>Конфигурация қайта жүктелді.'

@@ -1,5 +1,5 @@
 messages:
-  prefix: '<gradient:#ff00cc:#5555ff>[Бөмбөг]</gradient> <white>'
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
   no-permission: '<#fc1c1c>Хандах эрх алгагүй.'
   player-not-found: '<#fc1c1c>Тоглогч олдсонгүй.'
   config-reloaded: '<green>Тохиргоо дахин татаж авлагдлаа.'

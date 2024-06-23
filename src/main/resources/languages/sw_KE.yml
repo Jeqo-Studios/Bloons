@@ -1,5 +1,5 @@
 messages:
-  prefix: '<gradient:#ff00cc:#5555ff>[Maputo]</gradient> <white>'
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
   no-permission: '<#fc1c1c>Hakuna ruhusa.'
   player-not-found: '<#fc1c1c>Mchezaji hakupatikana.'
   config-reloaded: '<green>Mipangilio imesasishwa upya.'

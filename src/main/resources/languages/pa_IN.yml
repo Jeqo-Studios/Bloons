@@ -1,5 +1,5 @@
 messages:
-  prefix: '<gradient:#ff00cc:#5555ff>[ਗੁਬਾਰੇ]</gradient> <white>'
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
   no-permission: '<#fc1c1c>ਪਹੁੰਚ ਨਹੀਂ ਦਿੱਤੀ.'
   player-not-found: '<#fc1c1c>ਖਿਡਾਰ ਨਹੀਂ ਲੱਭਿਆ.'
   config-reloaded: '<green>ਸੰਰਚਨਾ ਮੁੜ ਲੋਡ ਕੀਤੀ.'

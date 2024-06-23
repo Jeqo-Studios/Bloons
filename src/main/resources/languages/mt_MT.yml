@@ -1,5 +1,5 @@
 messages:
-  prefix: '<gradient:#ff00cc:#5555ff>[Balloons]</gradient> <white>'
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
   no-permission: '<#fc1c1c>Aċċess imneħħi.'
   player-not-found: '<#fc1c1c>Lilek ma nstabx.'
   config-reloaded: '<green>Konfigurazzjoni riffriskata.'

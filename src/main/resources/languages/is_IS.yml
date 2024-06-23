@@ -1,5 +1,5 @@
 messages:
-  prefix: '<gradient:#ff00cc:#5555ff>[Loftbelgir]</gradient> <white>'
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
   no-permission: '<#fc1c1c>Áður hefur verið óheimilt.'
   player-not-found: '<#fc1c1c>Leikmaður fannst ekki.'
   config-reloaded: '<green>Stillingar hlaðnar aftur inn.'

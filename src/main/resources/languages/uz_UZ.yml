@@ -1,5 +1,5 @@
 messages:
-  prefix: '<gradient:#ff00cc:#5555ff>[Balonlar]</gradient> <white>'
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
   no-permission: '<#fc1c1c>Ruxsat berilmagan.'
   player-not-found: '<#fc1c1c>Oyinchi topilmadi.'
   config-reloaded: '<green>Sozlamalar qayta yuklandi.'

@@ -1,5 +1,5 @@
 messages:
-  prefix: '<gradient:#ff00cc:#5555ff>[Balonlar]</gradient> <white>'
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
   no-permission: '<#fc1c1c>İzin verilmedi.'
   player-not-found: '<#fc1c1c>Oyuncu bulunamadı.'
   config-reloaded: '<green>Ayarlar yeniden yüklendi.'

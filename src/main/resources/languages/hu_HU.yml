@@ -1,5 +1,5 @@
 messages:
-  prefix: '<gradient:#ff00cc:#5555ff>[Lufik]</gradient> <white>'
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
   no-permission: '<#fc1c1c>Hozzáférés megtagadva.'
   player-not-found: '<#fc1c1c>A játékos nem található.'
   config-reloaded: '<green>A konfiguráció újratöltve.'

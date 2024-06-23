@@ -1,5 +1,5 @@
 messages:
-  prefix: '<gradient:#ff00cc:#5555ff>[ბურთები]</gradient> <white>'
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
   no-permission: '<#fc1c1c>არაა ნებართვა.'
   player-not-found: '<#fc1c1c>მოთამაშე არ მოიძებნა.'
   config-reloaded: '<green>კონფიგურაცია გადატვირთულია.'

@@ -1,5 +1,5 @@
 messages:
-  prefix: '<gradient:#ff00cc:#5555ff>[Õhupallid]</gradient> <white>'
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
   no-permission: '<#fc1c1c>Puudub luba.'
   player-not-found: '<#fc1c1c>Mängijat ei leitud.'
   config-reloaded: '<green>Konfiguratsioon on uuesti laaditud.'

@@ -1,5 +1,5 @@
 messages:
-  prefix: '<gradient:#ff00cc:#5555ff>[بادبادک‌ها]</gradient> <white>'
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
   no-permission: '<#fc1c1c>دسترسی رد شد.'
   player-not-found: '<#fc1c1c>بازیکن یافت نشد.'
   config-reloaded: '<green>پیکربندی مجدداً بارگذاری شد.'

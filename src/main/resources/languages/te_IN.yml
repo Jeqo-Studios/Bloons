@@ -1,5 +1,5 @@
 messages:
-  prefix: '<gradient:#ff00cc:#5555ff>[బలూన్లు]</gradient> <white>'
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
   no-permission: '<#fc1c1c>అనుమతి లేదు.'
   player-not-found: '<#fc1c1c>క్రీడకు వ్యక్తి కనబడలేదు.'
   config-reloaded: '<green>ఆకృతీకరణ మళ్ళీ లోడు చేయబడింది.'

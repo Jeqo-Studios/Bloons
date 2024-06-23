@@ -1,5 +1,5 @@
 messages:
-  prefix: '<gradient:#ff00cc:#5555ff>[Ilmapallot]</gradient> <white>'
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
   no-permission: '<#fc1c1c>Ei lupaa.'
   player-not-found: '<#fc1c1c>Pelaajaa ei löydetty.'
   config-reloaded: '<green>Asetukset on ladattu uudelleen.'

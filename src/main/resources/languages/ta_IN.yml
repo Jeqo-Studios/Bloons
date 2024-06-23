@@ -1,5 +1,5 @@
 messages:
-  prefix: '<gradient:#ff00cc:#5555ff>[பலூன்கள்]</gradient> <white>'
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
   no-permission: '<#fc1c1c>அனுமதி இல்லை.'
   player-not-found: '<#fc1c1c>வீரர் கண்டுபிடிக்கப்படவில்லை.'
   config-reloaded: '<green>உள்ளமைவு மீள்படுத்தப்பட்டது.'

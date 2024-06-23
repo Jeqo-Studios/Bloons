@@ -1,5 +1,5 @@
 messages:
-  prefix: '<gradient:#ff00cc:#5555ff>[בלונים]</gradient> <white>'
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
   no-permission: '<#fc1c1c>אין הרשאה.'
   player-not-found: '<#fc1c1c>שחקן לא נמצא.'
   config-reloaded: '<green>התצורה נטענה מחדש.'

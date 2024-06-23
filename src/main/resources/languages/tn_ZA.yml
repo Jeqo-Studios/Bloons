@@ -1,5 +1,5 @@
 messages:
-  prefix: '<gradient:#ff00cc:#5555ff>[Balloons]</gradient> <white>'
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
   no-permission: '<#fc1c1c>Ha u fa tirisano.'
   player-not-found: '<#fc1c1c>Ha ke kene ke hore o tsebe monna oa chelete.'
   config-reloaded: '<green>Sebaka se hlasiloe ka tlase.'

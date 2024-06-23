@@ -1,5 +1,5 @@
 messages:
-  prefix: '<gradient:#ff00cc:#5555ff>[Ballonnen]</gradient> <white>'
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
   no-permission: '<#fc1c1c>Geen toestemming.'
   player-not-found: '<#fc1c1c>Speler niet gevonden.'
   config-reloaded: '<green>Configuratie herladen.'

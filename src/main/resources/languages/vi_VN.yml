@@ -1,5 +1,5 @@
 messages:
-  prefix: '<gradient:#ff00cc:#5555ff>[Bóng bóng]</gradient> <white>'
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
   no-permission: '<#fc1c1c>Không có quyền truy cập.'
   player-not-found: '<#fc1c1c>Không tìm thấy người chơi.'
   config-reloaded: '<green>Cấu hình đã được tải lại.'

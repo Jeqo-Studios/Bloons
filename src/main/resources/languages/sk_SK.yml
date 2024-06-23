@@ -1,5 +1,5 @@
 messages:
-  prefix: '<gradient:#ff00cc:#5555ff>[Balóny]</gradient> <white>'
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
   no-permission: '<#fc1c1c>Prístup zamietnutý.'
   player-not-found: '<#fc1c1c>Hráč nenájdený.'
   config-reloaded: '<green>Konfigurácia bola znovu načítaná.'

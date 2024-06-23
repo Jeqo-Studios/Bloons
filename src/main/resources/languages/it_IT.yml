@@ -1,5 +1,5 @@
 messages:
-  prefix: '<gradient:#ff00cc:#5555ff>[Palloncini]</gradient> <white>'
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
   no-permission: '<#fc1c1c>Accesso negato.'
   player-not-found: '<#fc1c1c>Giocatore non trovato.'
   config-reloaded: '<green>Configurazione ricaricata.'

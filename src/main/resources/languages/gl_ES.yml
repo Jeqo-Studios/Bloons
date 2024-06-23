@@ -1,5 +1,5 @@
 messages:
-  prefix: '<gradient:#ff00cc:#5555ff>[Globos]</gradient> <white>'
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
   no-permission: '<#fc1c1c>Sen permiso.'
   player-not-found: '<#fc1c1c>Xogador non atopado.'
   config-reloaded: '<green>Configuración recargada.'

@@ -1,5 +1,5 @@
 messages:
-  prefix: '<gradient:#ff00cc:#5555ff>[บอลลูน]</gradient> <white>'
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
   no-permission: '<#fc1c1c>ไม่อนุญาต.'
   player-not-found: '<#fc1c1c>ไม่พบผู้เล่น.'
   config-reloaded: '<green>โหลดการตั้งค่าใหม่.'

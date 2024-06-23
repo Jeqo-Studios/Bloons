@@ -1,5 +1,5 @@
 messages:
-  prefix: '<gradient:#ff00cc:#5555ff>[Բլունս]</gradient> <white>'
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
   no-permission: '<#fc1c1c>Թույլատրելիություն չկա.'
   player-not-found: '<#fc1c1c>Հաստատիչը չի գտնվել.'
   config-reloaded: '<green>Կոնֆիգուրացիան վերաբեռնվել է:'

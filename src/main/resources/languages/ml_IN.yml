@@ -1,5 +1,5 @@
 messages:
-  prefix: '<gradient:#ff00cc:#5555ff>[ബൽലൂൺസ്]</gradient> <white>'
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
   no-permission: '<#fc1c1c>അനുമതി നിരസ്കരിച്ചു.'
   player-not-found: '<#fc1c1c>കളിക്കാർ കണ്ടെത്തിയില്ല.'
   config-reloaded: '<green>കോൺഫിഗറേഷൻ പുനഃലോഡ് ചെയ്യപ്പെട്ടു.'

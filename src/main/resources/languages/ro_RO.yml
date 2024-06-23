@@ -1,5 +1,5 @@
 messages:
-  prefix: '<gradient:#ff00cc:#5555ff>[Baloane]</gradient> <white>'
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
   no-permission: '<#fc1c1c>Acces interzis.'
   player-not-found: '<#fc1c1c>Jucătorul nu a fost găsit.'
   config-reloaded: '<green>Configurația a fost reîncărcată.'

@@ -1,5 +1,5 @@
 messages:
-  prefix: '<gradient:#ff00cc:#5555ff>[Кульки]</gradient> <white>'
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
   no-permission: '<#fc1c1c>Доступ заборонено.'
   player-not-found: '<#fc1c1c>Гравець не знайдений.'
   config-reloaded: '<green>Конфігурація перезавантажена.'

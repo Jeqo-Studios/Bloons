@@ -1,5 +1,5 @@
 messages:
-  prefix: '<gradient:#ff00cc:#5555ff>[ಬಲೂನ್‌ಗಳು]</gradient> <white>'
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
   no-permission: '<#fc1c1c>ಪ್ರವೇಶ ನಿರಾಕರಿಸಲಾಗಿದೆ.'
   player-not-found: '<#fc1c1c>ಆಟಗಾರ ಕಂಡುಬರಲಿಲ್ಲ.'
   config-reloaded: '<green>ಕಾನ್ಫಿಗರೇಷನ್ ಮರುಹೊಂದಿಸಲಾಗಿದೆ.'

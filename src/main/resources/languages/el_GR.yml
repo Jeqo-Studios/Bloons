@@ -1,5 +1,5 @@
 messages:
-  prefix: '<gradient:#ff00cc:#5555ff>[Αερόσφαιρες]</gradient> <white>'
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
   no-permission: '<#fc1c1c>Δεν έχετε άδεια.'
   player-not-found: '<#fc1c1c>Ο παίκτης δεν βρέθηκε.'
   config-reloaded: '<green>Η διαμόρφωση επαναφορτώθηκε.'

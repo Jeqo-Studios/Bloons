@@ -1,5 +1,5 @@
 messages:
-  prefix: '<gradient:#ff00cc:#5555ff>[Gaisa baloni]</gradient> <white>'
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
   no-permission: '<#fc1c1c>Piekļuve liegta.'
   player-not-found: '<#fc1c1c>Spēlētājs nav atrasts.'
   config-reloaded: '<green>Konfigurācija pārlādēta.'

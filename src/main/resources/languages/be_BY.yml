@@ -1,5 +1,5 @@
 messages:
-  prefix: '<gradient:#ff00cc:#5555ff>[Блунс]</gradient> <white>'
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
   no-permission: '<#fc1c1c>Доступ забаронены.'
   player-not-found: '<#fc1c1c>Гульца не знойдзены.'
   config-reloaded: '<green>Канфігурацыя перазагружана.'

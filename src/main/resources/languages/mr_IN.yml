@@ -1,5 +1,5 @@
 messages:
-  prefix: '<gradient:#ff00cc:#5555ff>[गुब्बां]</gradient> <white>'
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
   no-permission: '<#fc1c1c>परवानगी नाकारली.'
   player-not-found: '<#fc1c1c>खेळाडू सापडला नाही.'
   config-reloaded: '<green>कॉन्फिगरेशन पुन्हा लोड केली गेली आहे.'

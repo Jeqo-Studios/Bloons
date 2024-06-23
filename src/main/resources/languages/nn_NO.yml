@@ -1,5 +1,5 @@
 messages:
-  prefix: '<gradient:#ff00cc:#5555ff>[Ballongar]</gradient> <white>'
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
   no-permission: '<#fc1c1c>Tilgang nekta.'
   player-not-found: '<#fc1c1c>Spelaren vart ikkje funnen.'
   config-reloaded: '<green>Konfigurasjon lasta inn på nytt.'

@@ -1,5 +1,5 @@
 messages:
-  prefix: '<gradient:#ff00cc:#5555ff>[Belon]</gradient> <white>'
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
   no-permission: '<#fc1c1c>Akses ditolak.'
   player-not-found: '<#fc1c1c>Pemain tidak dijumpai.'
   config-reloaded: '<green>Konfigurasi dimuat semula.'

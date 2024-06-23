@@ -1,5 +1,5 @@
 messages:
-  prefix: '<gradient:#ff00cc:#5555ff>[Baloni]</gradient> <white>'
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
   no-permission: '<#fc1c1c>Nema dozvole.'
   player-not-found: '<#fc1c1c>Igrač nije pronađen.'
   config-reloaded: '<green>Konfiguracija je ponovo učitana.'

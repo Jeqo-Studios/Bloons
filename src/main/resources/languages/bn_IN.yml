@@ -1,5 +1,5 @@
 messages:
-  prefix: '<gradient:#ff00cc:#5555ff>[ব্লুনস]</gradient> <white>'
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
   no-permission: '<#fc1c1c>অনুমতি অস্বীকৃত।'
   player-not-found: '<#fc1c1c>খেলোয়াড় পাওয়া যায়নি।'
   config-reloaded: '<green>কনফিগারেশন পুনরায় লোড হয়েছে।'

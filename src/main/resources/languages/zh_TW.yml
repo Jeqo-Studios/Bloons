@@ -1,5 +1,5 @@
 messages:
-  prefix: '<gradient:#ff00cc:#5555ff>[氣球]</gradient> <white>'
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
   no-permission: '<#fc1c1c>無權訪問。'
   player-not-found: '<#fc1c1c>找不到玩家。'
   config-reloaded: '<green>配置已重新加載。'

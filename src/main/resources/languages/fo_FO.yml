@@ -1,5 +1,5 @@
 messages:
-  prefix: '<gradient:#ff00cc:#5555ff>[Ballóner]</gradient> <white>'
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
   no-permission: '<#fc1c1c>Eingin loyvi.'
   player-not-found: '<#fc1c1c>Spælari fannst ikki.'
   config-reloaded: '<green>Stillingar endurrættir.'

@@ -1,5 +1,5 @@
 messages:
-  prefix: '<gradient:#ff00cc:#5555ff>[Iibalooni]</gradient> <white>'
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
   no-permission: '<#fc1c1c>Ukunceda akwenzeki.'
   player-not-found: '<#fc1c1c>I-Player ayikho.'
   config-reloaded: '<green>I-config yachazwe kabusha.'

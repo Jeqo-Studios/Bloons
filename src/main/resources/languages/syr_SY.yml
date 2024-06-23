@@ -1,5 +1,5 @@
 messages:
-  prefix: '<gradient:#ff00cc:#5555ff>[بالونات]</gradient> <white>'
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
   no-permission: '<#fc1c1c>رخصة مرفوضة.'
   player-not-found: '<#fc1c1c>اللاعب غير موجود.'
   config-reloaded: '<green>تم إعادة تحميل الإعدادات.'
