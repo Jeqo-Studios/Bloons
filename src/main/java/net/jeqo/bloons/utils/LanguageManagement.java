@@ -1,5 +1,6 @@
 package net.jeqo.bloons.utils;
 
+import lombok.Getter;
 import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.configuration.ConfigConfiguration;
 import net.jeqo.bloons.logger.Logger;
@@ -23,7 +24,12 @@ public class LanguageManagement {
     /**
      * Create a new set/hashmap to store the locales to ensure that they're unique
      */
+    @Getter
     private static final Set<String> availableLanguages = new HashSet<>();
+    /**
+     * The file extension used for language files
+     */
+    private static final String LANGUAGE_FILE_EXTENSION = ".yml";
 
     static {
         // Initialize available languages
@@ -36,16 +42,16 @@ public class LanguageManagement {
                 "te_IN", "th_TH", "tn_ZA", "tr_TR", "uk_UA", "uz_UZ", "vi_VN", "xh_ZA", "zh_CN", "zh_TW"
         };
         // Add all languages to the set
-        Collections.addAll(availableLanguages, languages);
+        Collections.addAll(getAvailableLanguages(), languages);
     }
 
     /**
      * Copies all language files over from the languages directory
      */
     public static void copyLanguageFiles() {
-        for (String language : availableLanguages) {
+        for (String language : getAvailableLanguages()) {
             if (!Files.exists(getLanguageFilePath(language))) {
-                Bloons.getInstance().saveResource(ConfigConfiguration.LANGUAGES_CONFIGURATION_FOLDER + File.separator + language + ".yml", false);
+                Bloons.getInstance().saveResource(ConfigConfiguration.LANGUAGES_CONFIGURATION_FOLDER + File.separator + language + LANGUAGE_FILE_EXTENSION, false);
             }
         }
     }
@@ -56,7 +62,7 @@ public class LanguageManagement {
      * @return          The path to the language file, type java.nio.file.Path
      */
     private static Path getLanguageFilePath(String language) {
-        return Paths.get(Bloons.getInstance().getDataFolder() + File.separator + ConfigConfiguration.LANGUAGES_CONFIGURATION_FOLDER + File.separator + language + ".yml");
+        return Paths.get(Bloons.getInstance().getDataFolder() + File.separator + ConfigConfiguration.LANGUAGES_CONFIGURATION_FOLDER + File.separator + language + LANGUAGE_FILE_EXTENSION);
     }
 
     /**
