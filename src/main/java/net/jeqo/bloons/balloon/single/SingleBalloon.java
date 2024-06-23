@@ -34,15 +34,15 @@ import java.util.concurrent.ThreadLocalRandom;
 @Getter @Setter
 public class SingleBalloon extends BukkitRunnable {
     /** Must have variables related to any balloon **/
-    private SingleBalloonType balloonType;
+    private SingleBalloonType type;
     private Player player;
-    private ArmorStand balloonArmorStand;
-    public Chicken balloonChicken;
+    private ArmorStand armorStand;
+    public Chicken chicken;
 
     /**
      * Only used for non-MEG balloons to configure the visual appearance of the balloon
      */
-    private ItemStack balloonVisual;
+    private ItemStack visual;
 
     /** MEG related variables **/
     private ModeledEntity modeledEntity;
@@ -67,10 +67,10 @@ public class SingleBalloon extends BukkitRunnable {
      */
     public SingleBalloon(Player player, String balloonID) {
         this.setPlayer(player);
-        this.setBalloonType(Bloons.getBalloonCore().getSingleBalloonByID(balloonID));
+        this.setType(Bloons.getBalloonCore().getSingleBalloonByID(balloonID));
 
-        if (this.getBalloonType().getMegModelID() == null) {
-            this.setBalloonVisual(getConfiguredBalloonVisual(balloonID));
+        if (this.getType().getMegModelID() == null) {
+            this.setVisual(getConfiguredBalloonVisual(balloonID));
         }
     }
 
@@ -82,11 +82,11 @@ public class SingleBalloon extends BukkitRunnable {
         this.setPlayerLocation(this.getPlayer().getLocation());
         this.getPlayerLocation().setYaw(0.0F);
 
-        if (this.getBalloonType().getMegModelID() == null) {
+        if (this.getType().getMegModelID() == null) {
             // Create and set the balloons visual appearance/model
-            ItemMeta meta = this.getBalloonVisual().getItemMeta();
+            ItemMeta meta = this.getVisual().getItemMeta();
             meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-            this.getBalloonVisual().setItemMeta(meta);
+            this.getVisual().setItemMeta(meta);
         }
 
         // Initialize the armor stand and lead to the player
@@ -98,22 +98,22 @@ public class SingleBalloon extends BukkitRunnable {
      * Initializes the balloon's armor stand entity with the proper configurations
      */
     public void initializeBalloonArmorStand() {
-        this.setBalloonArmorStand(this.getPlayerLocation().getWorld().spawn(this.getPlayerLocation(), ArmorStand.class));
-        this.getBalloonArmorStand().setBasePlate(false);
-        this.getBalloonArmorStand().setVisible(false);
-        this.getBalloonArmorStand().setInvulnerable(true);
-        this.getBalloonArmorStand().setCanPickupItems(false);
-        this.getBalloonArmorStand().setGravity(false);
-        this.getBalloonArmorStand().setSmall(false);
-        this.getBalloonArmorStand().setMarker(true);
-        this.getBalloonArmorStand().setCollidable(false);
-        if (this.getBalloonType().getMegModelID() == null) {
-            this.getBalloonArmorStand().getEquipment().setHelmet(this.getBalloonVisual());
+        this.setArmorStand(this.getPlayerLocation().getWorld().spawn(this.getPlayerLocation(), ArmorStand.class));
+        this.getArmorStand().setBasePlate(false);
+        this.getArmorStand().setVisible(false);
+        this.getArmorStand().setInvulnerable(true);
+        this.getArmorStand().setCanPickupItems(false);
+        this.getArmorStand().setGravity(false);
+        this.getArmorStand().setSmall(false);
+        this.getArmorStand().setMarker(true);
+        this.getArmorStand().setCollidable(false);
+        if (this.getType().getMegModelID() == null) {
+            this.getArmorStand().getEquipment().setHelmet(this.getVisual());
         } else {
             try {
                 // Create the entity and tag it onto the armor stand
-                ModeledEntity modeledEntity = ModelEngineAPI.createModeledEntity(this.getBalloonArmorStand());
-                ActiveModel activeModel = ModelEngineAPI.createActiveModel(this.getBalloonType().getMegModelID());
+                ModeledEntity modeledEntity = ModelEngineAPI.createModeledEntity(this.getArmorStand());
+                ActiveModel activeModel = ModelEngineAPI.createActiveModel(this.getType().getMegModelID());
 
                 modeledEntity.addModel(activeModel, true);
 
@@ -123,27 +123,27 @@ public class SingleBalloon extends BukkitRunnable {
                 // If an idle animation exists, play it initially
                 this.getAnimationHandler().playAnimation(this.getDefaultIdleAnimationID(), 0.3, 0.3, 1,true);
             } catch (Exception e) {
-                Logger.logError("An error occurred while creating the MEG model for the balloon " + this.getBalloonType().getId() + "! This is because a MEG model error occurred.");
+                Logger.logError("An error occurred while creating the MEG model for the balloon " + this.getType().getId() + "! This is because a MEG model error occurred.");
                 e.printStackTrace();
             }
         }
-        this.getBalloonArmorStand().customName(Component.text(BalloonConfiguration.BALLOON_ARMOR_STAND_ID));
+        this.getArmorStand().customName(Component.text(BalloonConfiguration.BALLOON_ARMOR_STAND_ID));
     }
 
     /**
      * Initializes the balloon's lead to the player (chicken entity)
      */
     public void initializeBalloonLead() {
-        this.setBalloonChicken(this.getPlayerLocation().getWorld().spawn(this.getPlayerLocation(), Chicken.class));
-        this.getBalloonChicken().setInvulnerable(true);
-        this.getBalloonChicken().setInvisible(true);
-        this.getBalloonChicken().setSilent(true);
-        this.getBalloonChicken().setBaby();
-        this.getBalloonChicken().setAgeLock(true);
-        this.getBalloonChicken().setAware(false);
-        this.getBalloonChicken().setCollidable(false);
-        this.getBalloonChicken().setLeashHolder(this.getPlayer());
-        this.getBalloonChicken().customName(Component.text(BalloonConfiguration.BALLOON_CHICKEN_ID));
+        this.setChicken(this.getPlayerLocation().getWorld().spawn(this.getPlayerLocation(), Chicken.class));
+        this.getChicken().setInvulnerable(true);
+        this.getChicken().setInvisible(true);
+        this.getChicken().setSilent(true);
+        this.getChicken().setBaby();
+        this.getChicken().setAgeLock(true);
+        this.getChicken().setAware(false);
+        this.getChicken().setCollidable(false);
+        this.getChicken().setLeashHolder(this.getPlayer());
+        this.getChicken().customName(Component.text(BalloonConfiguration.BALLOON_CHICKEN_ID));
     }
 
     /**
@@ -152,7 +152,7 @@ public class SingleBalloon extends BukkitRunnable {
      */
     public void run() {
         // If the balloon armor stand is null, initialize the balloon
-        if (this.getBalloonArmorStand() == null) initializeBalloon();
+        if (this.getArmorStand() == null) initializeBalloon();
 
         // Every tick, retrieve the updated player location
         Location playerLocation = this.getPlayerLocation();
@@ -172,7 +172,7 @@ public class SingleBalloon extends BukkitRunnable {
         }
 
         // Set the move location to the armor stand location minus 2 on the Y axis
-        this.setMoveLocation(this.getBalloonArmorStand().getLocation().subtract(0.0D, this.getBalloonType().getBalloonHeight(), 0.0D).clone());
+        this.setMoveLocation(this.getArmorStand().getLocation().subtract(0.0D, this.getType().getBalloonHeight(), 0.0D).clone());
 
         // Set the vector to the player location minus the move location
         Vector vector = playerLocation.toVector().subtract(this.getMoveLocation().toVector());
@@ -184,14 +184,14 @@ public class SingleBalloon extends BukkitRunnable {
         EulerAngle tiltAngle = new EulerAngle(Math.toRadians(vectorZ), Math.toRadians(playerLocation.getYaw()), Math.toRadians(vectorX));
 
         // Set the pose(s) of the armor stand
-        ArmorStand armorStand = this.getBalloonArmorStand();
+        ArmorStand armorStand = this.getArmorStand();
 
         // Set the pose of only the head regardless of the model type
         armorStand.setHeadPose(tiltAngle);
 
         // Only set the entire pose of the armor stand if it uses MEG, this is to reduce lag across the server
         // when having 100's of models/armor stands used simultaneously
-        if (this.getBalloonType().getMegModelID() != null) {
+        if (this.getType().getMegModelID() != null) {
             armorStand.setBodyPose(tiltAngle);
             armorStand.setLeftArmPose(tiltAngle);
             armorStand.setRightArmPose(tiltAngle);
@@ -203,7 +203,7 @@ public class SingleBalloon extends BukkitRunnable {
         this.teleport(this.getMoveLocation());
 
         // If the balloon armor stand is more than 5 blocks away, teleport to player location
-        if (this.getBalloonArmorStand().getLocation().distance(playerLocation) > 5.0D) {
+        if (this.getArmorStand().getLocation().distance(playerLocation) > 5.0D) {
             this.teleport(playerLocation);
         }
 
@@ -228,11 +228,11 @@ public class SingleBalloon extends BukkitRunnable {
     public synchronized void cancel() throws IllegalStateException {
         if (this.getModeledEntity() != null) {
             // Remove the MEG model if it exists
-            ModeledEntity modeledEntity = ModelEngineAPI.getModeledEntity(this.getBalloonArmorStand());
-            modeledEntity.removeModel(this.getBalloonType().getMegModelID());
+            ModeledEntity modeledEntity = ModelEngineAPI.getModeledEntity(this.getArmorStand());
+            modeledEntity.removeModel(this.getType().getMegModelID());
         }
-        this.getBalloonArmorStand().remove();
-        this.getBalloonChicken().remove();
+        this.getArmorStand().remove();
+        this.getChicken().remove();
         super.cancel();
     }
 
@@ -248,8 +248,8 @@ public class SingleBalloon extends BukkitRunnable {
      * @param location  The location to teleport the balloon to, type org.bukkit.Location
      */
     private void teleport(Location location) {
-        this.getBalloonArmorStand().teleport(location.add(0.0D, this.getBalloonType().getBalloonHeight(), 0.0D));
-        this.getBalloonChicken().teleport(location.add(0.0D, this.getBalloonType().getLeashHeight(), 0.0D));
+        this.getArmorStand().teleport(location.add(0.0D, this.getType().getBalloonHeight(), 0.0D));
+        this.getChicken().teleport(location.add(0.0D, this.getType().getLeashHeight(), 0.0D));
     }
 
     /**
