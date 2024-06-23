@@ -5,6 +5,7 @@ net.jeqo.bloons.balloon.multipart
 net.jeqo.bloons.balloon.multipart.balloon
 net.jeqo.bloons.balloon.multipart.nodes
 net.jeqo.bloons.balloon.single
+net.jeqo.bloons.colors
 net.jeqo.bloons.commands
 net.jeqo.bloons.commands.manager
 net.jeqo.bloons.commands.manager.types
@@ -18,9 +19,11 @@ net.jeqo.bloons.gui
 net.jeqo.bloons.gui.item.border
 net.jeqo.bloons.gui.item.filler
 net.jeqo.bloons.gui.menus
+net.jeqo.bloons.health
+net.jeqo.bloons.item
 net.jeqo.bloons.listeners
 net.jeqo.bloons.listeners.multipart
 net.jeqo.bloons.listeners.single
 net.jeqo.bloons.logger
-net.jeqo.bloons.utils
-net.jeqo.bloons.utils.management
+net.jeqo.bloons.management
+net.jeqo.bloons.message
