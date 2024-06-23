@@ -16,6 +16,9 @@ import java.util.ArrayList;
  */
 @Setter @Getter
 public class BalloonCore {
+    /**
+     * The plugin instance that runs the balloon core, type org.bukkit.plugin.java.JavaPlugin
+     */
     private JavaPlugin plugin;
     /**
      * Contains all valid and loaded multipart balloon types/configurations

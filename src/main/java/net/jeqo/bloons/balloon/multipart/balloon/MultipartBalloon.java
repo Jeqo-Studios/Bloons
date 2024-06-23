@@ -22,19 +22,34 @@ import java.util.List;
  */
 @Getter
 public class MultipartBalloon {
+    /**
+     * The type of balloon that the multipart balloon is creating
+     */
     @Setter
     private MultipartBalloonType balloonType;
+    /**
+     * The owner of the balloon
+     */
     @Setter
     private Player balloonOwner;
-
+    /**
+     * The chicken that is used to attach the player via a lead to the balloon
+     */
     @Setter
     private Chicken balloonChicken;
-
+    /**
+     * The tentacle node that is the front of the balloon
+     */
     @Setter
     private ModelNode tentacle;
+    /**
+     * The runnable that is used to constantly update the balloons' position
+     */
     @Setter
     private BukkitRunnable runnable;
-
+    /**
+     * The list of model nodes that are used to create the balloon
+     */
     private final List<ModelNode> modelNodes = new ArrayList<>();
 
     /**

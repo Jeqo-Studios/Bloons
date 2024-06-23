@@ -41,13 +41,35 @@ public class ModelNode {
      */
     ArmorStand balloonArmorStand;
 
-
+    /**
+     * The index position of the node in the balloon chain
+     */
     private float index;
+    /**
+     * The length of the segment in blocks
+     */
     private float length;
+    /**
+     * The type of balloon that the node is a part of that is currently
+     * registered in the configuration file
+     */
     private MultipartBalloonType balloonType;
+    /**
+     * The owner of the balloon
+     */
     private Player balloonOwner;
+    /**
+     * The maximum angle that the node can rotate to
+     */
     double maxNodeJointAngle;
+    /**
+     * The interpolation factor for the Y-axis
+     */
     double yAxisInterpolation;
+    /**
+     * The interpolation factor for the turning spline
+     * to make the turning of the balloon smoother
+     */
     double turningSplineInterpolation;
 
     /**

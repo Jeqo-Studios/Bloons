@@ -9,10 +9,13 @@ import org.bukkit.entity.Player;
  */
 @Setter
 public class MultipartBalloonBuilder {
-
-    // Both of these have attached lombok setters to
-    // allow for easy setting of the values in the instance
+    /**
+     * The type of balloon to create
+     */
     MultipartBalloonType balloonType;
+    /**
+     * The owner of the balloon
+     */
     Player balloonOwner;
 
     /**
