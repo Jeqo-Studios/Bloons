@@ -1,7 +1,7 @@
 package net.jeqo.bloons.gui;
 
 import net.jeqo.bloons.events.BloonsEvent;
-import net.jeqo.bloons.utils.NBTItem;
+import net.jeqo.bloons.item.NBTItem;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

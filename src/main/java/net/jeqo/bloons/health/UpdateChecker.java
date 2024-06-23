@@ -1,4 +1,4 @@
-package net.jeqo.bloons.utils;
+package net.jeqo.bloons.health;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;

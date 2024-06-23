@@ -9,9 +9,9 @@ import net.jeqo.bloons.commands.manager.types.CommandAccess;
 import net.jeqo.bloons.configuration.PluginConfiguration;
 import net.jeqo.bloons.gui.menus.BalloonMenu;
 import net.jeqo.bloons.logger.Logger;
-import net.jeqo.bloons.utils.Color;
-import net.jeqo.bloons.utils.Languages;
-import net.jeqo.bloons.utils.MessageTranslations;
+import net.jeqo.bloons.colors.Color;
+import net.jeqo.bloons.message.Languages;
+import net.jeqo.bloons.message.MessageTranslations;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.command.CommandExecutor;
@@ -160,7 +160,7 @@ public class CommandCore implements CommandExecutor {
 
                 // Check if the command is disabled
                 if (currentCommand.getRequiredAccess() == CommandAccess.DISABLED) {
-                    sender.sendMessage(this.getMessageTranslations().getSerializedString(this.getMessageTranslations().getMessage("prefix"), Languages.getMessage("command-disabled")));
+                    sender.sendMessage(this.getMessageTranslations().getSerializedString(Languages.getMessage("prefix"), Languages.getMessage("command-disabled")));
                     return false;
                 }
 

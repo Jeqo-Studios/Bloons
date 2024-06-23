@@ -1,4 +1,4 @@
-package net.jeqo.bloons.utils;
+package net.jeqo.bloons.message;
 
 import lombok.Getter;
 import net.jeqo.bloons.Bloons;
