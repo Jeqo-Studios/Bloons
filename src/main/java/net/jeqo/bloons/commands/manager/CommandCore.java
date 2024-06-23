@@ -160,7 +160,7 @@ public class CommandCore implements CommandExecutor {
 
                 // Check if the command is disabled
                 if (currentCommand.getRequiredAccess() == CommandAccess.DISABLED) {
-                    sender.sendMessage(this.getMessageTranslations().getSerializedString(this.getMessageTranslations().getMessage("prefix"), Languages.getMessage("command-disabled")));
+                    sender.sendMessage(this.getMessageTranslations().getSerializedString(Languages.getMessage("prefix"), Languages.getMessage("command-disabled")));
                     return false;
                 }
 
