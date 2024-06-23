@@ -23,15 +23,15 @@ public class MultipartBalloonModel {
     /**
      * The material used to create the model
      */
-    private String material;
+    private String material; // required
     /**
      * The color of the model
      */
-    private String color;
+    private String color = "#ffffff"; // optional
     /**
      * The custom model data value stored in the item metadata
      */
-    private Integer customModelData;
+    private Integer customModelData; // required
 
     /**
      *                          Creates a new model for a multipart balloon
