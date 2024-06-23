@@ -20,7 +20,7 @@ public class SingleBalloonType {
     private int customModelData;
 
     private double leashHeight = 1.2D;
-    private double balloonHeight = 1.5D;
+    private double balloonHeight = 2.0D;
 
     /** MEG only options **/
     private String megModelID;
