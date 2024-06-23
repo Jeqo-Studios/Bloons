@@ -3,7 +3,7 @@ package net.jeqo.bloons.balloon.multipart;
 import lombok.Getter;
 import lombok.Setter;
 import net.jeqo.bloons.balloon.model.BalloonModel;
-import net.jeqo.bloons.balloon.model.BalloonModelType;
+import net.jeqo.bloons.balloon.model.BalloonSegmentType;
 import net.jeqo.bloons.logger.Logger;
 import net.jeqo.bloons.colors.Color;
 import net.jeqo.bloons.message.Languages;
@@ -15,9 +15,22 @@ import org.bukkit.inventory.ItemStack;
  */
 @Getter @Setter
 public class MultipartBalloonModel {
-    private BalloonModelType modelType;
+    /**
+     * The type of segment that the model accommodates
+     * This can either be the head, body, or tail of the balloon
+     */
+    private BalloonSegmentType modelType;
+    /**
+     * The material used to create the model
+     */
     private String material;
+    /**
+     * The color of the model
+     */
     private String color;
+    /**
+     * The custom model data value stored in the item metadata
+     */
     private Integer customModelData;
 
     /**
@@ -27,7 +40,7 @@ public class MultipartBalloonModel {
      * @param color             The color of the model as a hex color code value, type java.lang.String
      * @param customModelData   The custom model data value stored in the item metadata, type int
      */
-    public MultipartBalloonModel(BalloonModelType modelType, String material, String color, int customModelData) {
+    public MultipartBalloonModel(BalloonSegmentType modelType, String material, String color, int customModelData) {
         this.setModelType(modelType);
         this.setMaterial(material);
         this.setColor(color);

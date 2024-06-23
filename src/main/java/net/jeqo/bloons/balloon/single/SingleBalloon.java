@@ -33,11 +33,16 @@ import java.util.concurrent.ThreadLocalRandom;
 
 @Getter @Setter
 public class SingleBalloon extends BukkitRunnable {
+    /** Must have variables related to any balloon **/
     private SingleBalloonType balloonType;
     private Player player;
-    private ItemStack balloonVisual;
     private ArmorStand balloonArmorStand;
     public Chicken balloonChicken;
+
+    /**
+     * Only used for non-MEG balloons to configure the visual appearance of the balloon
+     */
+    private ItemStack balloonVisual;
 
     /** MEG related variables **/
     private ModeledEntity modeledEntity;
@@ -45,13 +50,15 @@ public class SingleBalloon extends BukkitRunnable {
     private AnimationHandler animationHandler;
     private final String defaultIdleAnimationID = "idle";
 
+    /** Variables used for the movement of the balloon **/
     private Location playerLocation;
     private Location moveLocation;
 
     private int ticks = 0;
     private float targetYaw = 0.0F;
 
-    private static final String leatherMaterialPrefix = "LEATHER_"; // A constant to define a dyeable material
+    // A prefix that is needed for dyable materials
+    private static final String LEATHER_MATERIAL_PREFIX = "LEATHER_";
 
     /**
      *                      Constructor for the SingleBalloon class
@@ -279,7 +286,7 @@ public class SingleBalloon extends BukkitRunnable {
         meta.setCustomModelData(singleBalloonType.getCustomModelData());
 
         // If the color of the balloon is not set, log an error and return null
-        if (singleBalloonType.getColor() != null && singleBalloonType.getMaterial().startsWith(leatherMaterialPrefix)) {
+        if (singleBalloonType.getColor() != null && singleBalloonType.getMaterial().startsWith(LEATHER_MATERIAL_PREFIX)) {
             // If the color of the balloon is set to potion, log a warning and return null
             if (singleBalloonType.getColor().equalsIgnoreCase("potion")) {
                 Logger.logWarning(String.format(Languages.getMessage("material-not-dyeable"), material));

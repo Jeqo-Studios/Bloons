@@ -35,18 +35,6 @@ public class BalloonCore {
     };
 
     /**
-     *                          Creates a new instance of the balloon core manager with preset registered balloons
-     * @param plugin            The plugin instance, type org.bukkit.plugin.java.JavaPlugin
-     * @param balloons          The balloons to register, type java.util.ArrayList[net.jeqo.bloons.balloon.multipart.MultipartBalloonType]
-     * @param singleBalloons    The single balloons to register, type java.util.ArrayList[net.jeqo.bloons.balloon.single.SingleBalloonType]
-     */
-    public BalloonCore(JavaPlugin plugin, ArrayList<MultipartBalloonType> balloons, ArrayList<SingleBalloonType> singleBalloons) {
-        this.setPlugin(plugin);
-        this.setMultipartBalloonTypes(balloons);
-        this.setSingleBalloonTypes(singleBalloons);
-    }
-
-    /**
      *                  Creates a new empty balloon core instance
      * @param plugin    The plugin instance, type org.bukkit.plugin.java.JavaPlugin
      */
@@ -84,41 +72,10 @@ public class BalloonCore {
     }
 
     /**
-     *                  Adds a balloon to the registered balloons list
-     * @param balloon   The balloon to add, type net.jeqo.bloons.balloon.multipart.MultipartBalloonType
-     */
-    public void addMultipartBalloon(MultipartBalloonType balloon) {
-        this.getMultipartBalloonTypes().add(balloon);
-    }
-
-    /**
-     *                  Removes a balloon from the registered balloons list
-     * @param balloon   The balloon to remove, type net.jeqo.bloons.balloon.multipart.MultipartBalloonType
-     */
-    public void removeMultipartBalloon(MultipartBalloonType balloon) {
-        this.getMultipartBalloonTypes().remove(balloon);
-    }
-
-    /**
-     *                  Adds a single balloon to the registered balloons list
-     * @param balloon   The single balloon to add, type net.jeqo.bloons.balloon.single.SingleBalloonType
-     */
-    public void addSingleBalloon(SingleBalloonType balloon) {
-        this.getSingleBalloonTypes().add(balloon);
-    }
-
-    /**
-     *                  Removes a single balloon from the registered balloons list
-     * @param balloon   The single balloon to remove, type net.jeqo.bloons.balloon.single.SingleBalloonType
-     */
-    public void removeSingleBalloon(SingleBalloonType balloon) {
-        this.getSingleBalloonTypes().remove(balloon);
-    }
-
-    /**
      *                  Retrieves a balloon by its ID from the registered balloons list
      * @param ID        The ID of the balloon, type java.lang.String
-     * @return          The balloon with the specified name, type net.jeqo.bloons.balloon.multipart.MultipartBalloonType/null
+     * @return          The balloon with the specified name, type net.jeqo.bloons.balloon.multipart.MultipartBalloonType
+     *                  Returns null if no balloon is found by the specified ID
      */
     public MultipartBalloonType getMultipartBalloonByID(String ID) {
         // Loop over every balloon in the registered balloons list
@@ -136,7 +93,8 @@ public class BalloonCore {
     /**
      *                  Retrieves a single balloon by its ID from the registered balloons list
      * @param ID        The ID of the balloon, type java.lang.String
-     * @return          The single balloon with the specified ID, type net.jeqo.bloons.balloon.single.SingleBalloonType/null
+     * @return          The single balloon with the specified ID, type net.jeqo.bloons.balloon.single.SingleBalloonType
+     *                  Returns null if no balloon is found by the specified ID
      */
     public SingleBalloonType getSingleBalloonByID(String ID) {
         // Loop over every single balloon in the registered balloons list

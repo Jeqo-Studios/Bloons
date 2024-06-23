@@ -18,16 +18,32 @@ import static java.lang.Math.sin;
  */
 @Getter @Setter
 public class ModelNode {
+    /**
+     * The front most point of the segment/node
+     */
     public ModelNodeVector pointA;
+    /**
+     * The back most point of the segment/node
+     */
     public ModelNodeVector pointB = new ModelNodeVector();
 
+    /**
+     * The parent node of the current node
+     */
     public ModelNode parent = null;
+    /**
+     * The child node of the current node
+     */
     public ModelNode child = null;
 
+    /**
+     * The armor stand that represents the node
+     */
     ArmorStand balloonArmorStand;
 
-    float index;
-    float length;
+
+    private float index;
+    private float length;
     private MultipartBalloonType balloonType;
     private Player balloonOwner;
     double maxNodeJointAngle;

@@ -3,7 +3,7 @@ package net.jeqo.bloons.balloon.model;
 /**
  * The type of segment that the model accommodates
  */
-public enum BalloonModelType {
+public enum BalloonSegmentType {
     /**
      * This is the head of the balloon, indexed as the last index in the multipart balloon
      */

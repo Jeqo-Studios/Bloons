@@ -32,16 +32,6 @@ public class ModelNodeVector implements Serializable {
     }
 
     /**
-     * Creates a segment vector holding a 2D space.
-     * @param x X axis.
-     * @param z Z axis.
-     */
-    public ModelNodeVector(float x, float z) {
-        this.x = x;
-        this.z = z;
-    }
-
-    /**
      * Sets a 3D's vectors axis.
      * @param x X axis float.
      * @param y Y axis float.

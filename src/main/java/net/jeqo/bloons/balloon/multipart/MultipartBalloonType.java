@@ -8,24 +8,85 @@ import lombok.Setter;
  */
 @Getter @Setter
 public class MultipartBalloonType {
+    /**
+     * The unique identifier for the balloon type
+     */
     private String id;
+    /**
+     * The permission required to use the balloon
+     */
     private String permission;
+    /**
+     * The name of the balloon that is displayed both in chat and in the Bloons menu
+     */
     private String name;
+    /**
+     * The lore of the item that is displayed in the GUI
+     */
     private String[] lore;
+    /**
+     * The number of nodes, or models, in the balloon
+     */
     private int nodeCount;
+    /**
+     * The distance between each node in the balloon measured in blocks
+     */
     private double distanceBetweenNodes;
+    /**
+     * The height of the leash attached to a player relative from the head of the player in blocks
+     */
     private double leashHeight;
+    /**
+     * The offset of the head node from its 0 position measured in blocks
+     */
     private double headNodeOffset = 0.0;
+    /**
+     * The offset of the body node from its 0 position measured in blocks
+     */
     private double bodyNodeOffset = 0.0;
+    /**
+     * The offset of the tail node from its 0 position measured in blocks
+     */
     private double tailNodeOffset = 0.0;
+    /**
+     * The max angle that a segment/node can rotate to in degrees in both directions
+     * This number *2 is equal to the total range of motion for each segment
+     */
     private double maxNodeJointAngle = 35.0;
+    /**
+     * The interpolation of the Y-axis motion of every segment
+     */
     private double yAxisInterpolation = 0.35;
+    /**
+     * The interpolation of the turning spline to prevent overturning and
+     * to enhance smoother turning
+     */
     private double turningSplineInterpolation = 0.35;
+    /**
+     * The speed of the passive sine wave animation. This is the amount of blocks it
+     * will move every tick due to the runnable running every tick.
+     */
     private double passiveSineWaveSpeed = 0.05;
+    /**
+     * The amplitude of the passive sine wave animation. This is the maximum amount of
+     * blocks the balloon will move in the positive and negative direction.
+     */
     private double passiveSineWaveAmplitude = 0.5;
+    /**
+     * The amplitude of the passive sine wave animation starting at the nose
+     */
     private double passiveNoseSineWaveAmplitude = 0.5;
+    /**
+     * The model used for the head node
+     */
     private MultipartBalloonModel headModel;
+    /**
+     * The model used for the body node
+     */
     private MultipartBalloonModel bodyModel;
+    /**
+     * The model used for the tail node
+     */
     private MultipartBalloonModel tailModel;
 
     /**
