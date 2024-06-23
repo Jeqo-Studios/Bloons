@@ -2,6 +2,7 @@ package net.jeqo.bloons.balloon.single;
 
 import com.ticxo.modelengine.api.ModelEngineAPI;
 import com.ticxo.modelengine.api.animation.handler.AnimationHandler;
+import com.ticxo.modelengine.api.entity.Dummy;
 import com.ticxo.modelengine.api.model.ActiveModel;
 import com.ticxo.modelengine.api.model.ModeledEntity;
 import lombok.Getter;
@@ -262,7 +263,10 @@ public class SingleBalloon extends BukkitRunnable {
         } else {
             try {
                 // Create the entity and tag it onto the armor stand
-                ModeledEntity modeledEntity = ModelEngineAPI.createModeledEntity(this.getBalloonArmorStand());
+                Dummy<?> dummy = new Dummy<>();
+
+                dummy.setDetectingPlayers(false);
+                ModeledEntity modeledEntity = ModelEngineAPI.createModeledEntity(dummy);
                 ActiveModel activeModel = ModelEngineAPI.createActiveModel(this.getBalloonType().getMegModelID());
 
                 modeledEntity.addModel(activeModel, true);
