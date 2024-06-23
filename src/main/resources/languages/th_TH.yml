@@ -1,0 +1,31 @@
+messages:
+  prefix: '<gradient:#ff00cc:#5555ff>[บอลลูน]</gradient> <white>'
+  no-permission: '<#fc1c1c>ไม่อนุญาต.'
+  player-not-found: '<#fc1c1c>ไม่พบผู้เล่น.'
+  config-reloaded: '<green>โหลดการตั้งค่าใหม่.'
+  command-disabled: '<#fc1c1c>คำสั่งนี้ถูกปิดใช้งานในปัจจุบัน!'
+
+  equipped: '%s <green>ได้รับการติดตั้งแล้ว!'
+  unequipped: '<green>บอลลูนของคุณได้รับการจัดเก็บไว้อย่างปลอดภัย'
+  balloon-not-found: '<#fc1c1c>ไม่พบบอลลูน.'
+  not-equipped: '<#fc1c1c>คุณยังไม่ได้ติดตั้งบอลลูนใด ๆ.'
+
+  material-not-dyeable: 'วัสดุ %s ไม่สามารถเปลี่ยนสีได้.'
+  invalid-rgb-values: 'ค่า RGB ต้องอยู่ระหว่าง 0 และ 255 เพื่อเป็นไปได้.'
+  balloon-not-set: 'ไม่ได้ตั้งค่าบอลลูน %s ในการกำหนดค่า!'
+  material-not-set: 'วัสดุของบอลลูน %s ไม่ได้ตั้งค่าในการกำหนดค่า!'
+  material-not-valid: 'วัสดุของบอลลูน %s ไม่ถูกต้อง! วัสดุ: %s'
+  material-is-not-valid: 'วัสดุ %s ไม่ถูกต้อง!'
+  invalid-item-meta: 'ItemMeta ไม่ถูกต้องสำหรับวัสดุ: %s'
+
+  no-balloons-registered: 'ไม่มีบอลลูนที่ลงทะเบียน! ไม่สามารถสร้างเมนูโดยไม่มีบอลลูน.'
+
+  configuration-folder-not-found: 'ไม่พบโฟลเดอร์การกำหนดค่า: %s'
+  no-configuration-files-found: 'ไม่พบไฟล์การกำหนดค่าในโฟลเดอร์: %s'
+  configuration-section-not-found: 'ไม่พบส่วนการกำหนดค่าสำหรับไฟล์: %s'
+  balloon-type-not-found: 'ข้อผิดพลาดในการประมวลผลประเภทบอลลูนสำหรับส่วน: %s ในไฟล์: %s. ประเภทบอลลูนไม่มีหรือเป็น null.'
+  balloon-process-error: 'ข้อผิดพลาดในการประมวลผลบอลลูนสำหรับส่วน: %s ในไฟล์: %s. ข้อผิดพลาด: %s'
+
+  menu-slot-out-of-bounds: 'ปุ่มเมนูหน้า %s เกินขอบเขต!'
+
+  invalid-hex-code: 'รหัสฮีกไม่ถูกต้อง: %s'

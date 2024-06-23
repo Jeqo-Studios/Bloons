@@ -1,0 +1,31 @@
+messages:
+  prefix: '<gradient:#ff00cc:#5555ff>[Baloane]</gradient> <white>'
+  no-permission: '<#fc1c1c>Acces interzis.'
+  player-not-found: '<#fc1c1c>Jucătorul nu a fost găsit.'
+  config-reloaded: '<green>Configurația a fost reîncărcată.'
+  command-disabled: '<#fc1c1c>Această comandă este momentan dezactivată!'
+
+  equipped: '%s <green>echipat!'
+  unequipped: '<green>Balonul tău a fost stocat în siguranță.'
+  balloon-not-found: '<#fc1c1c>Balonul nu a fost găsit.'
+  not-equipped: '<#fc1c1c>Nu deții momentan un balon echipat.'
+
+  material-not-dyeable: 'Materialul %s nu poate fi vopsit.'
+  invalid-rgb-values: 'Valorile RGB trebuie să fie între 0 și 255 pentru a fi valide.'
+  balloon-not-set: 'Balonul %s nu este setat în configurație!'
+  material-not-set: 'Materialul balonului %s nu este setat în configurație!'
+  material-not-valid: 'Materialul balonului %s nu este valid! Material: %s'
+  material-is-not-valid: 'Materialul %s nu este valid!'
+  invalid-item-meta: 'ItemMeta nu este valid pentru materialul: %s'
+
+  no-balloons-registered: 'Nu sunt baloane înregistrate! Nu se poate crea un meniu fără baloane.'
+
+  configuration-folder-not-found: 'Folderul de configurare nu a fost găsit: %s'
+  no-configuration-files-found: 'Nu s-au găsit fișiere de configurare în folder: %s'
+  configuration-section-not-found: 'Secțiunea de configurare nu a fost găsită pentru fișier: %s'
+  balloon-type-not-found: 'Eroare la procesarea tipului de balon pentru secțiunea: %s în fișier: %s. Tipul de balon nu există sau este nul.'
+  balloon-process-error: 'Eroare la procesarea balonului pentru secțiunea: %s în fișier: %s. Eroare: %s'
+
+  menu-slot-out-of-bounds: '%s sloturi de butoane de pagină meniu depășesc limitele!'
+
+  invalid-hex-code: 'Cod hexazecimal invalid: %s'

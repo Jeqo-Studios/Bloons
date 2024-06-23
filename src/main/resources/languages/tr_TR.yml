@@ -1,0 +1,31 @@
+messages:
+  prefix: '<gradient:#ff00cc:#5555ff>[Balonlar]</gradient> <white>'
+  no-permission: '<#fc1c1c>İzin verilmedi.'
+  player-not-found: '<#fc1c1c>Oyuncu bulunamadı.'
+  config-reloaded: '<green>Ayarlar yeniden yüklendi.'
+  command-disabled: '<#fc1c1c>Bu komut şu anda devre dışı!'
+
+  equipped: '%s <green>donatıldı!'
+  unequipped: '<green>Balonunuz güvenli bir şekilde depolandı.'
+  balloon-not-found: '<#fc1c1c>Balon bulunamadı.'
+  not-equipped: '<#fc1c1c>Şu anda donatılmış bir balonunuz yok.'
+
+  material-not-dyeable: '%s malzemesi boyanabilir değil.'
+  invalid-rgb-values: 'Geçersiz RGB değerleri: Değerler 0 ve 255 arasında olmalıdır.'
+  balloon-not-set: '%s balonu yapılandırmada belirtilmemiş!'
+  material-not-set: '%s balonunun malzemesi yapılandırmada belirtilmemiş!'
+  material-not-valid: '%s balonun malzemesi geçerli değil! Malzeme: %s'
+  material-is-not-valid: '%s malzemesi geçerli değil!'
+  invalid-item-meta: 'Malzeme için geçersiz ItemMeta: %s'
+
+  no-balloons-registered: 'Kayıtlı balon bulunmuyor! Boş bir balon menüsü oluşturulamaz.'
+
+  configuration-folder-not-found: 'Yapılandırma klasörü bulunamadı: %s'
+  no-configuration-files-found: 'Klasörde yapılandırma dosyası bulunamadı: %s'
+  configuration-section-not-found: 'Dosya için yapılandırma bölümü bulunamadı: %s'
+  balloon-type-not-found: 'Bölüm için balon türü işlenirken hata oluştu: %s, dosya: %s. Balon türü mevcut değil veya null.'
+  balloon-process-error: 'Bölüm için balon işlenirken hata oluştu: %s, dosya: %s. Hata: %s'
+
+  menu-slot-out-of-bounds: '%s menü sayfa düğme yuvası sınırların dışında!'
+
+  invalid-hex-code: 'Geçersiz hex kodu: %s'

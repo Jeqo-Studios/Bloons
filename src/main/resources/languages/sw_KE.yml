@@ -1,0 +1,31 @@
+messages:
+  prefix: '<gradient:#ff00cc:#5555ff>[Maputo]</gradient> <white>'
+  no-permission: '<#fc1c1c>Hakuna ruhusa.'
+  player-not-found: '<#fc1c1c>Mchezaji hakupatikana.'
+  config-reloaded: '<green>Mipangilio imesasishwa upya.'
+  command-disabled: '<#fc1c1c>Amri hii kwa sasa imelemazwa!'
+
+  equipped: '%s <green>limevalishwa!'
+  unequipped: '<green>Baluni lako limehifadhiwa kwa usalama.'
+  balloon-not-found: '<#fc1c1c>Baluni halipatikani.'
+  not-equipped: '<#fc1c1c>Huna baluni limevalishwa kwa sasa.'
+
+  material-not-dyeable: 'Materiali %s haiwezi kuchovyeka.'
+  invalid-rgb-values: 'Thamani za RGB lazima ziwe kati ya 0 na 255 ili ziwe halali.'
+  balloon-not-set: 'Baluni %s haijasanidiwa!'
+  material-not-set: 'Vifaa vya baluni %s havijasanidiwa!'
+  material-not-valid: 'Vifaa vya baluni %s sio halali! Materiali: %s'
+  material-is-not-valid: 'Materiali %s sio halali!'
+  invalid-item-meta: 'ItemMeta sio halali kwa vifaa: %s'
+
+  no-balloons-registered: 'Hakuna baluni zilizosajiliwa! Haiwezekani kuunda menyu bila baluni.'
+
+  configuration-folder-not-found: 'Folda ya mipangilio haipatikani: %s'
+  no-configuration-files-found: 'Hakuna faili za mipangilio zilizopatikana kwenye folda: %s'
+  configuration-section-not-found: 'Sehemu ya mipangilio haikupatikana kwa faili: %s'
+  balloon-type-not-found: 'Kosa katika kusindika aina ya baluni kwa sehemu: %s katika faili: %s. Aina ya baluni haipo au ni tupu.'
+  balloon-process-error: 'Kosa katika kusindika baluni kwa sehemu: %s katika faili: %s. Kosa: %s'
+
+  menu-slot-out-of-bounds: '%s kifungo cha ukurasa wa menyu kimezidi mipaka!'
+
+  invalid-hex-code: 'Nambari ya hexa batili: %s'

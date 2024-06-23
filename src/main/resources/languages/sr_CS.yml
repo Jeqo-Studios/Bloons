@@ -1,0 +1,31 @@
+messages:
+  prefix: '<gradient:#ff00cc:#5555ff>[Balončići]</gradient> <white>'
+  no-permission: '<#fc1c1c>Nema dozvole.'
+  player-not-found: '<#fc1c1c>Igrač nije pronađen.'
+  config-reloaded: '<green>Konfiguracija je ponovo učitana.'
+  command-disabled: '<#fc1c1c>Ova komanda je trenutno onemogućena!'
+
+  equipped: '%s <green>opremljen!'
+  unequipped: '<green>Vaš balon je sada sigurno uskladišten.'
+  balloon-not-found: '<#fc1c1c>Balon nije pronađen.'
+  not-equipped: '<#fc1c1c>Trenutno nemate opremljen balon.'
+
+  material-not-dyeable: 'Materijal %s nije moguće obojiti.'
+  invalid-rgb-values: 'RGB vrednosti moraju biti između 0 i 255 da bi bile validne.'
+  balloon-not-set: 'Balon %s nije postavljen u konfiguraciji!'
+  material-not-set: 'Materijal balona %s nije postavljen u konfiguraciji!'
+  material-not-valid: 'Materijal balona %s nije validan! Materijal: %s'
+  material-is-not-valid: 'Materijal %s nije validan!'
+  invalid-item-meta: 'ItemMeta nije validan za materijal: %s'
+
+  no-balloons-registered: 'Nema registrovanih balona! Ne može se kreirati meni bez balona.'
+
+  configuration-folder-not-found: 'Folder konfiguracije nije pronađen: %s'
+  no-configuration-files-found: 'Nije pronađena nijedna konfiguraciona datoteka u folderu: %s'
+  configuration-section-not-found: 'Sekcija konfiguracije nije pronađena za datoteku: %s'
+  balloon-type-not-found: 'Greška prilikom obrade tipa balona za sekciju: %s u datoteci: %s. Tip balona ne postoji ili je null.'
+  balloon-process-error: 'Greška prilikom obrade balona za sekciju: %s u datoteci: %s. Greška: %s'
+
+  menu-slot-out-of-bounds: '%s slot(ova) meni stranice prelazi granice!'
+
+  invalid-hex-code: 'Nevažeći heksadecimalni kod: %s'

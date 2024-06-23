@@ -1,0 +1,31 @@
+messages:
+  prefix: '<gradient:#ff00cc:#5555ff>[Balony]</gradient> <white>'
+  no-permission: '<#fc1c1c>Brak uprawnień.'
+  player-not-found: '<#fc1c1c>Nie znaleziono gracza.'
+  config-reloaded: '<green>Konfiguracja została ponownie załadowana.'
+  command-disabled: '<#fc1c1c>Ta komenda jest obecnie wyłączona!'
+
+  equipped: '%s <green>wyposażony!'
+  unequipped: '<green>Twój balon został teraz bezpiecznie przechowany.'
+  balloon-not-found: '<#fc1c1c>Balon nie został znaleziony.'
+  not-equipped: '<#fc1c1c>Nie masz obecnie wyposażonego balonu.'
+
+  material-not-dyeable: 'Materiał %s nie może być farbowany.'
+  invalid-rgb-values: 'Wartości RGB muszą być między 0 a 255, aby być prawidłowe.'
+  balloon-not-set: 'Balon %s nie jest ustawiony w konfiguracji!'
+  material-not-set: 'Materiał balonu %s nie jest ustawiony w konfiguracji!'
+  material-not-valid: 'Materiał balonu %s nie jest prawidłowy! Materiał: %s'
+  material-is-not-valid: 'Materiał %s nie jest prawidłowy!'
+  invalid-item-meta: 'ItemMeta nie jest prawidłowy dla materiału: %s'
+
+  no-balloons-registered: 'Nie zarejestrowano żadnych balonów! Nie można utworzyć menu bez balonów.'
+
+  configuration-folder-not-found: 'Nie znaleziono folderu konfiguracji: %s'
+  no-configuration-files-found: 'Nie znaleziono plików konfiguracyjnych w folderze: %s'
+  configuration-section-not-found: 'Nie znaleziono sekcji konfiguracji dla pliku: %s'
+  balloon-type-not-found: 'Błąd przetwarzania typu balonu dla sekcji: %s w pliku: %s. Typ balonu nie istnieje lub jest null.'
+  balloon-process-error: 'Błąd przetwarzania balonu dla sekcji: %s w pliku: %s. Błąd: %s'
+
+  menu-slot-out-of-bounds: '%s przycisk(i) strony menu poza zakresem!'
+
+  invalid-hex-code: 'Nieprawidłowy kod szesnastkowy: %s'

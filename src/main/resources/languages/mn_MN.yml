@@ -1,0 +1,31 @@
+messages:
+  prefix: '<gradient:#ff00cc:#5555ff>[Бөмбөг]</gradient> <white>'
+  no-permission: '<#fc1c1c>Хандах эрх алгагүй.'
+  player-not-found: '<#fc1c1c>Тоглогч олдсонгүй.'
+  config-reloaded: '<green>Тохиргоо дахин татаж авлагдлаа.'
+  command-disabled: '<#fc1c1c>Энэ комманд одоогоор идэвхгүй байна!'
+
+  equipped: '%s <green>тохируулсан!'
+  unequipped: '<green>Таны бөмбөг амжилттай хадгалагдсан байна.'
+  balloon-not-found: '<#fc1c1c>Бөмбөг олдсонгүй.'
+  not-equipped: '<#fc1c1c>Танд одоогоор суурилсан бөмбөг байхгүй байна.'
+
+  material-not-dyeable: 'Материал %s харах боломжгүй.'
+  invalid-rgb-values: 'RGB утгууд 0 ба 255 хооронд байх ёстой.'
+  balloon-not-set: '%s бөмбөг тохиргоо дотор тохирохгүй байна!'
+  material-not-set: '%s бөмбөгийн материал тохиргоо дотор тохирохгүй байна!'
+  material-not-valid: '%s бөмбөгийн материал буруу бөгөөд! Материал: %s'
+  material-is-not-valid: 'Материал %s буруу материал байна!'
+  invalid-item-meta: 'ItemMeta %s материалд хүчин төгөлдөр биш байна.'
+
+  no-balloons-registered: 'Тодорхойлолтоо хийгээгүй бөмбөг олдсонгүй! Бөмбөгтэй цэс үүсгэх боломжгүй.'
+
+  configuration-folder-not-found: 'Тохиргоо хавтас олдсонгүй: %s'
+  no-configuration-files-found: 'Тохиргоо файл олдсонгүй хавтас дотор: %s'
+  configuration-section-not-found: 'Тохиргоо хэсэг олдсонгүй файлд: %s'
+  balloon-type-not-found: 'Секц шинж чанарыг бөмбөг төрөлд байршуулахад алдаа гарлаа: %s файлаас: %s. Бөмбөгийн төрөл байхгүй буюу хоосон байна.'
+  balloon-process-error: 'Секц бөмбөгийг боловсруулах үед алдаа гарлаа: %s файлаас: %s. Алдаа: %s'
+
+  menu-slot-out-of-bounds: '%s цэсийн товчны слот баасан хязгаартай байна!'
+
+  invalid-hex-code: 'Хүчин төгөлдөрт олдсонгүй хэкс код: %s'

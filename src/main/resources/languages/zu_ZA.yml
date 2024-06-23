@@ -1,0 +1,31 @@
+messages:
+  prefix: '<gradient:#ff00cc:#5555ff>[Iibaluni]</gradient> <white>'
+  no-permission: '<#fc1c1c>Ayikwazi ukunceda.'
+  player-not-found: '<#fc1c1c>Ukuphikisa akukho.'
+  config-reloaded: '<green>Ikhasi eliyibala lithwashwe kabusha.'
+  command-disabled: '<#fc1c1c>Lemibuzo iyashintshwa ngoku!'
+
+  equipped: '%s <green>kuvalelwe!'
+  unequipped: '<green>Ibaluni yakho isungulwe ngeqiniso.'
+  balloon-not-found: '<#fc1c1c>Ibaluni aliyibonakalanga.'
+  not-equipped: '<#fc1c1c>Awukwazi ukuvula kabini lobaluni.'
+
+  material-not-dyeable: 'Iyateriali %s ayikwazi ukuvakashiwa.'
+  invalid-rgb-values: 'Izigaba ze-RGB azilungisiwe: Izimvo kumele zibe phakathi kwesimo se-0 kanye ne-255.'
+  balloon-not-set: 'Ibaluni %s aliyivezwa kwe-config!'
+  material-not-set: 'Iyateriali yobaluni %s ayivezwa kwe-config!'
+  material-not-valid: 'Iyateriali yobaluni %s ayilungisiwe! Iyateriali: %s'
+  material-is-not-valid: 'Iyateriali %s ayilungisiwe!'
+  invalid-item-meta: 'ItemMeta ayilungisiwe ngokwelungiselelwa kwe-materiali: %s'
+
+  no-balloons-registered: 'Akukho iibaluni ethandwa! Akuyona ngokwengeza imenyu ngaphandle kokuthi kungekho ibaluni.'
+
+  configuration-folder-not-found: 'Akuyona ikhasi eliyibala elitholakalayo: %s'
+  no-configuration-files-found: 'Akukho amafayela we-config efilayo: %s'
+  configuration-section-not-found: 'Akuyona isekishini se-config elifikayo: %s'
+  balloon-type-not-found: 'Kukhona iphutha ekwenzeni isikrini somsebenzi ongathandwa kwi-sektion: %s kwe-file: %s. Isigaba seballooni asilutho noma asisilinganayo.'
+  balloon-process-error: 'Kukhona iphutha ekwenzeni ibaluni kwi-sektion: %s kwe-file: %s. Iphutha: %s'
+
+  menu-slot-out-of-bounds: '%s imenyu yebhethi lalimandi lisinyelwe!'
+
+  invalid-hex-code: 'Ikhowudi ye-hex engalungile: %s'

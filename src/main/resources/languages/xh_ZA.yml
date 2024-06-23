@@ -1,0 +1,31 @@
+messages:
+  prefix: '<gradient:#ff00cc:#5555ff>[Iibalooni]</gradient> <white>'
+  no-permission: '<#fc1c1c>Ukunceda akwenzeki.'
+  player-not-found: '<#fc1c1c>I-Player ayikho.'
+  config-reloaded: '<green>I-config yachazwe kabusha.'
+  command-disabled: '<#fc1c1c>Loo mkhombandlela ulwaziwe!'
+
+  equipped: '%s <green>kwenziwe!'
+  unequipped: '<green>Umtya wakho uwugcinwe ngefanayo.'
+  balloon-not-found: '<#fc1c1c>Uballooni awukho.'
+  not-equipped: '<#fc1c1c>Awunayo ngoku i-ballooni engabhiyiselwe.'
+
+  material-not-dyeable: 'I-material %s alifakanyi ngezinto.'
+  invalid-rgb-values: 'Izimvo RGB ezisembiwe: Izimvo kufanele zibe phakathi kwesikhombisa se-0 kunye ne-255.'
+  balloon-not-set: 'Uballooni %s akawuthandwa kwi-config!'
+  material-not-set: 'I-material yoballoon %s aliyithandwa kwi-config!'
+  material-not-valid: 'I-material yoballoon %s aliyenzekanga! Material: %s'
+  material-is-not-valid: 'I-material %s aliyenzekanga!'
+  invalid-item-meta: 'ItemMeta ayifanelekanga kwi-material: %s'
+
+  no-balloons-registered: 'Akukho i-ballooni ethandwa! Ayikwazi ukwakha imenyu ngenkathazo i-ballooni.'
+
+  configuration-folder-not-found: 'Akakuthandwa ifowudha yomhleli wocaphepha: %s'
+  no-configuration-files-found: 'Akakuthandwa amafayela omthwalo wocaphepha: %s'
+  configuration-section-not-found: 'Akakuthandwa i-section ye-config yokhuphela: %s'
+  balloon-type-not-found: 'Igosa elikhona lokuqhuba i-ballooni elithandwa kwi-section: %s kwi-fayela: %s. Lolu qhubo lwaballooni alukho noma lulungile.'
+  balloon-process-error: 'Lolu qhubo lwaballooni lokuqhuba kwenzakala kwi-section: %s kwi-fayela: %s. Iphutha: %s'
+
+  menu-slot-out-of-bounds: '%s imenyu yephepha i-buttoni yaselwimiyo kwi-imfundiso!'
+
+  invalid-hex-code: 'Ikhodi ye-hex engalungile: %s'

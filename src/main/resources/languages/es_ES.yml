@@ -1,0 +1,31 @@
+messages:
+  prefix: '<gradient:#ff00cc:#5555ff>[Globos]</gradient> <white>'
+  no-permission: '<#fc1c1c>Acceso denegado.'
+  player-not-found: '<#fc1c1c>Jugador no encontrado.'
+  config-reloaded: '<green>Configuración recargada.'
+  command-disabled: '<#fc1c1c>¡Este comando está actualmente desactivado!'
+
+  equipped: '%s <green>equipado!'
+  unequipped: '<green>Tu globo ha sido almacenado de forma segura.'
+  balloon-not-found: '<#fc1c1c>Globo no encontrado.'
+  not-equipped: '<#fc1c1c>No tienes actualmente un globo equipado.'
+
+  material-not-dyeable: 'El material %s no se puede teñir.'
+  invalid-rgb-values: 'Los valores RGB deben estar entre 0 y 255 para ser válidos.'
+  balloon-not-set: '¡El globo %s no está configurado!'
+  material-not-set: '¡El material del globo %s no está configurado!'
+  material-not-valid: '¡El material del globo %s no es válido! Material: %s'
+  material-is-not-valid: '¡El material %s no es válido!'
+  invalid-item-meta: 'ItemMeta no es válido para el material: %s'
+
+  no-balloons-registered: '¡No hay globos registrados! No se puede crear un menú sin globos.'
+
+  configuration-folder-not-found: 'Carpeta de configuración no encontrada: %s'
+  no-configuration-files-found: 'No se encontraron archivos de configuración en la carpeta: %s'
+  configuration-section-not-found: 'Sección de configuración no encontrada para el archivo: %s'
+  balloon-type-not-found: 'Error al procesar el tipo de globo para la sección: %s en el archivo: %s. El tipo de globo no existe o es nulo.'
+  balloon-process-error: 'Error al procesar el globo para la sección: %s en el archivo: %s. Error: %s'
+
+  menu-slot-out-of-bounds: '%s botón(es) de página de menú fuera de límites!'
+
+  invalid-hex-code: 'Código hexadecimal inválido: %s'
