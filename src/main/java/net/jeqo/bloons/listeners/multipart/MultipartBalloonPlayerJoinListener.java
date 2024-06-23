@@ -4,7 +4,7 @@ import net.jeqo.bloons.balloon.multipart.balloon.MultipartBalloon;
 import net.jeqo.bloons.balloon.multipart.balloon.MultipartBalloonBuilder;
 import net.jeqo.bloons.balloon.multipart.MultipartBalloonType;
 import net.jeqo.bloons.events.balloon.multipart.MultipartBalloonEquipEvent;
-import net.jeqo.bloons.utils.management.MultipartBalloonManagement;
+import net.jeqo.bloons.management.MultipartBalloonManagement;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;

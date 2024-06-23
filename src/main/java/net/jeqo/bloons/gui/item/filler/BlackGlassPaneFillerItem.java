@@ -1,7 +1,7 @@
 package net.jeqo.bloons.gui.item.filler;
 
 import net.jeqo.bloons.gui.GUIClickableItem;
-import net.jeqo.bloons.utils.NBTItem;
+import net.jeqo.bloons.item.NBTItem;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;

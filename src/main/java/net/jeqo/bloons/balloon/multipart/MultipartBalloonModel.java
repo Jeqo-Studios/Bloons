@@ -5,8 +5,8 @@ import lombok.Setter;
 import net.jeqo.bloons.balloon.model.BalloonModel;
 import net.jeqo.bloons.balloon.model.BalloonModelType;
 import net.jeqo.bloons.logger.Logger;
-import net.jeqo.bloons.utils.Color;
-import net.jeqo.bloons.utils.Languages;
+import net.jeqo.bloons.colors.Color;
+import net.jeqo.bloons.message.Languages;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 

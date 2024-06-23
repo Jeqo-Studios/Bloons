@@ -12,7 +12,7 @@
  *
  * Violations will result in a ban of your plugin and account from bStats.
  */
-package net.jeqo.bloons.utils;
+package net.jeqo.bloons.health;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;

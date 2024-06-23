@@ -1,4 +1,4 @@
-package net.jeqo.bloons.utils;
+package net.jeqo.bloons.message;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
