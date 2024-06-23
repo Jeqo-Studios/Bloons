@@ -1,0 +1,31 @@
+messages:
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
+  no-permission: '<#fc1c1c>Нямате разрешение.'
+  player-not-found: '<#fc1c1c>Играчът не е намерен.'
+  config-reloaded: '<green>Конфигурацията е презаредена.'
+  command-disabled: '<#fc1c1c>Тази команда е в момента деактивирана!'
+
+  equipped: '%s <green>екипиран!'
+  unequipped: '<green>Вашият балон е сигурно съхранен.'
+  balloon-not-found: '<#fc1c1c>Балонът не е намерен.'
+  not-equipped: '<#fc1c1c>В момента нямате екипиран балон.'
+
+  material-not-dyeable: 'Материалът %s не може да бъде оцветен.'
+  invalid-rgb-values: 'RGB стойностите трябва да са между 0 и 255, за да бъдат валидни.'
+  balloon-not-set: 'Балонът %s не е настроен в конфигурацията!'
+  material-not-set: 'Материалът на балона %s не е настроен в конфигурацията!'
+  material-not-valid: 'Материалът на балона %s не е валиден! Материал: %s'
+  material-is-not-valid: 'Материалът %s не е валиден!'
+  invalid-item-meta: 'ItemMeta не е валиден за материала: %s'
+
+  no-balloons-registered: 'Няма регистрирани балони! Не може да се създаде меню без балони.'
+
+  configuration-folder-not-found: 'Папката с конфигурация не е намерена: %s'
+  no-configuration-files-found: 'Няма намерени конфигурационни файлове в папката: %s'
+  configuration-section-not-found: 'Разделът на конфигурацията не е намерен за файла: %s'
+  balloon-type-not-found: 'Грешка при обработката на типа балон за секцията: %s във файла: %s. Типът на балона не съществува или е празен.'
+  balloon-process-error: 'Грешка при обработката на балона за секцията: %s във файла: %s. Грешка: %s'
+
+  menu-slot-out-of-bounds: '%s бутон на страницата на менюто извън границите!'
+
+  invalid-hex-code: 'Невалиден хекс код: %s'

@@ -1,0 +1,31 @@
+messages:
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
+  no-permission: '<#fc1c1c>অনুমতি অস্বীকৃত।'
+  player-not-found: '<#fc1c1c>খেলোয়াড় পাওয়া যায়নি।'
+  config-reloaded: '<green>কনফিগারেশন পুনরায় লোড হয়েছে।'
+  command-disabled: '<#fc1c1c>এই কমান্ড বর্তমানে নিষ্ক্রিয় করা হয়েছে!'
+
+  equipped: '%s <green>পরিপ্রেক্ষিত!'
+  unequipped: '<green>আপনার বেলুন নিরাপদে সংরক্ষিত হয়েছে।'
+  balloon-not-found: '<#fc1c1c>বেলুন পাওয়া যায়নি।'
+  not-equipped: '<#fc1c1c>আপনি বর্তমানে কোনও বেলুন পরিপ্রেক্ষিত করা নেই।'
+
+  material-not-dyeable: '%s উপাদানটি রঙ করা যাবে না।'
+  invalid-rgb-values: 'আরজিবি মান 0 থেকে 255 এর মধ্যে হতে হবে একটি বৈধ মানের জন্য।'
+  balloon-not-set: '%s কনফিগারেশনে বেলুন সেট করা হয়নি!'
+  material-not-set: '%s বেলুনের উপাদানটি কনফিগারেশনে সেট করা হয়নি!'
+  material-not-valid: '%s বেলুনের উপাদানটি বৈধ নয়! উপাদান: %s'
+  material-is-not-valid: '%s উপাদান বৈধ নয়!'
+  invalid-item-meta: 'উপাদান মেটা মূল্য বৈধ নয় মেটেরিয়ালের জন্য: %s'
+
+  no-balloons-registered: 'কোনও বেলুন নিবন্ধিত নেই! কোনও বেলুন নেই মেনু তৈরি করা যায় না।'
+
+  configuration-folder-not-found: 'কনফিগারেশন ফোল্ডার খুঁজে পাওয়া যায়নি: %s'
+  no-configuration-files-found: 'ফোল্ডারে কোনও কনফিগারেশন ফাইল পাওয়া যায়নি: %s'
+  configuration-section-not-found: 'ফাইলের জন্য কনফিগারেশন বিভাগ পাওয়া যায়নি: %s'
+  balloon-type-not-found: 'বিভাগের জন্য বেলুনের প্রকার প্রসেসিং ত্রুটি: %s ফাইলে: %s। বেলুনের ধরন অস্তিত্ব নেই বা খালি।'
+  balloon-process-error: 'বিভাগের জন্য বেলুন প্রসেসিং ত্রুটি: %s ফাইলে: %s। ত্রুটি: %s'
+
+  menu-slot-out-of-bounds: '%s মেনু পৃষ্ঠা বোতাম স্লটগুলি সীমার বাইরে!'
+
+  invalid-hex-code: 'অবৈধ হেক্স কোড: %s'

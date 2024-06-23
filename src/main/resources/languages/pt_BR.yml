@@ -3,21 +3,22 @@ messages:
   no-permission: '<#fc1c1c>Acesso negado.'
   player-not-found: '<#fc1c1c>Jogador não encontrado.'
   config-reloaded: '<green>Configuração recarregada.'
-  command-disabled: '<#fc1c1c>Este comando está atualmente desativado!'
+  command-disabled: '<#fc1c1c>Este comando está desativado no momento!'
 
   equipped: '%s <green>equipado!'
-  unequipped: '<green>Seu balão foi guardado com segurança.'
+  unequipped: '<green>Seu balão foi armazenado com segurança.'
   balloon-not-found: '<#fc1c1c>Balão não encontrado.'
-  not-equipped: '<#fc1c1c>Você não tem nenhum balão equipado no momento.'
+  not-equipped: '<#fc1c1c>Você não possui um balão equipado no momento.'
 
-  material-not-dyeable: 'Material %s não é um material tingível.'
+  material-not-dyeable: 'O material %s não pode ser tingido.'
   invalid-rgb-values: 'Os valores RGB devem estar entre 0 e 255 para serem válidos.'
-  balloon-not-set: 'O balão %s não está definido na configuração!'
-  material-not-set: 'O material do balão %s não está definido na configuração!'
-  material-not-valid: 'O material do balão %s não é um material válido! Material: %s'
+  balloon-not-set: 'O balão %s não está configurado!'
+  material-not-set: 'O material do balão %s não está configurado!'
+  material-not-valid: 'O material do balão %s não é válido! Material: %s'
+  material-is-not-valid: 'O material %s não é válido!'
   invalid-item-meta: 'ItemMeta não é válido para o material: %s'
 
-  no-balloons-registered: 'Nenhum balão encontrado! Não é possível criar um menu sem balões.'
+  no-balloons-registered: 'Nenhum balão registrado! Não é possível criar um menu sem balões.'
 
   configuration-folder-not-found: 'Pasta de configuração não encontrada: %s'
   no-configuration-files-found: 'Nenhum arquivo de configuração encontrado na pasta: %s'
@@ -25,6 +26,6 @@ messages:
   balloon-type-not-found: 'Erro ao processar o tipo de balão para a seção: %s no arquivo: %s. O tipo de balão não existe ou é nulo.'
   balloon-process-error: 'Erro ao processar o balão para a seção: %s no arquivo: %s. Erro: %s'
 
-  menu-slot-out-of-bounds: 'Slot(s) do botão da página de menu %s fora dos limites!'
+  menu-slot-out-of-bounds: '%s botão(s) da página do menu fora dos limites!'
 
   invalid-hex-code: 'Código hexadecimal inválido: %s'

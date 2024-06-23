@@ -10,7 +10,7 @@ import net.jeqo.bloons.listeners.*;
 import net.jeqo.bloons.listeners.multipart.MultipartBalloonPlayerJoinListener;
 import net.jeqo.bloons.listeners.multipart.MultipartBalloonPlayerLeaveListener;
 import net.jeqo.bloons.listeners.single.SingleBalloonPlayerListener;
-import net.jeqo.bloons.utils.LanguageManagement;
+import net.jeqo.bloons.utils.Languages;
 import net.jeqo.bloons.utils.UpdateChecker;
 import net.jeqo.bloons.logger.Logger;
 import net.jeqo.bloons.utils.Metrics;
@@ -64,7 +64,7 @@ public final class Bloons extends JavaPlugin {
          */
 
         // Copy over language files
-        LanguageManagement.copyLanguageFiles();
+        Languages.copyLanguageFiles();
 
         // Generate config(s) and set defaults
         getConfig().options().copyDefaults();

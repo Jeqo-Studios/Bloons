@@ -1,0 +1,31 @@
+messages:
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
+  no-permission: '<#fc1c1c>الوصول ممنوع.'
+  player-not-found: '<#fc1c1c>اللاعب غير موجود.'
+  config-reloaded: '<green>تم إعادة تحميل الإعدادات.'
+  command-disabled: '<#fc1c1c>هذا الأمر معطل حالياً!'
+
+  equipped: '%s <green>تم التجهيز!'
+  unequipped: '<green>تم تخزين بالونك بأمان.'
+  balloon-not-found: '<#fc1c1c>البالون غير موجود.'
+  not-equipped: '<#fc1c1c>ليس لديك بالون مجهز حالياً.'
+
+  material-not-dyeable: 'المادة %s غير قابلة للصبغ.'
+  invalid-rgb-values: 'قيم RGB يجب أن تكون بين 0 و 255 لتكون صالحة.'
+  balloon-not-set: 'البالون %s غير محدد في الإعدادات!'
+  material-not-set: 'مادة البالون %s غير محددة في الإعدادات!'
+  material-not-valid: 'مادة البالون %s غير صالحة! المادة: %s'
+  material-is-not-valid: 'المادة %s غير صالحة!'
+  invalid-item-meta: 'ItemMeta غير صالح للمادة: %s'
+
+  no-balloons-registered: 'لا توجد بالونات مسجلة! لا يمكن إنشاء قائمة بدون بالونات.'
+
+  configuration-folder-not-found: 'مجلد الإعدادات غير موجود: %s'
+  no-configuration-files-found: 'لا توجد ملفات إعدادات في المجلد: %s'
+  configuration-section-not-found: 'قسم الإعدادات غير موجود للملف: %s'
+  balloon-type-not-found: 'خطأ في معالجة نوع البالون للقسم: %s في الملف: %s. نوع البالون غير موجود أو فارغ.'
+  balloon-process-error: 'خطأ في معالجة البالون للقسم: %s في الملف: %s. الخطأ: %s'
+
+  menu-slot-out-of-bounds: 'فتحات زر صفحة القائمة %s خارج الحدود!'
+
+  invalid-hex-code: 'كود سداسي غير صالح: %s'

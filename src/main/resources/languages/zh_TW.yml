@@ -1,0 +1,31 @@
+messages:
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
+  no-permission: '<#fc1c1c>無權訪問。'
+  player-not-found: '<#fc1c1c>找不到玩家。'
+  config-reloaded: '<green>配置已重新加載。'
+  command-disabled: '<#fc1c1c>此命令目前已禁用！'
+
+  equipped: '%s <green>已裝備！'
+  unequipped: '<green>您的氣球已安全存儲。'
+  balloon-not-found: '<#fc1c1c>找不到氣球。'
+  not-equipped: '<#fc1c1c>您目前沒有裝備氣球。'
+
+  material-not-dyeable: '材料%s無法染色。'
+  invalid-rgb-values: 'RGB 值必須在 0 和 255 之間才有效。'
+  balloon-not-set: '未在配置中設置氣球%s！'
+  material-not-set: '未在配置中設置氣球%s的材料！'
+  material-not-valid: '氣球%s的材料無效！ 材料：%s'
+  material-is-not-valid: '材料%s無效！'
+  invalid-item-meta: '對於材料%s，ItemMeta 無效。'
+
+  no-balloons-registered: '沒有註冊氣球！不能創建沒有氣球的菜單。'
+
+  configuration-folder-not-found: '找不到配置文件夾：%s'
+  no-configuration-files-found: '在文件夾%s中找不到配置文件。'
+  configuration-section-not-found: '找不到文件%s的配置部分。'
+  balloon-type-not-found: '處理文件%s中部分%s的氣球類型時出錯。氣球類型不存在或為空。'
+  balloon-process-error: '處理文件%s中部分%s的氣球時出錯。錯誤：%s'
+
+  menu-slot-out-of-bounds: '菜單頁%s按鈕位置超出範圍！'
+
+  invalid-hex-code: '無效的十六進制代碼：%s'

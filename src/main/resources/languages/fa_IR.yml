@@ -1,0 +1,31 @@
+messages:
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
+  no-permission: '<#fc1c1c>دسترسی رد شد.'
+  player-not-found: '<#fc1c1c>بازیکن یافت نشد.'
+  config-reloaded: '<green>پیکربندی مجدداً بارگذاری شد.'
+  command-disabled: '<#fc1c1c>این دستور در حال حاضر غیرفعال است!'
+
+  equipped: '%s <green>نصب شده است!'
+  unequipped: '<green>بادبادک شما اکنون به طور ایمن ذخیره شده است.'
+  balloon-not-found: '<#fc1c1c>بادبادک یافت نشد.'
+  not-equipped: '<#fc1c1c>شما در حال حاضر هیچ بادبادکی نصب نکرده‌اید.'
+
+  material-not-dyeable: 'مواد %s قابل رنگ‌آمیزی نیست.'
+  invalid-rgb-values: 'مقادیر RGB باید بین 0 و 255 باشند تا معتبر باشند.'
+  balloon-not-set: 'بادبادک %s در پیکربندی تنظیم نشده است!'
+  material-not-set: 'مواد بادبادک %s در پیکربندی تنظیم نشده است!'
+  material-not-valid: 'مواد بادبادک %s معتبر نیست! مواد: %s'
+  material-is-not-valid: 'ماده %s معتبر نیست!'
+  invalid-item-meta: 'ItemMeta برای ماده %s معتبر نیست.'
+
+  no-balloons-registered: 'بادبادکی ثبت نشده است! نمی‌توانید یک فهرست بدون بادبادک ایجاد کنید.'
+
+  configuration-folder-not-found: 'پوشه پیکربندی یافت نشد: %s'
+  no-configuration-files-found: 'فایل‌های پیکربندی در پوشه یافت نشد: %s'
+  configuration-section-not-found: 'بخش پیکربندی برای فایل یافت نشد: %s'
+  balloon-type-not-found: 'خطا در پردازش نوع بادبادک برای بخش: %s در فایل: %s. نوع بادبادک موجود نیست یا صفر است.'
+  balloon-process-error: 'خطا در پردازش بادبادک برای بخش: %s در فایل: %s. خطا: %s'
+
+  menu-slot-out-of-bounds: '%s دکمه صفحه منو خارج از حدود است!'
+
+  invalid-hex-code: 'کد هگزاگرادی اشتباه است: %s'
