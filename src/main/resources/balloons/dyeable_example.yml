@@ -18,8 +18,8 @@ single_meg_example:
   permission: balloon.single_meg_example
   meg-model-id: single_meg_example
   icon:
-    display-material: FLINT
-    display-custom-model-data: 7
+    material: FLINT
+    custom-model-data: 7
     name: '<white>Single MEG Balloon'
     lore:
     - '&8Bloons Default Balloon'

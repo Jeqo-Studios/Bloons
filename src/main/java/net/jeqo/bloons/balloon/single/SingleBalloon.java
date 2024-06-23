@@ -1,5 +1,7 @@
 package net.jeqo.bloons.balloon.single;
 
+import com.ticxo.modelengine.api.ModelEngineAPI;
+import com.ticxo.modelengine.api.model.ModeledEntity;
 import lombok.Getter;
 import lombok.Setter;
 import net.jeqo.bloons.Bloons;
@@ -29,10 +31,13 @@ import java.util.concurrent.ThreadLocalRandom;
 
 @Getter @Setter
 public class SingleBalloon extends BukkitRunnable {
+    private SingleBalloonType balloonType;
     private Player player;
     private ItemStack balloonVisual;
     private ArmorStand balloonArmorStand;
     public Chicken balloonChicken;
+
+    private ModeledEntity modeledEntity;
 
     private Location playerLocation;
     private Location moveLocation;
@@ -49,9 +54,11 @@ public class SingleBalloon extends BukkitRunnable {
      */
     public SingleBalloon(Player player, String balloonID) {
         this.setPlayer(player);
+        this.setBalloonType(Bloons.getBalloonCore().getSingleBalloonByID(balloonID));
 
-        // Configure the balloon visual elements
-        this.setBalloonVisual(this.getConfiguredBalloonVisual(balloonID));
+        if (this.getBalloonType().getMegModelID() == null) {
+            this.setBalloonVisual(getConfiguredBalloonVisual(balloonID));
+        }
     }
 
     /**
@@ -88,7 +95,24 @@ public class SingleBalloon extends BukkitRunnable {
         this.setMoveLocation(this.getMoveLocation().add(vector));
         double vectorZ = vector.getZ() * 50.0D * -1.0D;
         double vectorX = vector.getX() * 50.0D * -1.0D;
-        this.getBalloonArmorStand().setHeadPose(new EulerAngle(Math.toRadians(vectorZ), Math.toRadians(playerLocation.getYaw()), Math.toRadians(vectorX)));
+        // Create EulerAngle to tilt parts of the armor body
+        EulerAngle tiltAngle = new EulerAngle(Math.toRadians(vectorZ), Math.toRadians(playerLocation.getYaw()), Math.toRadians(vectorX));
+
+        // Set the pose(s) of the armor stand
+        ArmorStand armorStand = this.getBalloonArmorStand();
+
+        // Set the pose of only the head regardless of the model type
+        armorStand.setHeadPose(tiltAngle);
+
+        // Only set the entire pose of the armor stand if it uses MEG, this is to reduce lag across the server
+        // when having 100's of models/armor stands used simultaneously
+        if (this.getBalloonType().getMegModelID() != null) {
+            armorStand.setBodyPose(tiltAngle);
+            armorStand.setLeftArmPose(tiltAngle);
+            armorStand.setRightArmPose(tiltAngle);
+            armorStand.setLeftLegPose(tiltAngle);
+            armorStand.setRightLegPose(tiltAngle);
+        }
 
         // Teleport the balloon to the move location and set the player location yaw
         this.teleport(this.getMoveLocation());
@@ -108,6 +132,10 @@ public class SingleBalloon extends BukkitRunnable {
      * @throws IllegalStateException    If the task has already been cancelled
      */
     public synchronized void cancel() throws IllegalStateException {
+        if (this.getModeledEntity() != null) {
+            // Remove the MEG model if it exists
+            this.getModeledEntity().removeModel(this.getBalloonType().getMegModelID());
+        }
         this.getBalloonArmorStand().remove();
         this.getBalloonChicken().remove();
         super.cancel();
@@ -137,10 +165,12 @@ public class SingleBalloon extends BukkitRunnable {
         this.setPlayerLocation(this.getPlayer().getLocation());
         this.getPlayerLocation().setYaw(0.0F);
 
-        // Create and set the balloons visual appearance/model
-        ItemMeta meta = this.getBalloonVisual().getItemMeta();
-        meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-        this.getBalloonVisual().setItemMeta(meta);
+        if (this.getBalloonType().getMegModelID() == null) {
+            // Create and set the balloons visual appearance/model
+            ItemMeta meta = this.getBalloonVisual().getItemMeta();
+            meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+            this.getBalloonVisual().setItemMeta(meta);
+        }
 
         // Initialize the armor stand and lead to the player
         this.initializeBalloonArmorStand();
@@ -211,7 +241,16 @@ public class SingleBalloon extends BukkitRunnable {
         this.getBalloonArmorStand().setSmall(false);
         this.getBalloonArmorStand().setMarker(true);
         this.getBalloonArmorStand().setCollidable(false);
-        this.getBalloonArmorStand().getEquipment().setHelmet(this.getBalloonVisual());
+        if (this.getBalloonType().getMegModelID() == null) {
+            this.getBalloonArmorStand().getEquipment().setHelmet(this.getBalloonVisual());
+        } else {
+            try {
+                this.setModeledEntity(ModelEngineAPI.createModeledEntity(this.getBalloonArmorStand()));
+                this.getModeledEntity().addModel(ModelEngineAPI.createActiveModel(this.getBalloonType().getMegModelID()), true);
+            } catch (Exception e) {
+                Logger.logError("An error occurred while creating the MEG model for the balloon " + this.getBalloonType().getId() + "! This is most likely because the ID of the model doesn't exist in the meg-model-id field.");
+            }
+        }
         this.getBalloonArmorStand().customName(Component.text(BalloonConfiguration.BALLOON_ARMOR_STAND_ID));
     }
 

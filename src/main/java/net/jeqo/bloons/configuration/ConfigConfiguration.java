@@ -96,20 +96,39 @@ public class ConfigConfiguration {
 
                     if (!type.equals(BalloonConfiguration.SINGLE_BALLOON_TYPE_IDENTIFIER)) continue;
 
-                    try {
-                        // Add the single balloon type to the array list
-                        singleBalloons.add(new SingleBalloonType(
-                                key,
-                                config.getString(key + ".id"),
-                                config.getString(key + ".permission"),
-                                config.getString(key + ".material"),
-                                config.getString(key + ".color"),
-                                config.getInt(key + ".custom-model-data"),
-                                config.getString(key + ".name"),
-                                config.getStringList(key + ".lore").toArray(new String[0])
-                        ));
-                    } catch (Exception e) {
-                        Logger.logWarning("Error processing multipart balloon type for section: " + key + " in file: " + fileName + " - " + e.getMessage());
+                    if (config.getString(key + ".meg-model-id") != null) {
+                        // Process the MEG balloon type
+                        try {
+                            singleBalloons.add(new SingleBalloonType(
+                                    key,
+                                    config.getString(key + ".id"),
+                                    config.getString(key + ".permission"),
+                                    config.getString(key + ".icon.material"),
+                                    config.getInt(key + ".icon.custom-model-data"),
+                                    config.getString(key + ".meg-model-id"),
+                                    config.getString(key + ".icon.name"),
+                                    config.getStringList(key + ".icon.lore").toArray(new String[0])
+                            ));
+                        } catch (Exception e) {
+                            Logger.logWarning("Error processing MEG balloon type for section: " + key + " in file: " + fileName + " - " + e.getMessage());
+                        }
+                    } else {
+                        // Process the non-MEG balloon type
+                        try {
+                            // Add the single balloon type to the array list
+                            singleBalloons.add(new SingleBalloonType(
+                                    key,
+                                    config.getString(key + ".id"),
+                                    config.getString(key + ".permission"),
+                                    config.getString(key + ".material"),
+                                    config.getString(key + ".color"),
+                                    config.getInt(key + ".custom-model-data"),
+                                    config.getString(key + ".name"),
+                                    config.getStringList(key + ".lore").toArray(new String[0])
+                            ));
+                        } catch (Exception e) {
+                            Logger.logWarning("Error processing multipart balloon type for section: " + key + " in file: " + fileName + " - " + e.getMessage());
+                        }
                     }
                 }
             }
