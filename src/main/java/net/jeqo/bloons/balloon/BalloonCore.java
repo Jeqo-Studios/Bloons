@@ -16,14 +16,20 @@ import java.util.ArrayList;
 @Setter @Getter
 public class BalloonCore {
     private JavaPlugin plugin;
+    /**
+     * Contains all valid and loaded multipart balloon types/configurations
+     */
     public ArrayList<MultipartBalloonType> multipartBalloonTypes = new ArrayList<>();
+    /**
+     * Contains all valid and loaded single balloon types/configurations
+     */
     public ArrayList<SingleBalloonType> singleBalloonTypes = new ArrayList<>();
 
     /**
      *                          Creates a new instance of the balloon core manager with preset registered balloons
      * @param plugin            The plugin instance, type org.bukkit.plugin.java.JavaPlugin
-     * @param balloons          The balloons to register, type java.util.ArrayList<net.jeqo.bloons.balloon.multipart.MultipartBalloonType>
-     * @param singleBalloons    The single balloons to register, type java.util.ArrayList<net.jeqo.bloons.balloon.single.SingleBalloonType>
+     * @param balloons          The balloons to register, type java.util.ArrayList[net.jeqo.bloons.balloon.multipart.MultipartBalloonType]
+     * @param singleBalloons    The single balloons to register, type java.util.ArrayList[net.jeqo.bloons.balloon.single.SingleBalloonType]
      */
     public BalloonCore(JavaPlugin plugin, ArrayList<MultipartBalloonType> balloons, ArrayList<SingleBalloonType> singleBalloons) {
         this.setPlugin(plugin);

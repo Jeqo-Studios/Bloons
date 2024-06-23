@@ -1,0 +1,31 @@
+messages:
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
+  no-permission: '<#fc1c1c>Ha u fa tirisano.'
+  player-not-found: '<#fc1c1c>Ha ke kene ke hore o tsebe monna oa chelete.'
+  config-reloaded: '<green>Sebaka se hlasiloe ka tlase.'
+  command-disabled: '<#fc1c1c>Khomando ena ke e tlaaseha ha ho na le tšireletso e sa tšoanang!'
+
+  equipped: '%s <green>e pharalletsa!'
+  unequipped: '<green>Seboka sa hao sa behe ka khalemoleng.'
+  balloon-not-found: '<#fc1c1c>Ha ho fumanehe seboka.'
+  not-equipped: '<#fc1c1c>Haeba o sa fumane seboka e kenyelletsoa.'
+
+  material-not-dyeable: 'Letsoho %s ha le se e tsebahalisang.'
+  invalid-rgb-values: 'Maqheku a RGB a tlameha ho beng 0 le 255 ho ba le mohlala.'
+  balloon-not-set: 'Seboka %s se ha se sesebetseng ka sebaka!'
+  material-not-set: 'Mosebetsi oa seboka %s ha o se setelehang ka sebaka!'
+  material-not-valid: 'Mosebetsi oa seboka %s ha o se boemo bona! Boemo: %s'
+  material-is-not-valid: 'Mosebetsi %s ha o se boemo bona!'
+  invalid-item-meta: 'ItemMeta ha e sebetse ho mosebetsi: %s'
+
+  no-balloons-registered: 'Ha ho na besebetsi ba bolone ba rekisitara! Ha hloka ho atleha menu e sa fumane bolone.'
+
+  configuration-folder-not-found: 'Sebaka sa tšireletso e sa fumaneha: %s'
+  no-configuration-files-found: 'Ha ho fumanehe maqheku a tšireletso a sebaka: %s'
+  configuration-section-not-found: 'Maqheku a tšireletso a sebaka ha a fumaneha bakeng sa file: %s'
+  balloon-type-not-found: 'Khetla e sa sebedisana ka tsebo ea bolone bakeng sa sebaka: %s ka file: %s. E ka sebelisoa ka e ka sebelisoa hoba ka nolle.'
+  balloon-process-error: 'Khetla e sa sebedisana ka bolone bakeng sa sebaka: %s ka file: %s. Hlobo ea sebetsa: %s'
+
+  menu-slot-out-of-bounds: '%s khatiso ea bontša lebitla le kasehleng!'
+
+  invalid-hex-code: 'Mohlala oa hex e sa sebetse: %s'

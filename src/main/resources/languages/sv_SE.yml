@@ -1,0 +1,31 @@
+messages:
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
+  no-permission: '<#fc1c1c>Åtkomst nekad.'
+  player-not-found: '<#fc1c1c>Spelaren hittades inte.'
+  config-reloaded: '<green>Konfigurationen har laddats om.'
+  command-disabled: '<#fc1c1c>Denna kommando är för närvarande inaktiverad!'
+
+  equipped: '%s <green>utrustad!'
+  unequipped: '<green>Din ballong har säkrats.'
+  balloon-not-found: '<#fc1c1c>Ballongen hittades inte.'
+  not-equipped: '<#fc1c1c>Du har för närvarande ingen ballong utrustad.'
+
+  material-not-dyeable: 'Materialet %s kan inte färgas.'
+  invalid-rgb-values: 'RGB-värdena måste vara mellan 0 och 255 för att vara giltiga.'
+  balloon-not-set: 'Ballongen %s är inte inställd i konfigurationen!'
+  material-not-set: 'Materialet för ballongen %s är inte inställt i konfigurationen!'
+  material-not-valid: 'Materialet för ballongen %s är inte giltigt! Material: %s'
+  material-is-not-valid: 'Materialet %s är inte giltigt!'
+  invalid-item-meta: 'ItemMeta är inte giltigt för materialet: %s'
+
+  no-balloons-registered: 'Inga ballonger är registrerade! Det går inte att skapa en meny utan ballonger.'
+
+  configuration-folder-not-found: 'Konfigurationsmappen hittades inte: %s'
+  no-configuration-files-found: 'Inga konfigurationsfiler hittades i mappen: %s'
+  configuration-section-not-found: 'Konfigurationssektionen hittades inte för filen: %s'
+  balloon-type-not-found: 'Fel vid bearbetning av ballongtypen för avsnittet: %s i filen: %s. Ballongtypen finns inte eller är null.'
+  balloon-process-error: 'Fel vid bearbetning av ballongen för avsnittet: %s i filen: %s. Fel: %s'
+
+  menu-slot-out-of-bounds: '%s meny sida knapp(ar) utanför gränserna!'
+
+  invalid-hex-code: 'Ogiltig hex-kod: %s'

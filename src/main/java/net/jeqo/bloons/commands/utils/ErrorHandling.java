@@ -2,10 +2,13 @@ package net.jeqo.bloons.commands.utils;
 
 import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.configuration.PluginConfiguration;
-import net.jeqo.bloons.utils.MessageTranslations;
+import net.jeqo.bloons.message.MessageTranslations;
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandSender;
 
+/**
+ * A class used to handle errors on commands and to send the usage message to the sender
+ */
 public class ErrorHandling {
 
     /**

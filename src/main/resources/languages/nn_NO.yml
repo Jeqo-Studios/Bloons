@@ -1,0 +1,31 @@
+messages:
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
+  no-permission: '<#fc1c1c>Tilgang nekta.'
+  player-not-found: '<#fc1c1c>Spelaren vart ikkje funnen.'
+  config-reloaded: '<green>Konfigurasjon lasta inn på nytt.'
+  command-disabled: '<#fc1c1c>Denne kommandoen er for øyeblikket deaktivert!'
+
+  equipped: '%s <green>utstyrte!'
+  unequipped: '<green>Ballongen din er no trygt lagra.'
+  balloon-not-found: '<#fc1c1c>Ballongen vart ikkje funnen.'
+  not-equipped: '<#fc1c1c>Du har for øyeblikket ingen ballong utstyrt.'
+
+  material-not-dyeable: 'Materialet %s kan ikkje fargestast.'
+  invalid-rgb-values: 'RGB-verdiane må vere mellom 0 og 255 for å vere gyldige.'
+  balloon-not-set: 'Ballongen %s er ikkje sett i konfigurasjonen!'
+  material-not-set: 'Materialet til ballongen %s er ikkje sett i konfigurasjonen!'
+  material-not-valid: 'Materialet til ballongen %s er ikkje gyldig! Materiale: %s'
+  material-is-not-valid: 'Materialet %s er ikkje gyldig!'
+  invalid-item-meta: 'ItemMeta er ikkje gyldig for materialet: %s'
+
+  no-balloons-registered: 'Ingen ballongar er registrert! Kan ikkje opprette ei meny utan ballongar.'
+
+  configuration-folder-not-found: 'Konfigurasjonsmappa vart ikkje funnen: %s'
+  no-configuration-files-found: 'Ingen konfigurasjonsfiler vart funne i mappa: %s'
+  configuration-section-not-found: 'Konfigurasjonsdelen vart ikkje funnen for fila: %s'
+  balloon-type-not-found: 'Feil ved behandling av ballongtype for seksjon: %s i fila: %s. Ballongtypen eksisterer ikkje eller er null.'
+  balloon-process-error: 'Feil ved behandling av ballong for seksjon: %s i fila: %s. Feil: %s'
+
+  menu-slot-out-of-bounds: '%s meny sideknapp(ar) utanfor grensene!'
+
+  invalid-hex-code: 'Ugyldig heksadesimal kode: %s'

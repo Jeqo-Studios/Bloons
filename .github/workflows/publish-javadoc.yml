@@ -4,22 +4,39 @@ on:
   push:
     branches:
       - main
-concurrency:
-  group: pages
-  cancel-in-progress: false
+
 jobs:
   publish:
     runs-on: ubuntu-latest
+    environment: jdk21-flat
     permissions:
-      contents: read
-      pages: write
-      id-token: write
+      contents: write  # if you have a protection rule on your repository, you'll need to give write permission to the workflow.
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up JDK ${{ vars.JAVA_VERSION }}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ vars.JAVA_VERSION }}
+          distribution: ${{ vars.JAVA_DISTRIBUTION }}
+
+      - name: Cache Maven dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      - name: Build with Maven
+        run: mvn -B package --file pom.xml
+
       - name: Deploy JavaDoc 🚀
         uses: MathieuSoysal/Javadoc-publisher.yml@v2.5.0
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          deploy-mode: artifact
-          java-version: 21
+          javadoc-branch: javadoc
+          java-version: ${{ vars.JAVA_VERSION }}
+          target-folder: javadoc # url will be https://<username>.github.io/<repo>/javadoc, This can be left as nothing to generate javadocs in the root folder.
           project: maven # or gradle
-          # subdirectories: moduleA moduleB #for subdirectories support, needs to be run with custom command

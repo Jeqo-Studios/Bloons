@@ -3,8 +3,8 @@ package net.jeqo.bloons.logger;
 import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.configuration.ConfigConfiguration;
 import net.jeqo.bloons.configuration.PluginConfiguration;
-import net.jeqo.bloons.utils.LanguageManagement;
-import net.jeqo.bloons.utils.MessageTranslations;
+import net.jeqo.bloons.message.Languages;
+import net.jeqo.bloons.message.MessageTranslations;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -39,7 +39,7 @@ public class Logger {
      */
     public static void logToPlayer(Player player, String message) {
         MessageTranslations messageTranslations = new MessageTranslations(Bloons.getInstance());
-        Component component = messageTranslations.getSerializedString(LanguageManagement.getMessage("prefix") + message);
+        Component component = messageTranslations.getSerializedString(Languages.getMessage("prefix") + message);
         player.sendMessage(component);
     }
 
@@ -120,7 +120,8 @@ public class Logger {
     }
 
     /**
-     * Logs an update notification to a player
+     *                  Logs an update notification to a player
+     * @param player    The player to log the update notification to, type org.bukkit.entity.Player
      */
     public static void logUpdateNotificationPlayer(Player player) {
         logToPlayer(player, "A new update is available for " + PluginConfiguration.getName() + " plugin");

@@ -1,0 +1,31 @@
+messages:
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
+  no-permission: '<#fc1c1c>אין הרשאה.'
+  player-not-found: '<#fc1c1c>שחקן לא נמצא.'
+  config-reloaded: '<green>התצורה נטענה מחדש.'
+  command-disabled: '<#fc1c1c>פקודה זו מנוטרלת כרגע!'
+
+  equipped: '%s <green>נצמד בהצלחה!'
+  unequipped: '<green>הבלון שלך נשמר בבטיחות.'
+  balloon-not-found: '<#fc1c1c>הבלון לא נמצא.'
+  not-equipped: '<#fc1c1c>אין לך בלון מצופה כרגע.'
+
+  material-not-dyeable: 'החומר %s אינו ניתן לצביעה.'
+  invalid-rgb-values: 'ערכי RGB חייבים להיות בין 0 ל-255 כדי להיות חוקיים.'
+  balloon-not-set: 'הבלון %s לא מוגדר בתצורה!'
+  material-not-set: 'החומר של הבלון %s אינו מוגדר בתצורה!'
+  material-not-valid: 'החומר של הבלון %s אינו חומר חוקי! חומר: %s'
+  material-is-not-valid: 'החומר %s אינו חומר חוקי!'
+  invalid-item-meta: 'ItemMeta אינו חוקי עבור החומר: %s'
+
+  no-balloons-registered: 'לא נמצאו בלונים! לא ניתן ליצור תפריט ללא בלונים.'
+
+  configuration-folder-not-found: 'תיקיית התצורה לא נמצאה: %s'
+  no-configuration-files-found: 'לא נמצאו קבצי תצורה בתיקייה: %s'
+  configuration-section-not-found: 'לא נמצאה סעיף תצורה עבור הקובץ: %s'
+  balloon-type-not-found: 'שגיאה בעיבוד סוג בלון עבור הסעיף: %s בקובץ: %s. סוג הבלון אינו קיים או הוא ריק.'
+  balloon-process-error: 'שגיאה בעיבוד הבלון עבור הסעיף: %s בקובץ: %s. שגיאה: %s'
+
+  menu-slot-out-of-bounds: '%s כפתורי עמוד תפריט מחוץ לגבולות!'
+
+  invalid-hex-code: 'קוד hex לא חוקי: %s'

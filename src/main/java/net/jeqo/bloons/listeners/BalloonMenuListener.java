@@ -5,14 +5,17 @@ import net.jeqo.bloons.balloon.multipart.balloon.MultipartBalloon;
 import net.jeqo.bloons.balloon.multipart.balloon.MultipartBalloonBuilder;
 import net.jeqo.bloons.balloon.multipart.MultipartBalloonType;
 import net.jeqo.bloons.balloon.single.SingleBalloon;
+import net.jeqo.bloons.colors.Color;
+import net.jeqo.bloons.colors.ColorCodeConverter;
 import net.jeqo.bloons.events.balloon.multipart.MultipartBalloonEquipEvent;
 import net.jeqo.bloons.events.balloon.multipart.MultipartBalloonUnequipEvent;
 import net.jeqo.bloons.events.balloon.single.SingleBalloonEquipEvent;
 import net.jeqo.bloons.events.balloon.single.SingleBalloonUnequipEvent;
 import net.jeqo.bloons.gui.menus.BalloonMenu;
-import net.jeqo.bloons.utils.*;
-import net.jeqo.bloons.utils.management.MultipartBalloonManagement;
-import net.jeqo.bloons.utils.management.SingleBalloonManagement;
+import net.jeqo.bloons.message.Languages;
+import net.jeqo.bloons.message.MessageTranslations;
+import net.jeqo.bloons.management.MultipartBalloonManagement;
+import net.jeqo.bloons.management.SingleBalloonManagement;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -20,6 +23,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
+/**
+ * A class that listens for events related to the balloon menu
+ */
 public class BalloonMenuListener implements Listener {
 
     /**
@@ -30,7 +36,7 @@ public class BalloonMenuListener implements Listener {
     public void onClick(InventoryClickEvent event){
         MessageTranslations messageTranslations = new MessageTranslations(Bloons.getInstance());
 
-        if (!event.getView().getTitle().equals(ColorManagement.fromHex(messageTranslations.getString("menu-title")))) return;
+        if (!event.getView().getTitle().equals(Color.fromHex(messageTranslations.getString("menu-title")))) return;
         if(!(event.getWhoClicked() instanceof Player player)) return;
         if(!BalloonMenu.getUsers().containsKey(player.getUniqueId())) return;
 
@@ -98,7 +104,7 @@ public class BalloonMenuListener implements Listener {
 
             // Send equipped message and play sound
             player.playSound(player.getLocation(), Sound.ENTITY_CHICKEN_EGG, 1, 1);
-            Component equippedMessage = messageTranslations.getSerializedString(LanguageManagement.getMessage("prefix"), String.format(LanguageManagement.getMessage("equipped"), convertedColourBalloonName));
+            Component equippedMessage = messageTranslations.getSerializedString(Languages.getMessage("prefix"), String.format(Languages.getMessage("equipped"), convertedColourBalloonName));
             player.sendMessage(equippedMessage);
 
             // Close inventory if the config is set to true
@@ -149,7 +155,7 @@ public class BalloonMenuListener implements Listener {
                 if (singleBalloon == null && multipartBalloon == null) {
                     // If no balloon equipped, play sound and send message notifying them
                     player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_DIDGERIDOO, 1, 1);
-                    player.sendMessage(messageTranslations.getSerializedString(LanguageManagement.getMessage("prefix"), LanguageManagement.getMessage("not-equipped")));
+                    player.sendMessage(messageTranslations.getSerializedString(Languages.getMessage("prefix"), Languages.getMessage("not-equipped")));
                 } else {
                     if (singleBalloon != null) {
                         if (messageTranslations.getString("close-on-unequip").equals("true")) player.closeInventory();
@@ -163,7 +169,7 @@ public class BalloonMenuListener implements Listener {
 
                         // Play sound and send message saying the balloon is unequipped
                         player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_HURT_SWEET_BERRY_BUSH, 1, 1);
-                        player.sendMessage(messageTranslations.getSerializedString(LanguageManagement.getMessage("prefix"), LanguageManagement.getMessage("unequipped")));
+                        player.sendMessage(messageTranslations.getSerializedString(Languages.getMessage("prefix"), Languages.getMessage("unequipped")));
                     }
 
                     if (multipartBalloon != null) {
@@ -179,7 +185,7 @@ public class BalloonMenuListener implements Listener {
 
                         // Play sound and send message saying the balloon is unequipped
                         player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_HURT_SWEET_BERRY_BUSH, 1, 1);
-                        player.sendMessage(messageTranslations.getSerializedString(LanguageManagement.getMessage("prefix"), LanguageManagement.getMessage("unequipped")));
+                        player.sendMessage(messageTranslations.getSerializedString(Languages.getMessage("prefix"), Languages.getMessage("unequipped")));
                     }
                 }
             }

@@ -1,0 +1,31 @@
+messages:
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
+  no-permission: '<#fc1c1c>Toegang geweier.'
+  player-not-found: '<#fc1c1c>Speler nie gevind nie.'
+  config-reloaded: '<green>Konfigurasie herlaai.'
+  command-disabled: '<#fc1c1c>Hierdie opdrag is tans gedeaktiveer!'
+
+  equipped: '%s <green>toegerus!'
+  unequipped: '<green>Jou ballon is veilig gestoor.'
+  balloon-not-found: '<#fc1c1c>Ballon nie gevind nie.'
+  not-equipped: '<#fc1c1c>Jy het tans nie 'n ballon toegerus nie.'
+
+  material-not-dyeable: 'Materiaal %s is nie 'n kleurbare materiaal nie.'
+  invalid-rgb-values: 'RGB-waardes moet tussen 0 en 255 wees om geldig te wees.'
+  balloon-not-set: 'Die ballon %s is nie in die konfigurasie gestel nie!'
+  material-not-set: 'Die materiaal van die ballon %s is nie in die konfigurasie gestel nie!'
+  material-not-valid: "Die materiaal van die ballon %s is nie 'n geldige materiaal nie! Materiaal: %s"
+  material-is-not-valid: 'Materiaal %s is nie 'n geldige materiaal nie!'
+  invalid-item-meta: 'ItemMeta is nie geldig vir materiaal: %s nie'
+
+  no-balloons-registered: 'Geen ballonne gevind nie! Kan nie 'n spyskaart met geen ballonne skep nie.'
+
+  configuration-folder-not-found: 'Konfigurasie-lêergids nie gevind nie: %s'
+  no-configuration-files-found: 'Geen konfigurasie-lêers gevind in die gids nie: %s'
+  configuration-section-not-found: 'Konfigurasie-afdeling nie gevind vir lêer nie: %s'
+  balloon-type-not-found: 'Fout met verwerking van ballontipe vir afdeling: %s in lêer: %s. Ballontipe bestaan nie of is nul.'
+  balloon-process-error: 'Fout met verwerking van ballon vir afdeling: %s in lêer: %s. Fout: %s'
+
+  menu-slot-out-of-bounds: '%s spyskaartbladsy knoppie gleuf(e) buite perke!'
+
+  invalid-hex-code: 'Ongeldige heksadesimale kode: %s'

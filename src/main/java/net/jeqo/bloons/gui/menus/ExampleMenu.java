@@ -4,13 +4,16 @@ import net.jeqo.bloons.gui.GUI;
 import net.jeqo.bloons.gui.GUIClickableItem;
 import net.jeqo.bloons.gui.item.border.BlackGlassPaneBorder;
 import net.jeqo.bloons.gui.item.filler.BlackGlassPaneFillerItem;
-import net.jeqo.bloons.utils.NBTItem;
+import net.jeqo.bloons.item.NBTItem;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 
+/**
+ * An example of a menu made with the custom GUI system
+ */
 public class ExampleMenu extends GUI {
     Inventory inventory;
 

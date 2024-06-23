@@ -1,0 +1,31 @@
+messages:
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
+  no-permission: '<#fc1c1c>Giriş icazəsi yoxdur.'
+  player-not-found: '<#fc1c1c>Oyuncu tapılmadı.'
+  config-reloaded: '<green>Konfiq yenidən yükləndi.'
+  command-disabled: '<#fc1c1c>Bu komanda hazırda deaktiv edilmişdir!'
+
+  equipped: '%s <green>təchiz edildi!'
+  unequipped: '<green>Balonunuz təhlükəsiz şəkildə saxlanıldı.'
+  balloon-not-found: '<#fc1c1c>Balon tapılmadı.'
+  not-equipped: '<#fc1c1c>Hazırda təchiz edilmiş bir balonunuz yoxdur.'
+
+  material-not-dyeable: 'Material %s boyanabilir material deyil.'
+  invalid-rgb-values: 'RGB dəyərləri etibarlı olmaq üçün 0 ilə 255 arasında olmalıdır.'
+  balloon-not-set: 'Konfiqurasiyada %s balon təyin edilməyib!'
+  material-not-set: '%s balonun materialı konfiqurasiyada təyin edilməyib!'
+  material-not-valid: '%s balonun materialı etibarlı material deyil! Material: %s'
+  material-is-not-valid: 'Material %s etibarlı bir material deyil!'
+  invalid-item-meta: 'Material üçün əşya meta etiketi etibarlı deyil: %s'
+
+  no-balloons-registered: 'Heç bir balon qeydə alınmayıb! Balonsuz bir menyü yaradıla bilməz.'
+
+  configuration-folder-not-found: 'Konfiqurasiya qovluğu tapılmadı: %s'
+  no-configuration-files-found: 'Qovluqda konfiqurasiya faylları tapılmadı: %s'
+  configuration-section-not-found: 'Faylı üçün konfiqurasiya bölməsi tapılmadı: %s'
+  balloon-type-not-found: 'Faylda %s bölməsi üçün balon növü işlənməsində xəta baş verdi: %s. Balon növü mövcud deyil və ya boşdur.'
+  balloon-process-error: 'Faylda %s bölməsi üçün balon prosesi xətası baş verdi: %s. Xəta: %s'
+
+  menu-slot-out-of-bounds: '%s menyü səhifə düymə yeri çapdan kənar çıxır!'
+
+  invalid-hex-code: 'Etibarsız hex kodu: %s'

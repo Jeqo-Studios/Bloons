@@ -1,0 +1,31 @@
+messages:
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
+  no-permission: '<#fc1c1c>Áður hefur verið óheimilt.'
+  player-not-found: '<#fc1c1c>Leikmaður fannst ekki.'
+  config-reloaded: '<green>Stillingar hlaðnar aftur inn.'
+  command-disabled: '<#fc1c1c>Þessi skipun er í augnablikinu óvirk!'
+
+  equipped: '%s <green>búið til!'
+  unequipped: '<green>Loftbelgurinn þinn hefur verið geymdur örugglega.'
+  balloon-not-found: '<#fc1c1c>Loftbelgur fannst ekki.'
+  not-equipped: '<#fc1c1c>Þú ert ekki með loftbelg búinn að gera ráð fyrir þig.'
+
+  material-not-dyeable: 'Efnið %s er ekki litarefni.'
+  invalid-rgb-values: 'RGB gildin verða að vera á milli 0 og 255 til að vera gild gildi.'
+  balloon-not-set: '%s loftbelgurinn er ekki settur í stillingunni!'
+  material-not-set: '%s loftbelgurinn er ekki settur í efni í stillingunni!'
+  material-not-valid: '%s loftbelgurinn er ekki gilt efni! Efni: %s'
+  material-is-not-valid: 'Efnið %s er ekki gilt efni!'
+  invalid-item-meta: 'ItemMeta er ekki gilt fyrir efnið: %s'
+
+  no-balloons-registered: 'Engir loftbelgar eru skráðir! Ekki hægt að búa til valmynd án loftbelga.'
+
+  configuration-folder-not-found: 'Stillingarmappa fannst ekki: %s'
+  no-configuration-files-found: 'Engar stillingarskrár fundust í möppunni: %s'
+  configuration-section-not-found: 'Stillingarsekt fannst ekki fyrir skrá: %s'
+  balloon-type-not-found: 'Villa við að vinna með loftbelg tegund fyrir hluta: %s í skrá: %s. Loftbelgur tegund er ekki til eða er tómur.'
+  balloon-process-error: 'Villa við að vinna loftbelg fyrir hluta: %s í skrá: %s. Villa: %s'
+
+  menu-slot-out-of-bounds: '%s valmynd síðuhnappur staðsetning er utan marka!'
+
+  invalid-hex-code: 'Ógild hex kóði: %s'

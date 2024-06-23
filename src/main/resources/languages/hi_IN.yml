@@ -1,0 +1,31 @@
+messages:
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
+  no-permission: '<#fc1c1c>पहुंच निषेध।'
+  player-not-found: '<#fc1c1c>खिलाड़ी नहीं मिला।'
+  config-reloaded: '<green>कॉन्फ़िगरेशन पुनः लोड किया गया।'
+  command-disabled: '<#fc1c1c>यह कमांड वर्तमान में निष्क्रिय है!'
+
+  equipped: '%s <green>सफलतापूर्वक सुसज्जित किया गया!'
+  unequipped: '<green>आपका गुब्बारा सुरक्षित रूप से संग्रहीत हो गया है।'
+  balloon-not-found: '<#fc1c1c>गुब्बारा नहीं मिला।'
+  not-equipped: '<#fc1c1c>आपके पास वर्तमान में कोई गुब्बारा सुसज्जित नहीं है।'
+
+  material-not-dyeable: 'सामग्री %s को रंगने में सक्षम नहीं है।'
+  invalid-rgb-values: 'RGB मूल्यों को मान्य होने के लिए 0 से 255 के बीच होना चाहिए।'
+  balloon-not-set: 'गुब्बारा %s कॉन्फ़िगरेशन में सेट नहीं है!'
+  material-not-set: 'गुब्बारे की सामग्री %s कॉन्फ़िगरेशन में सेट नहीं है!'
+  material-not-valid: 'गुब्बारे की सामग्री %s मान्य सामग्री नहीं है! सामग्री: %s'
+  material-is-not-valid: 'सामग्री %s मान्य सामग्री नहीं है!'
+  invalid-item-meta: 'आइटम मेटा सामग्री के लिए मान्य नहीं है: %s'
+
+  no-balloons-registered: 'कोई गुब्बारे नहीं मिले! कोई गुब्बारे के साथ मेनू नहीं बनाया जा सकता।'
+
+  configuration-folder-not-found: 'कॉन्फ़िगरेशन फ़ोल्डर नहीं मिला: %s'
+  no-configuration-files-found: 'फ़ोल्डर में कोई कॉन्फ़िगरेशन फ़ाइलें नहीं मिलीं: %s'
+  configuration-section-not-found: 'फ़ाइल के लिए कॉन्फ़िगरेशन सेक्शन नहीं मिला: %s'
+  balloon-type-not-found: 'धागे के सेक्शन के लिए गुब्बारे का प्रकार प्रसंस्करण त्रुटि: %s फ़ाइल में: %s। गुब्बारे का प्रकार मौजूद नहीं है या खाली है।'
+  balloon-process-error: 'धागे के सेक्शन के लिए गुब्बारे की प्रसंस्करण त्रुटि: %s फ़ाइल में: %s। त्रुटि: %s'
+
+  menu-slot-out-of-bounds: '%s मेनू पृष्ठ बटन स्लॉट(स) सीमाओं के बाहर हैं!'
+
+  invalid-hex-code: 'अमान्य hex कोड: %s'

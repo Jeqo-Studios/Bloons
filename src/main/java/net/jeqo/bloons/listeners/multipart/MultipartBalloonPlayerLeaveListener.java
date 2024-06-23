@@ -2,7 +2,7 @@ package net.jeqo.bloons.listeners.multipart;
 
 import net.jeqo.bloons.balloon.multipart.balloon.MultipartBalloon;
 import net.jeqo.bloons.events.balloon.multipart.MultipartBalloonUnequipEvent;
-import net.jeqo.bloons.utils.management.MultipartBalloonManagement;
+import net.jeqo.bloons.management.MultipartBalloonManagement;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;

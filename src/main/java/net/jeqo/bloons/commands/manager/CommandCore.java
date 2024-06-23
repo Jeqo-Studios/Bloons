@@ -9,11 +9,10 @@ import net.jeqo.bloons.commands.manager.types.CommandAccess;
 import net.jeqo.bloons.configuration.PluginConfiguration;
 import net.jeqo.bloons.gui.menus.BalloonMenu;
 import net.jeqo.bloons.logger.Logger;
-import net.jeqo.bloons.utils.ColorManagement;
-import net.jeqo.bloons.utils.LanguageManagement;
-import net.jeqo.bloons.utils.MessageTranslations;
+import net.jeqo.bloons.colors.Color;
+import net.jeqo.bloons.message.Languages;
+import net.jeqo.bloons.message.MessageTranslations;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -31,6 +30,9 @@ import java.util.Objects;
 
 import static net.jeqo.bloons.commands.utils.ErrorHandling.usage;
 
+/**
+ * Handles the core functionality of commands and their restrictive access
+ */
 @Getter
 public class CommandCore implements CommandExecutor {
     private final ArrayList<Command> commands;
@@ -102,7 +104,7 @@ public class CommandCore implements CommandExecutor {
             Player player = (Player) sender;
 
             if (!player.hasPermission("bloons.menu")) {
-                Component noPermission = this.getMessageTranslations().getSerializedString(LanguageManagement.getMessage("prefix"), LanguageManagement.getMessage("no-permission"));
+                Component noPermission = this.getMessageTranslations().getSerializedString(Languages.getMessage("prefix"), Languages.getMessage("no-permission"));
                 player.sendMessage(noPermission);
                 return true;
             }
@@ -113,7 +115,7 @@ public class CommandCore implements CommandExecutor {
 
             //
             if (singleBalloonTypes == null && multipartBalloonTypes == null) {
-                Logger.logError(LanguageManagement.getMessage("no-balloons-registered"));
+                Logger.logError(Languages.getMessage("no-balloons-registered"));
                 return false;
             }
 
@@ -152,13 +154,13 @@ public class CommandCore implements CommandExecutor {
             if (currentCommand.getCommandAliases().contains(subcommand)) {
                 // Check if the sender has the permission to execute the command
                 if (!meetsRequirements(currentCommand, sender)) {
-                    sender.sendMessage(this.getMessageTranslations().getSerializedString(LanguageManagement.getMessage("prefix"), LanguageManagement.getMessage("no-permission")));
+                    sender.sendMessage(this.getMessageTranslations().getSerializedString(Languages.getMessage("prefix"), Languages.getMessage("no-permission")));
                     return false;
                 }
 
                 // Check if the command is disabled
                 if (currentCommand.getRequiredAccess() == CommandAccess.DISABLED) {
-                    sender.sendMessage(this.getMessageTranslations().getSerializedString(this.getMessageTranslations().getMessage("prefix"), LanguageManagement.getMessage("command-disabled")));
+                    sender.sendMessage(this.getMessageTranslations().getSerializedString(Languages.getMessage("prefix"), Languages.getMessage("command-disabled")));
                     return false;
                 }
 
@@ -220,14 +222,14 @@ public class CommandCore implements CommandExecutor {
     private ItemStack createBalloonItem(SingleBalloonType singleBalloonType) {
         Material material = Material.matchMaterial(singleBalloonType.getMaterial());
         if (material == null) {
-            Logger.logError(String.format(LanguageManagement.getMessage("material-not-valid"), singleBalloonType.getMaterial()));
+            Logger.logError(String.format(Languages.getMessage("material-not-valid"), singleBalloonType.getMaterial()));
             return null;
         }
 
         ItemStack item = new ItemStack(material);
         ItemMeta meta = item.getItemMeta();
         if (meta == null) {
-            Logger.logError(String.format(LanguageManagement.getMessage("invalid-item-meta"), singleBalloonType.getMaterial()));
+            Logger.logError(String.format(Languages.getMessage("invalid-item-meta"), singleBalloonType.getMaterial()));
             return null;
         }
 
@@ -249,14 +251,14 @@ public class CommandCore implements CommandExecutor {
     private ItemStack createBalloonItem(MultipartBalloonType multipartBalloonType) {
         Material material = Material.matchMaterial(multipartBalloonType.getHeadModel().getMaterial());
         if (material == null) {
-            Logger.logError(String.format(LanguageManagement.getMessage("material-not-valid"), multipartBalloonType.getHeadModel().getMaterial()));
+            Logger.logError(String.format(Languages.getMessage("material-not-valid"), multipartBalloonType.getHeadModel().getMaterial()));
             return null;
         }
 
         ItemStack item = new ItemStack(material);
         ItemMeta meta = item.getItemMeta();
         if (meta == null) {
-            Logger.logError(String.format(LanguageManagement.getMessage("invalid-item-meta"), multipartBalloonType.getHeadModel().getMaterial()));
+            Logger.logError(String.format(Languages.getMessage("invalid-item-meta"), multipartBalloonType.getHeadModel().getMaterial()));
             return null;
         }
 
@@ -281,7 +283,7 @@ public class CommandCore implements CommandExecutor {
     private void setBalloonLore(ItemMeta meta, SingleBalloonType singleBalloonType) {
         if (singleBalloonType.getLore() != null) {
             List<String> lore = new ArrayList<>(List.of(singleBalloonType.getLore()));
-            lore.replaceAll(ColorManagement::fromHex);
+            lore.replaceAll(Color::fromHex);
             meta.setLore(lore);
         }
     }
@@ -294,7 +296,7 @@ public class CommandCore implements CommandExecutor {
     private void setBalloonLore(ItemMeta meta, MultipartBalloonType multipartBalloonType) {
         if (multipartBalloonType.getLore() != null) {
             List<String> lore = new ArrayList<>(List.of(multipartBalloonType.getLore()));
-            lore.replaceAll(ColorManagement::fromHex);
+            lore.replaceAll(Color::fromHex);
             meta.setLore(lore);
         }
     }
@@ -335,9 +337,9 @@ public class CommandCore implements CommandExecutor {
 
         if (color != null && !color.equalsIgnoreCase("potion")) {
             if (meta instanceof LeatherArmorMeta) {
-                ((LeatherArmorMeta) meta).setColor(ColorManagement.hexToColor(color));
+                ((LeatherArmorMeta) meta).setColor(Color.hexToColor(color));
             } else {
-                Logger.logWarning(String.format(LanguageManagement.getMessage("material-not-dyeable"), singleBalloonType.getMaterial()));
+                Logger.logWarning(String.format(Languages.getMessage("material-not-dyeable"), singleBalloonType.getMaterial()));
             }
         }
     }
@@ -352,9 +354,9 @@ public class CommandCore implements CommandExecutor {
 
         if (color != null && !color.equalsIgnoreCase("potion")) {
             if (meta instanceof LeatherArmorMeta) {
-                ((LeatherArmorMeta) meta).setColor(ColorManagement.hexToColor(color));
+                ((LeatherArmorMeta) meta).setColor(Color.hexToColor(color));
             } else {
-                Logger.logWarning(String.format(LanguageManagement.getMessage("material-not-dyeable"), multipartBalloonType.getHeadModel().getMaterial()));
+                Logger.logWarning(String.format(Languages.getMessage("material-not-dyeable"), multipartBalloonType.getHeadModel().getMaterial()));
             }
         }
     }

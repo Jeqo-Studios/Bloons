@@ -1,0 +1,31 @@
+messages:
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
+  no-permission: '<#fc1c1c>Hozzáférés megtagadva.'
+  player-not-found: '<#fc1c1c>A játékos nem található.'
+  config-reloaded: '<green>A konfiguráció újratöltve.'
+  command-disabled: '<#fc1c1c>Ez a parancs jelenleg letiltva van!'
+
+  equipped: '%s <green>felszerelve!'
+  unequipped: '<green>A lufid biztonságosan eltárolva.'
+  balloon-not-found: '<#fc1c1c>A lufi nem található.'
+  not-equipped: '<#fc1c1c>Jelenleg nincs felszerelve lufi.'
+
+  material-not-dyeable: 'Az anyag %s nem festhető.'
+  invalid-rgb-values: 'Az RGB értékeknek 0 és 255 között kell lenniük.'
+  balloon-not-set: 'A %s lufi nincs beállítva a konfigurációban!'
+  material-not-set: 'A %s lufi anyaga nincs beállítva a konfigurációban!'
+  material-not-valid: 'A %s lufi anyaga nem érvényes anyag! Anyag: %s'
+  material-is-not-valid: 'Az anyag %s nem érvényes anyag!'
+  invalid-item-meta: 'Az ItemMeta nem érvényes az anyaghoz: %s'
+
+  no-balloons-registered: 'Nincsenek regisztrált lufik! Nem lehet menüt létrehozni regisztrált lufik nélkül.'
+
+  configuration-folder-not-found: 'A konfigurációs mappa nem található: %s'
+  no-configuration-files-found: 'Nincsenek konfigurációs fájlok a mappában: %s'
+  configuration-section-not-found: 'A konfigurációs szakasz nem található a fájlhoz: %s'
+  balloon-type-not-found: 'Hiba a lufi típusának feldolgozásakor a szakaszhoz: %s a fájlban: %s. A lufi típusa nem létezik vagy null.'
+  balloon-process-error: 'Hiba a lufi feldolgozásakor a szakaszhoz: %s a fájlban: %s. Hiba: %s'
+
+  menu-slot-out-of-bounds: '%s menü oldal gomb hely nincs határokon belül!'
+
+  invalid-hex-code: 'Érvénytelen hex kód: %s'

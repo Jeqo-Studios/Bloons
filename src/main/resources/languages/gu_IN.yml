@@ -1,0 +1,31 @@
+messages:
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
+  no-permission: '<#fc1c1c>કોઈ પરવાનગી નથી.'
+  player-not-found: '<#fc1c1c>ખેલાડી મળી નથી.'
+  config-reloaded: '<green>રૂપરેખાંકન પુનઃલોડ થયો.'
+  command-disabled: '<#fc1c1c>આ આદેશ હાલમાં અક્રિય છે!'
+
+  equipped: '%s <green>સજ્જ કરેલું છે!'
+  unequipped: '<green>તમારી બલૂન સુરક્ષિત રીતે સંગ્રહિત થઇ ગઈ છે.'
+  balloon-not-found: '<#fc1c1c>બલૂન મળ્યું નથી.'
+  not-equipped: '<#fc1c1c>તમારી સાથે હાલમાં કોઈ બલૂન સજ્જ નથી.'
+
+  material-not-dyeable: 'સામગ્રી %s રંગીન નથી.'
+  invalid-rgb-values: 'RGB મૂલ્યો માન્ય હોવા માટે 0 થી 255 વચ્ચે હોવો જ જોઈએ.'
+  balloon-not-set: 'બલૂન %s રૂપરેખાંકનમાં સેટ કરવામાં નથી!'
+  material-not-set: 'બલૂનની સામગ્રી %s રૂપરેખાંકનમાં સેટ કરવામાં નથી!'
+  material-not-valid: 'બલૂનની સામગ્રી %s માન્ય સામગ્રી નથી! સામગ્રી: %s'
+  material-is-not-valid: 'સામગ્રી %s માન્ય સામગ્રી નથી!'
+  invalid-item-meta: 'વસ્તુની મેટા માન્ય નથી: %s'
+
+  no-balloons-registered: 'કોઈ બલૂન્સ મળ્યા નથી! કોઈ બલૂન્સ સાથે મેનૂ બનાવી શકાતું નથી.'
+
+  configuration-folder-not-found: 'રૂપરેખાંકન ફોલ્ડર મળ્યો નથી: %s'
+  no-configuration-files-found: 'ફોલ્ડરમાં કોઈ રૂપરેખાંકન ફાઇલો મળ્યા નથી: %s'
+  configuration-section-not-found: 'ફાઇલ માટે રૂપરેખાંકન વિભાગ મળ્યો નથી: %s'
+  balloon-type-not-found: 'વિભાગ %s માટે બલૂન પ્રકારનું પ્રક્રિયાકરણ ક્રમ નથી: %s ફાઇલમાં. બલૂન પ્રકાર અસ્તિત્વમાં નથી અથવા ખાલી છે.'
+  balloon-process-error: 'વિભાગ %s માટે બલૂન પ્રક્રિયાકરણ ક્રમ નથી: %s ફાઇલમાં. ભૂલ: %s'
+
+  menu-slot-out-of-bounds: '%s મેનુ પેજ બટન સ્લોટ(સ) બાહ્ય મર્યાદાઓ બહાર!'
+
+  invalid-hex-code: 'અમાન્ય હેક્સ કોડ: %s'

@@ -1,0 +1,31 @@
+messages:
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
+  no-permission: '<#fc1c1c>ಪ್ರವೇಶ ನಿರಾಕರಿಸಲಾಗಿದೆ.'
+  player-not-found: '<#fc1c1c>ಆಟಗಾರ ಕಂಡುಬರಲಿಲ್ಲ.'
+  config-reloaded: '<green>ಕಾನ್ಫಿಗರೇಷನ್ ಮರುಹೊಂದಿಸಲಾಗಿದೆ.'
+  command-disabled: '<#fc1c1c>ಈ ಕಮಾಂಡ್ ಪ್ರಸ್ತುತವಾಗಿ ನಿಷೇಧಿಸಲಾಗಿದೆ!'
+
+  equipped: '%s <green>ಅಣಿಮಾಡಲಾಗಿದೆ!'
+  unequipped: '<green>ನಿಮ್ಮ ಬಲೂನ್ ಸುರಕ್ಷಿತವಾಗಿ ಸಂಗ್ರಹಿತವಾಗಿದೆ.'
+  balloon-not-found: '<#fc1c1c>ಬಲೂನ್ ಸಿಗಲಿಲ್ಲ.'
+  not-equipped: '<#fc1c1c>ನೀವು ಪ್ರಸ್ತುತವಾಗಿ ಯಾವುದೇ ಬಲೂನ್ ಅಣಿಯಲಾಗಿಲ್ಲ.'
+
+  material-not-dyeable: 'ತರಹದ %s ಬಣ್ಣಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ.'
+  invalid-rgb-values: 'RGB ಮೌಲ್ಯಗಳು 0 ಮತ್ತು 255 ನಡುವೆ ಇರಬೇಕು ಅಥವಾ ಮಾನ್ಯವಿರಬೇಕು.'
+  balloon-not-set: 'ಬಲೂನ್ %s ಆಕೃತಿಯಲ್ಲಿ ಹೊಂದಲ್ಪಡಿಲ್ಲ!'
+  material-not-set: 'ಬಲೂನ್ %s ಆಕೃತಿಯ ಬಲೂನ್ ಅನಾಯಕ್ತವಾಗಿದೆ!'
+  material-not-valid: 'ಬಲೂನ್ %s ಆಕೃತಿಯ ಬಲೂನ್ ಅಮಾನ್ಯ ವಸ್ತು! ವಸ್ತು: %s'
+  material-is-not-valid: '%s ವಸ್ತು ಅಮಾನ್ಯ ವಸ್ತು ಅಥವಾ ಖಾಲಿ ಇದೆ!'
+  invalid-item-meta: 'ಐಟಂಮೇಟಾ ಬಲೂನ್ ಅನಾಯಕ್ತವಾಗಿದೆ: %s'
+
+  no-balloons-registered: 'ಯಾವುದೇ ಬಲೂನ್‌ಗಳು ನೋಂದಿಗೆಯಾಗಿಲ್ಲ! ಬಲೂನ್‌ಗಳಿಲ್ಲದೆ ಮೆನು ರಚಿಸಲಾಗಿಲ್ಲ.'
+
+  configuration-folder-not-found: 'ಆಕೃತಿ ಫೋಲ್ಡರ್ ಸಿಗಲಿಲ್ಲ: %s'
+  no-configuration-files-found: 'ಫೋಲ್ಡರ್‌ನಲ್ಲಿ ಯಾವುದೇ ಆಕೃತಿ ಫೈಲ್‌ಗಳು ಸಿಗಲಿಲ್ಲ: %s'
+  configuration-section-not-found: 'ಫೈಲ್‌ಗಾಗಿ ಆಕೃತಿ ವಿಭಾಗ ಸಿಗಲಿಲ್ಲ: %s'
+  balloon-type-not-found: 'ಪ್ರಕಾರ ಸಿಗಲಿಲ್ಲ ಅಥವಾ ಖಾಲಿ ಆಗಿದೆ: %s ಫೈಲ್‌ನಲ್ಲಿ %s ವಿಭಾಗಕ್ಕಾಗಿ ಬಲೂನ್ ಪ್ರಕ್ರಿಯೆ ತಪ್ಪಾಗಿದೆ.'
+  balloon-process-error: 'ಬಲೂನ್ ವಿಭಾಗಕ್ಕಾಗಿ %s ಫೈಲ್‌ನಲ್ಲಿ %s ಬಲೂನ್ ಪ್ರಕ್ರಿಯೆ ತಪ್ಪಾಗಿದೆ. ತಪ್ಪು: %s'
+
+  menu-slot-out-of-bounds: '%s ಮೆನು ಪುಟ ಬಟನ್ ಸ್ಲಾಟ್‌ಗಳು ಗರಿಷ್ಠ ಮಿತಿಯ ಹೊರಗಿವೆ!'
+
+  invalid-hex-code: 'ಅಮಾನ್ಯ ಹೆಕ್ಸ್ ಕೋಡ್: %s'

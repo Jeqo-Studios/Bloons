@@ -1,6 +1,6 @@
 package net.jeqo.bloons.gui;
 
-import net.jeqo.bloons.utils.NBTItem;
+import net.jeqo.bloons.item.NBTItem;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

@@ -4,14 +4,21 @@ import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.commands.manager.Command;
 import net.jeqo.bloons.commands.manager.types.CommandPermission;
 import net.jeqo.bloons.events.general.BloonsConfigReloadEvent;
-import net.jeqo.bloons.utils.LanguageManagement;
-import net.jeqo.bloons.utils.MessageTranslations;
+import net.jeqo.bloons.message.Languages;
+import net.jeqo.bloons.message.MessageTranslations;
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
+/**
+ * A command used to reload the Bloons configurations
+ */
 public class CommandReload extends Command {
 
+    /**
+     *                 Constructor for the CommandReload class
+     * @param plugin   The instance of the plugin, type org.bukkit.plugin.java.JavaPlugin
+     */
     public CommandReload(JavaPlugin plugin) {
         super(plugin);
         this.addCommandAlias("reload");
@@ -39,7 +46,7 @@ public class CommandReload extends Command {
         // Refresh balloons and their configurations from their respective files
         Bloons.getBalloonCore().initialize();
 
-        Component configReloadedMessage = messageTranslations.getSerializedString(LanguageManagement.getMessage("prefix"), LanguageManagement.getMessage("config-reloaded"));
+        Component configReloadedMessage = messageTranslations.getSerializedString(Languages.getMessage("prefix"), Languages.getMessage("config-reloaded"));
         sender.sendMessage(configReloadedMessage);
 
         return false;

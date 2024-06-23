@@ -5,9 +5,8 @@ import lombok.Setter;
 import net.jeqo.bloons.balloon.model.BalloonModel;
 import net.jeqo.bloons.balloon.model.BalloonModelType;
 import net.jeqo.bloons.logger.Logger;
-import net.jeqo.bloons.utils.ColorManagement;
-import net.jeqo.bloons.utils.LanguageManagement;
-import org.bukkit.Color;
+import net.jeqo.bloons.colors.Color;
+import net.jeqo.bloons.message.Languages;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -45,7 +44,7 @@ public class MultipartBalloonModel {
 
         // Check if the material is valid
         if (material == null) {
-            Logger.logError(String.format(LanguageManagement.getMessage("material-is-not-valid"), this.getMaterial()));
+            Logger.logError(String.format(Languages.getMessage("material-is-not-valid"), this.getMaterial()));
             return null;
         }
 
@@ -60,13 +59,13 @@ public class MultipartBalloonModel {
         // If everything provided isn't null and is valid, create the model with the specified color and custom model data
         } else if (this.getColor().startsWith("#")) {
             // Check if valid hex code via the utility in net.jeqo.bloons.utils.ColorManagement
-            if (!ColorManagement.isHexCode(this.getColor())) {
-                Logger.logError(String.format(LanguageManagement.getMessage("invalid-hex-code"), this.getColor()));
+            if (!Color.isHexCode(this.getColor())) {
+                Logger.logError(String.format(Languages.getMessage("invalid-hex-code"), this.getColor()));
                 return null;
             }
 
             // Convert the hex code to a valid org.bukkit.Color object
-            Color color = ColorManagement.hexToColor(this.getColor());
+            org.bukkit.Color color = Color.hexToColor(this.getColor());
             return BalloonModel.createColouredModel(material, color, this.getCustomModelData());
 
         // If the color is not a hex code and there is no custom model data, only return a raw org.bukkit.inventory.ItemStack

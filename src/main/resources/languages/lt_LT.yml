@@ -1,0 +1,31 @@
+messages:
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
+  no-permission: '<#fc1c1c>Prieiga uždrausta.'
+  player-not-found: '<#fc1c1c>Žaidėjas nerastas.'
+  config-reloaded: '<green>Konfigūracija įkelta iš naujo.'
+  command-disabled: '<#fc1c1c>Ši komanda šiuo metu išjungta!'
+
+  equipped: '%s <green>įrengtas!'
+  unequipped: '<green>Jūsų balionas buvo saugiai padėtas.'
+  balloon-not-found: '<#fc1c1c>Balionas nerastas.'
+  not-equipped: '<#fc1c1c>Jūs šiuo metu neturite įrengto baliono.'
+
+  material-not-dyeable: 'Medžiaga %s negali būti nudažyta.'
+  invalid-rgb-values: 'RGB reikšmės turi būti tarp 0 ir 255, kad būtų galiojančios.'
+  balloon-not-set: 'Balionas %s neįrengtas konfigūracijoje!'
+  material-not-set: 'Baliono %s medžiaga nėra nustatyta konfigūracijoje!'
+  material-not-valid: 'Baliono %s medžiaga nėra galiojanti! Medžiaga: %s'
+  material-is-not-valid: 'Medžiaga %s nėra galiojanti medžiaga!'
+  invalid-item-meta: 'Elemento meta nėra galiojanti medžiagai: %s'
+
+  no-balloons-registered: 'Nėra užregistruota jokių balionų! Negalima sukurti meniu be balionų.'
+
+  configuration-folder-not-found: 'Konfigūracijos aplankas nerastas: %s'
+  no-configuration-files-found: 'Konfigūracijos failų nerasta aplanke: %s'
+  configuration-section-not-found: 'Konfigūracijos skyriaus nerasta failui: %s'
+  balloon-type-not-found: 'Klaida apdorojant baliono tipą skyriui: %s faile: %s. Baliono tipas neegzistuoja arba yra nulinis.'
+  balloon-process-error: 'Klaida apdorojant balioną skyriui: %s faile: %s. Klaida: %s'
+
+  menu-slot-out-of-bounds: '%s meniu puslapio mygtukų slotų yra už ribų!'
+
+  invalid-hex-code: 'Netinkamas heksadinis kodas: %s'

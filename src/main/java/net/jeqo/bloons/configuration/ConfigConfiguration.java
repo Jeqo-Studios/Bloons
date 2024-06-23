@@ -6,7 +6,7 @@ import net.jeqo.bloons.balloon.multipart.MultipartBalloonModel;
 import net.jeqo.bloons.balloon.multipart.MultipartBalloonType;
 import net.jeqo.bloons.balloon.single.SingleBalloonType;
 import net.jeqo.bloons.logger.Logger;
-import net.jeqo.bloons.utils.LanguageManagement;
+import net.jeqo.bloons.message.Languages;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -21,9 +21,13 @@ import java.util.ArrayList;
  * A class that contains configurations for the plugin configuration file
  */
 public class ConfigConfiguration {
-    // The folder that stores the balloons to be loaded
+    /**
+     * The folder that stores the balloons to be loaded
+     */
     public static final String BALLOON_CONFIGURATION_FOLDER = "balloons";
-    // The folder that stores the languages to be loaded
+    /**
+     * The folder that stores the languages to be loaded
+     */
     public static final String LANGUAGES_CONFIGURATION_FOLDER = "languages";
 
     /**
@@ -44,7 +48,7 @@ public class ConfigConfiguration {
     /**
      *         Gets all the single balloon types from the configuration files
      * @return The single balloon types from the configuration files,
-     *         returns an empty array list if no single balloons are found, type java.util.ArrayList<net.jeqo.bloons.balloon.single.SingleBalloonType>
+     *         returns an empty array list if no single balloons are found, type java.util.ArrayList[net.jeqo.bloons.balloon.single.SingleBalloonType]
      */
     public static ArrayList<SingleBalloonType> getSingleBalloons() {
         // Start an array of single balloon types that's empty
@@ -53,14 +57,14 @@ public class ConfigConfiguration {
 
         // Check if the folder exists
         if (!folder.exists() || !folder.isDirectory()) {
-            Logger.logWarning(String.format(LanguageManagement.getMessage("configuration-folder-not-found"), folder.getPath()));
+            Logger.logWarning(String.format(Languages.getMessage("configuration-folder-not-found"), folder.getPath()));
             return singleBalloons;
         }
 
         // List files in the folder
         File[] files = folder.listFiles();
         if (files == null) {
-            Logger.logWarning(String.format(LanguageManagement.getMessage("no-configuration-files-found"), folder.getPath()));
+            Logger.logWarning(String.format(Languages.getMessage("no-configuration-files-found"), folder.getPath()));
             return singleBalloons;
         }
 
@@ -75,7 +79,7 @@ public class ConfigConfiguration {
                 // Get the configuration section
                 ConfigurationSection section = config.getConfigurationSection("");
                 if (section == null) {
-                    Logger.logWarning(String.format(LanguageManagement.getMessage("configuration-section-not-found"), folder.getPath()));
+                    Logger.logWarning(String.format(Languages.getMessage("configuration-section-not-found"), folder.getPath()));
                     continue;
                 }
 
@@ -86,7 +90,7 @@ public class ConfigConfiguration {
                     String type = config.getString(key + ".type", BalloonConfiguration.SINGLE_BALLOON_TYPE_IDENTIFIER);
 
                     if (type.isBlank()) {
-                        Logger.logError(String.format(LanguageManagement.getMessage("balloon-type-not-found"), key, fileName));
+                        Logger.logError(String.format(Languages.getMessage("balloon-type-not-found"), key, fileName));
                         continue;
                     }
 
@@ -117,7 +121,7 @@ public class ConfigConfiguration {
     /**
      *          Gets all the multipart balloon types from the configuration files
      * @return  The multipart balloon types from the configuration files,
-     *          returns an empty array list if no multipart balloons are found, type java.util.ArrayList<net.jeqo.bloons.balloon.multipart.MultipartBalloonType>
+     *          returns an empty array list if no multipart balloons are found, type java.util.ArrayList[net.jeqo.bloons.balloon.multipart.MultipartBalloonType]
      */
     public static ArrayList<MultipartBalloonType> getMultipartBalloons() {
         // Start an array of single balloon types that's empty
@@ -126,14 +130,14 @@ public class ConfigConfiguration {
 
         // Check if the folder exists
         if (!folder.exists() || !folder.isDirectory()) {
-            Logger.logWarning(String.format(LanguageManagement.getMessage("configuration-folder-not-found"), folder.getPath()));
+            Logger.logWarning(String.format(Languages.getMessage("configuration-folder-not-found"), folder.getPath()));
             return multipartBalloons;
         }
 
         // List files in the folder
         File[] files = folder.listFiles();
         if (files == null) {
-            Logger.logWarning(String.format(LanguageManagement.getMessage("no-configuration-files-found"), folder.getPath()));
+            Logger.logWarning(String.format(Languages.getMessage("no-configuration-files-found"), folder.getPath()));
             return multipartBalloons;
         }
 
@@ -148,7 +152,7 @@ public class ConfigConfiguration {
                 // Get the configuration section
                 ConfigurationSection section = config.getConfigurationSection("");
                 if (section == null) {
-                    Logger.logWarning(String.format(LanguageManagement.getMessage("configuration-section-not-found"), folder.getPath()));
+                    Logger.logWarning(String.format(Languages.getMessage("configuration-section-not-found"), folder.getPath()));
                     continue;
                 }
 
@@ -159,7 +163,7 @@ public class ConfigConfiguration {
                     String type = config.getString(key + ".type", BalloonConfiguration.SINGLE_BALLOON_TYPE_IDENTIFIER);
 
                     if (type.isBlank()) {
-                        Logger.logError(String.format(LanguageManagement.getMessage("balloon-type-not-found"), key, fileName));
+                        Logger.logError(String.format(Languages.getMessage("balloon-type-not-found"), key, fileName));
                         continue;
                     }
 
@@ -203,7 +207,7 @@ public class ConfigConfiguration {
                                 )
                         ));
                     } catch (Exception e) {
-                        Logger.logWarning(String.format(LanguageManagement.getMessage("balloon-process-error"), key, fileName, e.getMessage()));
+                        Logger.logWarning(String.format(Languages.getMessage("balloon-process-error"), key, fileName, e.getMessage()));
                     }
                 }
             }

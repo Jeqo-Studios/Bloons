@@ -32,8 +32,9 @@ public class GUICore {
     }
 
     /**
-     *              Creates a new instance of the GUI core with a list of GUIs
-     * @param guis  The GUIs to register, type net.jeqo.bloons.gui.GUI...
+     *                Creates a new instance of the GUI core with a list of GUIs
+     * @param plugin  The plugin to register the GUIs to, type org.bukkit.plugin.java.JavaPlugin
+     * @param guis    The GUIs to register, type net.jeqo.bloons.gui.GUI...
      */
     public GUICore(JavaPlugin plugin, GUI... guis) {
         if (plugin == null) {
@@ -47,7 +48,7 @@ public class GUICore {
 
     /**
      *              Creates a new instance of the GUI core with a list of GUIs
-     * @param guis  The list of GUIs to register, type java.util.ArrayList<net.jeqo.bloons.gui.GUI>
+     * @param guis  The list of GUIs to register, type java.util.ArrayList[net.jeqo.bloons.gui.GUI]
      */
     public GUICore(JavaPlugin plugin, ArrayList<GUI> guis) {
         if (plugin == null) {
@@ -97,8 +98,9 @@ public class GUICore {
     }
 
     /**
-     *              Closes a GUI for the specified player
-     * @param gui   The GUI to close, type net.jeqo.bloons.gui.GUI
+     *                  Closes a GUI for the specified player
+     * @param gui       The GUI to close, type net.jeqo.bloons.gui.GUI
+     * @param player    The player to close the GUI for, type org.bukkit.entity.Player
      */
     public void closeGUI(GUI gui, Player player) {
         if (!this.getGuis().contains(gui)) {

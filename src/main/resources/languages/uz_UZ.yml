@@ -1,0 +1,31 @@
+messages:
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
+  no-permission: '<#fc1c1c>Ruxsat berilmagan.'
+  player-not-found: '<#fc1c1c>Oyinchi topilmadi.'
+  config-reloaded: '<green>Sozlamalar qayta yuklandi.'
+  command-disabled: '<#fc1c1c>Ushbu buyruq hozir faol emas!'
+
+  equipped: '%s <green>ojiqtirildi!'
+  unequipped: '<green>Baloningiz xavfsiz saqlandi.'
+  balloon-not-found: '<#fc1c1c>Balon topilmadi.'
+  not-equipped: '<#fc1c1c>Hozircha o'rnatilgan baloningiz yo\'q.'
+
+  material-not-dyeable: '%s materialini ranglab bo\'lmaydi.'
+  invalid-rgb-values: "Noto'g'ri RGB qiymatlari: qiymatlar 0 va 255 oralig'ida bo\'lishi kerak."
+  balloon-not-set: '%s baloni sozlamada o\'rnatilmagan!'
+  material-not-set: 'Balon materiali %s sozlamada o\'rnatilmagan!'
+  material-not-valid: '%s balon materiali haqiqiy emas! Material: %s'
+  material-is-not-valid: '%s materiali haqiqiy emas!'
+  invalid-item-meta: "Material uchun noto'g'ri ItemMeta: %s"
+
+  no-balloons-registered: 'Ro\'yxatga olingan balonlar yo\'q! Balonsiz menyuni yaratib bo\'lmaydi.'
+
+  configuration-folder-not-found: 'Sozlamalar papkasi topilmadi: %s'
+  no-configuration-files-found: 'Fayllar katalogida sozlamalar fayllari topilmadi: %s'
+  configuration-section-not-found: "Fayl uchun sozlamalar bo\'limi topilmadi: %s"
+  balloon-type-not-found: "Bo\'limda balon turi qayta ishlab chiqish jarayonida xatolik yuz berdi: %s faylda: %s. Balon turi mavjud emas yoki null."
+  balloon-process-error: "Bo\'limda balon jarayonida xatolik yuz berdi: %s faylda: %s. Xatolik: %s"
+
+  menu-slot-out-of-bounds: '%s menyuni sahifa tugmasi chetlardan tashqari!'
+
+  invalid-hex-code: "Noto'g'ri hex kodi: %s"

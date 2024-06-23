@@ -1,0 +1,31 @@
+messages:
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
+  no-permission: '<#fc1c1c>ਪਹੁੰਚ ਨਹੀਂ ਦਿੱਤੀ.'
+  player-not-found: '<#fc1c1c>ਖਿਡਾਰ ਨਹੀਂ ਲੱਭਿਆ.'
+  config-reloaded: '<green>ਸੰਰਚਨਾ ਮੁੜ ਲੋਡ ਕੀਤੀ.'
+  command-disabled: '<#fc1c1c>ਇਹ ਕਮਾਂਡ ਵਰਤਮਾਨ ਵਿੱਚ ਬੰਦ ਹੈ!'
+
+  equipped: '%s <green>ਸਜਾਇਆ ਗਿਆ ਹੈ!'
+  unequipped: '<green>ਤੁਹਾਡਾ ਗੁਬਾਰ ਸੁਰੱਖਿਆ ਨਾਲ ਭਰਾ ਗਿਆ ਹੈ.'
+  balloon-not-found: '<#fc1c1c>ਗੁਬਾਰ ਨਹੀਂ ਲੱਭਿਆ.'
+  not-equipped: '<#fc1c1c>ਤੁਹਾਡੇ ਕੋਲ ਵਰਤਮਾਨ ਵਿੱਚ ਕੋਈ ਗੁਬਾਰ ਨਹੀਂ ਹੈ.'
+
+  material-not-dyeable: 'ਮਾਟੀ %s ਨੂੰ ਰੰਗਣਯੋਗ ਨਹੀਂ ਹੈ.'
+  invalid-rgb-values: 'RGB ਮੁੱਲ 0 ਅਤੇ 255 ਵਿੱਚ ਹੀ ਮਾਨਯੋਗ ਹਨ.'
+  balloon-not-set: '%s ਗੁਬਾਰ ਸੰਰਚਨਾ ਵਿੱਚ ਸੈੱਟ ਨਹੀਂ ਹੈ!'
+  material-not-set: 'ਗੁਬਾਰ %s ਦੀ ਸਮਗਰੀ ਸੰਰਚਨਾ ਵਿੱਚ ਸੈੱਟ ਨਹੀਂ ਹੈ!'
+  material-not-valid: 'ਗੁਬਾਰ %s ਦਾ ਸਮਗਰੀ ਮਾਨਯੋਗ ਨਹੀਂ ਹੈ! ਸਮਗਰੀ: %s'
+  material-is-not-valid: 'ਮਾਟੀ %s ਮਾਨਯੋਗ ਨਹੀਂ ਹੈ!'
+  invalid-item-meta: 'ਆਇਟਮਮੀਟਾ ਮਾਟੀ ਲਈ ਮਾਨਯੋਗ ਨਹੀਂ ਹੈ: %s'
+
+  no-balloons-registered: 'ਕੋਈ ਗੁਬਾਰ ਰਜਿਸਟਰ ਨਹੀਂ ਹੋਈ! ਗੁਬਾਰ ਬਿਨਾਂ ਮੇਨੂ ਬਣਾਉਣਾ ਮੁਮਕਿਨ ਨਹੀਂ ਹੈ।'
+
+  configuration-folder-not-found: 'ਸੰਰਚਨਾ ਫੋਲਡਰ ਨਹੀਂ ਮਿਲਿਆ: %s'
+  no-configuration-files-found: 'ਕੋਈ ਸੰਰਚਨਾ ਫਾਈਲਾਂ ਫੋਲਡਰ ਵਿੱਚ ਨਹੀਂ ਮਿਲੀਆ: %s'
+  configuration-section-not-found: 'ਫਾਈਲ ਲਈ ਸੰਰਚਨਾ ਖੰਡ ਨਹੀਂ ਮਿਲਿਆ: %s'
+  balloon-type-not-found: 'ਸੈਕਸ਼ਨ ਲਈ ਗੁਬਾਰ ਕਿਸਮ ਪ੍ਰੋਸੈਸਿੰਗ ਵਿੱਚ ਗਲਤੀ ਹੋਈ ਹੈ: %s ਫਾਈਲ: %s। ਗੁਬਾਰ ਕਿਸਮ ਮੌਜੂਦ ਨਹੀਂ ਹੈ ਜਾਂ ਨਲ ਹੈ।'
+  balloon-process-error: 'ਸੈਕਸ਼ਨ ਲਈ ਗੁਬਾਰ ਪ੍ਰੋਸੈਸਿੰਗ ਵਿੱਚ ਗਲਤੀ ਹੋਈ ਹੈ: %s ਫਾਈਲ: %s। ਗਲਤੀ: %s'
+
+  menu-slot-out-of-bounds: '%s ਮੀਨੂ ਸਾਇਡ ਬਟਨ ਸਲੋਟ(ਸ) ਸੀਮਾਵਾਰ ਤੋਂ ਬਾਹਰ ਹਨ!'
+
+  invalid-hex-code: 'ਗਲਤ ਹੈਕਸਾਡੇਸੀਮਲ ਕੋਡ: %s'

@@ -7,9 +7,9 @@ import net.jeqo.bloons.configuration.BalloonConfiguration;
 import net.jeqo.bloons.events.balloon.single.SingleBalloonEquipEvent;
 import net.jeqo.bloons.events.balloon.single.SingleBalloonForceUnequipEvent;
 import net.jeqo.bloons.logger.Logger;
-import net.jeqo.bloons.utils.LanguageManagement;
-import net.jeqo.bloons.utils.management.SingleBalloonManagement;
-import net.jeqo.bloons.utils.ColorManagement;
+import net.jeqo.bloons.message.Languages;
+import net.jeqo.bloons.management.SingleBalloonManagement;
+import net.jeqo.bloons.colors.Color;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -157,13 +157,13 @@ public class SingleBalloon extends BukkitRunnable {
 
         // If there isn't a configuration for the balloon, log an error and return null
         if (singleBalloonType == null) {
-            Logger.logError(String.format(LanguageManagement.getMessage("balloon-not-set"), balloonID));
+            Logger.logError(String.format(Languages.getMessage("balloon-not-set"), balloonID));
             return new ItemStack(Material.BARRIER);
         }
 
         // If the material of the balloon is not set, log an error and return null
         if (singleBalloonType.getMaterial() == null) {
-            Logger.logError(String.format(LanguageManagement.getMessage("material-not-set"), balloonID));
+            Logger.logError(String.format(Languages.getMessage("material-not-set"), balloonID));
             return new ItemStack(Material.BARRIER);
         }
 
@@ -171,7 +171,7 @@ public class SingleBalloon extends BukkitRunnable {
 
         // If the material is not valid, log an error and return null
         if (material == null) {
-            Logger.logError(String.format(LanguageManagement.getMessage("material-not-valid"), balloonID, singleBalloonType.getMaterial()));
+            Logger.logError(String.format(Languages.getMessage("material-not-valid"), balloonID, singleBalloonType.getMaterial()));
             return new ItemStack(Material.BARRIER);
         }
 
@@ -184,12 +184,12 @@ public class SingleBalloon extends BukkitRunnable {
         if (singleBalloonType.getColor() != null && singleBalloonType.getMaterial().startsWith(leatherMaterialPrefix)) {
             // If the color of the balloon is set to potion, log a warning and return null
             if (singleBalloonType.getColor().equalsIgnoreCase("potion")) {
-                Logger.logWarning(String.format(LanguageManagement.getMessage("material-not-dyeable"), material));
+                Logger.logWarning(String.format(Languages.getMessage("material-not-dyeable"), material));
                 return item;
             }
 
             LeatherArmorMeta leatherArmorMeta = (LeatherArmorMeta) meta;
-            leatherArmorMeta.setColor(ColorManagement.hexToColor(singleBalloonType.getColor()));
+            leatherArmorMeta.setColor(Color.hexToColor(singleBalloonType.getColor()));
         }
 
         // Finally, set the item meta

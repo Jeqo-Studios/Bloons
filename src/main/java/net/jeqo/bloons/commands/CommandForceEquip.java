@@ -11,10 +11,10 @@ import net.jeqo.bloons.commands.manager.types.CommandPermission;
 import net.jeqo.bloons.events.balloon.multipart.MultipartBalloonEquipEvent;
 import net.jeqo.bloons.events.balloon.multipart.MultipartBalloonUnequipEvent;
 import net.jeqo.bloons.events.balloon.single.SingleBalloonEquipEvent;
-import net.jeqo.bloons.utils.LanguageManagement;
-import net.jeqo.bloons.utils.management.SingleBalloonManagement;
-import net.jeqo.bloons.utils.MessageTranslations;
-import net.jeqo.bloons.utils.management.MultipartBalloonManagement;
+import net.jeqo.bloons.message.Languages;
+import net.jeqo.bloons.management.SingleBalloonManagement;
+import net.jeqo.bloons.message.MessageTranslations;
+import net.jeqo.bloons.management.MultipartBalloonManagement;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -23,8 +23,15 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import static net.jeqo.bloons.commands.utils.ErrorHandling.usage;
 
+/**
+ * A command used to force equip a balloon to the specified player
+ */
 public class CommandForceEquip extends Command {
 
+    /**
+     *                  Constructor for the CommandForceEquip class
+     * @param plugin    The instance of the plugin, type org.bukkit.plugin.java.JavaPlugin
+     */
     public CommandForceEquip(JavaPlugin plugin) {
         super(plugin);
         this.addCommandAlias("fequip");
@@ -43,7 +50,7 @@ public class CommandForceEquip extends Command {
 
         // If the player isn't found, send a message to the sender
         if (player == null) {
-            Component playerNotFoundMessage = messageTranslations.getSerializedString(LanguageManagement.getMessage("prefix"), LanguageManagement.getMessage("player-not-found"));
+            Component playerNotFoundMessage = messageTranslations.getSerializedString(Languages.getMessage("prefix"), Languages.getMessage("player-not-found"));
             sender.sendMessage(playerNotFoundMessage);
             return false;
         }
@@ -52,7 +59,7 @@ public class CommandForceEquip extends Command {
 
         // If the balloon ID isn't found in both balloon types, send a message to the sender
         if (Bloons.getBalloonCore().containsSingleBalloon(balloonID) && Bloons.getBalloonCore().containsMultipartBalloon(balloonID)) {
-            Component balloonNotFoundMessage = messageTranslations.getSerializedString(LanguageManagement.getMessage("prefix"), LanguageManagement.getMessage("balloon-not-found"));
+            Component balloonNotFoundMessage = messageTranslations.getSerializedString(Languages.getMessage("prefix"), Languages.getMessage("balloon-not-found"));
             sender.sendMessage(balloonNotFoundMessage);
             return false;
         }
@@ -86,7 +93,7 @@ public class CommandForceEquip extends Command {
 
             MultipartBalloonManagement.setPlayerBalloon(player.getUniqueId(), balloon);
 
-            Component equippedMessage = messageTranslations.getSerializedString(LanguageManagement.getMessage("prefix"), String.format(LanguageManagement.getMessage("equipped"), type.getName()));
+            Component equippedMessage = messageTranslations.getSerializedString(Languages.getMessage("prefix"), String.format(Languages.getMessage("equipped"), type.getName()));
             player.sendMessage(equippedMessage);
 
         // If the balloon ID is a single balloon type, equip the balloon with the single associated methods
@@ -103,7 +110,7 @@ public class CommandForceEquip extends Command {
             SingleBalloonManagement.removeBalloon(player, Bloons.getPlayerSingleBalloons().get(player.getUniqueId()));
             SingleBalloon.checkBalloonRemovalOrAdd(player, balloonID);
 
-            Component equippedMessage = messageTranslations.getSerializedString(LanguageManagement.getMessage("prefix"), String.format(LanguageManagement.getMessage("equipped"), singleBalloonType.getName()));
+            Component equippedMessage = messageTranslations.getSerializedString(Languages.getMessage("prefix"), String.format(Languages.getMessage("equipped"), singleBalloonType.getName()));
             player.sendMessage(equippedMessage);
         }
 

@@ -1,0 +1,31 @@
+messages:
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
+  no-permission: '<#fc1c1c>Accesso negato.'
+  player-not-found: '<#fc1c1c>Giocatore non trovato.'
+  config-reloaded: '<green>Configurazione ricaricata.'
+  command-disabled: '<#fc1c1c>Questo comando è attualmente disabilitato!'
+
+  equipped: '%s <green>equipaggiato!'
+  unequipped: '<green>Il tuo palloncino è stato riposto in sicurezza.'
+  balloon-not-found: '<#fc1c1c>Palloncino non trovato.'
+  not-equipped: '<#fc1c1c>Al momento non hai un palloncino equipaggiato.'
+
+  material-not-dyeable: 'Il materiale %s non è tinto.'
+  invalid-rgb-values: 'I valori RGB devono essere compresi tra 0 e 255 per essere validi.'
+  balloon-not-set: 'Il palloncino %s non è impostato nella configurazione!'
+  material-not-set: 'Il materiale del palloncino %s non è impostato nella configurazione!'
+  material-not-valid: 'Il materiale del palloncino %s non è un materiale valido! Materiale: %s'
+  material-is-not-valid: 'Il materiale %s non è un materiale valido!'
+  invalid-item-meta: 'ItemMeta non è valido per il materiale: %s'
+
+  no-balloons-registered: 'Nessun palloncino registrato! Impossibile creare un menu senza palloncini.'
+
+  configuration-folder-not-found: 'Cartella di configurazione non trovata: %s'
+  no-configuration-files-found: 'Nessun file di configurazione trovato nella cartella: %s'
+  configuration-section-not-found: 'Sezione di configurazione non trovata per il file: %s'
+  balloon-type-not-found: "Errore durante l'elaborazione del tipo di palloncino per la sezione: %s nel file: %s. Il tipo di palloncino non esiste o è nullo."
+  balloon-process-error: "Errore durante l'elaborazione del palloncino per la sezione: %s nel file: %s. Errore: %s"
+
+  menu-slot-out-of-bounds: '%s slot pulsante della pagina del menu fuori limite!'
+
+  invalid-hex-code: 'Codice esadecimale non valido: %s'

@@ -1,6 +1,6 @@
 package net.jeqo.bloons.gui;
 
-import net.jeqo.bloons.utils.NBTItem;
+import net.jeqo.bloons.item.NBTItem;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
 import java.util.HashMap;
@@ -11,6 +11,9 @@ import java.util.UUID;
  * non-interactable.
  */
 public abstract class GUIClickableItem {
+    /**
+     * A map of all clickable items in the GUI
+     */
     public static HashMap<String, GUIClickableItem> itemData = new HashMap<>();
     private final String uuid;
 

@@ -1,0 +1,31 @@
+messages:
+  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
+  no-permission: '<#fc1c1c>அனுமதி இல்லை.'
+  player-not-found: '<#fc1c1c>வீரர் கண்டுபிடிக்கப்படவில்லை.'
+  config-reloaded: '<green>உள்ளமைவு மீள்படுத்தப்பட்டது.'
+  command-disabled: '<#fc1c1c>இந்த கட்டளை தற்போது முடக்கப்பட்டுள்ளது!'
+
+  equipped: '%s <green>உடைக்கப்பட்டது!'
+  unequipped: '<green>உங்கள் பலூன் பாதுகாக்கப்பட்டுள்ளது.'
+  balloon-not-found: '<#fc1c1c>பலூன் காணப்படவில்லை.'
+  not-equipped: '<#fc1c1c>உங்களுக்கு தற்போது பலூன் உடையப்பட்டிருக்கவில்லை.'
+
+  material-not-dyeable: 'பொருள் %s வண்ணமாக்க முடியாது.'
+  invalid-rgb-values: 'RGB மதிப்புகள் 0 மற்றும் 255 இடம் இருக்க வேண்டும்.'
+  balloon-not-set: 'பலூன் %s உள்ளது உள்ளது கட்டமைப்பில் அமைக்கப்படவில்லை!'
+  material-not-set: 'பலூன் %s மெட்டீரியல் கட்டமைப்பில் அமைக்கப்படவில்லை!'
+  material-not-valid: 'பலூன் %s மெட்டீரியல் தவறானது! பொருள்: %s'
+  material-is-not-valid: 'பொருள் %s தவறானது!'
+  invalid-item-meta: 'உருப்படி மெட்டாவின் %s மாதிரி தவறானது.'
+
+  no-balloons-registered: 'பலூன்கள் பதிவு செய்யப்படவில்லை! பலூன்கள் இல்லாத ஒரு பட்டியலை உருவாக்க முடியாது.'
+
+  configuration-folder-not-found: 'கட்டமைப்பு கோப்புறை காணப்படவில்லை: %s'
+  no-configuration-files-found: 'கோப்புறையில் கட்டமைப்பு கோப்புகள் காணப்படவில்லை: %s'
+  configuration-section-not-found: 'கோப்பின் கட்டமைப்பு பிரிப்பு காணப்படவில்லை: %s'
+  balloon-type-not-found: 'பட்டியலில் பலூன் வகையை செயல்படுத்தும் பிழை: %s கோப்பில் பிரிப்பு: %s. பலூன் வகை இல்லை அல்லது பூட்.'
+  balloon-process-error: 'பட்டியலில் பலூன் செயல்படுத்தும் பிழை: %s கோப்பில் பிரிப்பு: %s. பிழை: %s'
+
+  menu-slot-out-of-bounds: '%s பட்டி பக்க பொத்தான்(கள்) எல்லைகளை மீறுகின்றன!'
+
+  invalid-hex-code: 'தவறான ஹெக்ஸ் குறியீடு: %s'

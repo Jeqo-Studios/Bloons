@@ -4,9 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.logger.Logger;
-import net.jeqo.bloons.utils.ColorManagement;
-import net.jeqo.bloons.utils.LanguageManagement;
-import net.jeqo.bloons.utils.MessageTranslations;
+import net.jeqo.bloons.colors.Color;
+import net.jeqo.bloons.message.Languages;
+import net.jeqo.bloons.message.MessageTranslations;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -18,13 +18,28 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * A class that represents a balloon menu
+ */
 @Getter
 public class BalloonMenu {
+    /**
+     * The pages of the menu
+     */
     public ArrayList<Inventory> pages = new ArrayList<>();
+    /**
+     * The unique identifier of the menu
+     */
     @Setter
     public UUID id;
+    /**
+     * The current page index
+     */
     @Setter
     public int currentPageIndex = 0;
+    /**
+     * The users that have the menu open
+     */
     @Getter
     public static HashMap<UUID, BalloonMenu> users = new HashMap<>();
     private final MessageTranslations messageTranslations = new MessageTranslations(Bloons.getInstance());
@@ -36,7 +51,7 @@ public class BalloonMenu {
      */
     private Inventory getBlankPage(String name){
         int pageSize = this.getMessageTranslations().getInt("menu-size");
-        Inventory page = Bukkit.createInventory(null, pageSize, ColorManagement.fromHex(name));
+        Inventory page = Bukkit.createInventory(null, pageSize, Color.fromHex(name));
 
         // Create next page button
         ItemStack nextPage = new ItemStack(Material.valueOf(this.getMessageTranslations().getString("buttons.next-page.material")));
@@ -68,7 +83,7 @@ public class BalloonMenu {
             if (Integer.parseInt(previousPageSlot) < pageSize) {
                 page.setItem(Integer.parseInt(previousPageSlot), prevPage);
             } else {
-                Logger.logWarning(String.format(LanguageManagement.getMessage("menu-slot-out-of-bounds"), "Previous"));
+                Logger.logWarning(String.format(Languages.getMessage("menu-slot-out-of-bounds"), "Previous"));
             }
         }
 
@@ -77,7 +92,7 @@ public class BalloonMenu {
             if (Integer.parseInt(unequipSlot) < pageSize) {
                 page.setItem(Integer.parseInt(unequipSlot), removeBalloon);
             } else {
-                Logger.logWarning(String.format(LanguageManagement.getMessage("menu-slot-out-of-bounds"), "Unequip"));
+                Logger.logWarning(String.format(Languages.getMessage("menu-slot-out-of-bounds"), "Unequip"));
             }
         }
 
@@ -86,7 +101,7 @@ public class BalloonMenu {
             if (Integer.parseInt(nextPageSlot) < pageSize) {
                 page.setItem(Integer.parseInt(nextPageSlot), nextPage);
             } else {
-                Logger.logWarning(String.format(LanguageManagement.getMessage("menu-slot-out-of-bounds"), "Next"));
+                Logger.logWarning(String.format(Languages.getMessage("menu-slot-out-of-bounds"), "Next"));
             }
         }
 
@@ -95,7 +110,7 @@ public class BalloonMenu {
 
     /**
      *                  Creates a new balloon menu
-     * @param items     The items to display in the menu, type java.util.ArrayList<org.bukkit.inventory.ItemStack>
+     * @param items     The items to display in the menu, type java.util.ArrayList[org.bukkit.inventory.ItemStack]
      * @param name      The name of the menu, type java.lang.String
      * @param player    The player to open the menu for, type org.bukkit.entity.Player
      */

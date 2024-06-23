@@ -15,12 +15,17 @@ import java.util.ArrayList;
  */
 @Getter @Setter
 public abstract class Command {
-
+    /**
+     * The plugin instance
+     */
     protected JavaPlugin plugin;
 
     private CommandPermission requiredPermission;
     private CommandAccess requiredAccess = CommandAccess.ENABLED;
     private String commandSyntax;
+    /**
+     * The description of the command
+     */
     public String commandDescription;
     private ArrayList<String> commandAliases = new ArrayList<>();
 
