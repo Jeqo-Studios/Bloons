@@ -40,4 +40,3 @@ jobs:
           java-version: ${{ vars.JAVA_VERSION }}
           target-folder: javadoc # url will be https://<username>.github.io/<repo>/javadoc, This can be left as nothing to generate javadocs in the root folder.
           project: maven # or gradle
-          custom-command: javadoc -d javadoc -sourcepath src/main/java/net/jeqo/bloons -Xdoclint:all,-missing -subpackages .
