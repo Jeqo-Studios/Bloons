@@ -93,7 +93,7 @@ public class SingleBalloon extends BukkitRunnable {
         }
 
         // Set the move location to the armor stand location minus 2 on the Y axis
-        this.setMoveLocation(this.getBalloonArmorStand().getLocation().subtract(0.0D, 2.0D, 0.0D).clone());
+        this.setMoveLocation(this.getBalloonArmorStand().getLocation().subtract(0.0D, this.getBalloonType().getBalloonHeight(), 0.0D).clone());
 
         // Set the vector to the player location minus the move location
         Vector vector = playerLocation.toVector().subtract(this.getMoveLocation().toVector());
@@ -169,8 +169,8 @@ public class SingleBalloon extends BukkitRunnable {
      * @param location  The location to teleport the balloon to, type org.bukkit.Location
      */
     private void teleport(Location location) {
-        this.getBalloonArmorStand().teleport(location.add(0.0D, 2.0D, 0.0D));
-        this.getBalloonChicken().teleport(location.add(0.0D, 1.2D, 0.0D));
+        this.getBalloonArmorStand().teleport(location.add(0.0D, this.getBalloonType().getBalloonHeight(), 0.0D));
+        this.getBalloonChicken().teleport(location.add(0.0D, this.getBalloonType().getLeashHeight(), 0.0D));
     }
 
     /**

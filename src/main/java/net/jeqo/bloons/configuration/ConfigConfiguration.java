@@ -120,6 +120,8 @@ public class ConfigConfiguration {
                                     key,
                                     config.getString(key + ".id"),
                                     config.getString(key + ".permission"),
+                                    config.getDouble(key + ".leash-height"),
+                                    config.getDouble(key + ".balloon-height"),
                                     config.getString(key + ".material"),
                                     config.getString(key + ".color"),
                                     config.getInt(key + ".custom-model-data"),
