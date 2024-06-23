@@ -68,6 +68,78 @@ public class SingleBalloon extends BukkitRunnable {
     }
 
     /**
+     * Initializes the balloon and its subcomponents.
+     * Sets the current players location, and initializes the armor stand, and chicken entities
+     */
+    private void initializeBalloon() {
+        this.setPlayerLocation(this.getPlayer().getLocation());
+        this.getPlayerLocation().setYaw(0.0F);
+
+        if (this.getBalloonType().getMegModelID() == null) {
+            // Create and set the balloons visual appearance/model
+            ItemMeta meta = this.getBalloonVisual().getItemMeta();
+            meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+            this.getBalloonVisual().setItemMeta(meta);
+        }
+
+        // Initialize the armor stand and lead to the player
+        this.initializeBalloonArmorStand();
+        this.initializeBalloonLead();
+    }
+
+    /**
+     * Initializes the balloon's armor stand entity with the proper configurations
+     */
+    public void initializeBalloonArmorStand() {
+        this.setBalloonArmorStand(this.getPlayerLocation().getWorld().spawn(this.getPlayerLocation(), ArmorStand.class));
+        this.getBalloonArmorStand().setBasePlate(false);
+        this.getBalloonArmorStand().setVisible(false);
+        this.getBalloonArmorStand().setInvulnerable(true);
+        this.getBalloonArmorStand().setCanPickupItems(false);
+        this.getBalloonArmorStand().setGravity(false);
+        this.getBalloonArmorStand().setSmall(false);
+        this.getBalloonArmorStand().setMarker(true);
+        this.getBalloonArmorStand().setCollidable(false);
+        if (this.getBalloonType().getMegModelID() == null) {
+            this.getBalloonArmorStand().getEquipment().setHelmet(this.getBalloonVisual());
+        } else {
+            try {
+                // Create the entity and tag it onto the armor stand
+                ModeledEntity modeledEntity = ModelEngineAPI.createModeledEntity(this.getBalloonArmorStand());
+                ActiveModel activeModel = ModelEngineAPI.createActiveModel(this.getBalloonType().getMegModelID());
+
+                modeledEntity.addModel(activeModel, true);
+
+                // Set the animation handler to the one of the active model
+                this.setAnimationHandler(activeModel.getAnimationHandler());
+
+                // If an idle animation exists, play it initially
+                this.getAnimationHandler().playAnimation(this.getDefaultIdleAnimationID(), 0.3, 0.3, 1,true);
+            } catch (Exception e) {
+                Logger.logError("An error occurred while creating the MEG model for the balloon " + this.getBalloonType().getId() + "! This is because a MEG model error occurred.");
+                e.printStackTrace();
+            }
+        }
+        this.getBalloonArmorStand().customName(Component.text(BalloonConfiguration.BALLOON_ARMOR_STAND_ID));
+    }
+
+    /**
+     * Initializes the balloon's lead to the player (chicken entity)
+     */
+    public void initializeBalloonLead() {
+        this.setBalloonChicken(this.getPlayerLocation().getWorld().spawn(this.getPlayerLocation(), Chicken.class));
+        this.getBalloonChicken().setInvulnerable(true);
+        this.getBalloonChicken().setInvisible(true);
+        this.getBalloonChicken().setSilent(true);
+        this.getBalloonChicken().setBaby();
+        this.getBalloonChicken().setAgeLock(true);
+        this.getBalloonChicken().setAware(false);
+        this.getBalloonChicken().setCollidable(false);
+        this.getBalloonChicken().setLeashHolder(this.getPlayer());
+        this.getBalloonChicken().customName(Component.text(BalloonConfiguration.BALLOON_CHICKEN_ID));
+    }
+
+    /**
      * What runs inside the extended bukkit runnable, it's
      * the control center of the core functionality of how the balloon moves
      */
@@ -174,26 +246,6 @@ public class SingleBalloon extends BukkitRunnable {
     }
 
     /**
-     * Initializes the balloon and its subcomponents.
-     * Sets the current players location, and initializes the armor stand, and chicken entities
-     */
-    private void initializeBalloon() {
-        this.setPlayerLocation(this.getPlayer().getLocation());
-        this.getPlayerLocation().setYaw(0.0F);
-
-        if (this.getBalloonType().getMegModelID() == null) {
-            // Create and set the balloons visual appearance/model
-            ItemMeta meta = this.getBalloonVisual().getItemMeta();
-            meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-            this.getBalloonVisual().setItemMeta(meta);
-        }
-
-        // Initialize the armor stand and lead to the player
-        this.initializeBalloonArmorStand();
-        this.initializeBalloonLead();
-    }
-
-    /**
      *                      Retrieves the item stack object of the visual appearance of the balloon
      * @param balloonID     The balloon ID to get the visual appearance of, type java.lang.String
      * @return              The item object that contains the configured balloon model, returns a barrier if there is an issue, type org.bukkit.inventory.ItemStack
@@ -242,58 +294,6 @@ public class SingleBalloon extends BukkitRunnable {
         item.setItemMeta(meta);
 
         return item;
-    }
-
-    /**
-     * Initializes the balloon's armor stand entity with the proper configurations
-     */
-    public void initializeBalloonArmorStand() {
-        this.setBalloonArmorStand(this.getPlayerLocation().getWorld().spawn(this.getPlayerLocation(), ArmorStand.class));
-        this.getBalloonArmorStand().setBasePlate(false);
-        this.getBalloonArmorStand().setVisible(false);
-        this.getBalloonArmorStand().setInvulnerable(true);
-        this.getBalloonArmorStand().setCanPickupItems(false);
-        this.getBalloonArmorStand().setGravity(false);
-        this.getBalloonArmorStand().setSmall(false);
-        this.getBalloonArmorStand().setMarker(true);
-        this.getBalloonArmorStand().setCollidable(false);
-        if (this.getBalloonType().getMegModelID() == null) {
-            this.getBalloonArmorStand().getEquipment().setHelmet(this.getBalloonVisual());
-        } else {
-            try {
-                // Create the entity and tag it onto the armor stand
-                ModeledEntity modeledEntity = ModelEngineAPI.createModeledEntity(this.getBalloonArmorStand());
-                ActiveModel activeModel = ModelEngineAPI.createActiveModel(this.getBalloonType().getMegModelID());
-
-                modeledEntity.addModel(activeModel, true);
-
-                // Set the animation handler to the one of the active model
-                this.setAnimationHandler(activeModel.getAnimationHandler());
-
-                // If an idle animation exists, play it initially
-                this.getAnimationHandler().playAnimation(this.getDefaultIdleAnimationID(), 0.3, 0.3, 1,true);
-            } catch (Exception e) {
-                Logger.logError("An error occurred while creating the MEG model for the balloon " + this.getBalloonType().getId() + "! This is because a MEG model error occurred.");
-                e.printStackTrace();
-            }
-        }
-        this.getBalloonArmorStand().customName(Component.text(BalloonConfiguration.BALLOON_ARMOR_STAND_ID));
-    }
-
-    /**
-     * Initializes the balloon's lead to the player (chicken entity)
-     */
-    public void initializeBalloonLead() {
-        this.setBalloonChicken(this.getPlayerLocation().getWorld().spawn(this.getPlayerLocation(), Chicken.class));
-        this.getBalloonChicken().setInvulnerable(true);
-        this.getBalloonChicken().setInvisible(true);
-        this.getBalloonChicken().setSilent(true);
-        this.getBalloonChicken().setBaby();
-        this.getBalloonChicken().setAgeLock(true);
-        this.getBalloonChicken().setAware(false);
-        this.getBalloonChicken().setCollidable(false);
-        this.getBalloonChicken().setLeashHolder(this.getPlayer());
-        this.getBalloonChicken().customName(Component.text(BalloonConfiguration.BALLOON_CHICKEN_ID));
     }
 
     /**
