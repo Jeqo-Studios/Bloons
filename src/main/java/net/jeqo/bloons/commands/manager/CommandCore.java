@@ -339,7 +339,9 @@ public class CommandCore implements CommandExecutor {
             if (meta instanceof LeatherArmorMeta) {
                 ((LeatherArmorMeta) meta).setColor(Color.hexToColor(color));
             } else {
-                Logger.logWarning(String.format(Languages.getMessage("material-not-dyeable"), singleBalloonType.getMaterial()));
+                if (singleBalloonType.getMegModelID() == null) {
+                    Logger.logWarning(String.format(Languages.getMessage("material-not-dyeable"), singleBalloonType.getMaterial()));
+                }
             }
         }
     }
