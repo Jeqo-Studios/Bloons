@@ -5,6 +5,8 @@ dyeable_example:
   type: single
   id: dyeable_example
   permission: balloon.dyeable
+  leash-height: 1.2
+  balloon-height: 2.0
   material: LEATHER_HORSE_ARMOR
   color: '#ffffff'
   custom-model-data: 1

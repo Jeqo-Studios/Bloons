@@ -12,7 +12,7 @@ import org.bukkit.inventory.meta.LeatherArmorMeta;
  * A class to handle the creation of balloon models with custom model data and color metadata
  */
 public class BalloonModel {
-    private static final String leatherMaterialPrefix = "LEATHER_"; // A constant to define a dyeable material
+    private static final String LEATHER_MATERIAL_PREFIX = "LEATHER_"; // A constant to define a dyeable material
 
     /**
      *                          Generates a coloured model with the specified colour and custom model data
@@ -23,7 +23,7 @@ public class BalloonModel {
      */
     public static ItemStack createColouredModel(Material material, Color colour, int customModelData) {
         // Check if the material is dyeable and contains leather attributes
-        if (!material.name().contains(leatherMaterialPrefix)) {
+        if (!material.name().contains(LEATHER_MATERIAL_PREFIX)) {
             Logger.logError("Material " + material.name() + " is not a dyeable material.");
             return new ItemStack(material);
         }
@@ -52,7 +52,7 @@ public class BalloonModel {
      */
     public static ItemStack createColouredModel(Material material, int colourRed, int colourGreen, int colourBlue, int customModelData) {
         // Check if the material is dyeable and contains leather attributes
-        if (!material.name().contains(leatherMaterialPrefix)) {
+        if (!material.name().contains(LEATHER_MATERIAL_PREFIX)) {
             Logger.logWarning(String.format(Languages.getMessage("material-not-dyeable"), material));
             return new ItemStack(material);
         }

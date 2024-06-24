@@ -3,7 +3,7 @@ package net.jeqo.bloons.balloon.multipart;
 import lombok.Getter;
 import lombok.Setter;
 import net.jeqo.bloons.balloon.model.BalloonModel;
-import net.jeqo.bloons.balloon.model.BalloonModelType;
+import net.jeqo.bloons.balloon.model.BalloonSegmentType;
 import net.jeqo.bloons.logger.Logger;
 import net.jeqo.bloons.colors.Color;
 import net.jeqo.bloons.message.Languages;
@@ -15,22 +15,35 @@ import org.bukkit.inventory.ItemStack;
  */
 @Getter @Setter
 public class MultipartBalloonModel {
-    private BalloonModelType modelType;
-    private String material;
-    private String color;
-    private Integer customModelData;
+    /**
+     * The type of segment that the model accommodates
+     * This can either be the head, body, or tail of the balloon
+     */
+    private BalloonSegmentType segmentType;
+    /**
+     * The material used to create the model
+     */
+    private String material; // required
+    /**
+     * The color of the model
+     */
+    private String color = "#ffffff"; // optional
+    /**
+     * The custom model data value stored in the item metadata
+     */
+    private Integer customModelData; // required
 
     /**
      *                          Creates a new model for a multipart balloon
-     * @param modelType         The type of model (head, body, tail), type net.jeqo.bloons.balloon.model.BalloonModelType
+     * @param segmentType       The type of model (head, body, tail), type net.jeqo.bloons.balloon.model.BalloonModelType
      * @param material          The name of the Bukkit Material used to create the item, type java.lang.String
      * @param color             The color of the model as a hex color code value, type java.lang.String
      * @param customModelData   The custom model data value stored in the item metadata, type int
      */
-    public MultipartBalloonModel(BalloonModelType modelType, String material, String color, int customModelData) {
-        this.setModelType(modelType);
+    public MultipartBalloonModel(BalloonSegmentType segmentType, String material, String color, int customModelData) {
+        this.setSegmentType(segmentType);
         this.setMaterial(material);
-        this.setColor(color);
+        if (!color.equals(this.getColor()) && color != null && !color.isEmpty()) this.setColor(color);
         this.setCustomModelData(customModelData);
     }
 

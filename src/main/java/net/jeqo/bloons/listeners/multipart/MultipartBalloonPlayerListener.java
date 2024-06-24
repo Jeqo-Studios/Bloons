@@ -42,7 +42,7 @@ public class MultipartBalloonPlayerListener implements Listener {
     @EventHandler
     public void onRespawn(PlayerRespawnEvent event) {
         MultipartBalloon previousBalloon = Bloons.getPlayerMultipartBalloons().get(event.getPlayer().getPlayer().getUniqueId());
-        MultipartBalloonType type = previousBalloon.getBalloonType();
+        MultipartBalloonType type = previousBalloon.getType();
 
         if (previousBalloon == null) return;
 
@@ -68,7 +68,7 @@ public class MultipartBalloonPlayerListener implements Listener {
     public void onWorldChange(PlayerChangedWorldEvent event) {
         MultipartBalloon balloon = Bloons.getPlayerMultipartBalloons().get(event.getPlayer().getUniqueId());
         MultipartBalloon previousBalloon = Bloons.getPlayerMultipartBalloons().get(event.getPlayer().getPlayer().getUniqueId());
-        MultipartBalloonType type = previousBalloon.getBalloonType();
+        MultipartBalloonType type = previousBalloon.getType();
 
         MultipartBalloonForceUnequipEvent multipartBalloonForceUnequipEvent = new MultipartBalloonForceUnequipEvent(event.getPlayer(), balloon);
 

@@ -17,21 +17,59 @@ import static java.lang.Math.sin;
  * Handles the movement and functionality of a single node, model, or armor stand in a multipart balloon
  */
 @Getter @Setter
-public class ModelNode {
-    public ModelNodeVector pointA;
-    public ModelNodeVector pointB = new ModelNodeVector();
+public class MultipartBalloonNode {
+    /**
+     * The front most point of the segment/node
+     */
+    public MultipartBalloonNodeVector pointA;
+    /**
+     * The back most point of the segment/node
+     */
+    public MultipartBalloonNodeVector pointB = new MultipartBalloonNodeVector();
 
-    public ModelNode parent = null;
-    public ModelNode child = null;
+    /**
+     * The parent node of the current node
+     */
+    public MultipartBalloonNode parent = null;
+    /**
+     * The child node of the current node
+     */
+    public MultipartBalloonNode child = null;
 
+    /**
+     * The armor stand that represents the node
+     */
     ArmorStand balloonArmorStand;
 
-    float index;
-    float length;
+    /**
+     * The index position of the node in the balloon chain
+     */
+    private float index;
+    /**
+     * The length of the segment in blocks
+     */
+    private float length;
+    /**
+     * The type of balloon that the node is a part of that is currently
+     * registered in the configuration file
+     */
     private MultipartBalloonType balloonType;
+    /**
+     * The owner of the balloon
+     */
     private Player balloonOwner;
+    /**
+     * The maximum angle that the node can rotate to
+     */
     double maxNodeJointAngle;
+    /**
+     * The interpolation factor for the Y-axis
+     */
     double yAxisInterpolation;
+    /**
+     * The interpolation factor for the turning spline
+     * to make the turning of the balloon smoother
+     */
     double turningSplineInterpolation;
 
     /**
@@ -44,12 +82,12 @@ public class ModelNode {
      * @param balloonType   Type of balloon, type net.jeqo.bloons.balloon.multipart.MultipartBalloonType
      * @param balloonOwner  Owner of the balloon, type org.bukkit.entity.Player
      */
-    public ModelNode(float x, float y, float z, float length, int index, MultipartBalloonType balloonType, Player balloonOwner, double maxNodeJointAngle, double yAxisInterpolation, double turningSplineInterpolation) {
+    public MultipartBalloonNode(float x, float y, float z, float length, int index, MultipartBalloonType balloonType, Player balloonOwner, double maxNodeJointAngle, double yAxisInterpolation, double turningSplineInterpolation) {
         this.setLength(length);
         this.setIndex(index);
         this.setBalloonType(balloonType);
         this.setBalloonOwner(balloonOwner);
-        this.setPointA(new ModelNodeVector(x, y, z));
+        this.setPointA(new MultipartBalloonNodeVector(x, y, z));
         this.setMaxNodeJointAngle(maxNodeJointAngle);
         this.setYAxisInterpolation(yAxisInterpolation);
         this.setTurningSplineInterpolation(turningSplineInterpolation);
@@ -70,7 +108,7 @@ public class ModelNode {
      * @param length    Length of segment in blocks, type float
      * @param index     Index number in the balloon, type int
      */
-    public ModelNode(ModelNode parent, float length, int index, MultipartBalloonType balloonType, Player balloonOwner, double maxNodeJointAngle, double yAxisInterpolation, double turningSplineInterpolation) {
+    public MultipartBalloonNode(MultipartBalloonNode parent, float length, int index, MultipartBalloonType balloonType, Player balloonOwner, double maxNodeJointAngle, double yAxisInterpolation, double turningSplineInterpolation) {
         this.setParent(parent);
         this.setPointA(parent.getPointB().copy());
         this.setLength(length);
@@ -124,8 +162,8 @@ public class ModelNode {
      * @param targetZ   Target Z axis, type float
      */
     public void follow(float targetX, float targetY, float targetZ) {
-        ModelNodeVector target = new ModelNodeVector(targetX, targetY, targetZ);
-        ModelNodeVector dir = ModelNodeVector.subtract(target, this.getPointB());
+        MultipartBalloonNodeVector target = new MultipartBalloonNodeVector(targetX, targetY, targetZ);
+        MultipartBalloonNodeVector dir = MultipartBalloonNodeVector.subtract(target, this.getPointB());
 
         double targetAngle = dir.heading();
 
@@ -208,7 +246,7 @@ public class ModelNode {
      * @return  The heading of the two node vectors, type float
      */
     public float heading(){
-        return ModelNodeVector.subtract(this.getPointA(), this.getPointB()).heading();
+        return MultipartBalloonNodeVector.subtract(this.getPointA(), this.getPointB()).heading();
     }
 
     /**

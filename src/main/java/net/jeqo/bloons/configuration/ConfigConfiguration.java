@@ -1,7 +1,7 @@
 package net.jeqo.bloons.configuration;
 
 import net.jeqo.bloons.Bloons;
-import net.jeqo.bloons.balloon.model.BalloonModelType;
+import net.jeqo.bloons.balloon.model.BalloonSegmentType;
 import net.jeqo.bloons.balloon.multipart.MultipartBalloonModel;
 import net.jeqo.bloons.balloon.multipart.MultipartBalloonType;
 import net.jeqo.bloons.balloon.single.SingleBalloonType;
@@ -120,6 +120,8 @@ public class ConfigConfiguration {
                                     key,
                                     config.getString(key + ".id"),
                                     config.getString(key + ".permission"),
+                                    config.getDouble(key + ".leash-height"),
+                                    config.getDouble(key + ".balloon-height"),
                                     config.getString(key + ".material"),
                                     config.getString(key + ".color"),
                                     config.getInt(key + ".custom-model-data"),
@@ -207,19 +209,19 @@ public class ConfigConfiguration {
                                 config.getDouble(key + ".passive-sine-wave-amplitude"),
                                 config.getDouble(key + ".passive-nose-sine-wave-amplitude"),
                                 new MultipartBalloonModel(
-                                        BalloonModelType.HEAD,
+                                        BalloonSegmentType.HEAD,
                                         config.getString(key + ".head.material"),
                                         config.getString(key + ".head.color"),
                                         config.getInt(key + ".head.custom-model-data")
                                 ),
                                 new MultipartBalloonModel(
-                                        BalloonModelType.BODY,
+                                        BalloonSegmentType.BODY,
                                         config.getString(key + ".body.material"),
                                         config.getString(key + ".body.color"),
                                         config.getInt(key + ".body.custom-model-data")
                                 ),
                                 new MultipartBalloonModel(
-                                        BalloonModelType.TAIL,
+                                        BalloonSegmentType.TAIL,
                                         config.getString(key + ".tail.material"),
                                         config.getString(key + ".tail.color"),
                                         config.getInt(key + ".tail.custom-model-data")

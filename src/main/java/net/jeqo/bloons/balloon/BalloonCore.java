@@ -16,6 +16,9 @@ import java.util.ArrayList;
  */
 @Setter @Getter
 public class BalloonCore {
+    /**
+     * The plugin instance that runs the balloon core, type org.bukkit.plugin.java.JavaPlugin
+     */
     private JavaPlugin plugin;
     /**
      * Contains all valid and loaded multipart balloon types/configurations
@@ -25,18 +28,15 @@ public class BalloonCore {
      * Contains all valid and loaded single balloon types/configurations
      */
     public ArrayList<SingleBalloonType> singleBalloonTypes = new ArrayList<>();
-
     /**
-     *                          Creates a new instance of the balloon core manager with preset registered balloons
-     * @param plugin            The plugin instance, type org.bukkit.plugin.java.JavaPlugin
-     * @param balloons          The balloons to register, type java.util.ArrayList[net.jeqo.bloons.balloon.multipart.MultipartBalloonType]
-     * @param singleBalloons    The single balloons to register, type java.util.ArrayList[net.jeqo.bloons.balloon.single.SingleBalloonType]
+     * Contains all example balloon files to copy to the plugin's data folder
      */
-    public BalloonCore(JavaPlugin plugin, ArrayList<MultipartBalloonType> balloons, ArrayList<SingleBalloonType> singleBalloons) {
-        this.setPlugin(plugin);
-        this.setMultipartBalloonTypes(balloons);
-        this.setSingleBalloonTypes(singleBalloons);
-    }
+    private final String[] exampleBalloons = new String[] {
+            "color_pack_example.yml",
+            "dyeable_example.yml",
+            "meg_example.yml",
+            "multipart_example.yml"
+    };
 
     /**
      *                  Creates a new empty balloon core instance
@@ -74,8 +74,8 @@ public class BalloonCore {
         };
 
         // Save all example files in the balloons folder in /resources
-        for (String example : exampleBalloons) {
-            File file = new File(Bloons.getInstance().getDataFolder() + File.separator + ConfigConfiguration.BALLOON_CONFIGURATION_FOLDER + example);
+        for (String example : this.getExampleBalloons()) {
+            File file = new File(Bloons.getInstance().getDataFolder() + File.separator + ConfigConfiguration.BALLOON_CONFIGURATION_FOLDER + File.separator + example);
             if (file.exists()) continue;
 
             Bloons.getInstance().saveResource(ConfigConfiguration.BALLOON_CONFIGURATION_FOLDER + example, false);
@@ -83,41 +83,10 @@ public class BalloonCore {
     }
 
     /**
-     *                  Adds a balloon to the registered balloons list
-     * @param balloon   The balloon to add, type net.jeqo.bloons.balloon.multipart.MultipartBalloonType
-     */
-    public void addMultipartBalloon(MultipartBalloonType balloon) {
-        this.getMultipartBalloonTypes().add(balloon);
-    }
-
-    /**
-     *                  Removes a balloon from the registered balloons list
-     * @param balloon   The balloon to remove, type net.jeqo.bloons.balloon.multipart.MultipartBalloonType
-     */
-    public void removeMultipartBalloon(MultipartBalloonType balloon) {
-        this.getMultipartBalloonTypes().remove(balloon);
-    }
-
-    /**
-     *                  Adds a single balloon to the registered balloons list
-     * @param balloon   The single balloon to add, type net.jeqo.bloons.balloon.single.SingleBalloonType
-     */
-    public void addSingleBalloon(SingleBalloonType balloon) {
-        this.getSingleBalloonTypes().add(balloon);
-    }
-
-    /**
-     *                  Removes a single balloon from the registered balloons list
-     * @param balloon   The single balloon to remove, type net.jeqo.bloons.balloon.single.SingleBalloonType
-     */
-    public void removeSingleBalloon(SingleBalloonType balloon) {
-        this.getSingleBalloonTypes().remove(balloon);
-    }
-
-    /**
      *                  Retrieves a balloon by its ID from the registered balloons list
      * @param ID        The ID of the balloon, type java.lang.String
-     * @return          The balloon with the specified name, type net.jeqo.bloons.balloon.multipart.MultipartBalloonType/null
+     * @return          The balloon with the specified name, type net.jeqo.bloons.balloon.multipart.MultipartBalloonType
+     *                  Returns null if no balloon is found by the specified ID
      */
     public MultipartBalloonType getMultipartBalloonByID(String ID) {
         // Loop over every balloon in the registered balloons list
@@ -135,7 +104,8 @@ public class BalloonCore {
     /**
      *                  Retrieves a single balloon by its ID from the registered balloons list
      * @param ID        The ID of the balloon, type java.lang.String
-     * @return          The single balloon with the specified ID, type net.jeqo.bloons.balloon.single.SingleBalloonType/null
+     * @return          The single balloon with the specified ID, type net.jeqo.bloons.balloon.single.SingleBalloonType
+     *                  Returns null if no balloon is found by the specified ID
      */
     public SingleBalloonType getSingleBalloonByID(String ID) {
         // Loop over every single balloon in the registered balloons list

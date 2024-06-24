@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * A custom vector to store the axis of a balloon node
  */
-public class ModelNodeVector implements Serializable {
+public class MultipartBalloonNodeVector implements Serializable {
     /**
      * Model node vector axis.
      */
@@ -16,7 +16,7 @@ public class ModelNodeVector implements Serializable {
     /**
      * Creates a blank model node vector.
      */
-    public ModelNodeVector() {
+    public MultipartBalloonNodeVector() {
     }
 
     /**
@@ -25,19 +25,9 @@ public class ModelNodeVector implements Serializable {
      * @param y Y axis.
      * @param z Z axis.
      */
-    public ModelNodeVector(float x, float y, float z) {
+    public MultipartBalloonNodeVector(float x, float y, float z) {
         this.x = x;
         this.y = y;
-        this.z = z;
-    }
-
-    /**
-     * Creates a segment vector holding a 2D space.
-     * @param x X axis.
-     * @param z Z axis.
-     */
-    public ModelNodeVector(float x, float z) {
-        this.x = x;
         this.z = z;
     }
 
@@ -67,8 +57,8 @@ public class ModelNodeVector implements Serializable {
      * Copies a segment vector.
      * @return The copy of the vector.
      */
-    public ModelNodeVector copy() {
-        return new ModelNodeVector(x, y, z);
+    public MultipartBalloonNodeVector copy() {
+        return new MultipartBalloonNodeVector(x, y, z);
     }
 
     /**
@@ -77,7 +67,7 @@ public class ModelNodeVector implements Serializable {
      * @param v2 Segment vector 2.
      * @return The combined segment vector.
      */
-    static public ModelNodeVector add(ModelNodeVector v1, ModelNodeVector v2) {
+    static public MultipartBalloonNodeVector add(MultipartBalloonNodeVector v1, MultipartBalloonNodeVector v2) {
         return add(v1, v2, null);
     }
 
@@ -88,9 +78,9 @@ public class ModelNodeVector implements Serializable {
      * @param target Target vector.
      * @return The combined vectors.
      */
-    static public ModelNodeVector add(ModelNodeVector v1, ModelNodeVector v2, ModelNodeVector target) {
+    static public MultipartBalloonNodeVector add(MultipartBalloonNodeVector v1, MultipartBalloonNodeVector v2, MultipartBalloonNodeVector target) {
         if (target == null) {
-            target = new ModelNodeVector(v1.x + v2.x,v1.y + v2.y, v1.z + v2.z);
+            target = new MultipartBalloonNodeVector(v1.x + v2.x,v1.y + v2.y, v1.z + v2.z);
         } else {
             target.set(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z);
         }
@@ -103,7 +93,7 @@ public class ModelNodeVector implements Serializable {
      * @param v2 Segment vector 2.
      * @return The result of the two subtracted vectors.
      */
-    static public ModelNodeVector subtract(ModelNodeVector v1, ModelNodeVector v2) {
+    static public MultipartBalloonNodeVector subtract(MultipartBalloonNodeVector v1, MultipartBalloonNodeVector v2) {
         return subtract(v1, v2, null);
     }
 
@@ -114,9 +104,9 @@ public class ModelNodeVector implements Serializable {
      * @param target Target vector.
      * @return The result of the subtraction.
      */
-    static public ModelNodeVector subtract(ModelNodeVector v1, ModelNodeVector v2, ModelNodeVector target) {
+    static public MultipartBalloonNodeVector subtract(MultipartBalloonNodeVector v1, MultipartBalloonNodeVector v2, MultipartBalloonNodeVector target) {
         if (target == null) {
-            target = new ModelNodeVector(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z);
+            target = new MultipartBalloonNodeVector(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z);
         } else {
             target.set(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z);
         }

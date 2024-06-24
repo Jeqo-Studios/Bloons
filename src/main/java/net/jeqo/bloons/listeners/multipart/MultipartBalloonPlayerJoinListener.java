@@ -24,7 +24,7 @@ public class MultipartBalloonPlayerJoinListener implements Listener {
 
             if (equipEvent.isCancelled()) return;
 
-            MultipartBalloonType balloonType = MultipartBalloonManagement.getPlayerBalloon(event.getPlayer().getUniqueId()).getBalloonType();
+            MultipartBalloonType balloonType = MultipartBalloonManagement.getPlayerBalloon(event.getPlayer().getUniqueId()).getType();
 
             MultipartBalloonManagement.removePlayerBalloon(event.getPlayer().getUniqueId());
 
