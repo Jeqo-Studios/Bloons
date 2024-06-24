@@ -52,7 +52,7 @@ public class SingleBalloonType {
      * The lore of the item that is displayed in the GUI
      */
     private String[] lore;
-
+  
     /**
      * The ID of the MEG (ModelEngine) model you wish to use as the balloon model
      * This is only used if the balloon is a MEG balloon
