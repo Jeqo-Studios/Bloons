@@ -5,6 +5,7 @@ import lombok.Setter;
 import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.balloon.multipart.MultipartBalloonType;
 import net.jeqo.bloons.balloon.single.SingleBalloonType;
+import net.jeqo.bloons.colors.ColorCodeConverter;
 import net.jeqo.bloons.configuration.ConfigConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -34,7 +35,7 @@ public class BalloonCore {
     private final String[] exampleBalloons = new String[] {
             "color_pack_example.yml",
             "dyeable_example.yml",
-            "meg_example.yml",
+//            "meg_example.yml", causes way too much issues, not PROD ready
             "multipart_example.yml"
     };
 
@@ -66,19 +67,12 @@ public class BalloonCore {
      * Copies the example balloons folder to the plugin's data folder if it doesn't exist
      */
     public void copyExampleBalloons() {
-        // List of example balloon files
-        String[] exampleBalloons = new String[] {
-                "/color_pack_example.yml",
-                "/dyeable_example.yml",
-                "/multipart_example.yml"
-        };
-
         // Save all example files in the balloons folder in /resources
         for (String example : this.getExampleBalloons()) {
             File file = new File(Bloons.getInstance().getDataFolder() + File.separator + ConfigConfiguration.BALLOON_CONFIGURATION_FOLDER + File.separator + example);
             if (file.exists()) continue;
 
-            Bloons.getInstance().saveResource(ConfigConfiguration.BALLOON_CONFIGURATION_FOLDER + example, false);
+            Bloons.getInstance().saveResource(ConfigConfiguration.BALLOON_CONFIGURATION_FOLDER + File.separator + example, false);
         }
     }
 
@@ -112,6 +106,19 @@ public class BalloonCore {
         for (SingleBalloonType balloon : this.getSingleBalloonTypes()) {
             // Check if the single balloon's name matches the specified name
             if (balloon.getId().equalsIgnoreCase(ID)) {
+                return balloon;
+            }
+        }
+
+        // Return null if the single balloon is not found
+        return null;
+    }
+
+    public SingleBalloonType getSingleBalloonByName(String name) {
+        // Loop over every single balloon in the registered balloons list
+        for (SingleBalloonType balloon : this.getSingleBalloonTypes()) {
+            // Check if the single balloon's name matches the specified name
+            if (balloon.getName().equalsIgnoreCase(name)) {
                 return balloon;
             }
         }
