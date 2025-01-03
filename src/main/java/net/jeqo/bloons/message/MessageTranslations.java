@@ -1,6 +1,7 @@
 package net.jeqo.bloons.message;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -30,7 +31,7 @@ public record MessageTranslations(JavaPlugin instance) {
      */
     public Component getSerializedString(String message) {
         MiniMessage mm = MiniMessage.miniMessage();
-        return mm.deserialize(message);
+        return mm.deserialize(message).decoration(TextDecoration.ITALIC, false);
     }
 
     /**

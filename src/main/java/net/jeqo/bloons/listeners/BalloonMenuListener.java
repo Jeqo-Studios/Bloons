@@ -5,6 +5,7 @@ import net.jeqo.bloons.balloon.multipart.balloon.MultipartBalloon;
 import net.jeqo.bloons.balloon.multipart.balloon.MultipartBalloonBuilder;
 import net.jeqo.bloons.balloon.multipart.MultipartBalloonType;
 import net.jeqo.bloons.balloon.single.SingleBalloon;
+import net.jeqo.bloons.balloon.single.SingleBalloonType;
 import net.jeqo.bloons.colors.Color;
 import net.jeqo.bloons.colors.ColorCodeConverter;
 import net.jeqo.bloons.events.balloon.multipart.MultipartBalloonEquipEvent;
@@ -99,7 +100,9 @@ public class BalloonMenuListener implements Listener {
 
                 // Check if a balloon needs to be added or removed
                 SingleBalloonManagement.removeBalloon(player, Bloons.getPlayerSingleBalloons().get(player.getUniqueId()));
-                SingleBalloon.checkBalloonRemovalOrAdd(player, localizedName);
+                SingleBalloonType fromName = Bloons.getBalloonCore().getSingleBalloonByName(convertedColourBalloonName);
+
+                SingleBalloon.checkBalloonRemovalOrAdd(player, fromName.getId());
             }
 
             // Send equipped message and play sound
