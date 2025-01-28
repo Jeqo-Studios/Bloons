@@ -44,4 +44,24 @@ public class PluginConfiguration {
     public static String getURL() {
         return Bloons.getInstance().getDescription().getWebsite();
     }
+
+    public static boolean isSpigotServer() {
+        try {
+            // Check if a Spigot-specific class is available
+            Class.forName("org.spigotmc.SpigotConfig");
+            return true;
+        } catch (ClassNotFoundException e) {
+            return false;
+        }
+    }
+
+    public static boolean isPaperServer() {
+        try {
+            // Check if a Paper-specific class is available
+            Class.forName("com.destroystokyo.paper.PaperConfig");
+            return true;
+        } catch (ClassNotFoundException e) {
+            return false;
+        }
+    }
 }

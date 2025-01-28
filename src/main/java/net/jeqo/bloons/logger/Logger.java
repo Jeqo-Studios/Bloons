@@ -28,8 +28,16 @@ public class Logger {
      * @param message   The message to log, type java.lang.String
      */
     public static void logToPlayer(LoggingLevel level, Player player, String message) {
-        Component component = Component.text("[" + level.getName() + "] " + message).color(level.getColor());
-        player.sendMessage(component);
+        if (PluginConfiguration.isPaperServer()) {
+            Component component = Component.text("[" + level.getName() + "] " + message).color(level.getColor());
+            player.sendMessage(component);
+        } else if (PluginConfiguration.isSpigotServer()) {
+            String formattedMessage = String.format("%s[%s] %s", level.getSpigotColor(), level.getName(), message);
+            player.sendMessage(formattedMessage);
+        } else {
+            String formattedMessage = String.format("%s[%s] %s", level.getSpigotColor(), level.getName(), "An invalid server software is currently being used. Please use either PaperMC or Spigot.");
+            player.sendMessage(formattedMessage);
+        }
     }
 
     /**

@@ -196,6 +196,8 @@ public class CommandCore implements CommandExecutor {
      */
     private boolean shouldAddSingleBalloon(Player player, SingleBalloonType singleBalloonType) {
         if (this.getMessageTranslations().getString("hide-balloons-without-permission").equalsIgnoreCase("true")) {
+            if (singleBalloonType.getPermission() == null) return true;
+
             return player.hasPermission(singleBalloonType.getPermission());
         }
         return true;
@@ -209,6 +211,8 @@ public class CommandCore implements CommandExecutor {
      */
     private boolean shouldAddMultipartBalloon(Player player, MultipartBalloonType multipartBalloonType) {
         if (this.getMessageTranslations().getString("hide-balloons-without-permission").equalsIgnoreCase("true")) {
+            if (multipartBalloonType.getPermission() == null) return true;
+
             return player.hasPermission(multipartBalloonType.getPermission());
         }
         return true;

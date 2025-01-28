@@ -58,8 +58,8 @@ public class MultipartBalloon {
     public void initialize() {
         // Things that only need to be set up once and not looped over
         MultipartBalloonNode current = new MultipartBalloonNode((float) this.getOwner().getLocation().getX(), (float) this.getOwner().getLocation().getY(), (float) this.getOwner().getLocation().getZ(),
-                                         (float) ((float) this.getType().getDistanceBetweenNodes() + this.getType().getTailNodeOffset()), 0, getType(), this.getOwner(),
-                                         this.getType().getMaxNodeJointAngle(), this.getType().getYAxisInterpolation(), this.getType().getTurningSplineInterpolation());
+                (float) ((float) this.getType().getDistanceBetweenNodes() + this.getType().getTailNodeOffset()), 0, getType(), this.getOwner(),
+                this.getType().getMaxNodeJointAngle(), this.getType().getYAxisInterpolation(), this.getType().getTurningSplineInterpolation());
 
         // Add the current node to the list of model nodes
         this.getMultipartBalloonNodes().add(current);
