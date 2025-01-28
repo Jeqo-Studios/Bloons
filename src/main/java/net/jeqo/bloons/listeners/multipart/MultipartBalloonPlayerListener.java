@@ -4,8 +4,6 @@ import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.balloon.multipart.MultipartBalloonType;
 import net.jeqo.bloons.balloon.multipart.balloon.MultipartBalloon;
 import net.jeqo.bloons.balloon.multipart.balloon.MultipartBalloonBuilder;
-import net.jeqo.bloons.events.balloon.multipart.*;
-import net.jeqo.bloons.events.balloon.single.SingleBalloonForceUnequipEvent;
 import net.jeqo.bloons.management.MultipartBalloonManagement;
 import net.jeqo.bloons.management.SingleBalloonManagement;
 import org.bukkit.event.EventHandler;
@@ -26,13 +24,8 @@ public class MultipartBalloonPlayerListener implements Listener {
     public void onDeath(PlayerDeathEvent event) {
         MultipartBalloon balloon = Bloons.getPlayerMultipartBalloons().get(Objects.requireNonNull(event.getEntity().getPlayer()).getUniqueId());
 
-        MultipartBalloonForceUnequipEvent multipartBalloonEquipEvent = new MultipartBalloonForceUnequipEvent(event.getPlayer(), balloon);
-        multipartBalloonEquipEvent.callEvent();
-
-        if (multipartBalloonEquipEvent.isCancelled()) return;
-
         balloon.destroy();
-        MultipartBalloonManagement.removePlayerBalloon(event.getPlayer().getUniqueId());
+        MultipartBalloonManagement.removePlayerBalloon(event.getEntity().getUniqueId());
     }
 
     /**
@@ -41,23 +34,15 @@ public class MultipartBalloonPlayerListener implements Listener {
      */
     @EventHandler
     public void onRespawn(PlayerRespawnEvent event) {
-        MultipartBalloon previousBalloon = Bloons.getPlayerMultipartBalloons().get(event.getPlayer().getPlayer().getUniqueId());
-        MultipartBalloonType type = previousBalloon.getType();
+        MultipartBalloon previousBalloon = Bloons.getPlayerMultipartBalloons().get(event.getPlayer().getUniqueId());
 
         if (previousBalloon == null) return;
 
-        MultipartBalloonForceEquipEvent multipartBalloonEquipEvent = new MultipartBalloonForceEquipEvent(event.getPlayer(), previousBalloon);
-        multipartBalloonEquipEvent.callEvent();
-
-        if (multipartBalloonEquipEvent.isCancelled()) return;
-
-        MultipartBalloonBuilder builder = new MultipartBalloonBuilder(type, event.getPlayer());
         SingleBalloonManagement.removeBalloon(event.getPlayer(), Bloons.getPlayerSingleBalloons().get(event.getPlayer().getUniqueId()));
-        MultipartBalloon balloon = builder.build();
-        balloon.initialize();
-        balloon.run();
+        previousBalloon.initialize();
+        previousBalloon.run();
 
-        MultipartBalloonManagement.setPlayerBalloon(event.getPlayer().getUniqueId(), balloon);
+        MultipartBalloonManagement.setPlayerBalloon(event.getPlayer().getUniqueId(), previousBalloon);
     }
 
     /**
@@ -67,31 +52,12 @@ public class MultipartBalloonPlayerListener implements Listener {
     @EventHandler
     public void onWorldChange(PlayerChangedWorldEvent event) {
         MultipartBalloon balloon = Bloons.getPlayerMultipartBalloons().get(event.getPlayer().getUniqueId());
-        MultipartBalloon previousBalloon = Bloons.getPlayerMultipartBalloons().get(event.getPlayer().getPlayer().getUniqueId());
+        MultipartBalloon previousBalloon = Bloons.getPlayerMultipartBalloons().get(event.getPlayer().getUniqueId());
         MultipartBalloonType type = previousBalloon.getType();
 
-        MultipartBalloonForceUnequipEvent multipartBalloonForceUnequipEvent = new MultipartBalloonForceUnequipEvent(event.getPlayer(), balloon);
-
-        MultipartBalloonStoreEvent storeEvent = new MultipartBalloonStoreEvent(event.getPlayer(), balloon);
-        storeEvent.callEvent();
-
-        if (storeEvent.isCancelled()) return;
-
         if (balloon != null) {
-            SingleBalloonForceUnequipEvent unequipEvent = new SingleBalloonForceUnequipEvent(event.getPlayer(), Bloons.getPlayerSingleBalloons().get(event.getPlayer().getUniqueId()));
-            unequipEvent.callEvent();
-
-            if (unequipEvent.isCancelled()) return;
-            multipartBalloonForceUnequipEvent.callEvent();
-
-            if (multipartBalloonForceUnequipEvent.isCancelled()) return;
-
             balloon.destroy();
             MultipartBalloonManagement.removePlayerBalloon(event.getPlayer().getUniqueId());
-
-            multipartBalloonForceUnequipEvent.callEvent();
-
-            if (multipartBalloonForceUnequipEvent.isCancelled()) return;
 
             MultipartBalloonBuilder builder = new MultipartBalloonBuilder(type, event.getPlayer());
             SingleBalloonManagement.removeBalloon(event.getPlayer(), Bloons.getPlayerSingleBalloons().get(event.getPlayer().getUniqueId()));

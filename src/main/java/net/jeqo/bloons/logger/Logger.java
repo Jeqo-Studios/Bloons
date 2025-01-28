@@ -5,7 +5,6 @@ import net.jeqo.bloons.configuration.ConfigConfiguration;
 import net.jeqo.bloons.configuration.PluginConfiguration;
 import net.jeqo.bloons.message.Languages;
 import net.jeqo.bloons.message.MessageTranslations;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -28,16 +27,8 @@ public class Logger {
      * @param message   The message to log, type java.lang.String
      */
     public static void logToPlayer(LoggingLevel level, Player player, String message) {
-        if (PluginConfiguration.isPaperServer()) {
-            Component component = Component.text("[" + level.getName() + "] " + message).color(level.getColor());
-            player.sendMessage(component);
-        } else if (PluginConfiguration.isSpigotServer()) {
-            String formattedMessage = String.format("%s[%s] %s", level.getSpigotColor(), level.getName(), message);
-            player.sendMessage(formattedMessage);
-        } else {
-            String formattedMessage = String.format("%s[%s] %s", level.getSpigotColor(), level.getName(), "An invalid server software is currently being used. Please use either PaperMC or Spigot.");
-            player.sendMessage(formattedMessage);
-        }
+        String formattedMessage = String.format("%s[%s] %s", level.getColor(), level.getName(), message);
+        player.sendMessage(formattedMessage);
     }
 
     /**
@@ -46,9 +37,7 @@ public class Logger {
      * @param message   The message to log, type java.lang.String
      */
     public static void logToPlayer(Player player, String message) {
-        MessageTranslations messageTranslations = new MessageTranslations(Bloons.getInstance());
-        Component component = messageTranslations.getSerializedString(Languages.getMessage("prefix") + message);
-        player.sendMessage(component);
+        player.sendMessage(message);
     }
 
     /**
@@ -57,8 +46,8 @@ public class Logger {
      * @param message   The message to log, type java.lang.String
      */
     public static void log(LoggingLevel level, String message) {
-        Component component = Component.text("[" + level.getName() + "] " + message).color(level.getColor());
-        Bukkit.getServer().getConsoleSender().sendMessage(component);
+        String loggedMessage = String.format("%s[%s] %s", level.getColor(), level.getName(), message);
+        Bukkit.getServer().getConsoleSender().sendMessage(loggedMessage);
     }
 
     /**

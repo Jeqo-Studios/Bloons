@@ -29,12 +29,14 @@ public class BalloonModel {
         }
 
         ItemStack generatedItem = new ItemStack(material);
-        LeatherArmorMeta generatedItemMeta = (LeatherArmorMeta) generatedItem.getItemMeta();
+        LeatherArmorMeta generatedItemLeatherMeta = (LeatherArmorMeta) generatedItem.getItemMeta();
+
+        if (generatedItemLeatherMeta == null) return generatedItem;
 
         // Set the color and custom model data of the item in the metadata
-        generatedItemMeta.setColor(colour);
-        generatedItemMeta.setCustomModelData(customModelData);
-        generatedItem.setItemMeta(generatedItemMeta);
+        generatedItemLeatherMeta.setColor(colour);
+        generatedItemLeatherMeta.setCustomModelData(customModelData);
+        generatedItem.setItemMeta(generatedItemLeatherMeta);
 
         return generatedItem;
     }
@@ -68,6 +70,7 @@ public class BalloonModel {
         Color color = Color.fromRGB(colourRed, colourGreen, colourBlue);
 
         // Set the color and custom model data of the item in the metadata
+        assert generatedItemMeta != null; // Equivalent of setting to regular leather colour, assume we aren't
         generatedItemMeta.setColor(color);
         generatedItemMeta.setCustomModelData(customModelData);
         generatedItem.setItemMeta(generatedItemMeta);
@@ -84,6 +87,12 @@ public class BalloonModel {
     public static ItemStack createBlankModel(Material material, int customModelData) {
         ItemStack generatedItem = new ItemStack(material);
         ItemMeta generatedItemMeta = generatedItem.getItemMeta();
+
+        // Check if the item supports ItemMeta
+        if (generatedItemMeta == null) {
+            Logger.logError(String.format("The specified material does not support ItemMeta: %s", material));
+            return generatedItem;
+        }
 
         // Set the custom model data of the item
         generatedItemMeta.setCustomModelData(customModelData);

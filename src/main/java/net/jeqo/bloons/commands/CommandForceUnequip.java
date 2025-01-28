@@ -5,13 +5,10 @@ import net.jeqo.bloons.balloon.multipart.balloon.MultipartBalloon;
 import net.jeqo.bloons.balloon.single.SingleBalloon;
 import net.jeqo.bloons.commands.manager.Command;
 import net.jeqo.bloons.commands.manager.types.CommandPermission;
-import net.jeqo.bloons.events.balloon.multipart.MultipartBalloonUnequipEvent;
-import net.jeqo.bloons.events.balloon.single.SingleBalloonUnequipEvent;
 import net.jeqo.bloons.message.Languages;
 import net.jeqo.bloons.management.SingleBalloonManagement;
 import net.jeqo.bloons.message.MessageTranslations;
 import net.jeqo.bloons.management.MultipartBalloonManagement;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -34,7 +31,7 @@ public class CommandForceUnequip extends Command {
 
         // If the specified player doesn't exist, send a message to the sender
         if (player == null) {
-            Component playerNotFoundMessage = messageTranslations.getSerializedString(Languages.getMessage("prefix"), Languages.getMessage("player-not-found"));
+            String playerNotFoundMessage = Languages.getMessage("prefix") + Languages.getMessage("player-not-found");
             sender.sendMessage(playerNotFoundMessage);
             return false;
         }
@@ -44,33 +41,21 @@ public class CommandForceUnequip extends Command {
 
         // If the player doesn't have any balloons equipped, send a message to the sender
         if (singleBalloon == null && multipartBalloon == null) {
-            Component notEquippedMessage = messageTranslations.getSerializedString(Languages.getMessage("prefix"), Languages.getMessage("not-equipped"));
+            String notEquippedMessage = Languages.getMessage("prefix") + Languages.getMessage("not-equipped");
             player.sendMessage(notEquippedMessage);
             return false;
         }
 
         // If the player has a single balloon equipped, unequip it
-        if (singleBalloon != null) {
-            SingleBalloonUnequipEvent singleBalloonUnequipEvent = new SingleBalloonUnequipEvent(player, singleBalloon);
-            singleBalloonUnequipEvent.callEvent();
-
-            if (singleBalloonUnequipEvent.isCancelled()) return false;
-
-            SingleBalloonManagement.removeBalloon(player, singleBalloon);
-        }
+        SingleBalloonManagement.removeBalloon(player, singleBalloon);
 
         // If the player has a multipart balloon equipped, unequip it
         if (multipartBalloon != null) {
-            MultipartBalloonUnequipEvent multipartBalloonUnequipEvent = new MultipartBalloonUnequipEvent(player, multipartBalloon);
-            multipartBalloonUnequipEvent.callEvent();
-
-            if (multipartBalloonUnequipEvent.isCancelled()) return false;
-
             multipartBalloon.destroy();
             MultipartBalloonManagement.removePlayerBalloon(player.getUniqueId());
         }
 
-        Component unequipSuccessfulMessage = messageTranslations.getSerializedString(Languages.getMessage("prefix"), Languages.getMessage("unequipped"));
+        String unequipSuccessfulMessage = Languages.getMessage("prefix") + Languages.getMessage("unequipped");
         sender.sendMessage(unequipSuccessfulMessage);
         return false;
     }

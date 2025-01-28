@@ -8,13 +8,10 @@ import lombok.Getter;
 import lombok.Setter;
 import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.configuration.BalloonConfiguration;
-import net.jeqo.bloons.events.balloon.single.SingleBalloonEquipEvent;
-import net.jeqo.bloons.events.balloon.single.SingleBalloonForceUnequipEvent;
 import net.jeqo.bloons.logger.Logger;
 import net.jeqo.bloons.message.Languages;
 import net.jeqo.bloons.management.SingleBalloonManagement;
 import net.jeqo.bloons.colors.Color;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -127,7 +124,7 @@ public class SingleBalloon extends BukkitRunnable {
                 e.printStackTrace();
             }
         }
-        this.getArmorStand().customName(Component.text(BalloonConfiguration.BALLOON_ARMOR_STAND_ID));
+        this.getArmorStand().setCustomName(BalloonConfiguration.BALLOON_ARMOR_STAND_ID);
     }
 
     /**
@@ -143,7 +140,7 @@ public class SingleBalloon extends BukkitRunnable {
         this.getChicken().setAware(false);
         this.getChicken().setCollidable(false);
         this.getChicken().setLeashHolder(this.getPlayer());
-        this.getChicken().customName(Component.text(BalloonConfiguration.BALLOON_CHICKEN_ID));
+        this.getChicken().setCustomName(BalloonConfiguration.BALLOON_CHICKEN_ID);
     }
 
     /**
@@ -315,20 +312,8 @@ public class SingleBalloon extends BukkitRunnable {
                 SingleBalloon initialBalloon = Bloons.getPlayerSingleBalloons().get(player.getUniqueId());
                 if (initialBalloon != null) return;
 
-                // Call the unequip event and check if it's cancelled
-                SingleBalloonForceUnequipEvent unequipEvent = new SingleBalloonForceUnequipEvent(player, null);
-                unequipEvent.callEvent();
-
-                if (unequipEvent.isCancelled()) return;
-
                 // Remove the balloon from the player
                 SingleBalloonManagement.removeBalloon(player, null);
-
-                // Call the equip event and check if it's cancelled
-                SingleBalloonEquipEvent equipEvent = new SingleBalloonEquipEvent(player, balloonID);
-                equipEvent.callEvent();
-
-                if (equipEvent.isCancelled()) return;
 
                 // Create a new balloon and add it to the player/start the runnables and add the player to the maps
                 SingleBalloon balloon = new SingleBalloon(player, balloonID);

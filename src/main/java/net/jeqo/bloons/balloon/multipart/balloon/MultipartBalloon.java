@@ -6,7 +6,6 @@ import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.balloon.multipart.MultipartBalloonType;
 import net.jeqo.bloons.balloon.multipart.nodes.MultipartBalloonNode;
 import net.jeqo.bloons.configuration.BalloonConfiguration;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.entity.Chicken;
 import org.bukkit.entity.Player;
@@ -95,7 +94,7 @@ public class MultipartBalloon {
         this.getChicken().setAgeLock(true);
         this.getChicken().setAware(false);
         this.getChicken().setCollidable(false);
-        this.getChicken().customName(Component.text(BalloonConfiguration.BALLOON_CHICKEN_ID));
+        this.getChicken().setCustomName(BalloonConfiguration.BALLOON_CHICKEN_ID);
     }
 
     /**

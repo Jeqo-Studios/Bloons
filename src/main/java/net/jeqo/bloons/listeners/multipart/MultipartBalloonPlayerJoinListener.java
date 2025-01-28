@@ -3,7 +3,6 @@ package net.jeqo.bloons.listeners.multipart;
 import net.jeqo.bloons.balloon.multipart.balloon.MultipartBalloon;
 import net.jeqo.bloons.balloon.multipart.balloon.MultipartBalloonBuilder;
 import net.jeqo.bloons.balloon.multipart.MultipartBalloonType;
-import net.jeqo.bloons.events.balloon.multipart.MultipartBalloonEquipEvent;
 import net.jeqo.bloons.management.MultipartBalloonManagement;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -19,11 +18,6 @@ public class MultipartBalloonPlayerJoinListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         MultipartBalloon equippedBalloon = MultipartBalloonManagement.getPlayerBalloon(event.getPlayer().getUniqueId());
         if (equippedBalloon != null) {
-            MultipartBalloonEquipEvent equipEvent = new MultipartBalloonEquipEvent(event.getPlayer(), equippedBalloon);
-            equipEvent.callEvent();
-
-            if (equipEvent.isCancelled()) return;
-
             MultipartBalloonType balloonType = MultipartBalloonManagement.getPlayerBalloon(event.getPlayer().getUniqueId()).getType();
 
             MultipartBalloonManagement.removePlayerBalloon(event.getPlayer().getUniqueId());
