@@ -1,5 +1,5 @@
 <div class="logo" align="center">
-  <img width="25%" src="https://jeqo.net/images/bloons-logo.png" alt="bloons-logo">
+  <img width="25%" src="https://www.spigotmc.org/data/resource_icons/106/106243.jpg?1668352166" alt="bloons-logo">
   <br>
 </div>
 
