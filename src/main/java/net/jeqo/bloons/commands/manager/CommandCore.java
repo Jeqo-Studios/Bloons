@@ -12,6 +12,7 @@ import net.jeqo.bloons.logger.Logger;
 import net.jeqo.bloons.colors.Color;
 import net.jeqo.bloons.message.Languages;
 import net.jeqo.bloons.message.MessageTranslations;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -104,7 +105,7 @@ public class CommandCore implements CommandExecutor {
 
             if (!player.hasPermission("bloons.menu")) {
                 String noPermission = Languages.getMessage("prefix") + Languages.getMessage("no-permission");
-                player.sendMessage(noPermission);
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', noPermission));
                 return true;
             }
 
@@ -114,27 +115,31 @@ public class CommandCore implements CommandExecutor {
 
             //
             if (singleBalloonTypes == null && multipartBalloonTypes == null) {
-                Logger.logError(Languages.getMessage("no-balloons-registered"));
+                Logger.logError(ChatColor.translateAlternateColorCodes('&', Languages.getMessage("no-balloons-registered")));
                 return false;
             }
 
-            // For every single balloon registered, add it to the GUI
-            for (SingleBalloonType singleBalloon : singleBalloonTypes) {
-                if (singleBalloon == null) continue;
+            if (singleBalloonTypes != null) {
+                // For every single balloon registered, add it to the GUI
+                for (SingleBalloonType singleBalloon : singleBalloonTypes) {
+                    if (singleBalloon == null) continue;
 
-                if (shouldAddSingleBalloon(player, singleBalloon)) {
-                    ItemStack item = createBalloonItem(singleBalloon);
-                    items.add(item);
+                    if (shouldAddSingleBalloon(player, singleBalloon)) {
+                        ItemStack item = createBalloonItem(singleBalloon);
+                        items.add(item);
+                    }
                 }
             }
 
-            // For every multipart balloon registered, add it to the GUI
-            for (MultipartBalloonType multipartBalloon : multipartBalloonTypes) {
-                if (multipartBalloon == null) continue;
+            if (multipartBalloonTypes != null) {
+                // For every multipart balloon registered, add it to the GUI
+                for (MultipartBalloonType multipartBalloon : multipartBalloonTypes) {
+                    if (multipartBalloon == null) continue;
 
-                if (shouldAddMultipartBalloon(player, multipartBalloon)) {
-                    ItemStack item = createBalloonItem(multipartBalloon);
-                    items.add(item);
+                    if (shouldAddMultipartBalloon(player, multipartBalloon)) {
+                        ItemStack item = createBalloonItem(multipartBalloon);
+                        items.add(item);
+                    }
                 }
             }
 
@@ -312,7 +317,7 @@ public class CommandCore implements CommandExecutor {
     private void setBalloonDisplayName(ItemMeta meta, SingleBalloonType singleBalloonType) {
         String name = singleBalloonType.getName();
         if (name != null) {
-            meta.setDisplayName(name);
+            meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
         }
     }
 
@@ -324,7 +329,7 @@ public class CommandCore implements CommandExecutor {
     private void setBalloonDisplayName(ItemMeta meta, MultipartBalloonType multipartBalloonType) {
         String name = multipartBalloonType.getName();
         if (name != null) {
-            meta.setDisplayName(name);
+            meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
         }
     }
 

@@ -7,7 +7,7 @@ blue:
   permission: balloon.blue
   material: FLINT
   custom-model-data: 4
-  name: '<blue>Blue <white>Balloon'
+  name: '&9Blue &fBalloon'
   lore:
     - '&8Bloons Default Balloon'
     - ''
@@ -18,7 +18,7 @@ green:
   permission: balloon.green
   material: FLINT
   custom-model-data: 5
-  name: '<green>Green <white>Balloon'
+  name: '&aGreen &fBalloon'
   lore:
     - '&8Bloons Default Balloon'
     - ''
@@ -29,7 +29,7 @@ pink:
   permission: balloon.pink
   material: FLINT
   custom-model-data: 6
-  name: '<light_purple>Pink <white>Balloon'
+  name: '&dPink &fBalloon'
   lore:
     - '&8Bloons Default Balloon'
     - ''
@@ -39,7 +39,7 @@ yellow:
   permission: balloon.yellow
   material: FLINT
   custom-model-data: 7
-  name: '<yellow>Yellow <white>Balloon'
+  name: '&eYellow &fBalloon'
   lore:
     - '&8Bloons Default Balloon'
     - ''

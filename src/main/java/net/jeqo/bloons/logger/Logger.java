@@ -117,12 +117,29 @@ public class Logger {
     }
 
     /**
+     * Logs an unreleased plugin version notification to the Bukkit console
+     */
+    public static void logUnreleasedVersionNotification() {
+        logInfo("The version for the " + PluginConfiguration.getName() + " plugin is higher than latest version");
+        logInfo("You are currently running an unreleased version of the plugin that is NOT stable");
+    }
+
+    /**
      *                  Logs an update notification to a player
      * @param player    The player to log the update notification to, type org.bukkit.entity.Player
      */
     public static void logUpdateNotificationPlayer(Player player) {
-        logToPlayer(player, "A new update is available for " + PluginConfiguration.getName() + " plugin");
-        logToPlayer(player, "You can find the update at: https://jeqo.net/bloons");
+        logToPlayer(LoggingLevel.INFO, player, "A new update is available for " + PluginConfiguration.getName() + " plugin");
+        logToPlayer(LoggingLevel.INFO, player, "You can find the update at: https://jeqo.net/bloons");
+    }
+
+    /**
+     *                  Logs an unreleased version notification to a player
+     * @param player    The player to log the unreleased version notification to, type org.bukkit.entity.Player
+     */
+    public static void logUnreleasedVersionNotificationPlayer(Player player) {
+        logToPlayer(LoggingLevel.INFO, player, "The version for the " + PluginConfiguration.getName() + " plugin is higher than latest version");
+        logToPlayer(LoggingLevel.INFO, player, "You are currently running an unreleased version of the plugin that is NOT stable");
     }
 
     /**

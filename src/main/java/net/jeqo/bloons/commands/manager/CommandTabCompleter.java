@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * A class used to handle the tab completion of the commands
@@ -89,6 +90,6 @@ public class CommandTabCompleter implements TabCompleter {
     public List<String> getBalloonTabComplete() {
         List<String> singleBalloons = ConfigConfiguration.getSingleBalloons().stream().map(singleBalloonType -> singleBalloonType.getId().toLowerCase()).toList();
         List<String> multipartBalloons = ConfigConfiguration.getMultipartBalloons().stream().map(multipartBalloonType -> multipartBalloonType.getId().toLowerCase()).toList();
-        return List.of(singleBalloons, multipartBalloons).stream().flatMap(List::stream).toList();
+        return Stream.of(singleBalloons, multipartBalloons).flatMap(List::stream).toList();
     }
 }

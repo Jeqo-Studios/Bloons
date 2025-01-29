@@ -5,6 +5,7 @@ import net.jeqo.bloons.commands.manager.Command;
 import net.jeqo.bloons.commands.manager.types.CommandPermission;
 import net.jeqo.bloons.message.Languages;
 import net.jeqo.bloons.message.MessageTranslations;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -39,7 +40,7 @@ public class CommandReload extends Command {
         Bloons.getBalloonCore().initialize();
 
         String configReloadedMessage = Languages.getMessage("prefix") + Languages.getMessage("config-reloaded");
-        sender.sendMessage(configReloadedMessage);
+        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', configReloadedMessage));
 
         return false;
     }

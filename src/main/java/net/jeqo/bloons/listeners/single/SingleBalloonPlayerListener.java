@@ -49,8 +49,12 @@ public class SingleBalloonPlayerListener implements Listener {
             if (Bloons.getInstance().getConfig().getBoolean("check-for-updates")) {
                 // Check for an update if the player is an operator on the server
                 new UpdateChecker(Bloons.getInstance(), 106243).getVersion(version -> {
-                    if (!Bloons.getInstance().getDescription().getVersion().equals(version)) {
-                        Logger.logUpdateNotificationPlayer(player);
+                    String currentVersion = Bloons.getInstance().getDescription().getVersion();
+
+                    if (Bloons.getInstance().isVersionLower(currentVersion, version)) {
+                        Logger.logUpdateNotificationPlayer(event.getPlayer());
+                    } else if (Bloons.getInstance().isVersionHigher(currentVersion, version)) {
+                        Logger.logUnreleasedVersionNotificationPlayer(event.getPlayer());
                     }
                 });
             }

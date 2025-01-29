@@ -4,6 +4,7 @@ import lombok.Getter;
 import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.configuration.ConfigConfiguration;
 import net.jeqo.bloons.logger.Logger;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -33,14 +34,7 @@ public class Languages {
 
     static {
         // Initialize available languages
-        String[] languages = {
-                "af_ZA", "ar_SA", "az_AZ", "be_BY", "bg_BG", "bn_IN", "bs_BA", "cs_CZ", "cy_GB", "da_DK", "de_DE", "el_GR",
-                "en_US", "es_ES", "et_EE", "eu_ES", "fa_IR", "fo_FO", "fi_FI", "fr_FR", "gl_ES", "gu_IN", "he_IL", "hi_IN",
-                "hr_HR", "hu_HU", "hy_AM", "id_ID", "is_IS", "it_IT", "ja_JP", "ka_GE", "kk_KZ", "kn_IN", "ko_KR", "kok_IN",
-                "lt_LT", "lv_LV", "mk_MK", "ml_IN", "mn_MN", "mr_IN", "ms_MY", "mt_MT", "nb_NO", "nl_NL", "nn_NO", "pa_IN",
-                "pl_PL", "pt_BR", "ro_RO", "ru_RU", "se_NO", "sk_SK", "sq_AL", "sr_BA", "sv_SE", "sw_KE", "syr_SY", "ta_IN",
-                "te_IN", "th_TH", "tn_ZA", "tr_TR", "uk_UA", "uz_UZ", "vi_VN", "xh_ZA", "zh_CN", "zh_TW"
-        };
+        String[] languages = { "en_US", "es_ES" };
         // Add all languages to the set
         Collections.addAll(getAvailableLanguages(), languages);
     }
@@ -96,10 +90,12 @@ public class Languages {
                 // Load the configuration file
                 FileConfiguration config = YamlConfiguration.loadConfiguration(file);
 
-                return config.getString("messages." + message);
+                return ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(config.getString("messages." + message)));
             }
         }
 
-        return "";
+        // Fallback onto en_US.yml if translation is missing
+        FileConfiguration englishConfig = YamlConfiguration.loadConfiguration(new File(folder + File.separator + "en_US.yml"));
+        return ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(englishConfig.getString("messages." + message)));
     }
 }

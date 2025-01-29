@@ -6,7 +6,7 @@
 
     <groupId>net.jeqo</groupId>
     <artifactId>bloons</artifactId>
-    <version>2.1.0</version>
+    <version>2.1.1</version>
     <packaging>jar</packaging>
 
     <name>Bloons</name>
@@ -56,11 +56,11 @@
             <plugin>
                 <groupId>blue.lhf</groupId>
                 <artifactId>run-paper-maven-plugin</artifactId>
-                <version>1.1.0</version>
+                <version>1.1.1</version>
                 <configuration>
                     <minecraftVersion>1.21.4</minecraftVersion>
                     <acceptEula>true</acceptEula>
-                    <serverDirectory>run</serverDirectory>
+                    <serverDirectory>../server</serverDirectory>
                     <jvmFlags>
                         <flag>-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:25566</flag>
                     </jvmFlags>

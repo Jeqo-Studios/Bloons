@@ -1,6 +1,9 @@
 package net.jeqo.bloons.message;
 
+import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.Objects;
 
 /**
  *                  A utility class intended to get messages from the config.yml file
@@ -14,7 +17,10 @@ public record MessageTranslations(JavaPlugin instance) {
      * @return      The value at the specified path, type java.lang.String
      */
     public String getString(String path) {
-        return this.instance.getConfig().getString(path);
+        if (this.instance.getConfig().getString(path) != null) {
+            return ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(this.instance.getConfig().getString(path)));
+        }
+        return "";
     }
 
     /**

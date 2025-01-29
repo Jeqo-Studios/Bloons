@@ -9,6 +9,7 @@ import net.jeqo.bloons.message.Languages;
 import net.jeqo.bloons.management.SingleBalloonManagement;
 import net.jeqo.bloons.message.MessageTranslations;
 import net.jeqo.bloons.management.MultipartBalloonManagement;
+import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -38,12 +39,11 @@ public class CommandUnequip extends Command {
 
         SingleBalloon singleBalloon = Bloons.getPlayerSingleBalloons().get(player.getUniqueId());
         MultipartBalloon multipartBalloon = MultipartBalloonManagement.getPlayerBalloon(player.getUniqueId());
-        MessageTranslations messageTranslations = new MessageTranslations(this.getPlugin());
 
         // If the player doesn't have any balloons equipped, send a message to the player
         if (singleBalloon == null && multipartBalloon == null) {
             String notEquippedMessage = Languages.getMessage("prefix") + Languages.getMessage("not-equipped");
-            player.sendMessage(notEquippedMessage);
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', notEquippedMessage));
             return false;
         }
 
@@ -59,7 +59,7 @@ public class CommandUnequip extends Command {
         }
 
         String unequipSuccessfulMessage = Languages.getMessage("prefix") + Languages.getMessage("unequipped");
-        player.sendMessage(unequipSuccessfulMessage);
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&', unequipSuccessfulMessage));
         player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_HURT_SWEET_BERRY_BUSH, 1, 1);
         return false;
     }

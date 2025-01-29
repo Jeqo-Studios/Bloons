@@ -10,6 +10,7 @@ import net.jeqo.bloons.management.SingleBalloonManagement;
 import net.jeqo.bloons.message.MessageTranslations;
 import net.jeqo.bloons.management.MultipartBalloonManagement;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -32,7 +33,7 @@ public class CommandForceUnequip extends Command {
         // If the specified player doesn't exist, send a message to the sender
         if (player == null) {
             String playerNotFoundMessage = Languages.getMessage("prefix") + Languages.getMessage("player-not-found");
-            sender.sendMessage(playerNotFoundMessage);
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', playerNotFoundMessage));
             return false;
         }
 
@@ -42,7 +43,7 @@ public class CommandForceUnequip extends Command {
         // If the player doesn't have any balloons equipped, send a message to the sender
         if (singleBalloon == null && multipartBalloon == null) {
             String notEquippedMessage = Languages.getMessage("prefix") + Languages.getMessage("not-equipped");
-            player.sendMessage(notEquippedMessage);
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', notEquippedMessage));
             return false;
         }
 
@@ -56,7 +57,7 @@ public class CommandForceUnequip extends Command {
         }
 
         String unequipSuccessfulMessage = Languages.getMessage("prefix") + Languages.getMessage("unequipped");
-        sender.sendMessage(unequipSuccessfulMessage);
+        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', unequipSuccessfulMessage));
         return false;
     }
 }
