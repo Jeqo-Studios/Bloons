@@ -2,6 +2,7 @@ package net.jeqo.bloons.balloon.single;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.jeqo.bloons.colors.ColorCodeConverter;
 
 /**
  * Represents the contents of a configuration for a single balloon
@@ -105,5 +106,9 @@ public class SingleBalloonType {
         this.setCustomModelData(customModelData);
         this.setName(name);
         this.setLore(lore);
+    }
+
+    public String getName() {
+        return ColorCodeConverter.adventureToColorCode(this.name);
     }
 }

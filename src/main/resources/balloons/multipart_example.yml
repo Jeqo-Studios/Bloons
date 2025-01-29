@@ -4,7 +4,7 @@ multipart_example:
   type: multipart # The type of balloon, this must be multipart for multipart balloons
   id: multipart_example # The id of the balloon, this must be unique
   permission: balloon.multipart_example
-  name: '<white>Multipart Balloon'
+  name: '&fMultipart Balloon'
   lore:
     - '&8Bloons Default Balloon'
     - ''

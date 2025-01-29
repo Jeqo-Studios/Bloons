@@ -6,7 +6,6 @@ import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.balloon.multipart.MultipartBalloonType;
 import net.jeqo.bloons.balloon.multipart.nodes.MultipartBalloonNode;
 import net.jeqo.bloons.configuration.BalloonConfiguration;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.entity.Chicken;
 import org.bukkit.entity.Player;
@@ -58,8 +57,8 @@ public class MultipartBalloon {
     public void initialize() {
         // Things that only need to be set up once and not looped over
         MultipartBalloonNode current = new MultipartBalloonNode((float) this.getOwner().getLocation().getX(), (float) this.getOwner().getLocation().getY(), (float) this.getOwner().getLocation().getZ(),
-                                         (float) ((float) this.getType().getDistanceBetweenNodes() + this.getType().getTailNodeOffset()), 0, getType(), this.getOwner(),
-                                         this.getType().getMaxNodeJointAngle(), this.getType().getYAxisInterpolation(), this.getType().getTurningSplineInterpolation());
+                (float) ((float) this.getType().getDistanceBetweenNodes() + this.getType().getTailNodeOffset()), 0, getType(), this.getOwner(),
+                this.getType().getMaxNodeJointAngle(), this.getType().getYAxisInterpolation(), this.getType().getTurningSplineInterpolation());
 
         // Add the current node to the list of model nodes
         this.getMultipartBalloonNodes().add(current);
@@ -95,7 +94,7 @@ public class MultipartBalloon {
         this.getChicken().setAgeLock(true);
         this.getChicken().setAware(false);
         this.getChicken().setCollidable(false);
-        this.getChicken().customName(Component.text(BalloonConfiguration.BALLOON_CHICKEN_ID));
+        this.getChicken().setCustomName(BalloonConfiguration.BALLOON_CHICKEN_ID);
     }
 
     /**

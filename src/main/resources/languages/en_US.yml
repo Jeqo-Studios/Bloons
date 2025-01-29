@@ -1,14 +1,14 @@
 messages:
-  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
-  no-permission: '<#fc1c1c>Access denied.'
-  player-not-found: '<#fc1c1c>Player not found.'
-  config-reloaded: '<green>Config reloaded.'
-  command-disabled: '<#fc1c1c>This command is currently disabled!'
+  prefix: '&d[Bloons] &f'
+  no-permission: '&cAccess denied.'
+  player-not-found: '&cPlayer not found.'
+  config-reloaded: '&aConfig reloaded.'
+  command-disabled: '&cThis command is currently disabled!'
 
-  equipped: '%s <green>equipped!'
-  unequipped: '<green>Your balloon has been stored safely.'
-  balloon-not-found: '<#fc1c1c>Balloon not found.'
-  not-equipped: '<#fc1c1c>You do not currently have a balloon equipped.'
+  equipped: '%s &aequipped!'
+  unequipped: '&aYour balloon has been stored safely.'
+  balloon-not-found: '&cBalloon not found.'
+  not-equipped: '&cYou do not currently have a balloon equipped.'
 
   material-not-dyeable: 'Material %s is not a dyeable material.'
   invalid-rgb-values: 'RGB values must be between 0 and 255 to be valid.'
@@ -29,4 +29,3 @@ messages:
   menu-slot-out-of-bounds: '%s menu page button slot(s) out of bounds!'
 
   invalid-hex-code: 'Invalid hex code: %s'
-

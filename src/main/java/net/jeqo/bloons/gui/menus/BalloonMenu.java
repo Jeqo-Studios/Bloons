@@ -8,6 +8,7 @@ import net.jeqo.bloons.colors.Color;
 import net.jeqo.bloons.message.Languages;
 import net.jeqo.bloons.message.MessageTranslations;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -57,7 +58,7 @@ public class BalloonMenu {
         ItemStack nextPage = new ItemStack(Material.valueOf(this.getMessageTranslations().getString("buttons.next-page.material")));
         ItemMeta nextMeta = nextPage.getItemMeta();
         assert nextMeta != null;
-        nextMeta.displayName(this.getMessageTranslations().getSerializedString(this.getMessageTranslations().getString("buttons.next-page.name")));
+        nextMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', this.getMessageTranslations().getString("buttons.next-page.name")));
         nextMeta.setCustomModelData(this.getMessageTranslations().getInt("buttons.next-page.custom-model-data"));
         nextPage.setItemMeta(nextMeta);
 
@@ -65,7 +66,7 @@ public class BalloonMenu {
         ItemStack prevPage = new ItemStack(Material.valueOf(this.getMessageTranslations().getString("buttons.previous-page.material")));
         ItemMeta prevMeta = prevPage.getItemMeta();
         assert prevMeta != null;
-        prevMeta.displayName(this.getMessageTranslations().getSerializedString(this.getMessageTranslations().getString("buttons.previous-page.name")));;
+        prevMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', this.getMessageTranslations().getString("buttons.previous-page.name")));
         prevMeta.setCustomModelData(this.getMessageTranslations().getInt("buttons.previous-page.custom-model-data"));
         prevPage.setItemMeta(prevMeta);
 
@@ -73,7 +74,7 @@ public class BalloonMenu {
         ItemStack removeBalloon = new ItemStack(Material.valueOf(this.getMessageTranslations().getString("buttons.unequip.material")));
         ItemMeta removeMeta = removeBalloon.getItemMeta();
         assert removeMeta != null;
-        removeMeta.displayName(this.getMessageTranslations().getSerializedString(this.getMessageTranslations().getString("buttons.unequip.name")));;
+        removeMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', this.getMessageTranslations().getString("buttons.unequip.name")));
         removeMeta.setCustomModelData(this.getMessageTranslations().getInt("buttons.unequip.custom-model-data"));
         removeBalloon.setItemMeta(removeMeta);
 

@@ -33,15 +33,4 @@ public class BalloonUnleashListener implements Listener {
                 event.setCancelled(true);
             }
     }
-
-    /**
-     *              Prevents breaking of the lead from chicken with the internal ID
-     * @param event The event that is called when an entity is unleashed, type org.bukkit.event.entity.EntityUnleashEvent
-     */
-    @EventHandler
-    public void onLeadBreak(EntityUnleashEvent event) {
-        if (event.getEntity().getCustomName() != null && event.getEntity().getCustomName().contains(BalloonConfiguration.BALLOON_CHICKEN_ID)) {
-            event.setCancelled(true);
-        }
-    }
 }

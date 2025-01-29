@@ -2,7 +2,6 @@ package net.jeqo.bloons.gui.item.filler;
 
 import net.jeqo.bloons.gui.GUIClickableItem;
 import net.jeqo.bloons.item.NBTItem;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
@@ -35,8 +34,12 @@ public class BlackGlassPaneFillerItem {
                 // Create and set the item meta for the black glass pane filler
                 NBTItem item = new NBTItem(new ItemStack(Material.COOKIE));
                 ItemMeta meta = item.getItemMeta();
-                meta.displayName(Component.text(" "));
+
+                if (meta == null) return null;
+
+                meta.setDisplayName("");
                 item.setItemMeta(meta);
+
                 return item;
             }
         };

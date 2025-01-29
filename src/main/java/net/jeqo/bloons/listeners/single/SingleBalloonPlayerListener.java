@@ -2,8 +2,6 @@ package net.jeqo.bloons.listeners.single;
 
 import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.balloon.single.SingleBalloon;
-import net.jeqo.bloons.events.balloon.single.SingleBalloonForceUnequipEvent;
-import net.jeqo.bloons.events.balloon.single.SingleBalloonStoreEvent;
 import net.jeqo.bloons.health.UpdateChecker;
 import net.jeqo.bloons.logger.Logger;
 import net.jeqo.bloons.management.SingleBalloonManagement;
@@ -28,9 +26,6 @@ public class SingleBalloonPlayerListener implements Listener {
     public void onQuit(PlayerQuitEvent event) {
         SingleBalloon owner = Bloons.getPlayerSingleBalloons().get(event.getPlayer().getUniqueId());
 
-        SingleBalloonStoreEvent storeEvent = new SingleBalloonStoreEvent(event.getPlayer(), owner);
-        storeEvent.callEvent();
-
         SingleBalloonManagement.storeBalloon(owner);
     }
 
@@ -45,11 +40,6 @@ public class SingleBalloonPlayerListener implements Listener {
 
         // If they have a balloon active, remove it and add it back to reduce issues
         if (balloonID != null) {
-            SingleBalloonForceUnequipEvent unequipEvent = new SingleBalloonForceUnequipEvent(player, Bloons.getPlayerSingleBalloons().get(player.getUniqueId()));
-            unequipEvent.callEvent();
-
-            if (unequipEvent.isCancelled()) return;
-
             SingleBalloonManagement.removeBalloon(event.getPlayer(), Bloons.getPlayerSingleBalloons().get(event.getPlayer().getUniqueId()));
 
             SingleBalloon.checkBalloonRemovalOrAdd(event.getPlayer(), balloonID);
@@ -59,8 +49,12 @@ public class SingleBalloonPlayerListener implements Listener {
             if (Bloons.getInstance().getConfig().getBoolean("check-for-updates")) {
                 // Check for an update if the player is an operator on the server
                 new UpdateChecker(Bloons.getInstance(), 106243).getVersion(version -> {
-                    if (!Bloons.getInstance().getDescription().getVersion().equals(version)) {
-                        Logger.logUpdateNotificationPlayer(player);
+                    String currentVersion = Bloons.getInstance().getDescription().getVersion();
+
+                    if (Bloons.getInstance().isVersionLower(currentVersion, version)) {
+                        Logger.logUpdateNotificationPlayer(event.getPlayer());
+                    } else if (Bloons.getInstance().isVersionHigher(currentVersion, version)) {
+                        Logger.logUnreleasedVersionNotificationPlayer(event.getPlayer());
                     }
                 });
             }
@@ -74,9 +68,6 @@ public class SingleBalloonPlayerListener implements Listener {
     @EventHandler
     public void onDeath(PlayerDeathEvent event) {
         SingleBalloon balloonOwner = Bloons.getPlayerSingleBalloons().get(Objects.requireNonNull(event.getEntity().getPlayer()).getUniqueId());
-
-        SingleBalloonForceUnequipEvent unequipEvent = new SingleBalloonForceUnequipEvent(event.getEntity().getPlayer(), balloonOwner);
-        unequipEvent.callEvent();
 
         SingleBalloonManagement.removeBalloon(event.getEntity().getPlayer(), balloonOwner);
     }
@@ -103,19 +94,9 @@ public class SingleBalloonPlayerListener implements Listener {
         SingleBalloon balloonOwner = Bloons.getPlayerSingleBalloons().get(event.getPlayer().getUniqueId());
         String balloonID = Bloons.getPlayerSingleBalloonID().get(event.getPlayer().getUniqueId());
 
-        SingleBalloonStoreEvent storeEvent = new SingleBalloonStoreEvent(event.getPlayer(), balloonOwner);
-        storeEvent.callEvent();
-
-        if (storeEvent.isCancelled()) return;
-
         SingleBalloonManagement.storeBalloon(balloonOwner);
 
         if (balloonID != null) {
-            SingleBalloonForceUnequipEvent unequipEvent = new SingleBalloonForceUnequipEvent(event.getPlayer(), Bloons.getPlayerSingleBalloons().get(event.getPlayer().getUniqueId()));
-            unequipEvent.callEvent();
-
-            if (unequipEvent.isCancelled()) return;
-
             SingleBalloonManagement.removeBalloon(event.getPlayer(), Bloons.getPlayerSingleBalloons().get(event.getPlayer().getUniqueId()));
 
             SingleBalloon.checkBalloonRemovalOrAdd(event.getPlayer(), balloonID);

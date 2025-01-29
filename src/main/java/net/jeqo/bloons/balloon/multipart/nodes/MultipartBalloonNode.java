@@ -6,7 +6,6 @@ import net.jeqo.bloons.balloon.multipart.MultipartBalloonType;
 import org.bukkit.Location;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.util.EulerAngle;
 import org.bukkit.util.Vector;
 
@@ -271,17 +270,18 @@ public class MultipartBalloonNode {
      * Sets the correct position and item in the armor stand.
      */
     public void display() {
-        EquipmentSlot slot = EquipmentSlot.HEAD;
         // Sets the segments finalized models based on their position in the balloon
-        if (this.getIndex() == this.getBalloonType().getNodeCount() - 1) {
-            // Set the head model
-            this.getBalloonArmorStand().setItem(slot, this.getBalloonType().getHeadModel().getFinalizedModel());
-        } else if (this.getIndex() == 0) {
-            // Set the tail model
-            this.getBalloonArmorStand().setItem(slot, this.getBalloonType().getTailModel().getFinalizedModel());
-        } else {
-            // Set the body model
-            this.getBalloonArmorStand().setItem(slot, this.getBalloonType().getBodyModel().getFinalizedModel());
+        if (this.getBalloonArmorStand().getEquipment() != null) {
+            if (this.getIndex() == this.getBalloonType().getNodeCount() - 1) {
+                // Set the head model
+                this.getBalloonArmorStand().getEquipment().setHelmet(this.getBalloonType().getHeadModel().getFinalizedModel());
+            } else if (this.getIndex() == 0) {
+                // Set the tail model
+                this.getBalloonArmorStand().getEquipment().setHelmet(this.getBalloonType().getTailModel().getFinalizedModel());
+            } else {
+                // Set the body model
+                this.getBalloonArmorStand().getEquipment().setHelmet(this.getBalloonType().getBodyModel().getFinalizedModel());
+            }
         }
 
         // Creates a new Bukkit vector based on the position of the two points

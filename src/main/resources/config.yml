@@ -1,6 +1,6 @@
 # --------------------------------------------------#
 #
-# Bloons 2.0.0
+# Bloons 2.1.1
 # Made by Jeqo
 #
 # Wiki:        https://jeqo.net/wiki
@@ -36,18 +36,18 @@ buttons:
   previous-page:
     material: FLINT
     custom-model-data: 1
-    name: '<gray>← ᴘʀᴇᴠɪᴏᴜs ᴘᴀɢᴇ'
+    name: '&7← ᴘʀᴇᴠɪᴏᴜs ᴘᴀɢᴇ'
     slots:
       - 48
   unequip:
     material: FLINT
     custom-model-data: 2
-    name: '<gray>ᴜɴᴇǫᴜɪᴘ ʙᴀʟʟᴏᴏɴ'
+    name: '&7ᴜɴᴇǫᴜɪᴘ ʙᴀʟʟᴏᴏɴ'
     slots:
       - 49
   next-page:
     material: FLINT
     custom-model-data: 3
-    name: '<gray>ɴᴇxᴛ ᴘᴀɢᴇ →'
+    name: '&7ɴᴇxᴛ ᴘᴀɢᴇ →'
     slots:
       - 50

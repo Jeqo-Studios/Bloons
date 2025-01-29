@@ -5,18 +5,14 @@ import net.jeqo.bloons.balloon.multipart.balloon.MultipartBalloon;
 import net.jeqo.bloons.balloon.multipart.balloon.MultipartBalloonBuilder;
 import net.jeqo.bloons.balloon.multipart.MultipartBalloonType;
 import net.jeqo.bloons.balloon.single.SingleBalloon;
+import net.jeqo.bloons.balloon.single.SingleBalloonType;
 import net.jeqo.bloons.colors.Color;
 import net.jeqo.bloons.colors.ColorCodeConverter;
-import net.jeqo.bloons.events.balloon.multipart.MultipartBalloonEquipEvent;
-import net.jeqo.bloons.events.balloon.multipart.MultipartBalloonUnequipEvent;
-import net.jeqo.bloons.events.balloon.single.SingleBalloonEquipEvent;
-import net.jeqo.bloons.events.balloon.single.SingleBalloonUnequipEvent;
 import net.jeqo.bloons.gui.menus.BalloonMenu;
 import net.jeqo.bloons.message.Languages;
 import net.jeqo.bloons.message.MessageTranslations;
 import net.jeqo.bloons.management.MultipartBalloonManagement;
 import net.jeqo.bloons.management.SingleBalloonManagement;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -51,7 +47,7 @@ public class BalloonMenuListener implements Listener {
 
         // Get the display name of the item clicked and the converted balloon name
         String displayName = event.getCurrentItem().getItemMeta().getDisplayName();
-        String localizedName = event.getCurrentItem().getItemMeta().getLocalizedName();
+        String localizedName = event.getCurrentItem().getItemMeta().getItemName();
         String convertedColourBalloonName = ColorCodeConverter.colorCodeToAdventure(displayName); // Weird parsing is needed for this because of the usage of minimessage
 
         // Always check for shift clicks
@@ -67,44 +63,29 @@ public class BalloonMenuListener implements Listener {
             MultipartBalloonType type = Bloons.getBalloonCore().getMultipartBalloonByID(localizedName);
             MultipartBalloon previousBalloon = MultipartBalloonManagement.getPlayerBalloon(player.getUniqueId());
             if (previousBalloon != null) {
-                MultipartBalloonUnequipEvent multipartBalloonEquipEvent = new MultipartBalloonUnequipEvent(player, previousBalloon);
-                multipartBalloonEquipEvent.callEvent();
-
-                if (multipartBalloonEquipEvent.isCancelled()) return;
-
                 previousBalloon.destroy();
                 MultipartBalloonManagement.removePlayerBalloon(player.getUniqueId());
             }
+
+            MultipartBalloonBuilder builder = new MultipartBalloonBuilder(type, player);
+            SingleBalloonManagement.removeBalloon(player, Bloons.getPlayerSingleBalloons().get(player.getUniqueId()));
             if (type != null) {
-                MultipartBalloonBuilder builder = new MultipartBalloonBuilder(type, player);
-                SingleBalloonManagement.removeBalloon(player, Bloons.getPlayerSingleBalloons().get(player.getUniqueId()));
                 MultipartBalloon balloon = builder.build();
-
-                // Call the equip event and check if it's cancelled, if it is, don't spawn the balloon or do anything
-                MultipartBalloonEquipEvent multipartBalloonEquipEvent = new MultipartBalloonEquipEvent(player);
-                multipartBalloonEquipEvent.callEvent();
-
-                if (multipartBalloonEquipEvent.isCancelled()) return;
 
                 balloon.initialize();
                 balloon.run();
 
                 MultipartBalloonManagement.setPlayerBalloon(player.getUniqueId(), balloon);
             } else {
-                // Call the equip event and check if it's cancelled, if it is, don't spawn the balloon or do anything
-                SingleBalloonEquipEvent singleBalloonEquipEvent = new SingleBalloonEquipEvent(player);
-                singleBalloonEquipEvent.callEvent();
-
-                if (singleBalloonEquipEvent.isCancelled()) return;
-
                 // Check if a balloon needs to be added or removed
-                SingleBalloonManagement.removeBalloon(player, Bloons.getPlayerSingleBalloons().get(player.getUniqueId()));
-                SingleBalloon.checkBalloonRemovalOrAdd(player, localizedName);
+                SingleBalloonType fromName = Bloons.getBalloonCore().getSingleBalloonByName(convertedColourBalloonName);
+
+                SingleBalloon.checkBalloonRemovalOrAdd(player, fromName.getId());
             }
 
             // Send equipped message and play sound
             player.playSound(player.getLocation(), Sound.ENTITY_CHICKEN_EGG, 1, 1);
-            Component equippedMessage = messageTranslations.getSerializedString(Languages.getMessage("prefix"), String.format(Languages.getMessage("equipped"), convertedColourBalloonName));
+            String equippedMessage = Languages.getMessage("prefix") + String.format(Languages.getMessage("equipped"), convertedColourBalloonName);
             player.sendMessage(equippedMessage);
 
             // Close inventory if the config is set to true
@@ -155,37 +136,27 @@ public class BalloonMenuListener implements Listener {
                 if (singleBalloon == null && multipartBalloon == null) {
                     // If no balloon equipped, play sound and send message notifying them
                     player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_DIDGERIDOO, 1, 1);
-                    player.sendMessage(messageTranslations.getSerializedString(Languages.getMessage("prefix"), Languages.getMessage("not-equipped")));
+                    player.sendMessage(Languages.getMessage("prefix"), Languages.getMessage("not-equipped"));
                 } else {
                     if (singleBalloon != null) {
                         if (messageTranslations.getString("close-on-unequip").equals("true")) player.closeInventory();
-
-                        SingleBalloonUnequipEvent singleBalloonUnequipEvent = new SingleBalloonUnequipEvent(player, singleBalloon);
-                        singleBalloonUnequipEvent.callEvent();
-
-                        if (singleBalloonUnequipEvent.isCancelled()) return;
 
                         SingleBalloonManagement.removeBalloon(player, singleBalloon);
 
                         // Play sound and send message saying the balloon is unequipped
                         player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_HURT_SWEET_BERRY_BUSH, 1, 1);
-                        player.sendMessage(messageTranslations.getSerializedString(Languages.getMessage("prefix"), Languages.getMessage("unequipped")));
+                        player.sendMessage(Languages.getMessage("prefix"), Languages.getMessage("unequipped"));
                     }
 
                     if (multipartBalloon != null) {
                         if (messageTranslations.getString("close-on-unequip").equals("true")) player.closeInventory();
-
-                        MultipartBalloonUnequipEvent multipartBalloonEquipEvent = new MultipartBalloonUnequipEvent(player, multipartBalloon);
-                        multipartBalloonEquipEvent.callEvent();
-
-                        if (multipartBalloonEquipEvent.isCancelled()) return;
 
                         multipartBalloon.destroy();
                         MultipartBalloonManagement.removePlayerBalloon(player.getUniqueId());
 
                         // Play sound and send message saying the balloon is unequipped
                         player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_HURT_SWEET_BERRY_BUSH, 1, 1);
-                        player.sendMessage(messageTranslations.getSerializedString(Languages.getMessage("prefix"), Languages.getMessage("unequipped")));
+                        player.sendMessage(Languages.getMessage("prefix"), Languages.getMessage("unequipped"));
                     }
                 }
             }

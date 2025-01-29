@@ -5,7 +5,6 @@ import net.jeqo.bloons.configuration.ConfigConfiguration;
 import net.jeqo.bloons.configuration.PluginConfiguration;
 import net.jeqo.bloons.message.Languages;
 import net.jeqo.bloons.message.MessageTranslations;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -28,8 +27,8 @@ public class Logger {
      * @param message   The message to log, type java.lang.String
      */
     public static void logToPlayer(LoggingLevel level, Player player, String message) {
-        Component component = Component.text("[" + level.getName() + "] " + message).color(level.getColor());
-        player.sendMessage(component);
+        String formattedMessage = String.format("%s[%s] %s", level.getColor(), level.getName(), message);
+        player.sendMessage(formattedMessage);
     }
 
     /**
@@ -38,9 +37,7 @@ public class Logger {
      * @param message   The message to log, type java.lang.String
      */
     public static void logToPlayer(Player player, String message) {
-        MessageTranslations messageTranslations = new MessageTranslations(Bloons.getInstance());
-        Component component = messageTranslations.getSerializedString(Languages.getMessage("prefix") + message);
-        player.sendMessage(component);
+        player.sendMessage(message);
     }
 
     /**
@@ -49,8 +46,8 @@ public class Logger {
      * @param message   The message to log, type java.lang.String
      */
     public static void log(LoggingLevel level, String message) {
-        Component component = Component.text("[" + level.getName() + "] " + message).color(level.getColor());
-        Bukkit.getServer().getConsoleSender().sendMessage(component);
+        String loggedMessage = String.format("%s[%s] %s", level.getColor(), level.getName(), message);
+        Bukkit.getServer().getConsoleSender().sendMessage(loggedMessage);
     }
 
     /**
@@ -120,12 +117,29 @@ public class Logger {
     }
 
     /**
+     * Logs an unreleased plugin version notification to the Bukkit console
+     */
+    public static void logUnreleasedVersionNotification() {
+        logInfo("The version for the " + PluginConfiguration.getName() + " plugin is higher than latest version");
+        logInfo("You are currently running an unreleased version of the plugin that is NOT stable");
+    }
+
+    /**
      *                  Logs an update notification to a player
      * @param player    The player to log the update notification to, type org.bukkit.entity.Player
      */
     public static void logUpdateNotificationPlayer(Player player) {
-        logToPlayer(player, "A new update is available for " + PluginConfiguration.getName() + " plugin");
-        logToPlayer(player, "You can find the update at: https://jeqo.net/bloons");
+        logToPlayer(LoggingLevel.INFO, player, "A new update is available for " + PluginConfiguration.getName() + " plugin");
+        logToPlayer(LoggingLevel.INFO, player, "You can find the update at: https://jeqo.net/bloons");
+    }
+
+    /**
+     *                  Logs an unreleased version notification to a player
+     * @param player    The player to log the unreleased version notification to, type org.bukkit.entity.Player
+     */
+    public static void logUnreleasedVersionNotificationPlayer(Player player) {
+        logToPlayer(LoggingLevel.INFO, player, "The version for the " + PluginConfiguration.getName() + " plugin is higher than latest version");
+        logToPlayer(LoggingLevel.INFO, player, "You are currently running an unreleased version of the plugin that is NOT stable");
     }
 
     /**

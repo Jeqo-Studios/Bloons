@@ -12,7 +12,7 @@ import net.jeqo.bloons.logger.Logger;
 import net.jeqo.bloons.colors.Color;
 import net.jeqo.bloons.message.Languages;
 import net.jeqo.bloons.message.MessageTranslations;
-import net.kyori.adventure.text.Component;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -104,8 +104,8 @@ public class CommandCore implements CommandExecutor {
             Player player = (Player) sender;
 
             if (!player.hasPermission("bloons.menu")) {
-                Component noPermission = this.getMessageTranslations().getSerializedString(Languages.getMessage("prefix"), Languages.getMessage("no-permission"));
-                player.sendMessage(noPermission);
+                String noPermission = Languages.getMessage("prefix") + Languages.getMessage("no-permission");
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', noPermission));
                 return true;
             }
 
@@ -115,27 +115,31 @@ public class CommandCore implements CommandExecutor {
 
             //
             if (singleBalloonTypes == null && multipartBalloonTypes == null) {
-                Logger.logError(Languages.getMessage("no-balloons-registered"));
+                Logger.logError(ChatColor.translateAlternateColorCodes('&', Languages.getMessage("no-balloons-registered")));
                 return false;
             }
 
-            // For every single balloon registered, add it to the GUI
-            for (SingleBalloonType singleBalloon : singleBalloonTypes) {
-                if (singleBalloon == null) continue;
+            if (singleBalloonTypes != null) {
+                // For every single balloon registered, add it to the GUI
+                for (SingleBalloonType singleBalloon : singleBalloonTypes) {
+                    if (singleBalloon == null) continue;
 
-                if (shouldAddSingleBalloon(player, singleBalloon)) {
-                    ItemStack item = createBalloonItem(singleBalloon);
-                    items.add(item);
+                    if (shouldAddSingleBalloon(player, singleBalloon)) {
+                        ItemStack item = createBalloonItem(singleBalloon);
+                        items.add(item);
+                    }
                 }
             }
 
-            // For every multipart balloon registered, add it to the GUI
-            for (MultipartBalloonType multipartBalloon : multipartBalloonTypes) {
-                if (multipartBalloon == null) continue;
+            if (multipartBalloonTypes != null) {
+                // For every multipart balloon registered, add it to the GUI
+                for (MultipartBalloonType multipartBalloon : multipartBalloonTypes) {
+                    if (multipartBalloon == null) continue;
 
-                if (shouldAddMultipartBalloon(player, multipartBalloon)) {
-                    ItemStack item = createBalloonItem(multipartBalloon);
-                    items.add(item);
+                    if (shouldAddMultipartBalloon(player, multipartBalloon)) {
+                        ItemStack item = createBalloonItem(multipartBalloon);
+                        items.add(item);
+                    }
                 }
             }
 
@@ -154,13 +158,13 @@ public class CommandCore implements CommandExecutor {
             if (currentCommand.getCommandAliases().contains(subcommand)) {
                 // Check if the sender has the permission to execute the command
                 if (!meetsRequirements(currentCommand, sender)) {
-                    sender.sendMessage(this.getMessageTranslations().getSerializedString(Languages.getMessage("prefix"), Languages.getMessage("no-permission")));
+                    sender.sendMessage(Languages.getMessage("prefix") + Languages.getMessage("no-permission"));
                     return false;
                 }
 
                 // Check if the command is disabled
                 if (currentCommand.getRequiredAccess() == CommandAccess.DISABLED) {
-                    sender.sendMessage(this.getMessageTranslations().getSerializedString(Languages.getMessage("prefix"), Languages.getMessage("command-disabled")));
+                    sender.sendMessage(Languages.getMessage("prefix") + Languages.getMessage("command-disabled"));
                     return false;
                 }
 
@@ -196,6 +200,8 @@ public class CommandCore implements CommandExecutor {
      */
     private boolean shouldAddSingleBalloon(Player player, SingleBalloonType singleBalloonType) {
         if (this.getMessageTranslations().getString("hide-balloons-without-permission").equalsIgnoreCase("true")) {
+            if (singleBalloonType.getPermission() == null) return true;
+
             return player.hasPermission(singleBalloonType.getPermission());
         }
         return true;
@@ -209,6 +215,8 @@ public class CommandCore implements CommandExecutor {
      */
     private boolean shouldAddMultipartBalloon(Player player, MultipartBalloonType multipartBalloonType) {
         if (this.getMessageTranslations().getString("hide-balloons-without-permission").equalsIgnoreCase("true")) {
+            if (multipartBalloonType.getPermission() == null) return true;
+
             return player.hasPermission(multipartBalloonType.getPermission());
         }
         return true;
@@ -233,7 +241,7 @@ public class CommandCore implements CommandExecutor {
             return null;
         }
 
-        meta.setLocalizedName(singleBalloonType.getKey());
+        meta.setItemName(singleBalloonType.getKey());
         setBalloonLore(meta, singleBalloonType);
         setBalloonDisplayName(meta, singleBalloonType);
         meta.setCustomModelData(singleBalloonType.getCustomModelData());
@@ -262,7 +270,7 @@ public class CommandCore implements CommandExecutor {
             return null;
         }
 
-        meta.setLocalizedName(multipartBalloonType.getId());
+        meta.setItemName(multipartBalloonType.getId());
         setBalloonLore(meta, multipartBalloonType);
         setBalloonDisplayName(meta, multipartBalloonType);
         meta.setCustomModelData(multipartBalloonType.getHeadModel().getCustomModelData());
@@ -308,9 +316,8 @@ public class CommandCore implements CommandExecutor {
      */
     private void setBalloonDisplayName(ItemMeta meta, SingleBalloonType singleBalloonType) {
         String name = singleBalloonType.getName();
-        MessageTranslations messageTranslations = new MessageTranslations(this.getPlugin());
         if (name != null) {
-            meta.displayName(messageTranslations.getSerializedString(name));
+            meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
         }
     }
 
@@ -321,9 +328,8 @@ public class CommandCore implements CommandExecutor {
      */
     private void setBalloonDisplayName(ItemMeta meta, MultipartBalloonType multipartBalloonType) {
         String name = multipartBalloonType.getName();
-        MessageTranslations messageTranslations = new MessageTranslations(this.getPlugin());
         if (name != null) {
-            meta.displayName(messageTranslations.getSerializedString(name));
+            meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
         }
     }
 

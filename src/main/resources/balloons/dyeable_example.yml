@@ -10,7 +10,7 @@ dyeable_example:
   material: LEATHER_HORSE_ARMOR
   color: '#ffffff'
   custom-model-data: 1
-  name: '<white>Dyeable Balloon'
+  name: '&fDyeable Balloon'
   lore:
     - '&8Bloons Example Balloon'
     - ''
@@ -22,7 +22,7 @@ single_meg_example:
   icon:
     material: FLINT
     custom-model-data: 7
-    name: '<white>Single MEG Balloon'
+    name: '&fSingle MEG Balloon'
     lore:
     - '&8Bloons Default Balloon'
     - ''

@@ -1,5 +1,6 @@
 package net.jeqo.bloons.configuration;
 
+import lombok.Getter;
 import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.balloon.model.BalloonSegmentType;
 import net.jeqo.bloons.balloon.multipart.MultipartBalloonModel;
@@ -16,6 +17,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Objects;
+import java.util.stream.Stream;
 
 /**
  * A class that contains configurations for the plugin configuration file
@@ -30,19 +33,23 @@ public class ConfigConfiguration {
      */
     public static final String LANGUAGES_CONFIGURATION_FOLDER = "languages";
 
+    @Getter
+    private static final String balloonConfigurationFolder = Bloons.getInstance().getDataFolder() + File.separator + BALLOON_CONFIGURATION_FOLDER;
+
     /**
      *          Gets the number of configuration files currently in the balloon configuration folder
      * @return  The number of configuration files in the balloon configuration folder. Returns 0 upon none found. type long
      */
     public static long getBalloonConfigurationCount() {
         try {
-            Path path = Path.of(Bloons.getInstance().getDataFolder() + File.separator + BALLOON_CONFIGURATION_FOLDER);
-            return Files.walk(path).filter(Files::isRegularFile).count();
-        } catch (IOException e) {
-            e.printStackTrace();
+            Path path = Path.of(getBalloonConfigurationFolder());
+            try (Stream<Path> paths = Files.walk(path)) {
+                return paths.filter(Files::isRegularFile).count();
+            }
+        } catch (Exception e) {
+            Logger.logError(String.format("An error occurred while counting balloon configuration files: %s", e.getMessage()));
+            return 0;
         }
-
-        return 0;
     }
 
     /**
@@ -53,7 +60,7 @@ public class ConfigConfiguration {
     public static ArrayList<SingleBalloonType> getSingleBalloons() {
         // Start an array of single balloon types that's empty
         ArrayList<SingleBalloonType> singleBalloons = new ArrayList<>();
-        File folder = new File(Bloons.getInstance().getDataFolder() + File.separator + BALLOON_CONFIGURATION_FOLDER);
+        File folder = new File(getBalloonConfigurationFolder());
 
         // Check if the folder exists
         if (!folder.exists() || !folder.isDirectory()) {
@@ -211,19 +218,19 @@ public class ConfigConfiguration {
                                 new MultipartBalloonModel(
                                         BalloonSegmentType.HEAD,
                                         config.getString(key + ".head.material"),
-                                        config.getString(key + ".head.color"),
+                                        Objects.requireNonNull(config.getString(key + ".head.color")),
                                         config.getInt(key + ".head.custom-model-data")
                                 ),
                                 new MultipartBalloonModel(
                                         BalloonSegmentType.BODY,
                                         config.getString(key + ".body.material"),
-                                        config.getString(key + ".body.color"),
+                                        Objects.requireNonNull(config.getString(key + ".body.color")),
                                         config.getInt(key + ".body.custom-model-data")
                                 ),
                                 new MultipartBalloonModel(
                                         BalloonSegmentType.TAIL,
                                         config.getString(key + ".tail.material"),
-                                        config.getString(key + ".tail.color"),
+                                        Objects.requireNonNull(config.getString(key + ".tail.color")),
                                         config.getInt(key + ".tail.custom-model-data")
                                 )
                         ));

@@ -12,7 +12,7 @@ import org.bukkit.inventory.meta.LeatherArmorMeta;
  * A class to handle the creation of balloon models with custom model data and color metadata
  */
 public class BalloonModel {
-    private static final String LEATHER_MATERIAL_PREFIX = "LEATHER_"; // A constant to define a dyeable material
+    private static final String DYEABLE_MATERIAL_PREFIX = "LEATHER_";
 
     /**
      *                          Generates a coloured model with the specified colour and custom model data
@@ -23,18 +23,20 @@ public class BalloonModel {
      */
     public static ItemStack createColouredModel(Material material, Color colour, int customModelData) {
         // Check if the material is dyeable and contains leather attributes
-        if (!material.name().contains(LEATHER_MATERIAL_PREFIX)) {
+        if (!material.name().contains(DYEABLE_MATERIAL_PREFIX)) {
             Logger.logError("Material " + material.name() + " is not a dyeable material.");
             return new ItemStack(material);
         }
 
         ItemStack generatedItem = new ItemStack(material);
-        LeatherArmorMeta generatedItemMeta = (LeatherArmorMeta) generatedItem.getItemMeta();
+        LeatherArmorMeta generatedItemLeatherMeta = (LeatherArmorMeta) generatedItem.getItemMeta();
+
+        if (generatedItemLeatherMeta == null) return generatedItem;
 
         // Set the color and custom model data of the item in the metadata
-        generatedItemMeta.setColor(colour);
-        generatedItemMeta.setCustomModelData(customModelData);
-        generatedItem.setItemMeta(generatedItemMeta);
+        generatedItemLeatherMeta.setColor(colour);
+        generatedItemLeatherMeta.setCustomModelData(customModelData);
+        generatedItem.setItemMeta(generatedItemLeatherMeta);
 
         return generatedItem;
     }
@@ -52,7 +54,7 @@ public class BalloonModel {
      */
     public static ItemStack createColouredModel(Material material, int colourRed, int colourGreen, int colourBlue, int customModelData) {
         // Check if the material is dyeable and contains leather attributes
-        if (!material.name().contains(LEATHER_MATERIAL_PREFIX)) {
+        if (!material.name().contains(DYEABLE_MATERIAL_PREFIX)) {
             Logger.logWarning(String.format(Languages.getMessage("material-not-dyeable"), material));
             return new ItemStack(material);
         }
@@ -68,10 +70,10 @@ public class BalloonModel {
         Color color = Color.fromRGB(colourRed, colourGreen, colourBlue);
 
         // Set the color and custom model data of the item in the metadata
+        assert generatedItemMeta != null; // Equivalent of setting to regular leather colour, assume we aren't
         generatedItemMeta.setColor(color);
         generatedItemMeta.setCustomModelData(customModelData);
         generatedItem.setItemMeta(generatedItemMeta);
-
 
         return generatedItem;
     }
@@ -85,6 +87,12 @@ public class BalloonModel {
     public static ItemStack createBlankModel(Material material, int customModelData) {
         ItemStack generatedItem = new ItemStack(material);
         ItemMeta generatedItemMeta = generatedItem.getItemMeta();
+
+        // Check if the item supports ItemMeta
+        if (generatedItemMeta == null) {
+            Logger.logError(String.format("The specified material does not support ItemMeta: %s", material));
+            return generatedItem;
+        }
 
         // Set the custom model data of the item
         generatedItemMeta.setCustomModelData(customModelData);

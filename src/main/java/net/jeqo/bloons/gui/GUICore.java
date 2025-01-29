@@ -90,11 +90,6 @@ public class GUICore {
         gui.open(player);
         player.openInventory(gui.inventory());
         gui.startUpdater(this.getPlugin());
-
-        // Trigger the event specified in the GUI if it exists
-        if (gui.triggerEvent() != null) {
-            gui.triggerEvent().callEvent();
-        }
     }
 
     /**

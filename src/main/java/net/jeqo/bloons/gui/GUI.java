@@ -1,8 +1,6 @@
 package net.jeqo.bloons.gui;
 
-import net.jeqo.bloons.events.BloonsEvent;
 import net.jeqo.bloons.item.NBTItem;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -25,7 +23,7 @@ public abstract class GUI {
      *          The name that is displayed as the GUI title
      * @return  The name, type net.kyori.adventure.text.Component
      */
-    public abstract Component name();
+    public abstract String name();
 
     /**
      *          The number of slots that are present within the GUI
@@ -55,14 +53,6 @@ public abstract class GUI {
      * @return      The item, type net.jeqo.bloons.gui.GUIClickableItem
      */
     public abstract GUIClickableItem cantPickup(NBTItem item, int slot);
-
-    /**
-     *          The event that is fired when the GUI is opened or triggered
-     * @return  The event, type net.jeqo.bloons.events.BloonsEvent
-     */
-    public BloonsEvent triggerEvent() {
-        return null;
-    }
 
     /**
      *                  Determines what happens when the GUI is closed

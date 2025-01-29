@@ -1,14 +1,14 @@
 messages:
-  prefix: '<gradient:#ff00cc:#5555ff>[Bloons]</gradient> <white>'
-  no-permission: '<#fc1c1c>Acceso denegado.'
-  player-not-found: '<#fc1c1c>Jugador no encontrado.'
-  config-reloaded: '<green>Configuración recargada.'
-  command-disabled: '<#fc1c1c>¡Este comando está actualmente desactivado!'
+  prefix: '&d[Bloons] &f'
+  no-permission: '&cAcceso denegado.'
+  player-not-found: '&cJugador no encontrado.'
+  config-reloaded: '&aConfiguración recargada.'
+  command-disabled: '&c¡Este comando está actualmente desactivado!'
 
   equipped: '%s <green>equipado!'
-  unequipped: '<green>Tu globo ha sido almacenado de forma segura.'
-  balloon-not-found: '<#fc1c1c>Globo no encontrado.'
-  not-equipped: '<#fc1c1c>No tienes actualmente un globo equipado.'
+  unequipped: '&aTu globo ha sido almacenado de forma segura.'
+  balloon-not-found: '&cGlobo no encontrado.'
+  not-equipped: '&cNo tienes actualmente un globo equipado.'
 
   material-not-dyeable: 'El material %s no se puede teñir.'
   invalid-rgb-values: 'Los valores RGB deben estar entre 0 y 255 para ser válidos.'

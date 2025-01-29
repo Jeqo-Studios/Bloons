@@ -2,8 +2,6 @@ package net.jeqo.bloons.management;
 
 import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.balloon.single.SingleBalloon;
-import net.jeqo.bloons.events.balloon.single.SingleBalloonStoreEvent;
-import net.jeqo.bloons.events.balloon.single.SingleBalloonUnequipEvent;
 import org.bukkit.entity.Player;
 
 /**
@@ -19,11 +17,6 @@ public class SingleBalloonManagement {
     public static void removeBalloon(Player player, SingleBalloon owner) {
         if (owner == null) return;
 
-        SingleBalloonUnequipEvent event = new SingleBalloonUnequipEvent(player, owner);
-        event.callEvent();
-
-        if (event.isCancelled()) return;
-
         owner.spawnRemoveParticle();
         owner.cancel();
         Bloons.getPlayerSingleBalloons().remove(player.getUniqueId());
@@ -38,11 +31,6 @@ public class SingleBalloonManagement {
     public static void quickRemoveBalloon(Player player, SingleBalloon owner) {
         if (owner == null) return;
 
-        SingleBalloonUnequipEvent event = new SingleBalloonUnequipEvent(player, owner);
-        event.callEvent();
-
-        if (event.isCancelled()) return;
-
         owner.cancel();
         Bloons.getPlayerSingleBalloons().remove(player.getUniqueId());
         Bloons.getPlayerSingleBalloonID().remove(player.getUniqueId());
@@ -54,11 +42,6 @@ public class SingleBalloonManagement {
      */
     public static void storeBalloon(SingleBalloon balloon) {
         if (balloon == null) return;
-
-        SingleBalloonStoreEvent event = new SingleBalloonStoreEvent(balloon.getPlayer(), balloon);
-        event.callEvent();
-
-        if (event.isCancelled()) return;
 
         balloon.cancel();
     }

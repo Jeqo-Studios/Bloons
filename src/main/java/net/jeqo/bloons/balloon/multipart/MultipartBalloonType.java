@@ -2,6 +2,7 @@ package net.jeqo.bloons.balloon.multipart;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.jeqo.bloons.colors.ColorCodeConverter;
 
 /**
  * An object to store the data of a balloon created in the config.yml file
@@ -132,5 +133,9 @@ public class MultipartBalloonType {
         this.setHeadModel(headModel); // required
         this.setBodyModel(bodyModel); // required
         this.setTailModel(tailModel); // required
+    }
+
+    public String getName() {
+        return ColorCodeConverter.adventureToColorCode(this.name);
     }
 }

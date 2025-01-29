@@ -123,9 +123,7 @@ public final class Bloons extends JavaPlugin {
         }
 
         // Clear all balloon data if it exists
-        if (getPlayerSingleBalloons() != null) {
-            getPlayerSingleBalloons().clear();
-        }
+        if (getPlayerSingleBalloons() != null) getPlayerSingleBalloons().clear();
 
         // Unregister all listeners in the manager
         getListenerCore().unregisterListeners();
@@ -143,9 +141,43 @@ public final class Bloons extends JavaPlugin {
         // Resource ID for the plugin on SpigotMC
         int resourceId = 106243;
         new UpdateChecker(this, resourceId).getVersion(version -> {
-            if (!this.getDescription().getVersion().equals(version)) {
+            String currentVersion = this.getDescription().getVersion();
+
+            if (isVersionLower(currentVersion, version)) {
                 Logger.logUpdateNotificationConsole();
+            } else if (isVersionHigher(currentVersion, version)) {
+                Logger.logUnreleasedVersionNotification();
             }
         });
+    }
+
+    public boolean isVersionLower(String current, String latest) {
+        return compareVersions(current, latest) < 0;
+    }
+
+    public boolean isVersionHigher(String current, String latest) {
+        return compareVersions(current, latest) > 0;
+    }
+
+    /**
+     * Compares two version strings (e.g., "1.2.3" vs. "1.2.4").
+     * Returns:
+     *  - A negative value if v1 < v2
+     *  - Zero if v1 == v2
+     *  - A positive value if v1 > v2
+     */
+    public int compareVersions(String v1, String v2) {
+        String[] v1Parts = v1.split("\\.");
+        String[] v2Parts = v2.split("\\.");
+
+        int length = Math.max(v1Parts.length, v2Parts.length);
+        for (int i = 0; i < length; i++) {
+            int part1 = i < v1Parts.length ? Integer.parseInt(v1Parts[i]) : 0;
+            int part2 = i < v2Parts.length ? Integer.parseInt(v2Parts[i]) : 0;
+            if (part1 != part2) {
+                return Integer.compare(part1, part2);
+            }
+        }
+        return 0;
     }
 }
