@@ -13,6 +13,9 @@ public class PluginConfiguration {
     // The base prefix to all commands within the plugin
     public static final String COMMAND_BASE = "bloons";
 
+    // The bStats plugin resource ID used for metrics
+    public static final int BSTATS_PLUGIN_ID = 16872;
+
     /**
      *          Get the version of the plugin from the pom.xml file
      * @return  The version of the plugin, type java.lang.String

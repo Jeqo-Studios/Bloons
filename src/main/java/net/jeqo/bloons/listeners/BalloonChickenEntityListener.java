@@ -8,7 +8,7 @@ import org.bukkit.event.entity.EntityPortalEvent;
 /**
  * A class that listens for events related to balloon entities
  */
-public class BalloonEntityListener implements Listener {
+public class BalloonChickenEntityListener implements Listener {
 
     /**
      *              Stop the chicken from going through the portal to prevent unleashing from player to balloon
