@@ -82,7 +82,11 @@ public class SingleBalloon extends BukkitRunnable {
         if (this.getType().getMegModelID() == null) {
             // Create and set the balloons visual appearance/model
             ItemMeta meta = this.getVisual().getItemMeta();
-            meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+
+            if (meta != null) {
+                meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+            }
+
             this.getVisual().setItemMeta(meta);
         }
 
@@ -95,6 +99,13 @@ public class SingleBalloon extends BukkitRunnable {
      * Initializes the balloon's armor stand entity with the proper configurations
      */
     public void initializeBalloonArmorStand() {
+        if (this.getPlayerLocation().getWorld() == null) {
+            Logger.logError("Player world is not currently set. Could not initialize balloon, removing from player.");
+            // Remove the balloon from the player
+            SingleBalloonManagement.removeBalloon(player, null);
+            return;
+        }
+
         this.setArmorStand(this.getPlayerLocation().getWorld().spawn(this.getPlayerLocation(), ArmorStand.class));
         this.getArmorStand().setBasePlate(false);
         this.getArmorStand().setVisible(false);
@@ -105,7 +116,9 @@ public class SingleBalloon extends BukkitRunnable {
         this.getArmorStand().setMarker(true);
         this.getArmorStand().setCollidable(false);
         if (this.getType().getMegModelID() == null) {
-            this.getArmorStand().getEquipment().setHelmet(this.getVisual());
+            if (this.getArmorStand().getEquipment() != null) {
+                this.getArmorStand().getEquipment().setHelmet(this.getVisual());
+            }
         } else {
             try {
                 // Create the entity and tag it onto the armor stand
@@ -120,8 +133,7 @@ public class SingleBalloon extends BukkitRunnable {
                 // If an idle animation exists, play it initially
                 this.getAnimationHandler().playAnimation(this.getDefaultIdleAnimationID(), 0.3, 0.3, 1,true);
             } catch (Exception e) {
-                Logger.logError("An error occurred while creating the MEG model for the balloon " + this.getType().getId() + "! This is because a MEG model error occurred.");
-                e.printStackTrace();
+                Logger.logError("An error occurred while creating the MEG model for the balloon " + this.getType().getId() + "! This is because a MEG model error occurred: " + e.getMessage());
             }
         }
         this.getArmorStand().setCustomName(BalloonConfiguration.BALLOON_ARMOR_STAND_ID);
@@ -131,6 +143,13 @@ public class SingleBalloon extends BukkitRunnable {
      * Initializes the balloon's lead to the player (chicken entity)
      */
     public void initializeBalloonLead() {
+        if (this.getPlayerLocation().getWorld() == null) {
+            Logger.logError("Player world is not currently set. Could not initialize balloon, removing from player.");
+            // Remove the balloon from the player
+            SingleBalloonManagement.removeBalloon(player, null);
+            return;
+        }
+
         this.setChicken(this.getPlayerLocation().getWorld().spawn(this.getPlayerLocation(), Chicken.class));
         this.getChicken().setInvulnerable(true);
         this.getChicken().setInvisible(true);
@@ -237,6 +256,8 @@ public class SingleBalloon extends BukkitRunnable {
      * Spawns the particle effect when the balloon is removed
      */
     public void spawnRemoveParticle() {
+        if (this.getMoveLocation().getWorld() == null) return;
+
         this.getMoveLocation().getWorld().spawnParticle(Particle.CLOUD, this.getMoveLocation(), 5, 0.0D, 0.0D, 0.0D, 0.1D);
     }
 
@@ -280,7 +301,10 @@ public class SingleBalloon extends BukkitRunnable {
         // Generate the item and set the custom model data meta
         ItemStack item = new ItemStack(material);
         ItemMeta meta = item.getItemMeta();
-        meta.setCustomModelData(singleBalloonType.getCustomModelData());
+
+        if (meta != null) {
+            meta.setCustomModelData(singleBalloonType.getCustomModelData());
+        }
 
         // If the color of the balloon is not set, log an error and return null
         if (singleBalloonType.getColor() != null && singleBalloonType.getMaterial().startsWith(LEATHER_MATERIAL_PREFIX)) {

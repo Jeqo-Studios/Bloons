@@ -43,7 +43,7 @@ public class MultipartBalloonModel {
     public MultipartBalloonModel(BalloonSegmentType segmentType, String material, String color, int customModelData) {
         this.setSegmentType(segmentType);
         this.setMaterial(material);
-        if (!color.equals(this.getColor()) && color != null && !color.isEmpty()) this.setColor(color);
+        if (!color.equals(this.getColor()) && !color.isEmpty()) this.setColor(color);
         this.setCustomModelData(customModelData);
     }
 

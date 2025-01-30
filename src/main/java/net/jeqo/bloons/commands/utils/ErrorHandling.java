@@ -2,7 +2,6 @@ package net.jeqo.bloons.commands.utils;
 
 import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.configuration.PluginConfiguration;
-import net.jeqo.bloons.message.MessageTranslations;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -16,9 +15,6 @@ public class ErrorHandling {
      * @param sender    The sender of the command, type org.bukkit.command.CommandSender
      */
     public static void usage(CommandSender sender) {
-        // MessageTranslations will need to adapt for plain text
-        MessageTranslations messageTranslations = new MessageTranslations(Bloons.getInstance());
-
         sender.sendMessage(""); // Blank line for spacing
         if (sender.hasPermission("bloons.menu")) {
             String menuMessage = "   §d/bloons §7- Open the balloon menu";

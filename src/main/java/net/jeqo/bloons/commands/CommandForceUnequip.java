@@ -7,7 +7,6 @@ import net.jeqo.bloons.commands.manager.Command;
 import net.jeqo.bloons.commands.manager.types.CommandPermission;
 import net.jeqo.bloons.message.Languages;
 import net.jeqo.bloons.management.SingleBalloonManagement;
-import net.jeqo.bloons.message.MessageTranslations;
 import net.jeqo.bloons.management.MultipartBalloonManagement;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -27,7 +26,6 @@ public class CommandForceUnequip extends Command {
 
     @Override
     public boolean execute(CommandSender sender, String[] args) {
-        MessageTranslations messageTranslations = new MessageTranslations(this.getPlugin());
         Player player = Bukkit.getPlayer(args[0]);
 
         // If the specified player doesn't exist, send a message to the sender
