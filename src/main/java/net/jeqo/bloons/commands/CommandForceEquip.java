@@ -10,7 +10,6 @@ import net.jeqo.bloons.commands.manager.Command;
 import net.jeqo.bloons.commands.manager.types.CommandPermission;
 import net.jeqo.bloons.message.Languages;
 import net.jeqo.bloons.management.SingleBalloonManagement;
-import net.jeqo.bloons.message.MessageTranslations;
 import net.jeqo.bloons.management.MultipartBalloonManagement;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -43,7 +42,6 @@ public class CommandForceEquip extends Command {
         if (args.length < 1) usage(sender);
 
         Player player = Bukkit.getPlayer(args[0]);
-        MessageTranslations messageTranslations = new MessageTranslations(this.getPlugin());
 
         // If the player isn't found, send a message to the sender
         if (player == null) {

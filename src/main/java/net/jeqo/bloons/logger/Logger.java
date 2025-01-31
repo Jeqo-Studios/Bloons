@@ -3,8 +3,6 @@ package net.jeqo.bloons.logger;
 import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.configuration.ConfigConfiguration;
 import net.jeqo.bloons.configuration.PluginConfiguration;
-import net.jeqo.bloons.message.Languages;
-import net.jeqo.bloons.message.MessageTranslations;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 

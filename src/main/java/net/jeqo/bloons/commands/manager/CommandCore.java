@@ -113,7 +113,7 @@ public class CommandCore implements CommandExecutor {
             ArrayList<SingleBalloonType> singleBalloonTypes = Bloons.getBalloonCore().getSingleBalloonTypes();
             ArrayList<MultipartBalloonType> multipartBalloonTypes = Bloons.getBalloonCore().getMultipartBalloonTypes();
 
-            //
+            // Check if none are registered
             if (singleBalloonTypes == null && multipartBalloonTypes == null) {
                 Logger.logError(ChatColor.translateAlternateColorCodes('&', Languages.getMessage("no-balloons-registered")));
                 return false;

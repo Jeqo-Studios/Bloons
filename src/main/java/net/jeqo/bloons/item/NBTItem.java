@@ -9,6 +9,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
+import java.util.Optional;
+
 /**
  * An extension of an Item with the utilities to manage NBT
  * data easier and more efficiently
@@ -32,6 +34,8 @@ public class NBTItem extends ItemStack {
      */
     public boolean hasKey(String key) {
         NamespacedKey nbtKey = new NamespacedKey(Bloons.getInstance(), key);
+
+        if (this.getItem().getItemMeta() == null) return false;
         PersistentDataContainer container = this.getItem().getItemMeta().getPersistentDataContainer();
 
         return container.getKeys().contains(nbtKey);
@@ -45,7 +49,8 @@ public class NBTItem extends ItemStack {
     public void setStringFlag(String key, String value) {
         NamespacedKey nbtKey = new NamespacedKey(Bloons.getInstance(), key);
 
-        ItemMeta meta = getItem().getItemMeta();
+        ItemMeta meta = this.getItem().getItemMeta();
+        if (meta == null) return;
         meta.getPersistentDataContainer().set(nbtKey, PersistentDataType.STRING, value);
 
         this.getItem().setItemMeta(meta);
@@ -58,6 +63,7 @@ public class NBTItem extends ItemStack {
      */
     public String getStringFlag(String key) {
         NamespacedKey nbtKey = new NamespacedKey(Bloons.getInstance(), key);
+        if (this.getItem().getItemMeta() == null) return "";
         PersistentDataContainer container = this.getItem().getItemMeta().getPersistentDataContainer();
 
         if (!container.has(nbtKey, PersistentDataType.STRING)) return null;
@@ -74,6 +80,7 @@ public class NBTItem extends ItemStack {
         NamespacedKey nbtKey = new NamespacedKey(Bloons.getInstance(), key);
 
         ItemMeta meta = this.getItem().getItemMeta();
+        if (meta == null) return;
         meta.getPersistentDataContainer().set(nbtKey, PersistentDataType.INTEGER, value);
 
         this.getItem().setItemMeta(meta);
@@ -86,11 +93,12 @@ public class NBTItem extends ItemStack {
      */
     public int getIntegerFlag(String key) {
         NamespacedKey nbtKey = new NamespacedKey(Bloons.getInstance(), key);
+        if (this.getItem().getItemMeta() == null) return 0;
         PersistentDataContainer container = this.getItem().getItemMeta().getPersistentDataContainer();
 
         if (!container.has(nbtKey, PersistentDataType.INTEGER)) return 0;
 
-        return container.get(nbtKey, PersistentDataType.INTEGER);
+        return Optional.ofNullable(container.get(nbtKey, PersistentDataType.INTEGER)).orElse(0);
     }
 
     /**
@@ -102,6 +110,7 @@ public class NBTItem extends ItemStack {
         NamespacedKey nbtKey = new NamespacedKey(Bloons.getInstance(), key);
 
         ItemMeta meta = this.getItem().getItemMeta();
+        if (meta == null) return;
         meta.getPersistentDataContainer().set(nbtKey, PersistentDataType.DOUBLE, value);
 
         this.getItem().setItemMeta(meta);
@@ -114,11 +123,12 @@ public class NBTItem extends ItemStack {
      */
     public double getDoubleFlag(String key) {
         NamespacedKey nbtKey = new NamespacedKey(Bloons.getInstance(), key);
+        if (this.getItem().getItemMeta() == null) return 0.0;
         PersistentDataContainer container = this.getItem().getItemMeta().getPersistentDataContainer();
 
         if (!container.has(nbtKey, PersistentDataType.DOUBLE)) return 0.0;
 
-        return container.get(nbtKey, PersistentDataType.DOUBLE);
+        return Optional.ofNullable(container.get(nbtKey, PersistentDataType.DOUBLE)).orElse(0.0);
     }
 
     /**
@@ -130,6 +140,7 @@ public class NBTItem extends ItemStack {
         NamespacedKey nbtKey = new NamespacedKey(Bloons.getInstance(), key);
 
         ItemMeta meta = this.getItem().getItemMeta();
+        if (meta == null) return;
         meta.getPersistentDataContainer().set(nbtKey, PersistentDataType.BOOLEAN, value);
 
         this.getItem().setItemMeta(meta);
@@ -142,6 +153,7 @@ public class NBTItem extends ItemStack {
      */
     public boolean getBooleanFlag(String key) {
         NamespacedKey nbtKey = new NamespacedKey(Bloons.getInstance(), key);
+        if (this.getItem().getItemMeta() == null) return false;
         PersistentDataContainer container = this.getItem().getItemMeta().getPersistentDataContainer();
 
         if (!container.has(nbtKey, PersistentDataType.BOOLEAN)) return false;

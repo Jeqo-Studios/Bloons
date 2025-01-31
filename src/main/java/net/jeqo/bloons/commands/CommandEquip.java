@@ -8,9 +8,10 @@ import net.jeqo.bloons.balloon.single.SingleBalloon;
 import net.jeqo.bloons.balloon.single.SingleBalloonType;
 import net.jeqo.bloons.commands.manager.Command;
 import net.jeqo.bloons.commands.manager.types.CommandPermission;
+import net.jeqo.bloons.logger.Logger;
+import net.jeqo.bloons.logger.LoggingLevel;
 import net.jeqo.bloons.message.Languages;
 import net.jeqo.bloons.management.SingleBalloonManagement;
-import net.jeqo.bloons.message.MessageTranslations;
 import net.jeqo.bloons.management.MultipartBalloonManagement;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -45,7 +46,6 @@ public class CommandEquip extends Command {
         if (args.length < 1) usage(player);
 
         String balloonID = args[0];
-        MessageTranslations messageTranslations = new MessageTranslations(this.getPlugin());
 
         // If the balloon ID isn't found in both balloon types, send a message to the player
         if (Bloons.getBalloonCore().containsSingleBalloon(balloonID) && Bloons.getBalloonCore().containsMultipartBalloon(balloonID)) {
@@ -101,8 +101,13 @@ public class CommandEquip extends Command {
             SingleBalloonManagement.removeBalloon(player, Bloons.getPlayerSingleBalloons().get(player.getUniqueId()));
             SingleBalloon.checkBalloonRemovalOrAdd(player, balloonID);
 
-            String equippedMessage = Languages.getMessage("prefix") + String.format(Languages.getMessage("equipped"), singleBalloonType.getName());
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', equippedMessage));
+            if (singleBalloonType == null) {
+                Logger.logToPlayer(LoggingLevel.ERROR, player, "The current balloon type is null! Please correct this in the config.");
+                return false;
+            } else {
+                String equippedMessage = Languages.getMessage("prefix") + String.format(Languages.getMessage("equipped"), singleBalloonType.getName());
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', equippedMessage));
+            }
         }
 
         // Play a sound regardless of the balloon type and when it executes successfully

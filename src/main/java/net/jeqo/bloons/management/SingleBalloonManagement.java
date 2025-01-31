@@ -24,19 +24,6 @@ public class SingleBalloonManagement {
     }
 
     /**
-     *                  Remove the balloon from the player quickly
-     * @param player    The player to remove the balloon from, type org.bukkit.entity.Player
-     * @param owner     The balloon, type net.jeqo.bloons.balloon.single.SingleBalloon
-     */
-    public static void quickRemoveBalloon(Player player, SingleBalloon owner) {
-        if (owner == null) return;
-
-        owner.cancel();
-        Bloons.getPlayerSingleBalloons().remove(player.getUniqueId());
-        Bloons.getPlayerSingleBalloonID().remove(player.getUniqueId());
-    }
-
-    /**
      *                  Store the balloon in storage and just cancel the runnable
      * @param balloon   The balloon, type net.jeqo.bloons.balloon.single.SingleBalloon
      */

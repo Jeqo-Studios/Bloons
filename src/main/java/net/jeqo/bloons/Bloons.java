@@ -6,6 +6,7 @@ import net.jeqo.bloons.balloon.BalloonCore;
 import net.jeqo.bloons.balloon.multipart.balloon.MultipartBalloon;
 import net.jeqo.bloons.balloon.single.SingleBalloon;
 import net.jeqo.bloons.commands.manager.CommandCore;
+import net.jeqo.bloons.configuration.PluginConfiguration;
 import net.jeqo.bloons.listeners.*;
 import net.jeqo.bloons.listeners.multipart.MultipartBalloonPlayerJoinListener;
 import net.jeqo.bloons.listeners.multipart.MultipartBalloonPlayerLeaveListener;
@@ -14,6 +15,7 @@ import net.jeqo.bloons.message.Languages;
 import net.jeqo.bloons.health.UpdateChecker;
 import net.jeqo.bloons.logger.Logger;
 import net.jeqo.bloons.health.Metrics;
+import net.jeqo.bloons.utils.VersionChecker;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
@@ -77,9 +79,9 @@ public final class Bloons extends JavaPlugin {
 
         // Stage listeners
         getListenerCore().stageListener(new SingleBalloonPlayerListener());
-        getListenerCore().stageListener(new BalloonUnleashListener());
+        getListenerCore().stageListener(new BalloonChickenLeashListener());
         getListenerCore().stageListener(new BalloonMenuListener());
-        getListenerCore().stageListener(new BalloonEntityListener());
+        getListenerCore().stageListener(new BalloonChickenEntityListener());
 
         getListenerCore().stageListener(new MultipartBalloonPlayerJoinListener());
         getListenerCore().stageListener(new MultipartBalloonPlayerLeaveListener());
@@ -88,9 +90,7 @@ public final class Bloons extends JavaPlugin {
         getListenerCore().registerListeners();
 
         // Startup the metrics and update checker
-        // This is the ID of the plugin on bStats, this should be kept as a constant
-        int pluginId = 16872;
-        new Metrics(this, pluginId);
+        new Metrics(this, PluginConfiguration.BSTATS_PLUGIN_ID);
         updateChecker();
 
         // Copy over example balloons folder
@@ -143,41 +143,11 @@ public final class Bloons extends JavaPlugin {
         new UpdateChecker(this, resourceId).getVersion(version -> {
             String currentVersion = this.getDescription().getVersion();
 
-            if (isVersionLower(currentVersion, version)) {
+            if (VersionChecker.isVersionLower(currentVersion, version)) {
                 Logger.logUpdateNotificationConsole();
-            } else if (isVersionHigher(currentVersion, version)) {
+            } else if (VersionChecker.isVersionHigher(currentVersion, version)) {
                 Logger.logUnreleasedVersionNotification();
             }
         });
-    }
-
-    public boolean isVersionLower(String current, String latest) {
-        return compareVersions(current, latest) < 0;
-    }
-
-    public boolean isVersionHigher(String current, String latest) {
-        return compareVersions(current, latest) > 0;
-    }
-
-    /**
-     * Compares two version strings (e.g., "1.2.3" vs. "1.2.4").
-     * Returns:
-     *  - A negative value if v1 < v2
-     *  - Zero if v1 == v2
-     *  - A positive value if v1 > v2
-     */
-    public int compareVersions(String v1, String v2) {
-        String[] v1Parts = v1.split("\\.");
-        String[] v2Parts = v2.split("\\.");
-
-        int length = Math.max(v1Parts.length, v2Parts.length);
-        for (int i = 0; i < length; i++) {
-            int part1 = i < v1Parts.length ? Integer.parseInt(v1Parts[i]) : 0;
-            int part2 = i < v2Parts.length ? Integer.parseInt(v2Parts[i]) : 0;
-            if (part1 != part2) {
-                return Integer.compare(part1, part2);
-            }
-        }
-        return 0;
     }
 }
