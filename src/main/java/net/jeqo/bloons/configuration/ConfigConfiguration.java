@@ -121,7 +121,7 @@ public class ConfigConfiguration {
                                     config.getString(key + ".id"),
                                     config.getString(key + ".permission"),
                                     config.getString(key + ".icon.material"),
-                                    config.getInt(key + ".icon.custom-model-data"),
+                                    config.getString(key + ".icon.custom-model-data"),
                                     config.getString(key + ".meg-model-id"),
                                     config.getString(key + ".icon.name"),
                                     config.getStringList(key + ".icon.lore").toArray(new String[0])
@@ -141,7 +141,7 @@ public class ConfigConfiguration {
                                     config.getDouble(key + ".balloon-height"),
                                     config.getString(key + ".material"),
                                     config.getString(key + ".color"),
-                                    config.getInt(key + ".custom-model-data"),
+                                    config.getString(key + ".custom-model-data"),
                                     config.getString(key + ".name"),
                                     config.getStringList(key + ".lore").toArray(new String[0])
                             ));
@@ -229,19 +229,19 @@ public class ConfigConfiguration {
                                         BalloonSegmentType.HEAD,
                                         config.getString(key + ".head.material"),
                                         Objects.requireNonNull(config.getString(key + ".head.color")),
-                                        config.getInt(key + ".head.custom-model-data")
+                                        config.getString(key + ".head.custom-model-data")
                                 ),
                                 new MultipartBalloonModel(
                                         BalloonSegmentType.BODY,
                                         config.getString(key + ".body.material"),
                                         Objects.requireNonNull(config.getString(key + ".body.color")),
-                                        config.getInt(key + ".body.custom-model-data")
+                                        config.getString(key + ".body.custom-model-data")
                                 ),
                                 new MultipartBalloonModel(
                                         BalloonSegmentType.TAIL,
                                         config.getString(key + ".tail.material"),
                                         Objects.requireNonNull(config.getString(key + ".tail.color")),
-                                        config.getInt(key + ".tail.custom-model-data")
+                                        config.getString(key + ".tail.custom-model-data")
                                 )
                         ));
                     } catch (Exception e) {

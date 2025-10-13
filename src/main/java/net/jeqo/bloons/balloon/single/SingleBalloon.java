@@ -22,10 +22,12 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.EulerAngle;
 import org.bukkit.util.Vector;
 
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Getter @Setter
@@ -278,48 +280,54 @@ public class SingleBalloon extends BukkitRunnable {
     public ItemStack getConfiguredBalloonVisual(String balloonID) {
         SingleBalloonType singleBalloonType = Bloons.getBalloonCore().getSingleBalloonByID(balloonID);
 
-        // If there isn't a configuration for the balloon, log an error and return null
         if (singleBalloonType == null) {
             Logger.logError(String.format(Languages.getMessage("balloon-not-set"), balloonID));
             return new ItemStack(Material.BARRIER);
         }
 
-        // If the material of the balloon is not set, log an error and return null
         if (singleBalloonType.getMaterial() == null) {
             Logger.logError(String.format(Languages.getMessage("material-not-set"), balloonID));
             return new ItemStack(Material.BARRIER);
         }
 
         Material material = Material.getMaterial(singleBalloonType.getMaterial());
-
-        // If the material is not valid, log an error and return null
         if (material == null) {
             Logger.logError(String.format(Languages.getMessage("material-not-valid"), balloonID, singleBalloonType.getMaterial()));
             return new ItemStack(Material.BARRIER);
         }
 
-        // Generate the item and set the custom model data meta
         ItemStack item = new ItemStack(material);
         ItemMeta meta = item.getItemMeta();
 
         if (meta != null) {
-            meta.setCustomModelData(singleBalloonType.getCustomModelData());
-        }
+            CustomModelDataComponent customModelDataComponent = meta.getCustomModelDataComponent();
+            customModelDataComponent.setStrings(List.of(singleBalloonType.getCustomModelData()));
+            meta.setCustomModelDataComponent(customModelDataComponent);
 
-        // If the color of the balloon is not set, log an error and return null
-        if (singleBalloonType.getColor() != null && singleBalloonType.getMaterial().startsWith(LEATHER_MATERIAL_PREFIX)) {
-            // If the color of the balloon is set to potion, log a warning and return null
-            if (singleBalloonType.getColor().equalsIgnoreCase("potion")) {
-                Logger.logWarning(String.format(Languages.getMessage("material-not-dyeable"), material));
-                return item;
+            String colorHex = singleBalloonType.getColor();
+            if (colorHex != null) {
+                if (singleBalloonType.getMaterial().startsWith(LEATHER_MATERIAL_PREFIX)) {
+                    if (colorHex.equalsIgnoreCase("potion")) {
+                        Logger.logWarning(String.format(Languages.getMessage("material-not-dyeable"), material));
+                        item.setItemMeta(meta);
+                        return item;
+                    }
+                    if (meta instanceof LeatherArmorMeta leatherArmorMeta) {
+                        leatherArmorMeta.setColor(Color.hexToColor(colorHex));
+                        item.setItemMeta(leatherArmorMeta);
+                        return item;
+                    }
+                } else if (material == Material.FIREWORK_STAR && meta instanceof org.bukkit.inventory.meta.FireworkEffectMeta fireworkMeta) {
+                    org.bukkit.FireworkEffect effect = org.bukkit.FireworkEffect.builder()
+                        .withColor(Color.hexToColor(colorHex))
+                        .build();
+                    fireworkMeta.setEffect(effect);
+                    item.setItemMeta(fireworkMeta);
+                    return item;
+                }
             }
-
-            LeatherArmorMeta leatherArmorMeta = (LeatherArmorMeta) meta;
-            leatherArmorMeta.setColor(Color.hexToColor(singleBalloonType.getColor()));
+            item.setItemMeta(meta);
         }
-
-        // Finally, set the item meta
-        item.setItemMeta(meta);
 
         return item;
     }

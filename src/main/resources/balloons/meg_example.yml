@@ -6,7 +6,7 @@ meg_example:
   meg-model-id: meg_example
   icon:
     material: FLINT
-    custom-model-data: 7
+    custom-model-data: "balloon_dyeable"
     name: '&fMEG Balloon'
     lore:
       - '&8Bloons Default Balloon'

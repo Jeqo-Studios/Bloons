@@ -7,6 +7,9 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
+
+import java.util.List;
 
 /**
  * A class to handle the creation of balloon models with custom model data and color metadata
@@ -18,11 +21,10 @@ public class BalloonModel {
      *                          Generates a coloured model with the specified colour and custom model data
      * @param material          The Material type you want to generate the item as, type org.bukkit.Material
      * @param colour            The colour to dye the item if able to be dyed, type org.bukkit.Color
-     * @param customModelData   The custom model data value, type int
+     * @param customModelData   The custom model data value, type String
      * @return                  The generated item created with the corresponding metadata, type org.bukkit.inventory.ItemStack.
      */
-    public static ItemStack createColouredModel(Material material, Color colour, int customModelData) {
-        // Check if the material is dyeable or a firework star
+    public static ItemStack createColouredModel(Material material, Color colour, String customModelData) {
         if (!material.name().contains(DYEABLE_MATERIAL_PREFIX) && !material.name().equals("FIREWORK_STAR")) {
             Logger.logError("Material " + material.name() + " is not a dyeable material.");
             return new ItemStack(material);
@@ -31,21 +33,29 @@ public class BalloonModel {
         ItemStack generatedItem = new ItemStack(material);
 
         if (material.name().equals("FIREWORK_STAR")) {
-            ItemMeta fireworkMeta = generatedItem.getItemMeta();
-            if (fireworkMeta == null) return generatedItem;
+            ItemMeta meta = generatedItem.getItemMeta();
+            if (meta instanceof org.bukkit.inventory.meta.FireworkEffectMeta fireworkMeta) {
+                org.bukkit.FireworkEffect effect = org.bukkit.FireworkEffect.builder()
+                    .withColor(colour)
+                    .build();
+                fireworkMeta.setEffect(effect);
 
-            // Set the color and custom model data for the firework star
-            fireworkMeta.setCustomModelData(customModelData);
-            generatedItem.setItemMeta(fireworkMeta);
+                CustomModelDataComponent customModelDataComponent = fireworkMeta.getCustomModelDataComponent();
+                customModelDataComponent.setStrings(List.of(customModelData));
+                fireworkMeta.setCustomModelDataComponent(customModelDataComponent);
+
+                generatedItem.setItemMeta(fireworkMeta);
+            }
             return generatedItem;
         }
 
         LeatherArmorMeta generatedItemLeatherMeta = (LeatherArmorMeta) generatedItem.getItemMeta();
         if (generatedItemLeatherMeta == null) return generatedItem;
 
-        // Set the color and custom model data of the item in the metadata
         generatedItemLeatherMeta.setColor(colour);
-        generatedItemLeatherMeta.setCustomModelData(customModelData);
+        CustomModelDataComponent customModelDataComponent = generatedItemLeatherMeta.getCustomModelDataComponent();
+        customModelDataComponent.setStrings(List.of(customModelData));
+        generatedItemLeatherMeta.setCustomModelDataComponent(customModelDataComponent);
         generatedItem.setItemMeta(generatedItemLeatherMeta);
 
         return generatedItem;
@@ -57,12 +67,12 @@ public class BalloonModel {
      * @param colourRed         The red colour value in the RGB, within the range of 0-255, type int
      * @param colourGreen       The green colour value in the RGB, within the range of 0-255, type int
      * @param colourBlue        The blue colour value in the RGB, within the range of 0-255, type int
-     * @param customModelData   The custom model data value attached to the item metadata, type int
+     * @param customModelData   The custom model data value attached to the item metadata, type String
      * @return                  The generated item created with the corresponding metadata, type org.bukkit.inventory.ItemStack.
      *                          If the RGB values are not within the valid range of 0-255, or if the provided material is not dyeable,
      *                          the method will return null.
      */
-    public static ItemStack createColouredModel(Material material, int colourRed, int colourGreen, int colourBlue, int customModelData) {
+    public static ItemStack createColouredModel(Material material, int colourRed, int colourGreen, int colourBlue, String customModelData) {
         // Check if the material is dyeable and contains leather attributes
         if (!material.name().contains(DYEABLE_MATERIAL_PREFIX)) {
             Logger.logWarning(String.format(Languages.getMessage("material-not-dyeable"), material));
@@ -82,7 +92,9 @@ public class BalloonModel {
         // Set the color and custom model data of the item in the metadata
         assert generatedItemMeta != null; // Equivalent of setting to regular leather colour, assume we aren't
         generatedItemMeta.setColor(color);
-        generatedItemMeta.setCustomModelData(customModelData);
+        CustomModelDataComponent customModelDataComponent = generatedItemMeta.getCustomModelDataComponent();
+        customModelDataComponent.setStrings(List.of(customModelData));
+        generatedItemMeta.setCustomModelDataComponent(customModelDataComponent);
         generatedItem.setItemMeta(generatedItemMeta);
 
         return generatedItem;
@@ -91,10 +103,10 @@ public class BalloonModel {
     /**
      *                          Creates a model from any item without a specified colour and with custom model data in the metadata
      * @param material          The Material type of the item you want to generate, type org.bukkit.Material
-     * @param customModelData   The custom model data value attached to the item metadata, type int
+     * @param customModelData   The custom model data value attached to the item metadata, type String
      * @return                  The generated item created with the corresponding metadata, type org.bukkit.inventory.ItemStack.
      */
-    public static ItemStack createBlankModel(Material material, int customModelData) {
+    public static ItemStack createBlankModel(Material material, String customModelData) {
         ItemStack generatedItem = new ItemStack(material);
         ItemMeta generatedItemMeta = generatedItem.getItemMeta();
 
@@ -105,7 +117,9 @@ public class BalloonModel {
         }
 
         // Set the custom model data of the item
-        generatedItemMeta.setCustomModelData(customModelData);
+        CustomModelDataComponent customModelDataComponent = generatedItemMeta.getCustomModelDataComponent();
+        customModelDataComponent.setStrings(List.of(customModelData));
+        generatedItemMeta.setCustomModelDataComponent(customModelDataComponent);
         generatedItem.setItemMeta(generatedItemMeta);
 
         return generatedItem;

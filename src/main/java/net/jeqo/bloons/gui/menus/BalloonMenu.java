@@ -14,6 +14,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -59,7 +61,9 @@ public class BalloonMenu {
         ItemMeta nextMeta = nextPage.getItemMeta();
         assert nextMeta != null;
         nextMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', this.getMessageTranslations().getString("buttons.next-page.name")));
-        nextMeta.setCustomModelData(this.getMessageTranslations().getInt("buttons.next-page.custom-model-data"));
+        CustomModelDataComponent customModelDataComponentNext = nextMeta.getCustomModelDataComponent();
+        customModelDataComponentNext.setStrings(List.of(this.getMessageTranslations().getString("buttons.next-page.custom-model-data")));
+        nextMeta.setCustomModelDataComponent(customModelDataComponentNext);
         nextPage.setItemMeta(nextMeta);
 
         // Create previous page button
@@ -67,7 +71,9 @@ public class BalloonMenu {
         ItemMeta prevMeta = prevPage.getItemMeta();
         assert prevMeta != null;
         prevMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', this.getMessageTranslations().getString("buttons.previous-page.name")));
-        prevMeta.setCustomModelData(this.getMessageTranslations().getInt("buttons.previous-page.custom-model-data"));
+        CustomModelDataComponent customModelDataComponentPrev = prevMeta.getCustomModelDataComponent();
+        customModelDataComponentPrev.setStrings(List.of(this.getMessageTranslations().getString("buttons.previous-page.custom-model-data")));
+        prevMeta.setCustomModelDataComponent(customModelDataComponentPrev);
         prevPage.setItemMeta(prevMeta);
 
         // Create remove/unequip balloon button
@@ -75,7 +81,9 @@ public class BalloonMenu {
         ItemMeta removeMeta = removeBalloon.getItemMeta();
         assert removeMeta != null;
         removeMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', this.getMessageTranslations().getString("buttons.unequip.name")));
-        removeMeta.setCustomModelData(this.getMessageTranslations().getInt("buttons.unequip.custom-model-data"));
+        CustomModelDataComponent customModelDataComponentRemove = prevMeta.getCustomModelDataComponent();
+        customModelDataComponentRemove.setStrings(List.of(this.getMessageTranslations().getString("buttons.unequip.custom-model-data")));
+        removeMeta.setCustomModelDataComponent(customModelDataComponentRemove);
         removeBalloon.setItemMeta(removeMeta);
 
         // Add buttons to GUI

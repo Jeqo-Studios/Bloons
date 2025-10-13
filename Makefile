@@ -4,7 +4,7 @@ SERVICE_PREFIX = jeqo-
 SERVER_SUFFIX = -server
 
 # Building details
-BUILD_OUTPUT = $(shell for %f in (target\*.jar) do @echo %f)
+BUILD_OUTPUT = target/*.jar
 BUILD_SERVER = dev
 TARGET_PLUGIN_DIR = $(BUILD_SERVER)/plugins/
 
@@ -74,5 +74,5 @@ send-command:
 
 pbuild:
 	mvn clean package
-	for %%f in (target\*.jar) do @echo %%~nxf | findstr /b /c:"original-" >nul || move "%%f" $(TARGET_PLUGIN_DIR)
+	find $(BUILD_OUTPUT) -type f ! -name 'original-*' -exec cp {} $(TARGET_PLUGIN_DIR) \;
 	make send-command container=$(BUILD_SERVER) command="reload confirm"

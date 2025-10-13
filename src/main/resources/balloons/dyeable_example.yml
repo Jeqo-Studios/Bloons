@@ -9,7 +9,7 @@ dyeable_example:
   balloon-height: 2.0
   material: LEATHER_HORSE_ARMOR
   color: '#ffffff'
-  custom-model-data: 1
+  custom-model-data: "balloon_dyeable"
   name: '&fDyeable Balloon'
   lore:
     - '&8Bloons Example Balloon'
@@ -21,7 +21,7 @@ single_meg_example:
   meg-model-id: single_meg_example
   icon:
     material: FLINT
-    custom-model-data: 7
+    custom-model-data: "balloon_dyeable"
     name: '&fSingle MEG Balloon'
     lore:
     - '&8Bloons Default Balloon'

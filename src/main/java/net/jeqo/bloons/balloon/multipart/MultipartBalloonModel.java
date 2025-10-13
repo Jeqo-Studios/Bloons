@@ -31,16 +31,16 @@ public class MultipartBalloonModel {
     /**
      * The custom model data value stored in the item metadata
      */
-    private Integer customModelData; // required
+    private String customModelData; // required
 
     /**
      *                          Creates a new model for a multipart balloon
      * @param segmentType       The type of model (head, body, tail), type net.jeqo.bloons.balloon.model.BalloonModelType
      * @param material          The name of the Bukkit Material used to create the item, type java.lang.String
      * @param color             The color of the model as a hex color code value, type java.lang.String
-     * @param customModelData   The custom model data value stored in the item metadata, type int
+     * @param customModelData   The custom model data value stored in the item metadata, type String
      */
-    public MultipartBalloonModel(BalloonSegmentType segmentType, String material, String color, int customModelData) {
+    public MultipartBalloonModel(BalloonSegmentType segmentType, String material, String color, String customModelData) {
         this.setSegmentType(segmentType);
         this.setMaterial(material);
         if (!color.equals(this.getColor()) && !color.isEmpty()) this.setColor(color);

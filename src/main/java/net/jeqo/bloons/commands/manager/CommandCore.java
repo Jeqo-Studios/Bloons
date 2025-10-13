@@ -21,6 +21,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
@@ -246,7 +247,9 @@ public class CommandCore implements CommandExecutor {
         meta.setItemName(singleBalloonType.getKey());
         setBalloonLore(meta, singleBalloonType);
         setBalloonDisplayName(meta, singleBalloonType);
-        meta.setCustomModelData(singleBalloonType.getCustomModelData());
+        CustomModelDataComponent customModelDataComponent = meta.getCustomModelDataComponent();
+        customModelDataComponent.setStrings(List.of(singleBalloonType.getCustomModelData()));
+        meta.setCustomModelDataComponent(customModelDataComponent);
         setBalloonColor(meta, singleBalloonType);
 
         NamespacedKey balloonIdKey = new NamespacedKey(Bloons.getInstance(), "balloonId");
@@ -278,7 +281,9 @@ public class CommandCore implements CommandExecutor {
         meta.setItemName(multipartBalloonType.getId());
         setBalloonLore(meta, multipartBalloonType);
         setBalloonDisplayName(meta, multipartBalloonType);
-        meta.setCustomModelData(multipartBalloonType.getHeadModel().getCustomModelData());
+        CustomModelDataComponent customModelDataComponent = meta.getCustomModelDataComponent();
+        customModelDataComponent.setStrings(List.of(multipartBalloonType.getHeadModel().getCustomModelData()));
+        meta.setCustomModelDataComponent(customModelDataComponent);
 
         if (multipartBalloonType.getHeadModel().getColor() != null) {
             setBalloonColor(meta, multipartBalloonType);
@@ -352,6 +357,11 @@ public class CommandCore implements CommandExecutor {
         if (color != null && !color.equalsIgnoreCase("potion")) {
             if (meta instanceof LeatherArmorMeta) {
                 ((LeatherArmorMeta) meta).setColor(Color.hexToColor(color));
+            } else if (meta instanceof org.bukkit.inventory.meta.FireworkEffectMeta fireworkMeta) {
+                org.bukkit.FireworkEffect effect = org.bukkit.FireworkEffect.builder()
+                        .withColor(Color.hexToColor(color))
+                        .build();
+                fireworkMeta.setEffect(effect);
             } else {
                 if (singleBalloonType.getMegModelID() == null) {
                     Logger.logWarning(String.format(Languages.getMessage("material-not-dyeable"), singleBalloonType.getMaterial()));
@@ -371,6 +381,11 @@ public class CommandCore implements CommandExecutor {
         if (color != null && !color.equalsIgnoreCase("potion")) {
             if (meta instanceof LeatherArmorMeta) {
                 ((LeatherArmorMeta) meta).setColor(Color.hexToColor(color));
+            } else if (meta instanceof org.bukkit.inventory.meta.FireworkEffectMeta fireworkMeta) {
+                org.bukkit.FireworkEffect effect = org.bukkit.FireworkEffect.builder()
+                        .withColor(Color.hexToColor(color))
+                        .build();
+                fireworkMeta.setEffect(effect);
             } else {
                 Logger.logWarning(String.format(Languages.getMessage("material-not-dyeable"), multipartBalloonType.getHeadModel().getMaterial()));
             }

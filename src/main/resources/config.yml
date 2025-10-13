@@ -35,19 +35,19 @@ balloon-slots: 45
 buttons:
   previous-page:
     material: FLINT
-    custom-model-data: 1
+    custom-model-data: "previous_page"
     name: '&7← ᴘʀᴇᴠɪᴏᴜs ᴘᴀɢᴇ'
     slots:
       - 48
   unequip:
     material: FLINT
-    custom-model-data: 2
+    custom-model-data: "unequip"
     name: '&7ᴜɴᴇǫᴜɪᴘ ʙᴀʟʟᴏᴏɴ'
     slots:
       - 49
   next-page:
     material: FLINT
-    custom-model-data: 3
+    custom-model-data: "next_page"
     name: '&7ɴᴇxᴛ ᴘᴀɢᴇ →'
     slots:
       - 50
