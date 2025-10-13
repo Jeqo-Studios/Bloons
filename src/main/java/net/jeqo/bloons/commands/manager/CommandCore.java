@@ -14,12 +14,14 @@ import net.jeqo.bloons.message.Languages;
 import net.jeqo.bloons.message.MessageTranslations;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
@@ -247,6 +249,9 @@ public class CommandCore implements CommandExecutor {
         meta.setCustomModelData(singleBalloonType.getCustomModelData());
         setBalloonColor(meta, singleBalloonType);
 
+        NamespacedKey balloonIdKey = new NamespacedKey(Bloons.getInstance(), "balloonId");
+        meta.getPersistentDataContainer().set(balloonIdKey, org.bukkit.persistence.PersistentDataType.STRING, singleBalloonType.getId());
+
         item.setItemMeta(meta);
         return item;
     }
@@ -278,6 +283,9 @@ public class CommandCore implements CommandExecutor {
         if (multipartBalloonType.getHeadModel().getColor() != null) {
             setBalloonColor(meta, multipartBalloonType);
         }
+
+        NamespacedKey balloonIdKey = new NamespacedKey(Bloons.getInstance(), "balloonId");
+        meta.getPersistentDataContainer().set(balloonIdKey, PersistentDataType.STRING, multipartBalloonType.getId());
 
         item.setItemMeta(meta);
         return item;

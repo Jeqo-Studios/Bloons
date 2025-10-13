@@ -9,15 +9,18 @@ import net.jeqo.bloons.balloon.single.SingleBalloonType;
 import net.jeqo.bloons.colors.Color;
 import net.jeqo.bloons.colors.ColorCodeConverter;
 import net.jeqo.bloons.gui.menus.BalloonMenu;
+import net.jeqo.bloons.logger.Logger;
 import net.jeqo.bloons.message.Languages;
 import net.jeqo.bloons.message.MessageTranslations;
 import net.jeqo.bloons.management.MultipartBalloonManagement;
 import net.jeqo.bloons.management.SingleBalloonManagement;
+import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.persistence.PersistentDataType;
 
 /**
  * A class that listens for events related to the balloon menu
@@ -48,7 +51,9 @@ public class BalloonMenuListener implements Listener {
         // Get the display name of the item clicked and the converted balloon name
         String displayName = event.getCurrentItem().getItemMeta().getDisplayName();
         String localizedName = event.getCurrentItem().getItemMeta().getItemName();
-        String convertedColourBalloonName = ColorCodeConverter.colorCodeToAdventure(displayName); // Weird parsing is needed for this because of the usage of minimessage
+        String balloonId = event.getCurrentItem().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(Bloons.getInstance(), "balloonId"), PersistentDataType.STRING);
+        // Don't need this because we don't use minimessage in the balloon menu
+        //String convertedColourBalloonName = ColorCodeConverter.colorCodeToAdventure(displayName); // Weird parsing is needed for this because of the usage of minimessage
 
         // Always check for shift clicks
         if (event.isShiftClick()) event.setCancelled(true);
@@ -78,14 +83,14 @@ public class BalloonMenuListener implements Listener {
                 MultipartBalloonManagement.setPlayerBalloon(player.getUniqueId(), balloon);
             } else {
                 // Check if a balloon needs to be added or removed
-                SingleBalloonType fromName = Bloons.getBalloonCore().getSingleBalloonByName(convertedColourBalloonName);
+//                SingleBalloonType fromName = Bloons.getBalloonCore().getSingleBalloonByName(displayName);
 
-                SingleBalloon.checkBalloonRemovalOrAdd(player, fromName.getId());
+                SingleBalloon.checkBalloonRemovalOrAdd(player, balloonId);
             }
 
             // Send equipped message and play sound
             player.playSound(player.getLocation(), Sound.ENTITY_CHICKEN_EGG, 1, 1);
-            String equippedMessage = Languages.getMessage("prefix") + String.format(Languages.getMessage("equipped"), convertedColourBalloonName);
+            String equippedMessage = Languages.getMessage("prefix") + String.format(Languages.getMessage("equipped"), displayName);
             player.sendMessage(equippedMessage);
 
             // Close inventory if the config is set to true

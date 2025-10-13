@@ -22,15 +22,25 @@ public class BalloonModel {
      * @return                  The generated item created with the corresponding metadata, type org.bukkit.inventory.ItemStack.
      */
     public static ItemStack createColouredModel(Material material, Color colour, int customModelData) {
-        // Check if the material is dyeable and contains leather attributes
-        if (!material.name().contains(DYEABLE_MATERIAL_PREFIX)) {
+        // Check if the material is dyeable or a firework star
+        if (!material.name().contains(DYEABLE_MATERIAL_PREFIX) && !material.name().equals("FIREWORK_STAR")) {
             Logger.logError("Material " + material.name() + " is not a dyeable material.");
             return new ItemStack(material);
         }
 
         ItemStack generatedItem = new ItemStack(material);
-        LeatherArmorMeta generatedItemLeatherMeta = (LeatherArmorMeta) generatedItem.getItemMeta();
 
+        if (material.name().equals("FIREWORK_STAR")) {
+            ItemMeta fireworkMeta = generatedItem.getItemMeta();
+            if (fireworkMeta == null) return generatedItem;
+
+            // Set the color and custom model data for the firework star
+            fireworkMeta.setCustomModelData(customModelData);
+            generatedItem.setItemMeta(fireworkMeta);
+            return generatedItem;
+        }
+
+        LeatherArmorMeta generatedItemLeatherMeta = (LeatherArmorMeta) generatedItem.getItemMeta();
         if (generatedItemLeatherMeta == null) return generatedItem;
 
         // Set the color and custom model data of the item in the metadata

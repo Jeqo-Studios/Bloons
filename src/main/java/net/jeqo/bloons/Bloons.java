@@ -108,7 +108,7 @@ public final class Bloons extends JavaPlugin {
         // Log an initial shutdown message
         Logger.logInitialShutdown();
 
-        if (getPlayerSingleBalloons() != null) {
+        if (getPlayerSingleBalloons() != null && !getPlayerSingleBalloons().isEmpty()) {
             // Unregister all balloons and stop the task
             for (SingleBalloon owner : getPlayerSingleBalloons().values()) {
                 owner.cancel();
@@ -116,7 +116,7 @@ public final class Bloons extends JavaPlugin {
         }
 
         // Unregister all balloons and stop the task if it exists
-        if (getPlayerMultipartBalloons() != null) {
+        if (getPlayerMultipartBalloons() != null && !getPlayerMultipartBalloons().isEmpty()) {
             for (MultipartBalloon owner : getPlayerMultipartBalloons().values()) {
                 owner.destroy();
             }
@@ -124,6 +124,7 @@ public final class Bloons extends JavaPlugin {
 
         // Clear all balloon data if it exists
         if (getPlayerSingleBalloons() != null) getPlayerSingleBalloons().clear();
+        if (getPlayerMultipartBalloons() != null) getPlayerMultipartBalloons().clear();
 
         // Unregister all listeners in the manager
         getListenerCore().unregisterListeners();

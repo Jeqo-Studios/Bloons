@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * A class to interact with th entirety of the GUI system
+ * A class to interact with the entirety of the GUI system
  */
 @Getter @Setter
 public class GUICore {

@@ -51,6 +51,11 @@ public class ConfigConfiguration {
         }
     }
 
+    public static boolean isPaperServer() {
+        String version = org.bukkit.Bukkit.getVersion().toLowerCase();
+        return version.contains("paper");
+    }
+
     /**
      *         Gets all the single balloon types from the configuration files
      * @return The single balloon types from the configuration files,
@@ -103,6 +108,12 @@ public class ConfigConfiguration {
                     if (!type.equals(BalloonConfiguration.SINGLE_BALLOON_TYPE_IDENTIFIER)) continue;
 
                     if (config.getString(key + ".meg-model-id") != null) {
+                        if (!isPaperServer()) {
+                            Logger.logWarning("Model Engine balloons are only supported on Paper servers. Skipping MEG balloon type: " + key + " in file: " + fileName);
+                            continue;
+                        }
+
+                        // Check if ModelEngineAPI is available
                         // Process the MEG balloon type
                         try {
                             singleBalloons.add(new SingleBalloonType(
