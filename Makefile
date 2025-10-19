@@ -5,8 +5,9 @@ SERVER_SUFFIX = -server
 
 # Building details
 BUILD_OUTPUT = target/*.jar
-BUILD_SERVER = dev
-TARGET_PLUGIN_DIR = $(BUILD_SERVER)/plugins/
+BUILD_SERVER = dev-server
+TARGET_PLUGIN_DIR = dev/plugins/
+TARGET_PAPER_DIR = dev-paper/plugins/
 
 # Container lists
 CONTAINERS = dev$(SERVER_SUFFIX)
@@ -70,9 +71,12 @@ stop-servers:
 
 # Note: This only works with actual servers; not proxies
 send-command:
-	docker exec $(SERVICE_PREFIX)$(container)$(SERVER_SUFFIX) rcon-cli $(command)
+	docker exec $(SERVICE_PREFIX)$(container) rcon-cli $(command)
 
 pbuild:
 	mvn clean package
+	@mkdir -p $(TARGET_PLUGIN_DIR)
+	@mkdir -p $(TARGET_PAPER_DIR)
 	find $(BUILD_OUTPUT) -type f ! -name 'original-*' -exec cp {} $(TARGET_PLUGIN_DIR) \;
+	find $(BUILD_OUTPUT) -type f ! -name 'original-*' -exec cp {} $(TARGET_PAPER_DIR) \;
 	make send-command container=$(BUILD_SERVER) command="reload confirm"

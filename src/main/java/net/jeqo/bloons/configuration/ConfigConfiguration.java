@@ -40,8 +40,21 @@ public class ConfigConfiguration {
      * @return  True if the server is running Paper, false otherwise, type boolean
      */
     public static boolean isPaperServer() {
-        String version = org.bukkit.Bukkit.getVersion().toLowerCase();
-        return version.contains("paper");
+        try {
+            Class.forName("com.destroystokyo.paper.ParticleBuilder");
+            return true;
+        } catch (ClassNotFoundException ignored) {
+            try {
+                String version = org.bukkit.Bukkit.getBukkitVersion();
+                if(version != null && version.toLowerCase().contains("paper")) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } catch (Exception e) {
+                return false;
+            }
+        }
     }
 
     /**
