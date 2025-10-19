@@ -35,7 +35,6 @@ public class BalloonCore {
      * Contains all example balloon files to copy to the plugin's data folder
      */
     private final HashMap<String, ExampleBalloonType> exampleBalloons = new HashMap<>() {{
-        put("basic_example.yml", ExampleBalloonType.REGULAR);
         put("color_pack_example.yml", ExampleBalloonType.REGULAR);
         put("dyeable_example.yml", ExampleBalloonType.REGULAR);
         put("meg_example.yml", ExampleBalloonType.MEG);
