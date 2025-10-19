@@ -69,6 +69,9 @@ public class BalloonCore {
      * Copies the example balloons folder to the plugin's data folder if it doesn't exist
      */
     public void copyExampleBalloons() {
+        File marker = new File(this.getPlugin().getDataFolder(), ".examples_copied");
+        if (marker.exists()) return;
+
         // Save all example files in the balloons folder in /resources
         for (Map.Entry<String, ExampleBalloonType> example : this.getExampleBalloons().entrySet()) {
             if (example.getValue() == ExampleBalloonType.MEG && !ConfigConfiguration.isPaperServer()) {
@@ -80,6 +83,14 @@ public class BalloonCore {
             if (file.exists()) continue;
 
             Bloons.getInstance().saveResource(ConfigConfiguration.BALLOON_CONFIGURATION_FOLDER + File.separator + example.getKey(), false);
+        }
+
+        // Create marker file to indicate initial copy completed
+        try {
+            if (!marker.getParentFile().exists()) marker.getParentFile().mkdirs();
+            marker.createNewFile();
+        } catch (Exception e) {
+            Logger.logWarning("Could not create example marker file: " + e.getMessage());
         }
     }
 
