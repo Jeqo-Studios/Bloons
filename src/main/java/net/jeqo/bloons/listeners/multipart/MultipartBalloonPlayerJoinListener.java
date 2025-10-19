@@ -8,6 +8,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+/**
+ * Listens for player join events to manage multipart balloons
+ */
 public class MultipartBalloonPlayerJoinListener implements Listener {
 
     /**

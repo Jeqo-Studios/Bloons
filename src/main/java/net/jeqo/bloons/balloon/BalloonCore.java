@@ -122,19 +122,6 @@ public class BalloonCore {
         return null;
     }
 
-    public SingleBalloonType getSingleBalloonByName(String name) {
-        // Loop over every single balloon in the registered balloons list
-        for (SingleBalloonType balloon : this.getSingleBalloonTypes()) {
-            // Check if the single balloon's name matches the specified name
-            if (balloon.getName().equalsIgnoreCase(name)) {
-                return balloon;
-            }
-        }
-
-        // Return null if the single balloon is not found
-        return null;
-    }
-
     /**
      *                 Checks if the registered balloons list contains a balloon with the specified ID
      * @param ID       The ID of the balloon, type java.lang.String

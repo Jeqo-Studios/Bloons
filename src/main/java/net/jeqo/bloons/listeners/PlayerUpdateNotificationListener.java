@@ -8,8 +8,15 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+/**
+ * A class that listens for player join events to notify about plugin updates
+ */
 public class PlayerUpdateNotificationListener implements Listener {
 
+    /**
+     * Handles update checks hen a player joins the server
+     * @param event The PlayerJoinEvent
+     */
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         if (event.getPlayer().isOp()) {

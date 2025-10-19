@@ -135,6 +135,10 @@ public class MultipartBalloonType {
         this.setTailModel(tailModel); // required
     }
 
+    /**
+     *         Converts the adventure formatted name to a color code formatted name
+     * @return The name in color code format, type java.lang.String
+     */
     public String getName() {
         return ColorCodeConverter.adventureToColorCode(this.name);
     }

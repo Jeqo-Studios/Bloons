@@ -5,11 +5,9 @@ import net.jeqo.bloons.balloon.multipart.balloon.MultipartBalloon;
 import net.jeqo.bloons.balloon.multipart.balloon.MultipartBalloonBuilder;
 import net.jeqo.bloons.balloon.multipart.MultipartBalloonType;
 import net.jeqo.bloons.balloon.single.SingleBalloon;
-import net.jeqo.bloons.balloon.single.SingleBalloonType;
 import net.jeqo.bloons.colors.Color;
 import net.jeqo.bloons.colors.ColorCodeConverter;
 import net.jeqo.bloons.gui.menus.BalloonMenu;
-import net.jeqo.bloons.logger.Logger;
 import net.jeqo.bloons.message.Languages;
 import net.jeqo.bloons.message.MessageTranslations;
 import net.jeqo.bloons.management.MultipartBalloonManagement;
@@ -52,8 +50,6 @@ public class BalloonMenuListener implements Listener {
         String displayName = event.getCurrentItem().getItemMeta().getDisplayName();
         String localizedName = event.getCurrentItem().getItemMeta().getItemName();
         String balloonId = event.getCurrentItem().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(Bloons.getInstance(), "balloonId"), PersistentDataType.STRING);
-        // Don't need this because we don't use minimessage in the balloon menu
-        //String convertedColourBalloonName = ColorCodeConverter.colorCodeToAdventure(displayName); // Weird parsing is needed for this because of the usage of minimessage
 
         // Always check for shift clicks
         if (event.isShiftClick()) event.setCancelled(true);
@@ -83,8 +79,6 @@ public class BalloonMenuListener implements Listener {
                 MultipartBalloonManagement.setPlayerBalloon(player.getUniqueId(), balloon);
             } else {
                 // Check if a balloon needs to be added or removed
-//                SingleBalloonType fromName = Bloons.getBalloonCore().getSingleBalloonByName(displayName);
-
                 SingleBalloon.checkBalloonRemovalOrAdd(player, balloonId);
             }
 

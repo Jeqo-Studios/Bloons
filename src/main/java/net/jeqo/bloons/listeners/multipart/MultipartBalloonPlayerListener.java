@@ -14,6 +14,9 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 
 import java.util.Objects;
 
+/**
+ * A class that listens for player events related to multipart balloons and their management
+ */
 public class MultipartBalloonPlayerListener implements Listener {
 
     /**

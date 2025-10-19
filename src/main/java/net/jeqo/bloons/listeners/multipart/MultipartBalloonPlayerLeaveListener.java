@@ -6,6 +6,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+/**
+ * Listens for player leave events to manage multipart balloons
+ */
 public class MultipartBalloonPlayerLeaveListener implements Listener {
 
     /**

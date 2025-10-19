@@ -116,7 +116,7 @@ public final class Bloons extends JavaPlugin {
         }
 
         // Unregister all balloons and stop the task if it exists
-        if (getPlayerMultipartBalloons() != null && !getPlayerMultipartBalloons().isEmpty()) {
+        if (!getPlayerMultipartBalloons().isEmpty()) {
             for (MultipartBalloon owner : getPlayerMultipartBalloons().values()) {
                 owner.destroy();
             }
@@ -124,7 +124,7 @@ public final class Bloons extends JavaPlugin {
 
         // Clear all balloon data if it exists
         if (getPlayerSingleBalloons() != null) getPlayerSingleBalloons().clear();
-        if (getPlayerMultipartBalloons() != null) getPlayerMultipartBalloons().clear();
+        getPlayerMultipartBalloons().clear();
 
         // Unregister all listeners in the manager
         getListenerCore().unregisterListeners();

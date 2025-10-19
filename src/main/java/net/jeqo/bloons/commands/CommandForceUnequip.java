@@ -14,8 +14,15 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+/**
+ * A command that allows an admin to force unequip a balloon from a player
+ */
 public class CommandForceUnequip extends Command {
 
+    /**
+     *                 Constructor for the CommandForceUnequip class
+     * @param plugin   The instance of the plugin, type org.bukkit.plugin.java.JavaPlugin
+     */
     public CommandForceUnequip(JavaPlugin plugin) {
         super(plugin);
         this.addCommandAlias("funequip");

@@ -7,6 +7,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+/**
+ * Listens for player join events to manage single balloons
+ */
 public class SingleBalloonPlayerJoinListener implements Listener {
 
     /**

@@ -108,6 +108,10 @@ public class SingleBalloonType {
         this.setLore(lore);
     }
 
+    /**
+     *         Gets the name of the balloon with color codes converted
+     * @return The name of the balloon, type java.lang.String
+     */
     public String getName() {
         return ColorCodeConverter.adventureToColorCode(this.name);
     }

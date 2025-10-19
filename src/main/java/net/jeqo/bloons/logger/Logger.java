@@ -12,8 +12,10 @@ import org.bukkit.entity.Player;
 public class Logger {
     /**
      *                  Log a message to the console with STDOUT
+     * @deprecated      Use log methods with LoggingLevel instead
      * @param message   The message to log, type java.lang.String
      */
+    @Deprecated
     public static void logWithSTDOUT(String message) {
         System.out.println(message);
     }

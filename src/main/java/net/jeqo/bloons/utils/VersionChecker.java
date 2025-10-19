@@ -1,11 +1,26 @@
 package net.jeqo.bloons.utils;
 
+/**
+ * A utility class for version comparison
+ */
 public class VersionChecker {
 
+    /**
+     *                Checks if the current version is lower than the latest version
+     * @param current The current version
+     * @param latest  The latest version
+     * @return        Whether the current version is lower than the latest version
+     */
     public static boolean isVersionLower(String current, String latest) {
         return compareVersions(current, latest) < 0;
     }
 
+    /**
+     *                Checks if the current version is higher than the latest version
+     * @param current The current version
+     * @param latest  The latest version
+     * @return        Whether the current version is higher than the latest version
+     */
     public static boolean isVersionHigher(String current, String latest) {
         return compareVersions(current, latest) > 0;
     }

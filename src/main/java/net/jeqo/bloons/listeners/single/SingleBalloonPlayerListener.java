@@ -11,6 +11,9 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 
 import java.util.Objects;
 
+/**
+ * A class that listens for player events related to single balloons and their management
+ */
 public class SingleBalloonPlayerListener implements Listener {
 
     /**
