@@ -12,3 +12,15 @@ meg_example:
       - '&8Bloons Default Balloon'
       - ''
       - '&eᴄʟɪᴄᴋ ᴛᴏ ᴇǫᴜɪᴘ'
+single_meg_example:
+  id: single_meg_example
+  permission: balloon.single_meg_example
+  meg-model-id: single_meg_example
+  icon:
+    material: FLINT
+    custom-model-data: "balloon_dyeable"
+    name: '&fSingle MEG Balloon'
+    lore:
+      - '&8Bloons Default Balloon'
+      - ''
+      - '&eᴄʟɪᴄᴋ ᴛᴏ ᴇǫᴜɪᴘ'

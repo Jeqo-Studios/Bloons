@@ -36,6 +36,15 @@ public class ConfigConfiguration {
     private static final String balloonConfigurationFolder = Bloons.getInstance().getDataFolder() + File.separator + BALLOON_CONFIGURATION_FOLDER;
 
     /**
+     *          Checks if the server is running Paper
+     * @return  True if the server is running Paper, false otherwise, type boolean
+     */
+    public static boolean isPaperServer() {
+        String version = org.bukkit.Bukkit.getVersion().toLowerCase();
+        return version.contains("paper");
+    }
+
+    /**
      *          Gets the number of configuration files currently in the balloon configuration folder
      * @return  The number of configuration files in the balloon configuration folder. Returns 0 upon none found. type long
      */
@@ -49,11 +58,6 @@ public class ConfigConfiguration {
             Logger.logError(String.format("An error occurred while counting balloon configuration files: %s", e.getMessage()));
             return 0;
         }
-    }
-
-    public static boolean isPaperServer() {
-        String version = org.bukkit.Bukkit.getVersion().toLowerCase();
-        return version.contains("paper");
     }
 
     /**

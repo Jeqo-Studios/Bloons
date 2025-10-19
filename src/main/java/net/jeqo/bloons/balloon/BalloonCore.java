@@ -6,10 +6,13 @@ import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.balloon.multipart.MultipartBalloonType;
 import net.jeqo.bloons.balloon.single.SingleBalloonType;
 import net.jeqo.bloons.configuration.ConfigConfiguration;
+import net.jeqo.bloons.logger.Logger;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * The core class to handle the registering of multipart balloons
@@ -31,12 +34,13 @@ public class BalloonCore {
     /**
      * Contains all example balloon files to copy to the plugin's data folder
      */
-    private final String[] exampleBalloons = new String[] {
-            "color_pack_example.yml",
-            "dyeable_example.yml",
-            "meg_example.yml",
-            "multipart_example.yml"
-    };
+    private final HashMap<String, ExampleBalloonType> exampleBalloons = new HashMap<>() {{
+        put("basic_example.yml", ExampleBalloonType.REGULAR);
+        put("color_pack_example.yml", ExampleBalloonType.REGULAR);
+        put("dyeable_example.yml", ExampleBalloonType.REGULAR);
+        put("meg_example.yml", ExampleBalloonType.MEG);
+        put("multipart_example.yml", ExampleBalloonType.REGULAR);
+    }};
 
     /**
      *                  Creates a new empty balloon core instance
@@ -67,11 +71,16 @@ public class BalloonCore {
      */
     public void copyExampleBalloons() {
         // Save all example files in the balloons folder in /resources
-        for (String example : this.getExampleBalloons()) {
-            File file = new File(Bloons.getInstance().getDataFolder() + File.separator + ConfigConfiguration.BALLOON_CONFIGURATION_FOLDER + File.separator + example);
+        for (Map.Entry<String, ExampleBalloonType> example : this.getExampleBalloons().entrySet()) {
+            if (example.getValue() == ExampleBalloonType.MEG && !ConfigConfiguration.isPaperServer()) {
+                Logger.logWarning("The MEG example balloon requires a Paper server to function. Skipping MEG example balloon copy.");
+                continue;
+            }
+
+            File file = new File(Bloons.getInstance().getDataFolder() + File.separator + ConfigConfiguration.BALLOON_CONFIGURATION_FOLDER + File.separator + example.getKey());
             if (file.exists()) continue;
 
-            Bloons.getInstance().saveResource(ConfigConfiguration.BALLOON_CONFIGURATION_FOLDER + File.separator + example, false);
+            Bloons.getInstance().saveResource(ConfigConfiguration.BALLOON_CONFIGURATION_FOLDER + File.separator + example.getKey(), false);
         }
     }
 
