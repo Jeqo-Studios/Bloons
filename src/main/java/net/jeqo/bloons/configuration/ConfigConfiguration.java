@@ -245,24 +245,24 @@ public class ConfigConfiguration {
                                 new MultipartBalloonModel(
                                         BalloonSegmentType.HEAD,
                                         config.getString(key + ".head.material"),
-                                        Objects.requireNonNull(config.getString(key + ".head.color")),
+                                        config.getString(key + ".head.color"),
                                         config.getString(key + ".head.custom-model-data")
                                 ),
                                 new MultipartBalloonModel(
                                         BalloonSegmentType.BODY,
                                         config.getString(key + ".body.material"),
-                                        Objects.requireNonNull(config.getString(key + ".body.color")),
+                                        config.getString(key + ".body.color"),
                                         config.getString(key + ".body.custom-model-data")
                                 ),
                                 new MultipartBalloonModel(
                                         BalloonSegmentType.TAIL,
                                         config.getString(key + ".tail.material"),
-                                        Objects.requireNonNull(config.getString(key + ".tail.color")),
+                                        config.getString(key + ".tail.color"),
                                         config.getString(key + ".tail.custom-model-data")
                                 )
                         ));
                     } catch (Exception e) {
-                        Logger.logWarning(String.format(Languages.getMessage("balloon-process-error"), key, fileName, e.getMessage()));
+                        Logger.logWarning(String.format(Languages.getMessage("balloon-process-error"), key, fileName, e));
                     }
                 }
             }

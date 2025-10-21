@@ -27,7 +27,7 @@ public class MultipartBalloonModel {
     /**
      * The color of the model
      */
-    private String color = "#ffffff"; // optional
+    private String color; // optional
     /**
      * The custom model data value stored in the item metadata
      */
@@ -43,7 +43,9 @@ public class MultipartBalloonModel {
     public MultipartBalloonModel(BalloonSegmentType segmentType, String material, String color, String customModelData) {
         this.setSegmentType(segmentType);
         this.setMaterial(material);
-        if (!color.equals(this.getColor()) && !color.isEmpty()) this.setColor(color);
+        if (color != null && !color.isEmpty() && !color.equals(this.getColor())) {
+            this.setColor(color);
+        }
         this.setCustomModelData(customModelData);
     }
 
