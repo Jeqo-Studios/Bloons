@@ -89,6 +89,10 @@
             <id>spigot-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
+        <repository>
+            <id>papermc</id>
+            <url>https://repo.papermc.io/repository/maven-public/</url>
+        </repository>
     </repositories>
 
     <pluginRepositories>
@@ -101,10 +105,10 @@
     </pluginRepositories>
 
     <dependencies>
-        <!--    Spigot related dependencies    -->
+        <!--    Paper/Spigot related dependencies    -->
         <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot-api</artifactId>
+            <groupId>io.papermc.paper</groupId>
+            <artifactId>paper-api</artifactId>
             <version>1.21.8-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
@@ -132,7 +136,7 @@
         <dependency>
             <groupId>com.ticxo.modelengine</groupId>
             <artifactId>ModelEngine</artifactId>
-            <version>R4.0.4</version>
+            <version>R4.0.9</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

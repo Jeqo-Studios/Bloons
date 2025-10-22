@@ -55,26 +55,34 @@ public class MultipartBalloon {
      * Initializes the balloons functionality
      */
     public void initialize() {
-        // Things that only need to be set up once and not looped over
-        MultipartBalloonNode current = new MultipartBalloonNode((float) this.getOwner().getLocation().getX(), (float) this.getOwner().getLocation().getY(), (float) this.getOwner().getLocation().getZ(),
-                (float) ((float) this.getType().getDistanceBetweenNodes() + this.getType().getTailNodeOffset()), 0, getType(), this.getOwner(),
-                this.getType().getMaxNodeJointAngle(), this.getType().getYAxisInterpolation(), this.getType().getTurningSplineInterpolation());
+        // Create the first (tail) node higher than the player
+        MultipartBalloonNode current = new MultipartBalloonNode(
+                (float) this.getOwner().getLocation().getX(),
+                (float) this.getOwner().getLocation().getY(),
+                (float) this.getOwner().getLocation().getZ(),
+                (float) ((float) this.getType().getDistanceBetweenNodes() + this.getType().getTailNodeOffset()),
+                0,
+                getType(),
+                this.getOwner(),
+                this.getType().getMaxNodeJointAngle(),
+                this.getType().getYAxisInterpolation(),
+                this.getType().getTurningSplineInterpolation()
+        );
 
-        // Add the current node to the list of model nodes
         this.getMultipartBalloonNodes().add(current);
 
         // Create a new node for each node in the balloon type
         for (int i = 1; i < this.getType().getNodeCount(); i++) {
+            // Spawn initially at player height
+            current.getPointB().y = (float) this.getOwner().getLocation().getY();
+
             MultipartBalloonNode next = getModelNode(i, current);
             this.getMultipartBalloonNodes().add(next);
             current.child = next;
             current = next;
         }
 
-        // Set the tentacle to the current node
         this.setTentacle(current);
-
-        // Finally, attach a lead from the player to the balloon front node
         this.initializeBalloonLead();
     }
 

@@ -82,6 +82,7 @@ public final class Bloons extends JavaPlugin {
         getListenerCore().stageListener(new BalloonChickenLeashListener());
         getListenerCore().stageListener(new BalloonMenuListener());
         getListenerCore().stageListener(new BalloonChickenEntityListener());
+        getListenerCore().stageListener(new BalloonArmorStandEntityListener());
 
         getListenerCore().stageListener(new MultipartBalloonPlayerJoinListener());
         getListenerCore().stageListener(new MultipartBalloonPlayerLeaveListener());

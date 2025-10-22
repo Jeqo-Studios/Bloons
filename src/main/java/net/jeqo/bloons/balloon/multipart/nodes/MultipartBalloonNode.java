@@ -3,6 +3,7 @@ package net.jeqo.bloons.balloon.multipart.nodes;
 import lombok.Getter;
 import lombok.Setter;
 import net.jeqo.bloons.balloon.multipart.MultipartBalloonType;
+import net.jeqo.bloons.configuration.BalloonConfiguration;
 import org.bukkit.Location;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
@@ -17,6 +18,9 @@ import static java.lang.Math.sin;
  */
 @Getter @Setter
 public class MultipartBalloonNode {
+    private static final double SPAWN_Y_OFFSET = 2.0;
+    private static final double MIN_SPAWN_Y = 10.0;
+
     /**
      * The front most point of the segment/node
      */
@@ -91,13 +95,13 @@ public class MultipartBalloonNode {
         this.setYAxisInterpolation(yAxisInterpolation);
         this.setTurningSplineInterpolation(turningSplineInterpolation);
 
-        // Spawn an armor stand at the provided coordinates and with the players height + 2
-        this.initializeArmorStand(x, this.getBalloonOwner().getLocation().getY() + 2, z);
+        // Spawn at the actual Y position of this node (not player Y)
+        double spawnY = Math.max(y + SPAWN_Y_OFFSET, MIN_SPAWN_Y);
+        this.initializeArmorStand(x, spawnY, z);
 
         float dx = length * (float)cos(0);
         float dz = length * (float)sin(0);
 
-        // Calculate the point B location based on the angle and length
         this.getPointB().set(this.getPointA().x + dx, this.getPointA().y, this.getPointA().z + dz);
     }
 
@@ -118,13 +122,13 @@ public class MultipartBalloonNode {
         this.setYAxisInterpolation(yAxisInterpolation);
         this.setTurningSplineInterpolation(turningSplineInterpolation);
 
-        // Spawn an armor stand at the point A location with the height of the player + 2
-        this.initializeArmorStand(this.getPointA().x, this.getBalloonOwner().getLocation().getY() + 2, this.getPointA().z);
+        // Spawn at the actual Y position of pointA (not player Y)
+        double spawnY = Math.max(this.getPointA().y + SPAWN_Y_OFFSET, MIN_SPAWN_Y);
+        this.initializeArmorStand(this.getPointA().x, spawnY, this.getPointA().z);
 
         float dx = length * (float)cos(0);
         float dz = length * (float)sin(0);
 
-        // Calculate the point B location based on the angle and length
         this.getPointB().set(this.getPointA().x + dx, this.getPointA().z, this.getPointA().z + dz);
     }
 
@@ -135,13 +139,20 @@ public class MultipartBalloonNode {
      * @param z     Z-axis position, type double
      */
     public void initializeArmorStand(double x, double y, double z) {
-        this.setBalloonArmorStand(this.getBalloonOwner().getWorld().spawn(new Location(this.getBalloonOwner().getWorld(), x, y, z), ArmorStand.class));
-
-        this.getBalloonArmorStand().setVisible(false);
-        this.getBalloonArmorStand().setInvulnerable(true);
-        this.getBalloonArmorStand().setInvisible(true);
-        this.getBalloonArmorStand().setSilent(true);
-        this.getBalloonArmorStand().setCollidable(false);
+        this.setBalloonArmorStand(this.getBalloonOwner().getWorld().spawn(
+                new Location(this.getBalloonOwner().getWorld(), x, y, z),
+                ArmorStand.class,
+                armorStand -> {
+                    armorStand.setVisible(false);
+                    armorStand.setInvisible(true);
+                    armorStand.setBasePlate(false);
+                    armorStand.setGravity(false);
+                    armorStand.setInvulnerable(true);
+                    armorStand.setSilent(true);
+                    armorStand.setCollidable(false);
+                    armorStand.setCustomName(BalloonConfiguration.BALLOON_ARMOR_STAND_ID);
+                }
+        ));
     }
 
     /**
@@ -271,17 +282,15 @@ public class MultipartBalloonNode {
      */
     public void display() {
         // Sets the segments finalized models based on their position in the balloon
-        if (this.getBalloonArmorStand().getEquipment() != null) {
-            if (this.getIndex() == this.getBalloonType().getNodeCount() - 1) {
-                // Set the head model
-                this.getBalloonArmorStand().getEquipment().setHelmet(this.getBalloonType().getHeadModel().getFinalizedModel());
-            } else if (this.getIndex() == 0) {
-                // Set the tail model
-                this.getBalloonArmorStand().getEquipment().setHelmet(this.getBalloonType().getTailModel().getFinalizedModel());
-            } else {
-                // Set the body model
-                this.getBalloonArmorStand().getEquipment().setHelmet(this.getBalloonType().getBodyModel().getFinalizedModel());
-            }
+        if (this.getIndex() == this.getBalloonType().getNodeCount() - 1) {
+            // Set the head model
+            this.getBalloonArmorStand().getEquipment().setHelmet(this.getBalloonType().getHeadModel().getFinalizedModel());
+        } else if (this.getIndex() == 0) {
+            // Set the tail model
+            this.getBalloonArmorStand().getEquipment().setHelmet(this.getBalloonType().getTailModel().getFinalizedModel());
+        } else {
+            // Set the body model
+            this.getBalloonArmorStand().getEquipment().setHelmet(this.getBalloonType().getBodyModel().getFinalizedModel());
         }
 
         // Creates a new Bukkit vector based on the position of the two points
