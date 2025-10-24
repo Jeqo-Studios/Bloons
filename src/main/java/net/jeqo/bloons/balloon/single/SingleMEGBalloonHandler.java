@@ -4,7 +4,10 @@ import com.ticxo.modelengine.api.ModelEngineAPI;
 import com.ticxo.modelengine.api.animation.handler.AnimationHandler;
 import com.ticxo.modelengine.api.model.ActiveModel;
 import com.ticxo.modelengine.api.model.ModeledEntity;
+import com.ticxo.modelengine.api.model.bone.BoneBehaviorTypes;
 import com.ticxo.modelengine.api.model.bone.SimpleManualAnimator;
+import com.ticxo.modelengine.api.model.bone.behavior.BoneBehavior;
+import com.ticxo.modelengine.api.model.bone.behavior.BoneBehaviorType;
 import org.bukkit.entity.ArmorStand;
 import org.joml.Quaternionf;
 
@@ -35,15 +38,14 @@ public class SingleMEGBalloonHandler {
         this.animationHandler = activeModel.getAnimationHandler();
         this.animationHandler.playAnimation(this.defaultIdleAnimationID, 0.3, 0.3, 1, true);
 
-        // Set up the manual animator
-        activeModel.getBones().values().stream()
-                .filter(b -> b.getParent() == null)
-                .findFirst()
-                .ifPresent(bone -> {
-                    SimpleManualAnimator animator = new SimpleManualAnimator();
-                    bone.setManualAnimator(animator);
-                    this.animator = animator;
-                });
+        // Set up the manual animator for all bones
+        SimpleManualAnimator animator = new SimpleManualAnimator();
+        activeModel.getBones().values().forEach(bone -> {
+            bone.setManualAnimator(animator);
+            bone.setHasGlobalRotation(true);
+        });
+        activeModel.setLockPitch(false);
+        this.animator = animator;
     }
 
     /**
