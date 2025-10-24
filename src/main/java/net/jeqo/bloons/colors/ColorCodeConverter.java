@@ -41,17 +41,5 @@ public class ColorCodeConverter {
         }
         return message;
     }
-
-    /**
-     *                  Converts all Minecraft color codes to Adventure color codes
-     * @param message   The message to convert to Adventure color codes, type java.lang.String
-     * @return          The converted message with new Adventure color codes, type java.lang.String
-     */
-    public static String colorCodeToAdventure(String message) {
-        for (Map.Entry<String, String> entry : colorCodes.entrySet()) {
-            message = message.replace(entry.getValue(), entry.getKey());
-        }
-        return message;
-    }
 }
 

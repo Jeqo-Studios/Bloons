@@ -16,7 +16,6 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.stream.Stream;
 
 /**
@@ -44,16 +43,14 @@ public class ConfigConfiguration {
             Class.forName("com.destroystokyo.paper.ParticleBuilder");
             return true;
         } catch (ClassNotFoundException ignored) {
-            try {
-                String version = org.bukkit.Bukkit.getBukkitVersion();
-                if(version != null && version.toLowerCase().contains("paper")) {
-                    return true;
-                } else {
-                    return false;
-                }
-            } catch (Exception e) {
-                return false;
-            }
+            // Fallback: check version string
+        }
+
+        try {
+            String version = org.bukkit.Bukkit.getBukkitVersion();
+            return version.toLowerCase().contains("paper");
+        } catch (Exception e) {
+            return false;
         }
     }
 

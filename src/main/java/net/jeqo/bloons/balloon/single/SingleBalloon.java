@@ -1,9 +1,5 @@
 package net.jeqo.bloons.balloon.single;
 
-import com.ticxo.modelengine.api.ModelEngineAPI;
-import com.ticxo.modelengine.api.model.ActiveModel;
-import com.ticxo.modelengine.api.model.ModeledEntity;
-import com.ticxo.modelengine.api.model.bone.SimpleManualAnimator;
 import lombok.Getter;
 import lombok.Setter;
 import net.jeqo.bloons.Bloons;
@@ -120,9 +116,6 @@ public class SingleBalloon extends BukkitRunnable {
         // Check if MEG model ID exists and ModelEngine is available
         if (this.getType().getMegModelID() != null && !this.getType().getMegModelID().isEmpty()) {
             try {
-                // Check if ModelEngine is available
-                Class.forName("com.ticxo.modelengine.api.ModelEngineAPI");
-
                 this.setMegHandler(new SingleMEGBalloonHandler());
                 this.getMegHandler().initialize(this.getArmorStand(), this.getType().getMegModelID());
                 this.setHasMEGModel(true);
