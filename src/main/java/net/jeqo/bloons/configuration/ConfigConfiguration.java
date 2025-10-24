@@ -58,6 +58,19 @@ public class ConfigConfiguration {
     }
 
     /**
+     *         Checks if the server has Model Engine installed
+     * @return True if Model Engine is installed, false otherwise, type boolean
+     */
+    public static boolean serverHasModelEngine() {
+        try {
+            Class.forName("com.ticxo.modelengine.core.ModelEngine");
+            return true;
+        } catch (ClassNotFoundException ignored) {
+            return false;
+        }
+    }
+
+    /**
      *          Gets the number of configuration files currently in the balloon configuration folder
      * @return  The number of configuration files in the balloon configuration folder. Returns 0 upon none found. type long
      */
@@ -127,6 +140,11 @@ public class ConfigConfiguration {
                     if (config.getString(key + ".meg-model-id") != null) {
                         if (!isPaperServer()) {
                             Logger.logWarning("Model Engine balloons are only supported on Paper servers. Skipping MEG balloon type: " + key + " in file: " + fileName);
+                            continue;
+                        }
+
+                        if (!serverHasModelEngine()) {
+                            Logger.logWarning("Model Engine plugin not found. Skipping MEG balloon type: " + key + " in file: " + fileName);
                             continue;
                         }
 

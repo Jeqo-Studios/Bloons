@@ -1,9 +1,9 @@
 package net.jeqo.bloons.balloon.single;
 
 import com.ticxo.modelengine.api.ModelEngineAPI;
-import com.ticxo.modelengine.api.animation.handler.AnimationHandler;
 import com.ticxo.modelengine.api.model.ActiveModel;
 import com.ticxo.modelengine.api.model.ModeledEntity;
+import com.ticxo.modelengine.api.model.bone.SimpleManualAnimator;
 import lombok.Getter;
 import lombok.Setter;
 import net.jeqo.bloons.Bloons;
@@ -26,6 +26,7 @@ import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.EulerAngle;
 import org.bukkit.util.Vector;
+import org.joml.Quaternionf;
 
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -44,10 +45,8 @@ public class SingleBalloon extends BukkitRunnable {
     private ItemStack visual;
 
     /** MEG related variables **/
-    private ModeledEntity modeledEntity;
-    private ActiveModel activeModel;
-    private AnimationHandler animationHandler;
-    private final String defaultIdleAnimationID = "idle";
+    private SingleMEGBalloonHandler megHandler;
+    private boolean hasMEGModel;
 
     /** Variables used for the movement of the balloon **/
     private Location playerLocation;
@@ -103,7 +102,6 @@ public class SingleBalloon extends BukkitRunnable {
     public void initializeBalloonArmorStand() {
         if (this.getPlayerLocation().getWorld() == null) {
             Logger.logError("Player world is not currently set. Could not initialize balloon, removing from player.");
-            // Remove the balloon from the player
             SingleBalloonManagement.removeBalloon(player, null);
             return;
         }
@@ -111,33 +109,34 @@ public class SingleBalloon extends BukkitRunnable {
         this.setArmorStand(this.getPlayerLocation().getWorld().spawn(this.getPlayerLocation(), ArmorStand.class));
         this.getArmorStand().setBasePlate(false);
         this.getArmorStand().setVisible(false);
+        this.getArmorStand().setInvisible(true);
         this.getArmorStand().setInvulnerable(true);
         this.getArmorStand().setCanPickupItems(false);
         this.getArmorStand().setGravity(false);
         this.getArmorStand().setSmall(false);
         this.getArmorStand().setMarker(true);
         this.getArmorStand().setCollidable(false);
-        if (this.getType().getMegModelID() == null) {
-            if (this.getArmorStand().getEquipment() != null) {
+
+        // Check if MEG model ID exists and ModelEngine is available
+        if (this.getType().getMegModelID() != null && !this.getType().getMegModelID().isEmpty()) {
+            try {
+                // Check if ModelEngine is available
+                Class.forName("com.ticxo.modelengine.api.ModelEngineAPI");
+
+                this.setMegHandler(new SingleMEGBalloonHandler());
+                this.getMegHandler().initialize(this.getArmorStand(), this.getType().getMegModelID());
+                this.setHasMEGModel(true);
+            } catch (ClassNotFoundException e) {
+                Logger.logError("ModelEngine is not installed but balloon " + this.getType().getId() + " requires it!");
+                this.getArmorStand().getEquipment().setHelmet(this.getVisual());
+            } catch (Exception e) {
+                Logger.logError("Failed to create MEG model for balloon " + this.getType().getId() + ": " + e.getMessage());
                 this.getArmorStand().getEquipment().setHelmet(this.getVisual());
             }
         } else {
-            try {
-                // Create the entity and tag it onto the armor stand
-                ModeledEntity modeledEntity = ModelEngineAPI.createModeledEntity(this.getArmorStand());
-                ActiveModel activeModel = ModelEngineAPI.createActiveModel(this.getType().getMegModelID());
-
-                modeledEntity.addModel(activeModel, true);
-
-                // Set the animation handler to the one of the active model
-                this.setAnimationHandler(activeModel.getAnimationHandler());
-
-                // If an idle animation exists, play it initially
-                this.getAnimationHandler().playAnimation(this.getDefaultIdleAnimationID(), 0.3, 0.3, 1,true);
-            } catch (Exception e) {
-                Logger.logError("An error occurred while creating the MEG model for the balloon " + this.getType().getId() + "! This is because a MEG model error occurred: " + e.getMessage());
-            }
+            this.getArmorStand().getEquipment().setHelmet(this.getVisual());
         }
+
         this.getArmorStand().setCustomName(BalloonConfiguration.BALLOON_ARMOR_STAND_ID);
     }
 
@@ -193,28 +192,27 @@ public class SingleBalloon extends BukkitRunnable {
         this.setMoveLocation(this.getArmorStand().getLocation().subtract(0.0D, this.getType().getBalloonHeight(), 0.0D).clone());
 
         // Set the vector to the player location minus the move location
-        Vector vector = playerLocation.toVector().subtract(this.getMoveLocation().toVector());
-        vector.multiply(0.3D);
-        this.setMoveLocation(this.getMoveLocation().add(vector));
-        double vectorZ = vector.getZ() * 50.0D * -1.0D;
-        double vectorX = vector.getX() * 50.0D * -1.0D;
-        // Create EulerAngle to tilt parts of the armor body
-        EulerAngle tiltAngle = new EulerAngle(Math.toRadians(vectorZ), Math.toRadians(playerLocation.getYaw()), Math.toRadians(vectorX));
+        Vector playerToBalloon = playerLocation.toVector().subtract(this.getMoveLocation().toVector());
+        playerToBalloon.multiply(0.3D);
+        this.setMoveLocation(this.getMoveLocation().add(playerToBalloon));
 
-        // Set the pose(s) of the armor stand
+        // Compute local tilt
+        Vector direction = playerLocation.getDirection().setY(0).normalize();
+        double yawRad = Math.atan2(direction.getX(), direction.getZ());
+        Quaternionf toLocal = new Quaternionf().rotateY((float) -yawRad);
+        Vector localTilt = playerToBalloon.clone();
+        toLocal.transform(localTilt.toVector3f());
+
+        double pitch = Math.toRadians(localTilt.getZ() * 50.0D * -1.0D); // * -1.0D
+        double roll  = Math.toRadians(localTilt.getX() * 50.0D * -1.0D); // * -1.0D
+
+        EulerAngle tiltAngle = new EulerAngle(pitch, (float) yawRad, roll);
+
         ArmorStand armorStand = this.getArmorStand();
 
-        // Set the pose of only the head regardless of the model type
         armorStand.setHeadPose(tiltAngle);
-
-        // Only set the entire pose of the armor stand if it uses MEG, this is to reduce lag across the server
-        // when having 100's of models/armor stands used simultaneously
-        if (this.getType().getMegModelID() != null) {
-            armorStand.setBodyPose(tiltAngle);
-            armorStand.setLeftArmPose(tiltAngle);
-            armorStand.setRightArmPose(tiltAngle);
-            armorStand.setLeftLegPose(tiltAngle);
-            armorStand.setRightLegPose(tiltAngle);
+        if (this.hasMEGModel && this.getMegHandler() != null) {
+            this.getMegHandler().updateRotation(pitch, roll);
         }
 
         // Teleport the balloon to the move location and set the player location yaw
@@ -226,12 +224,8 @@ public class SingleBalloon extends BukkitRunnable {
         }
 
         // If all parts of a MEG balloon exist and the idle animation exists and it isn't playing, play it
-        if (this.getAnimationHandler() != null) {
-            if (this.getAnimationHandler().getAnimation(this.getDefaultIdleAnimationID()) != null) {
-                if (!this.getAnimationHandler().isPlayingAnimation(this.getDefaultIdleAnimationID())) {
-                    this.getAnimationHandler().playAnimation(this.getDefaultIdleAnimationID(), 0.3, 0.3, 1,true);
-                }
-            }
+        if (this.hasMEGModel && this.getMegHandler() != null) {
+            this.getMegHandler().updateAnimation();
         }
 
         this.setPlayerLocation(this.getPlayer().getLocation());
@@ -244,10 +238,8 @@ public class SingleBalloon extends BukkitRunnable {
      * @throws IllegalStateException    If the task has already been cancelled
      */
     public synchronized void cancel() throws IllegalStateException {
-        if (this.getModeledEntity() != null) {
-            // Remove the MEG model if it exists
-            ModeledEntity modeledEntity = ModelEngineAPI.getModeledEntity(this.getArmorStand());
-            modeledEntity.removeModel(this.getType().getMegModelID());
+        if (this.hasMEGModel && this.getMegHandler() != null) {
+            this.getMegHandler().destroy();
         }
         this.getArmorStand().remove();
         this.getChicken().remove();

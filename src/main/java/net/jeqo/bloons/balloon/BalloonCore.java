@@ -79,6 +79,11 @@ public class BalloonCore {
                 continue;
             }
 
+            if (!ConfigConfiguration.serverHasModelEngine()) {
+                Logger.logWarning("The server does not have the ModelEngine plugin installed. Skipping MEG example balloon copy.");
+                continue;
+            }
+
             File file = new File(Bloons.getInstance().getDataFolder() + File.separator + ConfigConfiguration.BALLOON_CONFIGURATION_FOLDER + File.separator + example.getKey());
             if (file.exists()) continue;
 
