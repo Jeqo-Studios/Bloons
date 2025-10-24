@@ -76,7 +76,7 @@ public class MultipartBalloonNode {
     double turningSplineInterpolation;
 
     /**
-         *                  Builder for creating lead segment.
+     *                      Builder for creating lead segment.
      * @param x             X-axis position, type float
      * @param y             Y-axis position, type float
      * @param z             Z-axis position, type float
@@ -95,14 +95,12 @@ public class MultipartBalloonNode {
         this.setYAxisInterpolation(yAxisInterpolation);
         this.setTurningSplineInterpolation(turningSplineInterpolation);
 
+        // Set point B right below point A; Fixes initial teleport jump
+        this.getPointB().set(x, y - length, z);
+
         // Spawn at the actual Y position of this node (not player Y)
         double spawnY = Math.max(y + SPAWN_Y_OFFSET, MIN_SPAWN_Y);
         this.initializeArmorStand(x, spawnY, z);
-
-        float dx = length * (float)cos(0);
-        float dz = length * (float)sin(0);
-
-        this.getPointB().set(this.getPointA().x + dx, this.getPointA().y, this.getPointA().z + dz);
     }
 
     /**
@@ -122,14 +120,12 @@ public class MultipartBalloonNode {
         this.setYAxisInterpolation(yAxisInterpolation);
         this.setTurningSplineInterpolation(turningSplineInterpolation);
 
+        // Set point B right below point A; Fixes initial teleport jump
+        this.getPointB().set(this.getPointA().x, this.getPointA().y - length, this.getPointA().z);
+
         // Spawn at the actual Y position of pointA (not player Y)
         double spawnY = Math.max(this.getPointA().y + SPAWN_Y_OFFSET, MIN_SPAWN_Y);
         this.initializeArmorStand(this.getPointA().x, spawnY, this.getPointA().z);
-
-        float dx = length * (float)cos(0);
-        float dz = length * (float)sin(0);
-
-        this.getPointB().set(this.getPointA().x + dx, this.getPointA().z, this.getPointA().z + dz);
     }
 
     /**
