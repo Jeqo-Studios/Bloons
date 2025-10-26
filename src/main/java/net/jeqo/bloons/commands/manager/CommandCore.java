@@ -247,9 +247,20 @@ public class CommandCore implements CommandExecutor {
         meta.setItemName(singleBalloonType.getKey());
         setBalloonLore(meta, singleBalloonType);
         setBalloonDisplayName(meta, singleBalloonType);
-        CustomModelDataComponent customModelDataComponent = meta.getCustomModelDataComponent();
-        customModelDataComponent.setStrings(List.of(singleBalloonType.getCustomModelData()));
-        meta.setCustomModelDataComponent(customModelDataComponent);
+
+        String customModelData = singleBalloonType.getCustomModelData();
+        if (customModelData != null && !customModelData.isEmpty()) {
+            CustomModelDataComponent customModelDataComponent = meta.getCustomModelDataComponent();
+            customModelDataComponent.setStrings(List.of(customModelData));
+            meta.setCustomModelDataComponent(customModelDataComponent);
+        }
+
+        String itemModel = singleBalloonType.getItemModel();
+        if (itemModel != null && !itemModel.isEmpty()) {
+            NamespacedKey itemModelKey = NamespacedKey.fromString(itemModel);
+            meta.setItemModel(itemModelKey);
+        }
+
         setBalloonColor(meta, singleBalloonType);
 
         NamespacedKey balloonIdKey = new NamespacedKey(Bloons.getInstance(), "balloonId");
@@ -281,9 +292,19 @@ public class CommandCore implements CommandExecutor {
         meta.setItemName(multipartBalloonType.getId());
         setBalloonLore(meta, multipartBalloonType);
         setBalloonDisplayName(meta, multipartBalloonType);
-        CustomModelDataComponent customModelDataComponent = meta.getCustomModelDataComponent();
-        customModelDataComponent.setStrings(List.of(multipartBalloonType.getHeadModel().getCustomModelData()));
-        meta.setCustomModelDataComponent(customModelDataComponent);
+
+        String customModelData = multipartBalloonType.getHeadModel().getCustomModelData();
+        if (customModelData != null && !customModelData.isEmpty()) {
+            CustomModelDataComponent customModelDataComponent = meta.getCustomModelDataComponent();
+            customModelDataComponent.setStrings(List.of(customModelData));
+            meta.setCustomModelDataComponent(customModelDataComponent);
+        }
+
+        String itemModel = multipartBalloonType.getHeadModel().getItemModel();
+        if (itemModel != null && !itemModel.isEmpty()) {
+            NamespacedKey itemModelKey = NamespacedKey.fromString(itemModel);
+            meta.setItemModel(itemModelKey);
+        }
 
         if (multipartBalloonType.getHeadModel().getColor() != null) {
             setBalloonColor(meta, multipartBalloonType);

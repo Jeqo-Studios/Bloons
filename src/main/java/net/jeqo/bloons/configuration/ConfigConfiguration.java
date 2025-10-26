@@ -174,6 +174,7 @@ public class ConfigConfiguration {
                                     config.getString(key + ".material"),
                                     config.getString(key + ".color"),
                                     config.getString(key + ".custom-model-data"),
+                                    config.getString(key + ".item-model"),
                                     config.getString(key + ".name"),
                                     config.getStringList(key + ".lore").toArray(new String[0])
                             ));
@@ -264,19 +265,22 @@ public class ConfigConfiguration {
                                         BalloonSegmentType.HEAD,
                                         config.getString(key + ".head.material"),
                                         config.getString(key + ".head.color"),
-                                        config.getString(key + ".head.custom-model-data")
+                                        config.getString(key + ".head.custom-model-data"),
+                                        config.getString(key + ".head.item-model")
                                 ),
                                 new MultipartBalloonModel(
                                         BalloonSegmentType.BODY,
                                         config.getString(key + ".body.material"),
                                         config.getString(key + ".body.color"),
-                                        config.getString(key + ".body.custom-model-data")
+                                        config.getString(key + ".body.custom-model-data"),
+                                        config.getString(key + ".body.item-model")
                                 ),
                                 new MultipartBalloonModel(
                                         BalloonSegmentType.TAIL,
                                         config.getString(key + ".tail.material"),
                                         config.getString(key + ".tail.color"),
-                                        config.getString(key + ".tail.custom-model-data")
+                                        config.getString(key + ".tail.custom-model-data"),
+                                        config.getString(key + ".tail.item-model")
                                 )
                         ));
                     } catch (Exception e) {

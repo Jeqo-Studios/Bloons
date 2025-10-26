@@ -28,11 +28,14 @@ multipart_example:
     material: LEATHER_HORSE_ARMOR # The material of the head
     color: '#FF0000' # The color of the head item, this is optional
     custom-model-data: "balloon_dyeable" # The custom model data of the head, this is not required but is recommended for use of models
+#   item-model: "bloons:example" # The item model of the head, this is not required but can be used for custom item models
   body: # Body must be supplied for a balloon of this kind
     material: LEATHER_HORSE_ARMOR # The material of the body
     color: '#FFFFFF' # The color of the body, this is optional
     custom-model-data: "balloon_dyeable" # The custom model data of the body, this is not required but is recommended for use of models
+#   item-model: "bloons:example" # The item model of the head, this is not required but can be used for custom item models
   tail: # Tail must be supplied for a balloon of this kind
     material: LEATHER_HORSE_ARMOR # The material of the tail
     color: '#0000FF' # The color of the tail, this is optional
     custom-model-data: "balloon_dyeable" # The custom model data of the tail, this is not required but is recommended for use of models
+#   item-model: "bloons:example" # The item model of the head, this is not required but can be used for custom item models

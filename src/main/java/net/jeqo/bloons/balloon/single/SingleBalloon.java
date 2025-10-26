@@ -10,6 +10,7 @@ import net.jeqo.bloons.management.SingleBalloonManagement;
 import net.jeqo.bloons.colors.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Chicken;
@@ -285,9 +286,20 @@ public class SingleBalloon extends BukkitRunnable {
         ItemMeta meta = item.getItemMeta();
 
         if (meta != null) {
-            CustomModelDataComponent customModelDataComponent = meta.getCustomModelDataComponent();
-            customModelDataComponent.setStrings(List.of(singleBalloonType.getCustomModelData()));
-            meta.setCustomModelDataComponent(customModelDataComponent);
+            // Set custom model data if present
+            String customModelData = singleBalloonType.getCustomModelData();
+            if (customModelData != null && !customModelData.isEmpty()) {
+                CustomModelDataComponent customModelDataComponent = meta.getCustomModelDataComponent();
+                customModelDataComponent.setStrings(List.of(customModelData));
+                meta.setCustomModelDataComponent(customModelDataComponent);
+            }
+
+            // Set item model if present
+            String itemModel = singleBalloonType.getItemModel();
+            if (itemModel != null && !itemModel.isEmpty()) {
+                NamespacedKey itemModelKey = NamespacedKey.fromString(itemModel);
+                meta.setItemModel(itemModelKey);
+            }
 
             String colorHex = singleBalloonType.getColor();
             if (colorHex != null) {
@@ -304,8 +316,8 @@ public class SingleBalloon extends BukkitRunnable {
                     }
                 } else if (material == Material.FIREWORK_STAR && meta instanceof org.bukkit.inventory.meta.FireworkEffectMeta fireworkMeta) {
                     org.bukkit.FireworkEffect effect = org.bukkit.FireworkEffect.builder()
-                        .withColor(Color.hexToColor(colorHex))
-                        .build();
+                            .withColor(Color.hexToColor(colorHex))
+                            .build();
                     fireworkMeta.setEffect(effect);
                     item.setItemMeta(fireworkMeta);
                     return item;

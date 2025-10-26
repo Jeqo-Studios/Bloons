@@ -31,7 +31,11 @@ public class MultipartBalloonModel {
     /**
      * The custom model data value stored in the item metadata
      */
-    private String customModelData; // required
+    private String customModelData; // optional
+    /**
+     * The name used to reference and set the item model
+     */
+    private String itemModel; // Optional
 
     /**
      *                          Creates a new model for a multipart balloon
@@ -39,14 +43,16 @@ public class MultipartBalloonModel {
      * @param material          The name of the Bukkit Material used to create the item, type java.lang.String
      * @param color             The color of the model as a hex color code value, type java.lang.String
      * @param customModelData   The custom model data value stored in the item metadata, type String
+     * @param itemModel         The item model name used to reference and set the item model, type java.lang.String
      */
-    public MultipartBalloonModel(BalloonSegmentType segmentType, String material, String color, String customModelData) {
+    public MultipartBalloonModel(BalloonSegmentType segmentType, String material, String color, String customModelData, String itemModel) {
         this.setSegmentType(segmentType);
         this.setMaterial(material);
         if (color != null && !color.isEmpty() && !color.equals(this.getColor())) {
             this.setColor(color);
         }
         this.setCustomModelData(customModelData);
+        this.setItemModel(itemModel);
     }
 
     /**
@@ -64,12 +70,12 @@ public class MultipartBalloonModel {
         }
 
         // Check if the color is null and the custom model data is null, return only the raw ItemStack
-        if (this.getColor() == null && this.getCustomModelData() == null) {
+        if (this.getColor() == null && this.getCustomModelData() == null && this.getItemModel() == null) {
             return new ItemStack(material);
 
         // Check if the color is null and the custom model data is not null, return the model with the custom model data
         } else if (this.getColor() == null) {
-            return BalloonModel.createBlankModel(material, this.getCustomModelData());
+            return BalloonModel.createBlankModel(material, this.getCustomModelData(), this.getItemModel());
 
         // If everything provided isn't null and is valid, create the model with the specified color and custom model data
         } else if (this.getColor().startsWith("#")) {
@@ -81,10 +87,10 @@ public class MultipartBalloonModel {
 
             // Convert the hex code to a valid org.bukkit.Color object
             org.bukkit.Color color = Color.hexToColor(this.getColor());
-            return BalloonModel.createColouredModel(material, color, this.getCustomModelData());
+            return BalloonModel.createColouredModel(material, color, this.getCustomModelData(), this.getItemModel());
 
         // If the color is not a hex code and there is no custom model data, only return a raw org.bukkit.inventory.ItemStack
-        } else if (this.getCustomModelData() == null) {
+        } else if (this.getCustomModelData() == null && this.getItemModel() == null) {
             return new ItemStack(material);
         }
 

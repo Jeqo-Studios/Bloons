@@ -46,6 +46,10 @@ public class SingleBalloonType {
      */
     private String customModelData;
     /**
+     * The item model name used for the balloon item
+     */
+    private String itemModel;
+    /**
      * The name of the balloon that is displayed both in chat and in the Bloons menu
      */
     private String name;
@@ -70,10 +74,11 @@ public class SingleBalloonType {
      * @param material          The name of the Bukkit Material used to create the item, type java.lang.String
      * @param color             The color of the model as a hex color code value, type java.lang.String
      * @param customModelData   The custom model data value stored in the item metadata, type java.lang.String
+     * @param itemModel         The item model name used for the balloon item, type java.lang.String
      * @param name              The name of the balloon, type java.lang.String
      * @param lore              The lore of the balloon, type java.lang.String[]
      */
-    public SingleBalloonType(String key, String id, String permission, double leashHeight, double balloonHeight, String material, String color, String customModelData, String name, String[] lore) {
+    public SingleBalloonType(String key, String id, String permission, double leashHeight, double balloonHeight, String material, String color, String customModelData, String itemModel, String name, String[] lore) {
         this.setKey(key);
         this.setId(id);
         this.setPermission(permission);
@@ -82,6 +87,7 @@ public class SingleBalloonType {
         this.setMaterial(material);
         this.setColor(color);
         this.setCustomModelData(customModelData);
+        this.setItemModel(itemModel);
         this.setName(name);
         this.setLore(lore);
     }

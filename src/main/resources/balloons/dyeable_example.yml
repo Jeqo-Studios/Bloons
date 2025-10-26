@@ -10,6 +10,7 @@ dyeable_example:
   material: LEATHER_HORSE_ARMOR
   color: '#ffffff'
   custom-model-data: "balloon_dyeable"
+# item-model: "bloons:example" # The item model of the balloon, this is not required but can be used for custom item models
   name: '&fDyeable Balloon'
   lore:
     - '&8Bloons Example Balloon'
