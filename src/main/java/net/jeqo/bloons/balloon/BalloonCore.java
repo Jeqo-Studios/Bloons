@@ -37,7 +37,7 @@ public class BalloonCore {
     private final HashMap<String, ExampleBalloonType> exampleBalloons = new HashMap<>() {{
         put("color_pack_example.yml", ExampleBalloonType.REGULAR);
         put("dyeable_example.yml", ExampleBalloonType.REGULAR);
-        put("meg_example.yml", ExampleBalloonType.MEG);
+//        put("meg_example.yml", ExampleBalloonType.MEG); // TODO: Proper MEG integration
         put("multipart_example.yml", ExampleBalloonType.REGULAR);
     }};
 
