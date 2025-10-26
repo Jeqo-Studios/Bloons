@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import net.jeqo.bloons.balloon.multipart.MultipartBalloonType;
 import net.jeqo.bloons.configuration.BalloonConfiguration;
+import net.jeqo.bloons.logger.Logger;
 import org.bukkit.Location;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
@@ -268,7 +269,15 @@ public class MultipartBalloonNode {
 
         double yaw = Math.atan2(-direction.getX(), direction.getZ()) + Math.toRadians(180.0);
         double pitch = Math.asin(direction.getY());
-        double roll = 0.0;
+
+        double time = System.currentTimeMillis() / 1000.0;
+
+        if (!this.getBalloonType().isRollOscillationEnabled()) {
+            // Disable all oscillation by setting roll to 0
+            return new EulerAngle(pitch, yaw, 0);
+        }
+
+        double roll = Math.sin(time + this.getIndex() * this.getBalloonType().getRollOscillationPhaseOffset()) * this.getBalloonType().getRollOscillationAmplitude();
 
         return new EulerAngle(pitch, yaw, roll);
     }

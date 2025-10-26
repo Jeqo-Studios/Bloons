@@ -21,6 +21,9 @@ multipart_example:
   passive-sine-wave-speed: 0.05 # The speed of the passive sine wave
   passive-sine-wave-amplitude: 0.5 # The amplitude of the passive sine wave
   passive-nose-sine-wave-amplitude: 0.5 # The amplitude of the passive sine wave for the nose
+  roll-oscillation-enabled: true # Whether roll oscillation is enabled
+  roll-oscillation-amplitude: 0.2 # The amplitude of the roll oscillation
+  roll-oscillation-phase-offset: 1.0 # The phase offset of the roll oscillation between nodes
   head: # Head must be supplied for a balloon of this kind
     material: FIREWORK_STAR # The material of the head
     color: '#FF0000' # The color of the head item, this is optional

@@ -257,6 +257,9 @@ public class ConfigConfiguration {
                                 config.getDouble(key + ".passive-sine-wave-speed"),
                                 config.getDouble(key + ".passive-sine-wave-amplitude"),
                                 config.getDouble(key + ".passive-nose-sine-wave-amplitude"),
+                                config.getBoolean(key + ".roll-oscillation-enabled"),
+                                config.getDouble(key + ".roll-oscillation-amplitude"),
+                                config.getDouble(key + ".roll-oscillation-phase-offset"),
                                 new MultipartBalloonModel(
                                         BalloonSegmentType.HEAD,
                                         config.getString(key + ".head.material"),

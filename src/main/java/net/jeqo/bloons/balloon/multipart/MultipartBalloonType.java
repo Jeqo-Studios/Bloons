@@ -78,6 +78,18 @@ public class MultipartBalloonType {
      */
     private double passiveNoseSineWaveAmplitude = 0.5D; // optional
     /**
+     * Whether to enable roll oscillation on the balloon
+     */
+    private boolean rollOscillationEnabled = false; // optional
+    /**
+     * The amplitude of the roll oscillation animation. A comfortable number is between 0 and 1
+     */
+    private double rollOscillationAmplitude = 0.2D; // optional
+    /**
+     * The offset to adjust for more or less lag in between roll oscillations starting from the head balloon.
+     */
+    private double rollOscillationPhaseOffset = 1.0D; // optional
+    /**
      * The model used for the head node
      */
     private MultipartBalloonModel headModel;
@@ -109,11 +121,14 @@ public class MultipartBalloonType {
      * @param passiveSineWaveSpeed          The speed of the passive sine wave animation, type double
      * @param passiveSineWaveAmplitude      The amplitude of the passive sine wave animation, type double
      * @param passiveNoseSineWaveAmplitude  The amplitude of the passive sine wave animation starting at the nose, type double
+     * @param rollOscillationEnabled        Whether to enable roll oscillation on the balloon, type boolean
+     * @param rollOscillationAmplitude      The amplitude of the roll oscillation animation, type double
+     * @param rollOscillationPhaseOffset    The offset to adjust for more or less lag in between roll oscillations starting from the head balloon, type double
      * @param headModel                     The model used for the head node, type net.jeqo.bloons.balloon.multipart.MultipartBalloonModel
      * @param bodyModel                     The model used for the body node, type net.jeqo.bloons.balloon.multipart.MultipartBalloonModel
      * @param tailModel                     The model used for the tail node, type net.jeqo.bloons.balloon.multipart.MultipartBalloonModel
      */
-    public MultipartBalloonType(String id, String permission, String name, String[] lore, int nodeCount, double distanceBetweenNodes, double leashHeight, double headNodeOffset, double bodyNodeOffset, double tailNodeOffset, double maxNodeJointAngle, double yAxisInterpolation, double turningSplineInterpolation, double passiveSineWaveSpeed, double passiveSineWaveAmplitude, double passiveNoseSineWaveAmplitude, MultipartBalloonModel headModel, MultipartBalloonModel bodyModel, MultipartBalloonModel tailModel) {
+    public MultipartBalloonType(String id, String permission, String name, String[] lore, int nodeCount, double distanceBetweenNodes, double leashHeight, double headNodeOffset, double bodyNodeOffset, double tailNodeOffset, double maxNodeJointAngle, double yAxisInterpolation, double turningSplineInterpolation, double passiveSineWaveSpeed, double passiveSineWaveAmplitude, double passiveNoseSineWaveAmplitude, boolean rollOscillationEnabled, double rollOscillationAmplitude, double rollOscillationPhaseOffset, MultipartBalloonModel headModel, MultipartBalloonModel bodyModel, MultipartBalloonModel tailModel) {
         this.setId(id); // required
         this.setPermission(permission); // required
         this.setName(name); // required
@@ -130,6 +145,9 @@ public class MultipartBalloonType {
         if (passiveSineWaveSpeed > 0.0D) this.setPassiveSineWaveSpeed(passiveSineWaveSpeed); // 0.05 by default, optional
         if (passiveSineWaveAmplitude > 0.0D) this.setPassiveSineWaveAmplitude(passiveSineWaveAmplitude); // 0.5 by default, optional
         if (passiveNoseSineWaveAmplitude > 0.0D) this.setPassiveNoseSineWaveAmplitude(passiveNoseSineWaveAmplitude); // 0.5 by default, optional
+        this.setRollOscillationEnabled(rollOscillationEnabled); // false by default, optional
+        if (rollOscillationAmplitude > 0.0D) this.setRollOscillationAmplitude(rollOscillationAmplitude); // 0.2 by default, optional
+        if (rollOscillationPhaseOffset > 0.0D) this.setRollOscillationPhaseOffset(rollOscillationPhaseOffset); // 1.0 by default, optional
         this.setHeadModel(headModel); // required
         this.setBodyModel(bodyModel); // required
         this.setTailModel(tailModel); // required
