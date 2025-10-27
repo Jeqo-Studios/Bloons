@@ -10,6 +10,9 @@ import net.jeqo.bloons.configuration.PluginConfiguration;
 import net.jeqo.bloons.listeners.*;
 import net.jeqo.bloons.listeners.multipart.MultipartBalloonPlayerJoinListener;
 import net.jeqo.bloons.listeners.multipart.MultipartBalloonPlayerLeaveListener;
+import net.jeqo.bloons.listeners.multipart.MultipartBalloonPlayerListener;
+import net.jeqo.bloons.listeners.single.SingleBalloonPlayerJoinListener;
+import net.jeqo.bloons.listeners.single.SingleBalloonPlayerLeaveListener;
 import net.jeqo.bloons.listeners.single.SingleBalloonPlayerListener;
 import net.jeqo.bloons.message.Languages;
 import net.jeqo.bloons.health.UpdateChecker;
@@ -78,12 +81,16 @@ public final class Bloons extends JavaPlugin {
         setBalloonCore(new BalloonCore(getInstance()));
 
         // Stage listeners
-        getListenerCore().stageListener(new SingleBalloonPlayerListener());
         getListenerCore().stageListener(new BalloonChickenLeashListener());
         getListenerCore().stageListener(new BalloonMenuListener());
         getListenerCore().stageListener(new BalloonChickenEntityListener());
         getListenerCore().stageListener(new BalloonArmorStandEntityListener());
 
+        getListenerCore().stageListener(new SingleBalloonPlayerListener());
+        getListenerCore().stageListener(new SingleBalloonPlayerJoinListener());
+        getListenerCore().stageListener(new SingleBalloonPlayerLeaveListener());
+
+        getListenerCore().stageListener(new MultipartBalloonPlayerListener());
         getListenerCore().stageListener(new MultipartBalloonPlayerJoinListener());
         getListenerCore().stageListener(new MultipartBalloonPlayerLeaveListener());
 
