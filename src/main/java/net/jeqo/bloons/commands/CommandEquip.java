@@ -34,7 +34,7 @@ public class CommandEquip extends Command {
         super(plugin);
         this.addCommandAlias("equip");
         this.setCommandDescription("Equip a balloon");
-        this.setCommandSyntax("/bloons equip <balloon>");
+        this.setCommandSyntax("/bloons equip <balloon> [#RRGGBB]");
         this.setRequiredPermission(CommandPermission.EQUIP);
     }
 
@@ -46,6 +46,17 @@ public class CommandEquip extends Command {
         if (args.length < 1) usage(player);
 
         String balloonID = args[0];
+
+        // Optional color override
+        String colorOverride = null;
+        if (args.length >= 2) {
+            colorOverride = args[1];
+            if (!colorOverride.matches("^#([A-Fa-f0-9]{6})$")) {
+                String invalidHex = Languages.getMessage("prefix") + String.format(Languages.getMessage("invalid-hex-code"), colorOverride);
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', invalidHex));
+                return false;
+            }
+        }
 
         // If the balloon ID isn't found in both balloon types, send a message to the player
         if (Bloons.getBalloonCore().containsSingleBalloon(balloonID) && Bloons.getBalloonCore().containsMultipartBalloon(balloonID)) {
@@ -97,9 +108,9 @@ public class CommandEquip extends Command {
 
             // If the balloon ID is a single balloon type, equip the balloon with the single associated methods
         } else {
-            // Check if a balloon needs to be added or removed
+            // Check if a balloon needs to be added or removed, pass override color if present
             SingleBalloonManagement.removeBalloon(player, Bloons.getPlayerSingleBalloons().get(player.getUniqueId()));
-            SingleBalloon.checkBalloonRemovalOrAdd(player, balloonID);
+            SingleBalloon.checkBalloonRemovalOrAdd(player, balloonID, colorOverride);
 
             if (singleBalloonType == null) {
                 Logger.logToPlayer(LoggingLevel.ERROR, player, "The current balloon type is null! Please correct this in the config.");

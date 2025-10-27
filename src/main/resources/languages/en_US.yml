@@ -28,4 +28,4 @@ messages:
 
   menu-slot-out-of-bounds: '%s menu page button slot(s) out of bounds!'
 
-  invalid-hex-code: 'Invalid hex code: %s'
+  invalid-hex-code: '&cInvalid hex code: %s'

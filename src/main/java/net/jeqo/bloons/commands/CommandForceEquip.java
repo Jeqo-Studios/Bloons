@@ -32,14 +32,14 @@ public class CommandForceEquip extends Command {
         super(plugin);
         this.addCommandAlias("fequip");
         this.setCommandDescription("Equip a balloon to a player");
-        this.setCommandSyntax("/bloons fequip <player> <balloon>");
+        this.setCommandSyntax("/bloons fequip <player> <balloon> [#RRGGBB]");
         this.setRequiredPermission(CommandPermission.FORCE);
     }
 
     @Override
     public boolean execute(CommandSender sender, String[] args) {
-        // If the arguments aren't within the range of the command, send the usage message
-        if (args.length < 1) usage(sender);
+        // Require at least player and balloon
+        if (args.length < 2) usage(sender);
 
         Player player = Bukkit.getPlayer(args[0]);
 
@@ -51,6 +51,17 @@ public class CommandForceEquip extends Command {
         }
 
         String balloonID = args[1];
+
+        // Optional color override
+        String colorOverride = null;
+        if (args.length >= 3) {
+            colorOverride = args[2];
+            if (!colorOverride.matches("^#([A-Fa-f0-9]{6})$")) {
+                String invalidHex = Languages.getMessage("prefix") + Languages.getMessage("invalid-hex-code");
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', invalidHex));
+                return false;
+            }
+        }
 
         // If the balloon ID isn't found in both balloon types, send a message to the sender
         if (Bloons.getBalloonCore().containsSingleBalloon(balloonID) && Bloons.getBalloonCore().containsMultipartBalloon(balloonID)) {
@@ -81,13 +92,13 @@ public class CommandForceEquip extends Command {
             String equippedMessage = Languages.getMessage("prefix") + String.format(Languages.getMessage("equipped"), type.getName());
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', equippedMessage));
 
-        // If the balloon ID is a single balloon type, equip the balloon with the single associated methods
+            // If the balloon ID is a single balloon type, equip the balloon with the single associated methods
         } else {
             SingleBalloonType singleBalloonType = Bloons.getBalloonCore().getSingleBalloonByID(balloonID);
 
-            // Check if a balloon needs to be added or removed
+            // Check if a balloon needs to be added or removed, pass optional colour override
             SingleBalloonManagement.removeBalloon(player, Bloons.getPlayerSingleBalloons().get(player.getUniqueId()));
-            SingleBalloon.checkBalloonRemovalOrAdd(player, balloonID);
+            SingleBalloon.checkBalloonRemovalOrAdd(player, balloonID, colorOverride);
 
             String equippedMessage = Languages.getMessage("prefix") + String.format(Languages.getMessage("equipped"), singleBalloonType.getName());
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', equippedMessage));

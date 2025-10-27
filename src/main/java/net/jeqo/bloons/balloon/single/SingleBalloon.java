@@ -54,18 +54,33 @@ public class SingleBalloon extends BukkitRunnable {
 
     // A prefix that is needed for dyable materials
     private static final String LEATHER_MATERIAL_PREFIX = "LEATHER_";
+    /**
+     * Optional override colour for the balloon visual (hex string like #RRGGBB)
+     */
+    private String overrideColor;
 
     /**
-     *                      Constructor for the SingleBalloon class
+     *                      Constructor for the SingleBalloon class (existing usage)
      * @param player        The player to attach the balloon to, type org.bukkit.entity.Player
      * @param balloonID     The ID of the balloon to attach to the player, type java.lang.String
      */
     public SingleBalloon(Player player, String balloonID) {
+        this(player, balloonID, null);
+    }
+
+    /**
+     *                      Constructor for the SingleBalloon class with colour override
+     * @param player        The player to attach the balloon to, type org.bukkit.entity.Player
+     * @param balloonID     The ID of the balloon to attach to the player, type java.lang.String
+     * @param overrideColor Optional hex colour override (e.g. "#ff0000")
+     */
+    public SingleBalloon(Player player, String balloonID, String overrideColor) {
         this.setPlayer(player);
         this.setType(Bloons.getBalloonCore().getSingleBalloonByID(balloonID));
+        this.setOverrideColor(overrideColor);
 
         if (this.getType().getMegModelID() == null) {
-            this.setVisual(getConfiguredBalloonVisual(balloonID));
+            this.setVisual(getConfiguredBalloonVisual(balloonID, overrideColor));
         }
     }
 
@@ -260,10 +275,12 @@ public class SingleBalloon extends BukkitRunnable {
 
     /**
      *                      Retrieves the item stack object of the visual appearance of the balloon
+     * Overload that accepts an optional override color
      * @param balloonID     The balloon ID to get the visual appearance of, type java.lang.String
+     * @param overrideColor Optional hex color override (e.g. "#RRGGBB")
      * @return              The item object that contains the configured balloon model, returns a barrier if there is an issue, type org.bukkit.inventory.ItemStack
      */
-    public ItemStack getConfiguredBalloonVisual(String balloonID) {
+    public ItemStack getConfiguredBalloonVisual(String balloonID, String overrideColor) {
         SingleBalloonType singleBalloonType = Bloons.getBalloonCore().getSingleBalloonByID(balloonID);
 
         if (singleBalloonType == null) {
@@ -301,7 +318,9 @@ public class SingleBalloon extends BukkitRunnable {
                 meta.setItemModel(itemModelKey);
             }
 
-            String colorHex = singleBalloonType.getColor();
+            // Decide which colour to use: override takes precedence
+            String colorHex = (overrideColor != null && !overrideColor.isEmpty()) ? overrideColor : singleBalloonType.getColor();
+
             if (colorHex != null) {
                 if (singleBalloonType.getMaterial().startsWith(LEATHER_MATERIAL_PREFIX)) {
                     if (colorHex.equalsIgnoreCase("potion")) {
@@ -330,11 +349,21 @@ public class SingleBalloon extends BukkitRunnable {
     }
 
     /**
-     *                  Checks if a balloon needs to be removed or added
+     *                  Checks if a balloon needs to be removed or added (existing API)
      * @param player    The player to check, type org.bukkit.entity.Player
      * @param balloonID The balloon ID to check, type java.lang.String
      */
     public static void checkBalloonRemovalOrAdd(final Player player, final String balloonID) {
+        checkBalloonRemovalOrAdd(player, balloonID, null);
+    }
+
+    /**
+     *                  Checks if a balloon needs to be removed or added with optional color override
+     * @param player        The player to check, type org.bukkit.entity.Player
+     * @param balloonID     The balloon ID to check, type java.lang.String
+     * @param overrideColor Optional hex color override (e.g. "#RRGGBB")
+     */
+    public static void checkBalloonRemovalOrAdd(final Player player, final String balloonID, final String overrideColor) {
         new BukkitRunnable() {
             public void run() {
                 // Gets and checks if the player has a balloon already
@@ -345,7 +374,7 @@ public class SingleBalloon extends BukkitRunnable {
                 SingleBalloonManagement.removeBalloon(player, null);
 
                 // Create a new balloon and add it to the player/start the runnables and add the player to the maps
-                SingleBalloon balloon = new SingleBalloon(player, balloonID);
+                SingleBalloon balloon = new SingleBalloon(player, balloonID, overrideColor);
                 balloon.runTaskTimer(Bloons.getInstance(), 0L, 1L);
                 Bloons.getPlayerSingleBalloons().put(player.getUniqueId(), balloon);
                 Bloons.getPlayerSingleBalloonID().put(player.getUniqueId(), balloonID);
