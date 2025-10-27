@@ -32,7 +32,7 @@ public class CommandForceEquip extends Command {
         super(plugin);
         this.addCommandAlias("fequip");
         this.setCommandDescription("Equip a balloon to a player");
-        this.setCommandSyntax("/bloons fequip <player> <balloon> [#RRGGBB]");
+        this.setCommandSyntax("/bloons fequip <player> <balloon> [#HEAD] [#BODY] [#TAIL]  (single balloons still accept \\[#RRGGBB\\] as before)");
         this.setRequiredPermission(CommandPermission.FORCE);
     }
 
@@ -52,14 +52,54 @@ public class CommandForceEquip extends Command {
 
         String balloonID = args[1];
 
-        // Optional color override
-        String colorOverride = null;
-        if (args.length >= 3) {
-            colorOverride = args[2];
-            if (!colorOverride.matches("^#([A-Fa-f0-9]{6})$")) {
-                String invalidHex = Languages.getMessage("prefix") + Languages.getMessage("invalid-hex-code");
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', invalidHex));
-                return false;
+        // Optional color overrides
+        String colorOverride = null; // single balloons
+        String headOverride = null;
+        String bodyOverride = null;
+        String tailOverride = null;
+
+        final String hexRegex = "^#([A-Fa-f0-9]{6})$";
+
+        // Determine types
+        MultipartBalloonType type = Bloons.getBalloonCore().getMultipartBalloonByID(balloonID);
+        SingleBalloonType singleBalloonType = Bloons.getBalloonCore().getSingleBalloonByID(balloonID);
+
+        // Parse color args depending on type
+        if (type != null) {
+            // args start at index 2: [player, balloon, head, body, tail]
+            if (args.length >= 3) {
+                headOverride = args[2];
+                if (!headOverride.matches(hexRegex)) {
+                    String invalidHex = Languages.getMessage("prefix") + String.format(Languages.getMessage("invalid-hex-code"), headOverride);
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', invalidHex));
+                    return false;
+                }
+            }
+            if (args.length >= 4) {
+                bodyOverride = args[3];
+                if (!bodyOverride.matches(hexRegex)) {
+                    String invalidHex = Languages.getMessage("prefix") + String.format(Languages.getMessage("invalid-hex-code"), bodyOverride);
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', invalidHex));
+                    return false;
+                }
+            }
+            if (args.length >= 5) {
+                tailOverride = args[4];
+                if (!tailOverride.matches(hexRegex)) {
+                    String invalidHex = Languages.getMessage("prefix") + String.format(Languages.getMessage("invalid-hex-code"), tailOverride);
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', invalidHex));
+                    return false;
+                }
+            }
+        } else {
+            // single balloon: optional single hex at args[2]
+            if (args.length >= 3) {
+                colorOverride = args[2];
+                if (!colorOverride.matches(hexRegex)) {
+                    String invalidHex = Languages.getMessage("prefix") + String.format(Languages.getMessage("invalid-hex-code"), colorOverride);
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', invalidHex));
+                    return false;
+                }
             }
         }
 
@@ -70,7 +110,6 @@ public class CommandForceEquip extends Command {
             return false;
         }
 
-        MultipartBalloonType type = Bloons.getBalloonCore().getMultipartBalloonByID(balloonID);
         MultipartBalloon previousBalloon = MultipartBalloonManagement.getPlayerBalloon(player.getUniqueId());
 
         // If the player has a previous multipart balloon, unequip it
@@ -82,6 +121,12 @@ public class CommandForceEquip extends Command {
         // If the balloon ID is a multipart balloon type, equip the balloon with the multipart associated methods
         if (type != null) {
             MultipartBalloonBuilder builder = new MultipartBalloonBuilder(type, player);
+
+            // apply overrides if present
+            if (headOverride != null) builder.setHeadColorOverride(headOverride);
+            if (bodyOverride != null) builder.setBodyColorOverride(bodyOverride);
+            if (tailOverride != null) builder.setTailColorOverride(tailOverride);
+
             SingleBalloonManagement.removeBalloon(player, Bloons.getPlayerSingleBalloons().get(player.getUniqueId()));
             MultipartBalloon balloon = builder.build();
             balloon.initialize();
@@ -94,8 +139,6 @@ public class CommandForceEquip extends Command {
 
             // If the balloon ID is a single balloon type, equip the balloon with the single associated methods
         } else {
-            SingleBalloonType singleBalloonType = Bloons.getBalloonCore().getSingleBalloonByID(balloonID);
-
             // Check if a balloon needs to be added or removed, pass optional colour override
             SingleBalloonManagement.removeBalloon(player, Bloons.getPlayerSingleBalloons().get(player.getUniqueId()));
             SingleBalloon.checkBalloonRemovalOrAdd(player, balloonID, colorOverride);

@@ -6,11 +6,14 @@ import net.jeqo.bloons.balloon.multipart.balloon.MultipartBalloon;
 import net.jeqo.bloons.balloon.multipart.balloon.MultipartBalloonBuilder;
 import net.jeqo.bloons.management.MultipartBalloonManagement;
 import net.jeqo.bloons.management.SingleBalloonManagement;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Objects;
 
@@ -70,5 +73,40 @@ public class MultipartBalloonPlayerListener implements Listener {
 
             MultipartBalloonManagement.setPlayerBalloon(event.getPlayer().getUniqueId(), newBalloon);
         }
+    }
+
+    /**
+     *              When they teleport, destroy and respawn the multipart balloon after the teleport completes
+     * @param event The event that is called when a player teleports, type org.bukkit.event.player.PlayerTeleportEvent
+     */
+    @EventHandler
+    public void onTeleport(PlayerTeleportEvent event) {
+        Player player = event.getPlayer();
+        MultipartBalloon balloon = Bloons.getPlayerMultipartBalloons().get(player.getUniqueId());
+        if (balloon == null) return;
+
+        MultipartBalloonType type = balloon.getType();
+        if (type == null) {
+            balloon.destroy();
+            MultipartBalloonManagement.removePlayerBalloon(player.getUniqueId());
+            return;
+        }
+
+        balloon.destroy();
+        MultipartBalloonManagement.removePlayerBalloon(player.getUniqueId());
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                SingleBalloonManagement.removeBalloon(player, Bloons.getPlayerSingleBalloons().get(player.getUniqueId()));
+
+                MultipartBalloonBuilder builder = new MultipartBalloonBuilder(type, player);
+                MultipartBalloon newBalloon = builder.build();
+                newBalloon.initialize();
+                newBalloon.run();
+
+                MultipartBalloonManagement.setPlayerBalloon(player.getUniqueId(), newBalloon);
+            }
+        }.runTaskLater(Bloons.getInstance(), 1L);
     }
 }

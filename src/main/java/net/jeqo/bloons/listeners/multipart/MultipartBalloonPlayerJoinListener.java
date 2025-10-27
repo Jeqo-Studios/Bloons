@@ -19,18 +19,30 @@ public class MultipartBalloonPlayerJoinListener implements Listener {
      */
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        MultipartBalloon equippedBalloon = MultipartBalloonManagement.getPlayerBalloon(event.getPlayer().getUniqueId());
-        if (equippedBalloon != null) {
-            MultipartBalloonType balloonType = MultipartBalloonManagement.getPlayerBalloon(event.getPlayer().getUniqueId()).getType();
+        var uuid = event.getPlayer().getUniqueId();
+        MultipartBalloon equippedBalloon = MultipartBalloonManagement.getPlayerBalloon(uuid);
+        if (equippedBalloon == null) return;
 
-            MultipartBalloonManagement.removePlayerBalloon(event.getPlayer().getUniqueId());
-
-            MultipartBalloonBuilder builder = new MultipartBalloonBuilder(balloonType, event.getPlayer());
-            MultipartBalloon playerBalloon = builder.build();
-
-            MultipartBalloonManagement.setPlayerBalloon(event.getPlayer().getUniqueId(), playerBalloon);
-            playerBalloon.initialize();
-            playerBalloon.run();
+        MultipartBalloonType balloonType = equippedBalloon.getType();
+        if (balloonType == null) {
+            MultipartBalloonManagement.removePlayerBalloon(uuid);
+            return;
         }
+
+        String headOverride = equippedBalloon.getHeadColorOverride();
+        String bodyOverride = equippedBalloon.getBodyColorOverride();
+        String tailOverride = equippedBalloon.getTailColorOverride();
+
+        MultipartBalloonManagement.removePlayerBalloon(uuid);
+
+        MultipartBalloonBuilder builder = new MultipartBalloonBuilder(balloonType, event.getPlayer());
+        if (headOverride != null) builder.setHeadColorOverride(headOverride);
+        if (bodyOverride != null) builder.setBodyColorOverride(bodyOverride);
+        if (tailOverride != null) builder.setTailColorOverride(tailOverride);
+
+        MultipartBalloon playerBalloon = builder.build();
+        MultipartBalloonManagement.setPlayerBalloon(uuid, playerBalloon);
+        playerBalloon.initialize();
+        playerBalloon.run();
     }
 }

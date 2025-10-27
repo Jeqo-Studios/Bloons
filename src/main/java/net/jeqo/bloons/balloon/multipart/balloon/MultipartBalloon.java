@@ -51,6 +51,10 @@ public class MultipartBalloon {
      */
     private final List<MultipartBalloonNode> multipartBalloonNodes = new ArrayList<>();
 
+    private String headColorOverride;
+    private String bodyColorOverride;
+    private String tailColorOverride;
+
     /**
      * Initializes the balloons functionality
      */
@@ -231,5 +235,9 @@ public class MultipartBalloon {
     MultipartBalloon(MultipartBalloonBuilder builder) {
         this.setType(builder.balloonType);
         this.setOwner(builder.balloonOwner);
+
+        this.headColorOverride = builder.headColorOverride;
+        this.bodyColorOverride = builder.bodyColorOverride;
+        this.tailColorOverride = builder.tailColorOverride;
     }
 }

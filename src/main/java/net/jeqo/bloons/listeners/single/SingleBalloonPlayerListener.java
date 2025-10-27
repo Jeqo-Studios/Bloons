@@ -3,11 +3,14 @@ package net.jeqo.bloons.listeners.single;
 import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.balloon.single.SingleBalloon;
 import net.jeqo.bloons.management.SingleBalloonManagement;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Objects;
 
@@ -55,6 +58,48 @@ public class SingleBalloonPlayerListener implements Listener {
             SingleBalloonManagement.removeBalloon(event.getPlayer(), Bloons.getPlayerSingleBalloons().get(event.getPlayer().getUniqueId()));
 
             SingleBalloon.checkBalloonRemovalOrAdd(event.getPlayer(), balloonID);
+        }
+    }
+
+    @EventHandler
+    public void onTeleport(PlayerTeleportEvent event) {
+        Player player = event.getPlayer();
+
+        SingleBalloon balloonOwner = Bloons.getPlayerSingleBalloons().get(player.getUniqueId());
+        String balloonID = Bloons.getPlayerSingleBalloonID().get(player.getUniqueId());
+        String overrideColor = balloonOwner != null ? balloonOwner.getOverrideColor() : null;
+
+        if (balloonOwner != null && balloonOwner.chicken != null) {
+            if (event.getFrom().getWorld().equals(event.getTo().getWorld())) {
+                final var chicken = balloonOwner.chicken;
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        if (chicken.isValid()) chicken.teleport(player.getLocation());
+                    }
+                }.runTaskLater(Bloons.getInstance(), 1L);
+                return;
+            }
+
+            SingleBalloonManagement.storeBalloon(balloonOwner);
+            SingleBalloonManagement.removeBalloon(player, balloonOwner);
+
+            final String finalOverride = overrideColor;
+            if (balloonID != null) {
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        SingleBalloon.checkBalloonRemovalOrAdd(player, balloonID, finalOverride);
+                    }
+                }.runTaskLater(Bloons.getInstance(), 1L);
+            }
+        } else if (balloonID != null) {
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    SingleBalloon.checkBalloonRemovalOrAdd(player, balloonID, overrideColor);
+                }
+            }.runTaskLater(Bloons.getInstance(), 1L);
         }
     }
 }

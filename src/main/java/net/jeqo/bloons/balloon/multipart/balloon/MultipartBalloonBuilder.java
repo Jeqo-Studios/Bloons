@@ -18,6 +18,10 @@ public class MultipartBalloonBuilder {
      */
     Player balloonOwner;
 
+    String headColorOverride;
+    String bodyColorOverride;
+    String tailColorOverride;
+
     /**
      *                      Constructs a balloon via an easy-to-use builder
      * @param balloonType   The type of balloon to create, type net.jeqo.bloons.balloon.multipart.MultipartBalloonType

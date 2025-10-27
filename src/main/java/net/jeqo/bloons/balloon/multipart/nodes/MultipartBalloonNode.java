@@ -5,6 +5,8 @@ import lombok.Setter;
 import net.jeqo.bloons.balloon.multipart.MultipartBalloonType;
 import net.jeqo.bloons.configuration.BalloonConfiguration;
 import net.jeqo.bloons.logger.Logger;
+import net.jeqo.bloons.management.MultipartBalloonManagement;
+import net.jeqo.bloons.balloon.multipart.MultipartBalloonModel;
 import org.bukkit.Location;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
@@ -208,7 +210,7 @@ public class MultipartBalloonNode {
 
         // Smoothly interpolate the y value
         double interpolatedY = lerpVal(this.getPointB().y, this.getPointA().y, this.getYAxisInterpolation());   // Change this to make it smoother or
-                                                                                                                // to make it more sudden, this seems to be the sweet spot
+        // to make it more sudden, this seems to be the sweet spot
 
         // Set the new point B location
         this.getPointB().set((float) (this.getPointA().x - interpolatedDx), (float) interpolatedY, (float) (this.getPointA().z - interpolatedDz));
@@ -286,16 +288,41 @@ public class MultipartBalloonNode {
      * Sets the correct position and item in the armor stand.
      */
     public void display() {
+        // Determine player's stored balloon (if any) to check for overrides
+        var stored = MultipartBalloonManagement.getPlayerBalloon(this.getBalloonOwner().getUniqueId());
+
         // Sets the segments finalized models based on their position in the balloon
         if (this.getIndex() == this.getBalloonType().getNodeCount() - 1) {
-            // Set the head model
-            this.getBalloonArmorStand().getEquipment().setHelmet(this.getBalloonType().getHeadModel().getFinalizedModel());
+            // Head segment
+            MultipartBalloonModel orig = this.getBalloonType().getHeadModel();
+            MultipartBalloonModel modelToUse;
+            if (stored != null && stored.getHeadColorOverride() != null) {
+                modelToUse = new MultipartBalloonModel(orig.getSegmentType(), orig.getMaterial(), stored.getHeadColorOverride(), orig.getCustomModelData(), orig.getItemModel());
+            } else {
+                modelToUse = orig;
+            }
+            this.getBalloonArmorStand().getEquipment().setHelmet(modelToUse.getFinalizedModel());
+
         } else if (this.getIndex() == 0) {
-            // Set the tail model
-            this.getBalloonArmorStand().getEquipment().setHelmet(this.getBalloonType().getTailModel().getFinalizedModel());
+            // Tail segment
+            MultipartBalloonModel orig = this.getBalloonType().getTailModel();
+            MultipartBalloonModel modelToUse;
+            if (stored != null && stored.getTailColorOverride() != null) {
+                modelToUse = new MultipartBalloonModel(orig.getSegmentType(), orig.getMaterial(), stored.getTailColorOverride(), orig.getCustomModelData(), orig.getItemModel());
+            } else {
+                modelToUse = orig;
+            }
+            this.getBalloonArmorStand().getEquipment().setHelmet(modelToUse.getFinalizedModel());
         } else {
-            // Set the body model
-            this.getBalloonArmorStand().getEquipment().setHelmet(this.getBalloonType().getBodyModel().getFinalizedModel());
+            // Body segment
+            MultipartBalloonModel orig = this.getBalloonType().getBodyModel();
+            MultipartBalloonModel modelToUse;
+            if (stored != null && stored.getBodyColorOverride() != null) {
+                modelToUse = new MultipartBalloonModel(orig.getSegmentType(), orig.getMaterial(), stored.getBodyColorOverride(), orig.getCustomModelData(), orig.getItemModel());
+            } else {
+                modelToUse = orig;
+            }
+            this.getBalloonArmorStand().getEquipment().setHelmet(modelToUse.getFinalizedModel());
         }
 
         // Creates a new Bukkit vector based on the position of the two points

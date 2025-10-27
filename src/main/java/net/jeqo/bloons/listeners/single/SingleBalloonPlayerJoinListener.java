@@ -22,9 +22,10 @@ public class SingleBalloonPlayerJoinListener implements Listener {
 
         // If they have a balloon active, remove it and add it back to reduce issues
         if (balloonID != null) {
+            SingleBalloon balloon = Bloons.getPlayerSingleBalloons().get(event.getPlayer().getUniqueId());
             SingleBalloonManagement.removeBalloon(event.getPlayer(), Bloons.getPlayerSingleBalloons().get(event.getPlayer().getUniqueId()));
 
-            SingleBalloon.checkBalloonRemovalOrAdd(event.getPlayer(), balloonID);
+            SingleBalloon.checkBalloonRemovalOrAdd(event.getPlayer(), balloonID, balloon.getOverrideColor());
         }
     }
 }

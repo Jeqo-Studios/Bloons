@@ -3,6 +3,7 @@ package net.jeqo.bloons.listeners;
 import net.jeqo.bloons.configuration.BalloonConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityUnleashEvent;
 import org.bukkit.event.entity.PlayerLeashEntityEvent;
 import org.bukkit.event.player.PlayerUnleashEntityEvent;
 
@@ -28,8 +29,19 @@ public class BalloonChickenLeashListener implements Listener {
      */
     @EventHandler
     public void onUnleash(PlayerUnleashEntityEvent event) {
-            if (event.getEntity().getCustomName() != null && event.getEntity().getCustomName().contains(BalloonConfiguration.BALLOON_CHICKEN_ID)) {
-                event.setCancelled(true);
-            }
+        if (event.getEntity().getCustomName() != null && event.getEntity().getCustomName().contains(BalloonConfiguration.BALLOON_CHICKEN_ID)) {
+            event.setCancelled(true);
+        }
+    }
+
+    /**
+     * Prevent any automatic or plugin-triggered unleashing of the balloon chicken.
+     * Cancelling this event stops the lead from breaking (distance/holder gone), allowing infinite stretch.
+     */
+    @EventHandler
+    public void onEntityUnleash(EntityUnleashEvent event) {
+        if (event.getEntity().getCustomName() != null && event.getEntity().getCustomName().contains(BalloonConfiguration.BALLOON_CHICKEN_ID)) {
+            event.setCancelled(true);
+        }
     }
 }
