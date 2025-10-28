@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import net.jeqo.bloons.colors.ColorCodeConverter;
 
+import java.util.List;
+
 /**
  * An object to store the data of a balloon created in the config.yml file
  */
@@ -96,11 +98,17 @@ public class MultipartBalloonType {
     /**
      * The model used for the body node
      */
-    private MultipartBalloonModel bodyModel;
+    private List<MultipartBalloonModel> bodyModels;
     /**
      * The model used for the tail node
      */
     private MultipartBalloonModel tailModel;
+
+    private boolean isTailParticlesEnabled;
+    private String tailParticleType;
+    private String tailParticleColor;
+    private int tailParticleCount;
+    private double tailParticleSpeed;
 
     /**
      *                                      Creates a new multipart balloon type which contains
@@ -125,10 +133,15 @@ public class MultipartBalloonType {
      * @param rollOscillationAmplitude      The amplitude of the roll oscillation animation, type double
      * @param rollOscillationPhaseOffset    The offset to adjust for more or less lag in between roll oscillations starting from the head balloon, type double
      * @param headModel                     The model used for the head node, type net.jeqo.bloons.balloon.multipart.MultipartBalloonModel
-     * @param bodyModel                     The model used for the body node, type net.jeqo.bloons.balloon.multipart.MultipartBalloonModel
+     * @param bodyModels                    The model used for the body nodes, type net.jeqo.bloons.balloon.multipart.MultipartBalloonModel
      * @param tailModel                     The model used for the tail node, type net.jeqo.bloons.balloon.multipart.MultipartBalloonModel
+     * @param isTailParticlesEnabled        Whether tail particles are enabled, type boolean
+     * @param tailParticleType              The type of tail particles, type java.lang.String
+     * @param tailParticleColor             The color of the tail particles, type java.lang.String
+     * @param tailParticleCount             The count of tail particles, type int
+     * @param tailParticleSpeed             The speed of the tail particles, type double
      */
-    public MultipartBalloonType(String id, String permission, String name, String[] lore, int nodeCount, double distanceBetweenNodes, double leashHeight, double headNodeOffset, double bodyNodeOffset, double tailNodeOffset, double maxNodeJointAngle, double yAxisInterpolation, double turningSplineInterpolation, double passiveSineWaveSpeed, double passiveSineWaveAmplitude, double passiveNoseSineWaveAmplitude, boolean rollOscillationEnabled, double rollOscillationAmplitude, double rollOscillationPhaseOffset, MultipartBalloonModel headModel, MultipartBalloonModel bodyModel, MultipartBalloonModel tailModel) {
+    public MultipartBalloonType(String id, String permission, String name, String[] lore, int nodeCount, double distanceBetweenNodes, double leashHeight, double headNodeOffset, double bodyNodeOffset, double tailNodeOffset, double maxNodeJointAngle, double yAxisInterpolation, double turningSplineInterpolation, double passiveSineWaveSpeed, double passiveSineWaveAmplitude, double passiveNoseSineWaveAmplitude, boolean rollOscillationEnabled, double rollOscillationAmplitude, double rollOscillationPhaseOffset, MultipartBalloonModel headModel, List<MultipartBalloonModel> bodyModels, MultipartBalloonModel tailModel, boolean isTailParticlesEnabled, String tailParticleType, String tailParticleColor, int tailParticleCount, double tailParticleSpeed) {
         this.setId(id); // required
         this.setPermission(permission); // required
         this.setName(name); // required
@@ -149,8 +162,13 @@ public class MultipartBalloonType {
         if (rollOscillationAmplitude > 0.0D) this.setRollOscillationAmplitude(rollOscillationAmplitude); // 0.2 by default, optional
         if (rollOscillationPhaseOffset > 0.0D) this.setRollOscillationPhaseOffset(rollOscillationPhaseOffset); // 1.0 by default, optional
         this.setHeadModel(headModel); // required
-        this.setBodyModel(bodyModel); // required
+        this.setBodyModels(bodyModels); // required
         this.setTailModel(tailModel); // required
+        this.setTailParticlesEnabled(isTailParticlesEnabled);
+        this.setTailParticleType(tailParticleType);
+        this.setTailParticleColor(tailParticleColor);
+        this.setTailParticleCount(tailParticleCount);
+        this.setTailParticleSpeed(tailParticleSpeed);
     }
 
     /**

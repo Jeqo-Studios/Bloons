@@ -313,9 +313,21 @@ public class MultipartBalloonNode {
                 modelToUse = orig;
             }
             this.getBalloonArmorStand().getEquipment().setHelmet(modelToUse.getFinalizedModel());
+
+            // Add particle trail behind the tail
+            if (this.getBalloonType().isTailParticlesEnabled()) {
+                Location tailLocation = this.getBalloonArmorStand().getEyeLocation();
+                org.bukkit.Particle particleType = org.bukkit.Particle.valueOf(this.getBalloonType().getTailParticleType());
+                if (particleType == org.bukkit.Particle.DUST) {
+                    org.bukkit.Color color = org.bukkit.Color.fromRGB(Integer.parseInt(this.getBalloonType().getTailParticleColor().substring(1), 16));
+                    this.getBalloonOwner().getWorld().spawnParticle(particleType, tailLocation, this.getBalloonType().getTailParticleCount(), 0.1, 0.1, 0.1, this.getBalloonType().getTailParticleSpeed(), new org.bukkit.Particle.DustOptions(color, 1.0f));
+                } else {
+                    this.getBalloonOwner().getWorld().spawnParticle(particleType, tailLocation, this.getBalloonType().getTailParticleCount(), 0.1, 0.1, 0.1, this.getBalloonType().getTailParticleSpeed());
+                }
+            }
         } else {
-            // Body segment
-            MultipartBalloonModel orig = this.getBalloonType().getBodyModel();
+            int bodyIndex = (int) (this.getIndex() - 1) % this.getBalloonType().getBodyModels().size();
+            MultipartBalloonModel orig = this.getBalloonType().getBodyModels().get(bodyIndex);
             MultipartBalloonModel modelToUse;
             if (stored != null && stored.getBodyColorOverride() != null) {
                 modelToUse = new MultipartBalloonModel(orig.getSegmentType(), orig.getMaterial(), stored.getBodyColorOverride(), orig.getCustomModelData(), orig.getItemModel());

@@ -16,6 +16,7 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Stream;
 
 /**
@@ -241,13 +242,39 @@ public class ConfigConfiguration {
                     if (!type.equals(BalloonConfiguration.MULTIPART_BALLOON_TYPE_IDENTIFIER)) continue;
 
                     try {
+                        int nodeCount = config.getInt(key + ".node-count", 5);
+                        List<MultipartBalloonModel> bodyModels = new ArrayList<>();
+                        MultipartBalloonModel defaultBody = new MultipartBalloonModel(
+                                BalloonSegmentType.BODY,
+                                config.getString(key + ".body.material"),
+                                config.getString(key + ".body.color"),
+                                config.getString(key + ".body.custom-model-data"),
+                                config.getString(key + ".body.item-model")
+                        );
+                        for (int i = nodeCount - 2; i >= 1; i--) {
+                            if (config.contains(key + ".body-" + i + ".material")) {
+                                bodyModels.add(new MultipartBalloonModel(
+                                        BalloonSegmentType.BODY,
+                                        config.getString(key + ".body-" + i + ".material"),
+                                        config.getString(key + ".body-" + i + ".color"),
+                                        config.getString(key + ".body-" + i + ".custom-model-data"),
+                                        config.getString(key + ".body-" + i + ".item-model")
+                                ));
+                            } else {
+                                bodyModels.add(defaultBody);
+                            }
+                        }
+                        if (bodyModels.isEmpty()) {
+                            bodyModels.add(defaultBody);
+                        }
+
                         multipartBalloons.add(new MultipartBalloonType(
                                 config.getString(key + ".id"),
                                 config.getString(key + ".permission"),
                                 config.getString(key + ".name"),
                                 config.getStringList(key + ".lore").toArray(new String[0]),
                                 config.getInt(key + ".node-count"),
-                                config.getInt(key + ".distance-between-nodes"),
+                                config.getDouble(key + ".distance-between-nodes"),
                                 config.getDouble(key + ".leash-height"),
                                 config.getDouble(key + ".head-node-offset"),
                                 config.getDouble(key + ".body-node-offset"),
@@ -268,20 +295,19 @@ public class ConfigConfiguration {
                                         config.getString(key + ".head.custom-model-data"),
                                         config.getString(key + ".head.item-model")
                                 ),
-                                new MultipartBalloonModel(
-                                        BalloonSegmentType.BODY,
-                                        config.getString(key + ".body.material"),
-                                        config.getString(key + ".body.color"),
-                                        config.getString(key + ".body.custom-model-data"),
-                                        config.getString(key + ".body.item-model")
-                                ),
+                                bodyModels,
                                 new MultipartBalloonModel(
                                         BalloonSegmentType.TAIL,
                                         config.getString(key + ".tail.material"),
                                         config.getString(key + ".tail.color"),
                                         config.getString(key + ".tail.custom-model-data"),
                                         config.getString(key + ".tail.item-model")
-                                )
+                                ),
+                                config.getBoolean(key + ".tail-particles.enabled"),
+                                config.getString(key + ".tail-particles.type", "DUST"),
+                                config.getString(key + ".tail-particles.color", "#0000FF"),
+                                config.getInt(key + ".tail-particles.count", 5),
+                                config.getDouble(key + ".tail-particles.speed", 0.01)
                         ));
                     } catch (Exception e) {
                         Logger.logWarning(String.format(Languages.getMessage("balloon-process-error"), key, fileName, e));
