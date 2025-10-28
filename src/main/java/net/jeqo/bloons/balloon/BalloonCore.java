@@ -79,7 +79,7 @@ public class BalloonCore {
                 continue;
             }
 
-            if (!ConfigConfiguration.serverHasModelEngine()) {
+            if (!ConfigConfiguration.serverHasModelEngine() && example.getValue() == ExampleBalloonType.MEG) {
                 Logger.logWarning("The server does not have the ModelEngine plugin installed. Skipping MEG example balloon copy.");
                 continue;
             }

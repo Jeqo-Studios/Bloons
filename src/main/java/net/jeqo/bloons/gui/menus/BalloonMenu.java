@@ -7,6 +7,7 @@ import net.jeqo.bloons.logger.Logger;
 import net.jeqo.bloons.colors.Color;
 import net.jeqo.bloons.message.Languages;
 import net.jeqo.bloons.message.MessageTranslations;
+import net.jeqo.bloons.utils.CustomModelDataCompat;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -14,7 +15,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -61,9 +61,7 @@ public class BalloonMenu {
         ItemMeta nextMeta = nextPage.getItemMeta();
         assert nextMeta != null;
         nextMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', this.getMessageTranslations().getString("buttons.next-page.name")));
-        CustomModelDataComponent customModelDataComponentNext = nextMeta.getCustomModelDataComponent();
-        customModelDataComponentNext.setStrings(List.of(this.getMessageTranslations().getString("buttons.next-page.custom-model-data")));
-        nextMeta.setCustomModelDataComponent(customModelDataComponentNext);
+        CustomModelDataCompat.applyCustomModelData(nextMeta, List.of(this.getMessageTranslations().getString("buttons.next-page.custom-model-data")));
         nextPage.setItemMeta(nextMeta);
 
         // Create previous page button
@@ -71,9 +69,7 @@ public class BalloonMenu {
         ItemMeta prevMeta = prevPage.getItemMeta();
         assert prevMeta != null;
         prevMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', this.getMessageTranslations().getString("buttons.previous-page.name")));
-        CustomModelDataComponent customModelDataComponentPrev = prevMeta.getCustomModelDataComponent();
-        customModelDataComponentPrev.setStrings(List.of(this.getMessageTranslations().getString("buttons.previous-page.custom-model-data")));
-        prevMeta.setCustomModelDataComponent(customModelDataComponentPrev);
+        CustomModelDataCompat.applyCustomModelData(prevMeta, List.of(this.getMessageTranslations().getString("buttons.previous-page.custom-model-data")));
         prevPage.setItemMeta(prevMeta);
 
         // Create remove/unequip balloon button
@@ -81,9 +77,8 @@ public class BalloonMenu {
         ItemMeta removeMeta = removeBalloon.getItemMeta();
         assert removeMeta != null;
         removeMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', this.getMessageTranslations().getString("buttons.unequip.name")));
-        CustomModelDataComponent customModelDataComponentRemove = prevMeta.getCustomModelDataComponent();
-        customModelDataComponentRemove.setStrings(List.of(this.getMessageTranslations().getString("buttons.unequip.custom-model-data")));
-        removeMeta.setCustomModelDataComponent(customModelDataComponentRemove);
+
+        CustomModelDataCompat.applyCustomModelData(removeMeta, List.of(this.getMessageTranslations().getString("buttons.unequip.custom-model-data")));
         removeBalloon.setItemMeta(removeMeta);
 
         // Add buttons to GUI

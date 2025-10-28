@@ -135,7 +135,7 @@ public class CommandForceEquip extends Command {
             MultipartBalloonManagement.setPlayerBalloon(player.getUniqueId(), balloon);
 
             String equippedMessage = Languages.getMessage("prefix") + String.format(Languages.getMessage("equipped"), type.getName());
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', equippedMessage));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', equippedMessage));
 
             // If the balloon ID is a single balloon type, equip the balloon with the single associated methods
         } else {
@@ -144,7 +144,7 @@ public class CommandForceEquip extends Command {
             SingleBalloon.checkBalloonRemovalOrAdd(player, balloonID, colorOverride);
 
             String equippedMessage = Languages.getMessage("prefix") + String.format(Languages.getMessage("equipped"), singleBalloonType.getName());
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', equippedMessage));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', equippedMessage));
         }
 
         return false;

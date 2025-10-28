@@ -48,7 +48,7 @@ public class CommandForceUnequip extends Command {
         // If the player doesn't have any balloons equipped, send a message to the sender
         if (singleBalloon == null && multipartBalloon == null) {
             String notEquippedMessage = Languages.getMessage("prefix") + Languages.getMessage("not-equipped");
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', notEquippedMessage));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', notEquippedMessage));
             return false;
         }
 

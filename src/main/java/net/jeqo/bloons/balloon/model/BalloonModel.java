@@ -1,13 +1,13 @@
 package net.jeqo.bloons.balloon.model;
 
 import net.jeqo.bloons.logger.Logger;
+import net.jeqo.bloons.utils.CustomModelDataCompat;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.util.List;
 
@@ -42,9 +42,7 @@ public class BalloonModel {
                 fireworkMeta.setEffect(effect);
 
                 if (customModelData != null && !customModelData.isEmpty()) {
-                    CustomModelDataComponent customModelDataComponent = fireworkMeta.getCustomModelDataComponent();
-                    customModelDataComponent.setStrings(List.of(customModelData));
-                    fireworkMeta.setCustomModelDataComponent(customModelDataComponent);
+                    CustomModelDataCompat.applyCustomModelData(fireworkMeta, List.of(customModelData));
                 }
 
                 if (itemModel != null && !itemModel.isEmpty()) {
@@ -68,9 +66,7 @@ public class BalloonModel {
         }
 
         if (customModelData != null && !customModelData.isEmpty()) {
-            CustomModelDataComponent customModelDataComponent = generatedItemLeatherMeta.getCustomModelDataComponent();
-            customModelDataComponent.setStrings(List.of(customModelData));
-            generatedItemLeatherMeta.setCustomModelDataComponent(customModelDataComponent);
+            CustomModelDataCompat.applyCustomModelData(generatedItemLeatherMeta, List.of(customModelData));
         }
 
         generatedItem.setItemMeta(generatedItemLeatherMeta);
@@ -97,9 +93,7 @@ public class BalloonModel {
 
         // Set the custom model data of the item
         if (customModelData != null && !customModelData.isEmpty()) {
-            CustomModelDataComponent customModelDataComponent = generatedItemMeta.getCustomModelDataComponent();
-            customModelDataComponent.setStrings(List.of(customModelData));
-            generatedItemMeta.setCustomModelDataComponent(customModelDataComponent);
+            CustomModelDataCompat.applyCustomModelData(generatedItemMeta, List.of(customModelData));
         }
 
         if (itemModel != null && !itemModel.isEmpty()) {

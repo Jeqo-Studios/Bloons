@@ -12,6 +12,7 @@ import net.jeqo.bloons.logger.Logger;
 import net.jeqo.bloons.colors.Color;
 import net.jeqo.bloons.message.Languages;
 import net.jeqo.bloons.message.MessageTranslations;
+import net.jeqo.bloons.utils.CustomModelDataCompat;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -21,7 +22,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
@@ -250,9 +250,7 @@ public class CommandCore implements CommandExecutor {
 
         String customModelData = singleBalloonType.getCustomModelData();
         if (customModelData != null && !customModelData.isEmpty()) {
-            CustomModelDataComponent customModelDataComponent = meta.getCustomModelDataComponent();
-            customModelDataComponent.setStrings(List.of(customModelData));
-            meta.setCustomModelDataComponent(customModelDataComponent);
+            CustomModelDataCompat.applyCustomModelData(meta, List.of(customModelData));
         }
 
         String itemModel = singleBalloonType.getItemModel();
@@ -295,9 +293,7 @@ public class CommandCore implements CommandExecutor {
 
         String customModelData = multipartBalloonType.getHeadModel().getCustomModelData();
         if (customModelData != null && !customModelData.isEmpty()) {
-            CustomModelDataComponent customModelDataComponent = meta.getCustomModelDataComponent();
-            customModelDataComponent.setStrings(List.of(customModelData));
-            meta.setCustomModelDataComponent(customModelDataComponent);
+            CustomModelDataCompat.applyCustomModelData(meta, List.of(customModelData));
         }
 
         String itemModel = multipartBalloonType.getHeadModel().getItemModel();

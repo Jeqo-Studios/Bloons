@@ -8,6 +8,7 @@ import net.jeqo.bloons.logger.Logger;
 import net.jeqo.bloons.message.Languages;
 import net.jeqo.bloons.management.SingleBalloonManagement;
 import net.jeqo.bloons.colors.Color;
+import net.jeqo.bloons.utils.CustomModelDataCompat;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -19,7 +20,6 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
-import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.EulerAngle;
 import org.bukkit.util.Vector;
@@ -212,13 +212,12 @@ public class SingleBalloon extends BukkitRunnable {
         Vector localTilt = playerToBalloon.clone();
         toLocal.transform(localTilt.toVector3f());
 
-        double pitch = Math.toRadians(localTilt.getZ() * 50.0D * -1.0D); // * -1.0D
-        double roll  = Math.toRadians(localTilt.getX() * 50.0D * -1.0D); // * -1.0D
+        double pitch = Math.toRadians(localTilt.getZ() * 50.0D * -1.0D);
+        double roll  = Math.toRadians(localTilt.getX() * 50.0D * -1.0D);
 
-        EulerAngle tiltAngle = new EulerAngle(pitch, (float) yawRad, roll);
+        EulerAngle tiltAngle = new EulerAngle(pitch, yawRad, roll);
 
         ArmorStand armorStand = this.getArmorStand();
-
         armorStand.setHeadPose(tiltAngle);
         if (this.hasMEGModel && this.getMegHandler() != null) {
             this.getMegHandler().updateRotation(pitch, roll);
@@ -306,9 +305,7 @@ public class SingleBalloon extends BukkitRunnable {
             // Set custom model data if present
             String customModelData = singleBalloonType.getCustomModelData();
             if (customModelData != null && !customModelData.isEmpty()) {
-                CustomModelDataComponent customModelDataComponent = meta.getCustomModelDataComponent();
-                customModelDataComponent.setStrings(List.of(customModelData));
-                meta.setCustomModelDataComponent(customModelDataComponent);
+                CustomModelDataCompat.applyCustomModelData(meta, List.of(customModelData));
             }
 
             // Set item model if present
