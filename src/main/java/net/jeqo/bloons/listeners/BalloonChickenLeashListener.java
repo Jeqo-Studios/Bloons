@@ -1,5 +1,7 @@
 package net.jeqo.bloons.listeners;
 
+import net.jeqo.bloons.Bloons;
+import net.jeqo.bloons.balloon.single.SingleBalloon;
 import net.jeqo.bloons.configuration.BalloonConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -34,14 +36,48 @@ public class BalloonChickenLeashListener implements Listener {
         }
     }
 
-    /**
-     * Prevent any automatic or plugin-triggered unleashing of the balloon chicken.
-     * Cancelling this event stops the lead from breaking (distance/holder gone), allowing infinite stretch.
-     */
     @EventHandler
     public void onEntityUnleash(EntityUnleashEvent event) {
-        if (event.getEntity().getCustomName() != null && event.getEntity().getCustomName().contains(BalloonConfiguration.BALLOON_CHICKEN_ID)) {
-            event.setCancelled(true);
+        if (event.getEntity().getCustomName() == null || !event.getEntity().getCustomName().contains(BalloonConfiguration.BALLOON_CHICKEN_ID)) {
+            return;
         }
+
+        if (!(event.getEntity() instanceof org.bukkit.entity.LivingEntity living)) {
+            return;
+        }
+
+        org.bukkit.entity.Entity holder = living.getLeashHolder();
+
+        org.bukkit.Bukkit.getScheduler().runTask(Bloons.getInstance(), () -> {
+            java.util.Optional<org.bukkit.entity.Item> lead = living.getNearbyEntities(15.0, 15.0, 15.0).stream()
+                    .filter(e -> e instanceof org.bukkit.entity.Item)
+                    .map(e -> (org.bukkit.entity.Item) e)
+                    .filter(i -> i.getItemStack().getType() == org.bukkit.Material.LEAD)
+                    .findFirst();
+
+            lead.ifPresent(org.bukkit.entity.Item::remove);
+
+            if (holder.isValid()) {
+                try {
+                    living.teleport(holder.getLocation());
+                    living.setLeashHolder(holder);
+                } catch (Exception ignored) {}
+                return;
+            }
+
+            java.util.Optional<java.util.Map.Entry<java.util.UUID, SingleBalloon>> ownerEntry = Bloons.getPlayerSingleBalloons().entrySet().stream()
+                    .filter(e -> e.getValue() != null && e.getValue().getChicken() == living)
+                    .findFirst();
+
+            if (ownerEntry.isPresent()) {
+                org.bukkit.entity.Player owner = org.bukkit.Bukkit.getPlayer(ownerEntry.get().getKey());
+                if (owner != null && owner.isOnline()) {
+                    try {
+                        living.teleport(owner.getLocation());
+                        living.setLeashHolder(owner);
+                    } catch (Exception ignored) {}
+                }
+            }
+        });
     }
 }

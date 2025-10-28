@@ -22,17 +22,17 @@ public class ErrorHandling {
         }
 
         if (sender.hasPermission("bloons.equip")) {
-            String equipMessage = "   §d/bloons equip §7- " + Bloons.getCommandCore().getCommandDescription("equip");
+            String equipMessage = "   §d/bloons equip <balloon name> [colour hex |  hex] [body hex] [tail hex] §7- " + Bloons.getCommandCore().getCommandDescription("equip");
             sender.sendMessage(equipMessage);
         }
 
         if (sender.hasPermission("bloons.unequip")) {
-            String unequipMessage = "   §d/bloons unequip §7- " + Bloons.getCommandCore().getCommandDescription("unequip");
+            String unequipMessage = "   §d/bloons unequip  §7- " + Bloons.getCommandCore().getCommandDescription("unequip");
             sender.sendMessage(unequipMessage);
         }
 
         if (sender.hasPermission("bloons.force")) {
-            String forceEquipMessage = "   §d/bloons fequip §7- " + Bloons.getCommandCore().getCommandDescription("fequip");
+            String forceEquipMessage = "   §d/bloons fequip <player> <balloon name> [colour hex | head hex] [body hex] [tail hex] §7- " + Bloons.getCommandCore().getCommandDescription("fequip");
             String forceUnequipMessage = "   §d/bloons funequip §7- " + Bloons.getCommandCore().getCommandDescription("funequip");
             sender.sendMessage(forceEquipMessage);
             sender.sendMessage(forceUnequipMessage);
