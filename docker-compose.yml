@@ -4,7 +4,7 @@ services:
     image: itzg/minecraft-server:2025.10.2
     environment:
       TYPE: SPIGOT
-      VERSION: 1.21.8
+      VERSION: 1.21.11
       EULA: "TRUE"
       SERVER_PORT: 25565
     ports:
@@ -34,7 +34,7 @@ services:
     image: itzg/minecraft-server:2025.10.2
     environment:
       TYPE: PAPER
-      VERSION: 1.21.8
+      VERSION: 1.21.11
       EULA: "TRUE"
       SERVER_PORT: 30000
     ports:

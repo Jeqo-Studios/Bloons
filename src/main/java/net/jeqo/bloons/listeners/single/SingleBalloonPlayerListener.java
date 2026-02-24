@@ -62,25 +62,15 @@ public class SingleBalloonPlayerListener implements Listener {
     @EventHandler
     public void onTeleport(PlayerTeleportEvent event) {
         Player player = event.getPlayer();
+        SingleBalloon balloon = Bloons.getPlayerSingleBalloons().get(player.getUniqueId());
+        if (balloon == null) return;
 
-        SingleBalloon balloonOwner = Bloons.getPlayerSingleBalloons().get(player.getUniqueId());
         String balloonID = Bloons.getPlayerSingleBalloonID().get(player.getUniqueId());
-        String overrideColor = balloonOwner != null ? balloonOwner.getOverrideColor() : null;
+        String overrideColor = balloon.getOverrideColor();
 
-        if (balloonOwner != null && balloonOwner.chicken != null) {
-            if (event.getFrom().getWorld().equals(event.getTo().getWorld())) {
-                final var chicken = balloonOwner.chicken;
-                new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        if (chicken.isValid()) chicken.teleport(player.getLocation());
-                    }
-                }.runTaskLater(Bloons.getInstance(), 1L);
-                return;
-            }
-
-            SingleBalloonManagement.storeBalloon(balloonOwner);
-            SingleBalloonManagement.removeBalloon(player, balloonOwner);
+        if (balloon.getChicken() != null) {
+            SingleBalloonManagement.storeBalloon(balloon);
+            SingleBalloonManagement.removeBalloon(player, balloon);
 
             final String finalOverride = overrideColor;
             if (balloonID != null) {

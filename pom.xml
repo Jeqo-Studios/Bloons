@@ -6,7 +6,7 @@
 
     <groupId>net.jeqo</groupId>
     <artifactId>bloons</artifactId>
-    <version>2.2.6</version>
+    <version>2.2.7</version>
     <packaging>jar</packaging>
 
     <name>Bloons</name>
@@ -105,7 +105,7 @@
         <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
-            <version>1.21.8-R0.1-SNAPSHOT</version>
+            <version>1.21.11-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
 
