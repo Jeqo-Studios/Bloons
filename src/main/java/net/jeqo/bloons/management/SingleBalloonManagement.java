@@ -31,5 +31,8 @@ public class SingleBalloonManagement {
         if (balloon == null) return;
 
         balloon.cancel();
+        if (balloon.getPlayer() != null) {
+            Bloons.getPlayerSingleBalloons().remove(balloon.getPlayer().getUniqueId());
+        }
     }
 }

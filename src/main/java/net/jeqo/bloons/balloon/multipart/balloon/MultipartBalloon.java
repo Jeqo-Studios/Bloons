@@ -217,7 +217,10 @@ public class MultipartBalloon {
         }
 
         // Remove the chicken first to reduce lead dropping on armor stand clears
-        this.getChicken().remove();
+        if (this.getChicken() != null) {
+            this.getChicken().remove();
+            this.setChicken(null);
+        }
 
         // Loop through every node and destroy it (remove the armor stand mainly)
         for (MultipartBalloonNode multipartBalloonNode : this.getMultipartBalloonNodes()) {

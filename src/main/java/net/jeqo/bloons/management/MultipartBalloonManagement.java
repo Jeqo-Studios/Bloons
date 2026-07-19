@@ -38,4 +38,16 @@ public class MultipartBalloonManagement {
             balloon.destroy();
         }
     }
+
+    /**
+     *                  Store the player's balloon without forgetting which balloon is equipped.
+     *                  This is used for temporary teardown events like death.
+     * @param playerId  The player's UUID, type java.util.UUID
+     */
+    public static void storePlayerBalloon(UUID playerId) {
+        MultipartBalloon balloon = Bloons.getPlayerMultipartBalloons().get(playerId);
+        if (balloon != null) {
+            balloon.destroy();
+        }
+    }
 }

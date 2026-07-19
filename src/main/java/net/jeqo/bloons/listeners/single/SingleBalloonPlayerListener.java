@@ -25,7 +25,7 @@ public class SingleBalloonPlayerListener implements Listener {
     public void onDeath(PlayerDeathEvent event) {
         SingleBalloon balloonOwner = Bloons.getPlayerSingleBalloons().get(Objects.requireNonNull(event.getEntity().getPlayer()).getUniqueId());
 
-        SingleBalloonManagement.removeBalloon(event.getEntity().getPlayer(), balloonOwner);
+        SingleBalloonManagement.storeBalloon(balloonOwner);
     }
 
     /**

@@ -17,6 +17,7 @@ public final class CustomModelDataCompat {
     private static final Method SET_COMPONENT;
     private static final Class<?> COMPONENT_CLASS;
     private static final Method SET_STRINGS;
+    private static final Method SET_FLOATS;
 
     static {
         boolean available = false;
@@ -24,11 +25,13 @@ public final class CustomModelDataCompat {
         Method setComp = null;
         Class<?> compClass = null;
         Method setStrings = null;
+        Method setFloats = null;
         try {
             compClass = Class.forName("org.bukkit.inventory.meta.components.CustomModelDataComponent");
             getComp = ItemMeta.class.getMethod("getCustomModelDataComponent");
             setComp = ItemMeta.class.getMethod("setCustomModelDataComponent", compClass);
             setStrings = compClass.getMethod("setStrings", List.class);
+            setFloats = compClass.getMethod("setFloats", List.class);
             available = true;
         } catch (Throwable ignored) {}
         COMPONENT_AVAILABLE = available;
@@ -36,6 +39,7 @@ public final class CustomModelDataCompat {
         SET_COMPONENT = setComp;
         COMPONENT_CLASS = compClass;
         SET_STRINGS = setStrings;
+        SET_FLOATS = setFloats;
     }
 
     private CustomModelDataCompat() {}
@@ -48,22 +52,37 @@ public final class CustomModelDataCompat {
     public static void applyCustomModelData(ItemMeta meta, List<String> strings) {
         if (meta == null || strings == null || strings.isEmpty()) return;
 
+        Integer legacyValue = parseLegacyValue(strings.get(0));
         if (COMPONENT_AVAILABLE) {
             try {
                 Object comp = GET_COMPONENT.invoke(meta);
-                SET_STRINGS.invoke(comp, strings);
+                if (legacyValue != null && SET_FLOATS != null) {
+                    SET_FLOATS.invoke(comp, List.of(legacyValue.floatValue()));
+                } else {
+                    SET_STRINGS.invoke(comp, strings);
+                }
                 SET_COMPONENT.invoke(meta, comp);
+                if (legacyValue != null) {
+                    meta.setCustomModelData(legacyValue);
+                }
                 return;
             } catch (Throwable t) {
                 Logger.logError("Failed to apply custom model data via CustomModelDataComponent, falling back to legacy method. Error: " + t.getMessage());
             }
         }
 
-        try {
-            int val = Integer.parseInt(strings.get(0));
-            meta.setCustomModelData(val);
-        } catch (NumberFormatException e) {
+        if (legacyValue != null) {
+            meta.setCustomModelData(legacyValue);
+        } else {
             Logger.logError("Failed to apply custom model data: '" + strings.get(0) + "' is not a valid integer for legacy setCustomModelData");
-        } catch (Throwable ignored) {}
+        }
+    }
+
+    private static Integer parseLegacyValue(String value) {
+        try {
+            return Integer.parseInt(value);
+        } catch (NumberFormatException ignored) {
+            return null;
+        }
     }
 }

@@ -249,8 +249,12 @@ public class SingleBalloon extends BukkitRunnable {
         if (this.hasMEGModel && this.getMegHandler() != null) {
             this.getMegHandler().destroy();
         }
-        this.getArmorStand().remove();
-        this.getChicken().remove();
+        if (this.getArmorStand() != null) {
+            this.getArmorStand().remove();
+        }
+        if (this.getChicken() != null) {
+            this.getChicken().remove();
+        }
         super.cancel();
     }
 
