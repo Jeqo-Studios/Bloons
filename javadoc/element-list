@@ -11,10 +11,6 @@ net.jeqo.bloons.commands.manager
 net.jeqo.bloons.commands.manager.types
 net.jeqo.bloons.commands.utils
 net.jeqo.bloons.configuration
-net.jeqo.bloons.events
-net.jeqo.bloons.events.balloon.multipart
-net.jeqo.bloons.events.balloon.single
-net.jeqo.bloons.events.general
 net.jeqo.bloons.gui
 net.jeqo.bloons.gui.item.border
 net.jeqo.bloons.gui.item.filler
@@ -27,3 +23,4 @@ net.jeqo.bloons.listeners.single
 net.jeqo.bloons.logger
 net.jeqo.bloons.management
 net.jeqo.bloons.message
+net.jeqo.bloons.utils
