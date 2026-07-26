@@ -28,15 +28,11 @@ public class CommandReload extends Command {
 
     @Override
     public boolean execute(CommandSender sender, String[] args) {
-        // Reload the main config.yml and its defaults
-        Bloons.getInstance().reloadConfig();
-        Bloons.getInstance().getConfig().options().copyDefaults();
-        Bloons.getInstance().saveDefaultConfig();
+        Bloons.getConfigurationManager().reload();
 
-        // Refresh balloons and their configurations from their respective files
         Bloons.getBalloonCore().initialize();
 
-        String configReloadedMessage = Languages.getMessage("prefix") + Languages.getMessage("config-reloaded");
+        String configReloadedMessage = Bloons.getConfigurationManager().getConfigString("prefix") + Bloons.getConfigurationManager().getConfigString("config-reloaded");
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', configReloadedMessage));
 
         return false;

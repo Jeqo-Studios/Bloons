@@ -6,7 +6,6 @@ import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.logger.Logger;
 import net.jeqo.bloons.colors.Color;
 import net.jeqo.bloons.message.Languages;
-import net.jeqo.bloons.message.MessageTranslations;
 import net.jeqo.bloons.utils.CustomModelDataCompat;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -45,7 +44,6 @@ public class BalloonMenu {
      */
     @Getter
     public static HashMap<UUID, BalloonMenu> users = new HashMap<>();
-    private final MessageTranslations messageTranslations = new MessageTranslations(Bloons.getInstance());
 
     /**
      *              Gets a blank GUI menu with the next page, previous page, and unequip buttons
@@ -53,32 +51,32 @@ public class BalloonMenu {
      * @return      The blank GUI menu, type org.bukkit.inventory.Inventory
      */
     private Inventory getBlankPage(String name){
-        int pageSize = this.getMessageTranslations().getInt("menu-size");
+        int pageSize = Bloons.getConfigurationManager().getConfigInt("menu-size");
         Inventory page = Bukkit.createInventory(null, pageSize, Color.fromHex(name));
 
         // Create next page button
-        ItemStack nextPage = new ItemStack(Material.valueOf(this.getMessageTranslations().getString("buttons.next-page.material")));
+        ItemStack nextPage = new ItemStack(Material.valueOf(Bloons.getConfigurationManager().getConfigString("buttons.next-page.material")));
         ItemMeta nextMeta = nextPage.getItemMeta();
         assert nextMeta != null;
-        nextMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', this.getMessageTranslations().getString("buttons.next-page.name")));
-        CustomModelDataCompat.applyCustomModelData(nextMeta, List.of(this.getMessageTranslations().getString("buttons.next-page.custom-model-data")));
+        nextMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Bloons.getConfigurationManager().getConfigString("buttons.next-page.name")));
+        CustomModelDataCompat.applyCustomModelData(nextMeta, List.of(Bloons.getConfigurationManager().getConfigString("buttons.next-page.custom-model-data")));
         nextPage.setItemMeta(nextMeta);
 
         // Create previous page button
-        ItemStack prevPage = new ItemStack(Material.valueOf(this.getMessageTranslations().getString("buttons.previous-page.material")));
+        ItemStack prevPage = new ItemStack(Material.valueOf(Bloons.getConfigurationManager().getConfigString("buttons.previous-page.material")));
         ItemMeta prevMeta = prevPage.getItemMeta();
         assert prevMeta != null;
-        prevMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', this.getMessageTranslations().getString("buttons.previous-page.name")));
-        CustomModelDataCompat.applyCustomModelData(prevMeta, List.of(this.getMessageTranslations().getString("buttons.previous-page.custom-model-data")));
+        prevMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Bloons.getConfigurationManager().getConfigString("buttons.previous-page.name")));
+        CustomModelDataCompat.applyCustomModelData(prevMeta, List.of(Bloons.getConfigurationManager().getConfigString("buttons.previous-page.custom-model-data")));
         prevPage.setItemMeta(prevMeta);
 
         // Create remove/unequip balloon button
-        ItemStack removeBalloon = new ItemStack(Material.valueOf(this.getMessageTranslations().getString("buttons.unequip.material")));
+        ItemStack removeBalloon = new ItemStack(Material.valueOf(Bloons.getConfigurationManager().getConfigString("buttons.unequip.material")));
         ItemMeta removeMeta = removeBalloon.getItemMeta();
         assert removeMeta != null;
-        removeMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', this.getMessageTranslations().getString("buttons.unequip.name")));
+        removeMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', Bloons.getConfigurationManager().getConfigString("buttons.unequip.name")));
 
-        CustomModelDataCompat.applyCustomModelData(removeMeta, List.of(this.getMessageTranslations().getString("buttons.unequip.custom-model-data")));
+        CustomModelDataCompat.applyCustomModelData(removeMeta, List.of(Bloons.getConfigurationManager().getConfigString("buttons.unequip.custom-model-data")));
         removeBalloon.setItemMeta(removeMeta);
 
         // Add buttons to GUI
@@ -87,7 +85,7 @@ public class BalloonMenu {
             if (Integer.parseInt(previousPageSlot) < pageSize) {
                 page.setItem(Integer.parseInt(previousPageSlot), prevPage);
             } else {
-                Logger.logWarning(String.format(Languages.getMessage("menu-slot-out-of-bounds"), "Previous"));
+                Logger.logWarning(String.format(Bloons.getConfigurationManager().getConfigString("menu-slot-out-of-bounds"), "Previous"));
             }
         }
 
@@ -96,7 +94,7 @@ public class BalloonMenu {
             if (Integer.parseInt(unequipSlot) < pageSize) {
                 page.setItem(Integer.parseInt(unequipSlot), removeBalloon);
             } else {
-                Logger.logWarning(String.format(Languages.getMessage("menu-slot-out-of-bounds"), "Unequip"));
+                Logger.logWarning(String.format(Bloons.getConfigurationManager().getConfigString("menu-slot-out-of-bounds"), "Unequip"));
             }
         }
 
@@ -105,7 +103,7 @@ public class BalloonMenu {
             if (Integer.parseInt(nextPageSlot) < pageSize) {
                 page.setItem(Integer.parseInt(nextPageSlot), nextPage);
             } else {
-                Logger.logWarning(String.format(Languages.getMessage("menu-slot-out-of-bounds"), "Next"));
+                Logger.logWarning(String.format(Bloons.getConfigurationManager().getConfigString("menu-slot-out-of-bounds"), "Next"));
             }
         }
 
@@ -132,7 +130,7 @@ public class BalloonMenu {
             slot++;
 
             // Check if we need to start a new page
-            if (slot >= this.getMessageTranslations().getInt("balloon-slots")) {
+            if (slot >= Bloons.getConfigurationManager().getConfigInt("balloon-slots")) {
                 this.getPages().add(page);
                 page = getBlankPage(name);
                 slot = 0;

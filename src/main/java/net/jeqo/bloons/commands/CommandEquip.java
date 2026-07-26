@@ -69,7 +69,7 @@ public class CommandEquip extends Command {
             if (args.length >= 2) {
                 headOverride = args[1];
                 if (!headOverride.matches(hexRegex)) {
-                    String invalidHex = Languages.getMessage("prefix") + String.format(Languages.getMessage("invalid-hex-code"), headOverride);
+                    String invalidHex = Bloons.getConfigurationManager().getConfigString("prefix") + String.format(Bloons.getConfigurationManager().getConfigString("invalid-hex-code"), headOverride);
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&', invalidHex));
                     return false;
                 }
@@ -77,7 +77,7 @@ public class CommandEquip extends Command {
             if (args.length >= 3) {
                 bodyOverride = args[2];
                 if (!bodyOverride.matches(hexRegex)) {
-                    String invalidHex = Languages.getMessage("prefix") + String.format(Languages.getMessage("invalid-hex-code"), bodyOverride);
+                    String invalidHex = Bloons.getConfigurationManager().getConfigString("prefix") + String.format(Bloons.getConfigurationManager().getConfigString("invalid-hex-code"), bodyOverride);
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&', invalidHex));
                     return false;
                 }
@@ -85,7 +85,7 @@ public class CommandEquip extends Command {
             if (args.length >= 4) {
                 tailOverride = args[3];
                 if (!tailOverride.matches(hexRegex)) {
-                    String invalidHex = Languages.getMessage("prefix") + String.format(Languages.getMessage("invalid-hex-code"), tailOverride);
+                    String invalidHex = Bloons.getConfigurationManager().getConfigString("prefix") + String.format(Bloons.getConfigurationManager().getConfigString("invalid-hex-code"), tailOverride);
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&', invalidHex));
                     return false;
                 }
@@ -95,7 +95,7 @@ public class CommandEquip extends Command {
             if (args.length >= 2) {
                 singleColorOverride = args[1];
                 if (!singleColorOverride.matches(hexRegex)) {
-                    String invalidHex = Languages.getMessage("prefix") + String.format(Languages.getMessage("invalid-hex-code"), singleColorOverride);
+                    String invalidHex = Bloons.getConfigurationManager().getConfigString("prefix") + String.format(Bloons.getConfigurationManager().getConfigString("invalid-hex-code"), singleColorOverride);
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&', invalidHex));
                     return false;
                 }
@@ -105,7 +105,7 @@ public class CommandEquip extends Command {
         // Permission checks
         if (singleBalloonType != null) {
             if (!player.hasPermission(singleBalloonType.getPermission())) {
-                String noPermissionMessage = Languages.getMessage("prefix") + Languages.getMessage("no-permission");
+                String noPermissionMessage = Bloons.getConfigurationManager().getConfigString("prefix") + Bloons.getConfigurationManager().getConfigString("no-permission");
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', noPermissionMessage));
                 return false;
             }
@@ -113,7 +113,7 @@ public class CommandEquip extends Command {
 
         if (multipartBalloonType != null) {
             if (!player.hasPermission(multipartBalloonType.getPermission())) {
-                String noPermissionMessage = Languages.getMessage("prefix") + Languages.getMessage("no-permission");
+                String noPermissionMessage = Bloons.getConfigurationManager().getConfigString("prefix") + Bloons.getConfigurationManager().getConfigString("no-permission");
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', noPermissionMessage));
                 return false;
             }
@@ -143,7 +143,7 @@ public class CommandEquip extends Command {
 
             MultipartBalloonManagement.setPlayerBalloon(player.getUniqueId(), balloon);
 
-            String equippedMessage = Languages.getMessage("prefix") + String.format(Languages.getMessage("equipped"), type.getName());
+            String equippedMessage = Bloons.getConfigurationManager().getConfigString("prefix") + String.format(Bloons.getConfigurationManager().getConfigString("equipped"), type.getName());
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', equippedMessage));
 
         } else {
@@ -155,7 +155,7 @@ public class CommandEquip extends Command {
                 Logger.logToPlayer(LoggingLevel.ERROR, player, "The current balloon type is null! Please correct this in the config.");
                 return false;
             } else {
-                String equippedMessage = Languages.getMessage("prefix") + String.format(Languages.getMessage("equipped"), singleBalloonType.getName());
+                String equippedMessage = Bloons.getConfigurationManager().getConfigString("prefix") + String.format(Bloons.getConfigurationManager().getConfigString("equipped"), singleBalloonType.getName());
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', equippedMessage));
             }
         }

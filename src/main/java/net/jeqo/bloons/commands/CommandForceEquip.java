@@ -45,7 +45,7 @@ public class CommandForceEquip extends Command {
 
         // If the player isn't found, send a message to the sender
         if (player == null) {
-            String playerNotFoundMessage = Languages.getMessage("prefix") + Languages.getMessage("player-not-found");
+            String playerNotFoundMessage = Bloons.getConfigurationManager().getConfigString("prefix") + Bloons.getConfigurationManager().getConfigString("player-not-found");
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', playerNotFoundMessage));
             return false;
         }
@@ -70,7 +70,7 @@ public class CommandForceEquip extends Command {
             if (args.length >= 3) {
                 headOverride = args[2];
                 if (!headOverride.matches(hexRegex)) {
-                    String invalidHex = Languages.getMessage("prefix") + String.format(Languages.getMessage("invalid-hex-code"), headOverride);
+                    String invalidHex = Bloons.getConfigurationManager().getConfigString("prefix") + String.format(Bloons.getConfigurationManager().getConfigString("invalid-hex-code"), headOverride);
                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&', invalidHex));
                     return false;
                 }
@@ -78,7 +78,7 @@ public class CommandForceEquip extends Command {
             if (args.length >= 4) {
                 bodyOverride = args[3];
                 if (!bodyOverride.matches(hexRegex)) {
-                    String invalidHex = Languages.getMessage("prefix") + String.format(Languages.getMessage("invalid-hex-code"), bodyOverride);
+                    String invalidHex = Bloons.getConfigurationManager().getConfigString("prefix") + String.format(Bloons.getConfigurationManager().getConfigString("invalid-hex-code"), bodyOverride);
                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&', invalidHex));
                     return false;
                 }
@@ -86,7 +86,7 @@ public class CommandForceEquip extends Command {
             if (args.length >= 5) {
                 tailOverride = args[4];
                 if (!tailOverride.matches(hexRegex)) {
-                    String invalidHex = Languages.getMessage("prefix") + String.format(Languages.getMessage("invalid-hex-code"), tailOverride);
+                    String invalidHex = Bloons.getConfigurationManager().getConfigString("prefix") + String.format(Bloons.getConfigurationManager().getConfigString("invalid-hex-code"), tailOverride);
                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&', invalidHex));
                     return false;
                 }
@@ -96,7 +96,7 @@ public class CommandForceEquip extends Command {
             if (args.length >= 3) {
                 colorOverride = args[2];
                 if (!colorOverride.matches(hexRegex)) {
-                    String invalidHex = Languages.getMessage("prefix") + String.format(Languages.getMessage("invalid-hex-code"), colorOverride);
+                    String invalidHex = Bloons.getConfigurationManager().getConfigString("prefix") + String.format(Bloons.getConfigurationManager().getConfigString("invalid-hex-code"), colorOverride);
                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&', invalidHex));
                     return false;
                 }
@@ -105,7 +105,7 @@ public class CommandForceEquip extends Command {
 
         // If the balloon ID isn't found in both balloon types, send a message to the sender
         if (Bloons.getBalloonCore().containsSingleBalloon(balloonID) && Bloons.getBalloonCore().containsMultipartBalloon(balloonID)) {
-            String balloonNotFoundMessage = Languages.getMessage("prefix") + Languages.getMessage("balloon-not-found");
+            String balloonNotFoundMessage = Bloons.getConfigurationManager().getConfigString("prefix") + Bloons.getConfigurationManager().getConfigString("balloon-not-found");
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', balloonNotFoundMessage));
             return false;
         }
@@ -134,7 +134,7 @@ public class CommandForceEquip extends Command {
 
             MultipartBalloonManagement.setPlayerBalloon(player.getUniqueId(), balloon);
 
-            String equippedMessage = Languages.getMessage("prefix") + String.format(Languages.getMessage("equipped"), type.getName());
+            String equippedMessage = Bloons.getConfigurationManager().getConfigString("prefix") + String.format(Bloons.getConfigurationManager().getConfigString("equipped"), type.getName());
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', equippedMessage));
 
             // If the balloon ID is a single balloon type, equip the balloon with the single associated methods
@@ -143,7 +143,7 @@ public class CommandForceEquip extends Command {
             SingleBalloonManagement.removeBalloon(player, Bloons.getPlayerSingleBalloons().get(player.getUniqueId()));
             SingleBalloon.checkBalloonRemovalOrAdd(player, balloonID, colorOverride);
 
-            String equippedMessage = Languages.getMessage("prefix") + String.format(Languages.getMessage("equipped"), singleBalloonType.getName());
+            String equippedMessage = Bloons.getConfigurationManager().getConfigString("prefix") + String.format(Bloons.getConfigurationManager().getConfigString("equipped"), singleBalloonType.getName());
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', equippedMessage));
         }
 

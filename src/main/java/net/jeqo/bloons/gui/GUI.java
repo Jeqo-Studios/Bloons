@@ -4,6 +4,7 @@ import net.jeqo.bloons.item.NBTItem;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -85,7 +86,9 @@ public abstract class GUI {
      * This should be executed upon the closing of the GUI
      */
     public void stopUpdater() {
-        this.updater.cancel();
+        if (this.updater != null) {
+            this.updater.cancel();
+        }
     }
 
     /**
@@ -108,9 +111,10 @@ public abstract class GUI {
     /**
      *              Gets the item in a specific slot
      * @param slot  The slot to get the item from, type int
+     * @return      The item stored in the slot, type org.bukkit.inventory.ItemStack
      */
-    public void getItem(int slot) {
-        inventory().getItem(slot);
+    public ItemStack getItem(int slot) {
+        return inventory().getItem(slot);
     }
 
     /**
@@ -124,13 +128,13 @@ public abstract class GUI {
             addItem(borderItem(i), i);
         }
 
-        for(int i = 0; i < Math.ceil(size / 10.0); i++) {
+        for (int i = 0; i < Math.ceil(size / 10.0); i++) {
             addItem(borderItem(i), (8 + (9 * i)));
-            if(9 + (9 * i) > size - 1) continue;
+            if (9 + (9 * i) > size - 1) continue;
             addItem(borderItem(i), (9 + (9 * i)));
         }
 
-        for(int i = size - 9; i < size; i++) {
+        for (int i = size - 9; i < size; i++) {
             addItem(borderItem(i), (i));
         }
     }

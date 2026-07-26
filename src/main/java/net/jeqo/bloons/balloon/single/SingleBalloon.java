@@ -287,18 +287,18 @@ public class SingleBalloon extends BukkitRunnable {
         SingleBalloonType singleBalloonType = Bloons.getBalloonCore().getSingleBalloonByID(balloonID);
 
         if (singleBalloonType == null) {
-            Logger.logError(String.format(Languages.getMessage("balloon-not-set"), balloonID));
+            Logger.logError(String.format(Bloons.getConfigurationManager().getConfigString("balloon-not-set"), balloonID));
             return new ItemStack(Material.BARRIER);
         }
 
         if (singleBalloonType.getMaterial() == null) {
-            Logger.logError(String.format(Languages.getMessage("material-not-set"), balloonID));
+            Logger.logError(String.format(Bloons.getConfigurationManager().getConfigString("material-not-set"), balloonID));
             return new ItemStack(Material.BARRIER);
         }
 
         Material material = Material.getMaterial(singleBalloonType.getMaterial());
         if (material == null) {
-            Logger.logError(String.format(Languages.getMessage("material-not-valid"), balloonID, singleBalloonType.getMaterial()));
+            Logger.logError(String.format(Bloons.getConfigurationManager().getConfigString("material-not-valid"), balloonID, singleBalloonType.getMaterial()));
             return new ItemStack(Material.BARRIER);
         }
 
@@ -325,7 +325,7 @@ public class SingleBalloon extends BukkitRunnable {
             if (colorHex != null) {
                 if (singleBalloonType.getMaterial().startsWith(LEATHER_MATERIAL_PREFIX)) {
                     if (colorHex.equalsIgnoreCase("potion")) {
-                        Logger.logWarning(String.format(Languages.getMessage("material-not-dyeable"), material));
+                        Logger.logWarning(String.format(Bloons.getConfigurationManager().getConfigString("material-not-dyeable"), material));
                         item.setItemMeta(meta);
                         return item;
                     }

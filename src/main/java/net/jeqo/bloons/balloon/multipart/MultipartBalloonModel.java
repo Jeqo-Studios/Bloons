@@ -2,6 +2,7 @@ package net.jeqo.bloons.balloon.multipart;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.balloon.model.BalloonModel;
 import net.jeqo.bloons.balloon.model.BalloonSegmentType;
 import net.jeqo.bloons.logger.Logger;
@@ -65,7 +66,7 @@ public class MultipartBalloonModel {
 
         // Check if the material is valid
         if (material == null) {
-            Logger.logError(String.format(Languages.getMessage("material-is-not-valid"), this.getMaterial()));
+            Logger.logError(String.format(Bloons.getConfigurationManager().getConfigString("material-is-not-valid"), this.getMaterial()));
             return null;
         }
 
@@ -81,7 +82,7 @@ public class MultipartBalloonModel {
         } else if (this.getColor().startsWith("#")) {
             // Check if valid hex code via the utility in net.jeqo.bloons.utils.ColorManagement
             if (!Color.isHexCode(this.getColor())) {
-                Logger.logError(String.format(Languages.getMessage("invalid-hex-code"), this.getColor()));
+                Logger.logError(String.format(Bloons.getConfigurationManager().getConfigString("invalid-hex-code"), this.getColor()));
                 return null;
             }
 

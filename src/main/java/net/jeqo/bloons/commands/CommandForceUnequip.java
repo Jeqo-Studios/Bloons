@@ -37,7 +37,7 @@ public class CommandForceUnequip extends Command {
 
         // If the specified player doesn't exist, send a message to the sender
         if (player == null) {
-            String playerNotFoundMessage = Languages.getMessage("prefix") + Languages.getMessage("player-not-found");
+            String playerNotFoundMessage = Bloons.getConfigurationManager().getConfigString("prefix") + Bloons.getConfigurationManager().getConfigString("player-not-found");
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', playerNotFoundMessage));
             return false;
         }
@@ -47,7 +47,7 @@ public class CommandForceUnequip extends Command {
 
         // If the player doesn't have any balloons equipped, send a message to the sender
         if (singleBalloon == null && multipartBalloon == null) {
-            String notEquippedMessage = Languages.getMessage("prefix") + Languages.getMessage("not-equipped");
+            String notEquippedMessage = Bloons.getConfigurationManager().getConfigString("prefix") + Bloons.getConfigurationManager().getConfigString("not-equipped");
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', notEquippedMessage));
             return false;
         }
@@ -61,7 +61,7 @@ public class CommandForceUnequip extends Command {
             MultipartBalloonManagement.removePlayerBalloon(player.getUniqueId());
         }
 
-        String unequipSuccessfulMessage = Languages.getMessage("prefix") + Languages.getMessage("unequipped");
+        String unequipSuccessfulMessage = Bloons.getConfigurationManager().getConfigString("prefix") + Bloons.getConfigurationManager().getConfigString("unequipped");
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', unequipSuccessfulMessage));
         return false;
     }

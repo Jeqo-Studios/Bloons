@@ -9,7 +9,6 @@ import net.jeqo.bloons.colors.Color;
 import net.jeqo.bloons.colors.ColorCodeConverter;
 import net.jeqo.bloons.gui.menus.BalloonMenu;
 import net.jeqo.bloons.message.Languages;
-import net.jeqo.bloons.message.MessageTranslations;
 import net.jeqo.bloons.management.MultipartBalloonManagement;
 import net.jeqo.bloons.management.SingleBalloonManagement;
 import org.bukkit.NamespacedKey;
@@ -31,9 +30,7 @@ public class BalloonMenuListener implements Listener {
      */
     @EventHandler
     public void onClick(InventoryClickEvent event){
-        MessageTranslations messageTranslations = new MessageTranslations(Bloons.getInstance());
-
-        if (!event.getView().getTitle().equals(Color.fromHex(messageTranslations.getString("menu-title")))) return;
+        if (!event.getView().getTitle().equals(Color.fromHex(Bloons.getConfigurationManager().getConfigString("menu-title")))) return;
         if(!(event.getWhoClicked() instanceof Player player)) return;
         if(!BalloonMenu.getUsers().containsKey(player.getUniqueId())) return;
 
@@ -44,7 +41,7 @@ public class BalloonMenuListener implements Listener {
         if(event.getCurrentItem() == null) return;
         if(event.getCurrentItem().getItemMeta() == null) return;
 
-        int pageSize = messageTranslations.getInt("balloon-slots");
+        int pageSize = Bloons.getConfigurationManager().getConfigInt("balloon-slots");
 
         // Get the display name of the item clicked and the converted balloon name
         String displayName = event.getCurrentItem().getItemMeta().getDisplayName();
@@ -56,9 +53,9 @@ public class BalloonMenuListener implements Listener {
 
         if (event.getRawSlot() <= pageSize) {
             // Do checks on if they're using the other buttons
-            if (displayName.equals(ColorCodeConverter.adventureToColorCode(messageTranslations.getString("buttons.previous-page.name")))) event.setCancelled(true);
-            if (displayName.equals(ColorCodeConverter.adventureToColorCode(messageTranslations.getString("buttons.next-page.name")))) event.setCancelled(true);
-            if (displayName.equals(ColorCodeConverter.adventureToColorCode(messageTranslations.getString("buttons.unequip.name")))) event.setCancelled(true);
+            if (displayName.equals(ColorCodeConverter.adventureToColorCode(Bloons.getConfigurationManager().getConfigString("buttons.previous-page.name")))) event.setCancelled(true);
+            if (displayName.equals(ColorCodeConverter.adventureToColorCode(Bloons.getConfigurationManager().getConfigString("buttons.next-page.name")))) event.setCancelled(true);
+            if (displayName.equals(ColorCodeConverter.adventureToColorCode(Bloons.getConfigurationManager().getConfigString("buttons.unequip.name")))) event.setCancelled(true);
 
             // Spawn the proper type of balloon (either single or multipart)
             MultipartBalloonType type = Bloons.getBalloonCore().getMultipartBalloonByID(localizedName);
@@ -84,17 +81,17 @@ public class BalloonMenuListener implements Listener {
 
             // Send equipped message and play sound
             player.playSound(player.getLocation(), Sound.ENTITY_CHICKEN_EGG, 1, 1);
-            String equippedMessage = Languages.getMessage("prefix") + String.format(Languages.getMessage("equipped"), displayName);
+            String equippedMessage = Bloons.getConfigurationManager().getConfigString("prefix") + String.format(Bloons.getConfigurationManager().getConfigString("equipped"), displayName);
             player.sendMessage(equippedMessage);
 
             // Close inventory if the config is set to true
-            if (messageTranslations.getString("close-on-equip").equals("true")) player.closeInventory();
+            if (Bloons.getConfigurationManager().getConfigString("close-on-equip").equals("true")) player.closeInventory();
         } else {
             event.setCancelled(true);
         }
 
         /* Next page functionality **/
-        if(displayName.equals(ColorCodeConverter.adventureToColorCode(messageTranslations.getString("buttons.next-page.name")))) {
+        if(displayName.equals(ColorCodeConverter.adventureToColorCode(Bloons.getConfigurationManager().getConfigString("buttons.next-page.name")))) {
             event.setCancelled(true);
 
             if (inventory.getCurrentPageIndex() >= inventory.getPages().size()-1) {
@@ -109,7 +106,7 @@ public class BalloonMenuListener implements Listener {
         }
 
         /* Previous page functionality **/
-        else if(displayName.equals(ColorCodeConverter.adventureToColorCode(messageTranslations.getString("buttons.previous-page.name")))) {
+        else if(displayName.equals(ColorCodeConverter.adventureToColorCode(Bloons.getConfigurationManager().getConfigString("buttons.previous-page.name")))) {
             event.setCancelled(true);
 
             if (inventory.getCurrentPageIndex() > 0) {
@@ -125,7 +122,7 @@ public class BalloonMenuListener implements Listener {
         }
 
         /* Unequip button functionality **/
-        else if(displayName.equals(ColorCodeConverter.adventureToColorCode(messageTranslations.getString("buttons.unequip.name")))) {
+        else if(displayName.equals(ColorCodeConverter.adventureToColorCode(Bloons.getConfigurationManager().getConfigString("buttons.unequip.name")))) {
             event.setCancelled(true);
 
             if (!event.isShiftClick()) {
@@ -135,27 +132,27 @@ public class BalloonMenuListener implements Listener {
                 if (singleBalloon == null && multipartBalloon == null) {
                     // If no balloon equipped, play sound and send message notifying them
                     player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_DIDGERIDOO, 1, 1);
-                    player.sendMessage(Languages.getMessage("prefix"), Languages.getMessage("not-equipped"));
+                    player.sendMessage(Bloons.getConfigurationManager().getConfigString("prefix"), Bloons.getConfigurationManager().getConfigString("not-equipped"));
                 } else {
                     if (singleBalloon != null) {
-                        if (messageTranslations.getString("close-on-unequip").equals("true")) player.closeInventory();
+                        if (Bloons.getConfigurationManager().getConfigString("close-on-unequip").equals("true")) player.closeInventory();
 
                         SingleBalloonManagement.removeBalloon(player, singleBalloon);
 
                         // Play sound and send message saying the balloon is unequipped
                         player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_HURT_SWEET_BERRY_BUSH, 1, 1);
-                        player.sendMessage(Languages.getMessage("prefix"), Languages.getMessage("unequipped"));
+                        player.sendMessage(Bloons.getConfigurationManager().getConfigString("prefix"), Bloons.getConfigurationManager().getConfigString("unequipped"));
                     }
 
                     if (multipartBalloon != null) {
-                        if (messageTranslations.getString("close-on-unequip").equals("true")) player.closeInventory();
+                        if (Bloons.getConfigurationManager().getConfigString("close-on-unequip").equals("true")) player.closeInventory();
 
                         multipartBalloon.destroy();
                         MultipartBalloonManagement.removePlayerBalloon(player.getUniqueId());
 
                         // Play sound and send message saying the balloon is unequipped
                         player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_HURT_SWEET_BERRY_BUSH, 1, 1);
-                        player.sendMessage(Languages.getMessage("prefix"), Languages.getMessage("unequipped"));
+                        player.sendMessage(Bloons.getConfigurationManager().getConfigString("prefix"), Bloons.getConfigurationManager().getConfigString("unequipped"));
                     }
                 }
             }

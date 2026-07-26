@@ -53,15 +53,9 @@ public class BalloonCore {
      * Initializes the balloons from the config and clears the current balloons map
      */
     public void initialize() {
-
-        // Clear the current balloons list to reduce memory usage
         this.getMultipartBalloonTypes().clear();
         this.getSingleBalloonTypes().clear();
-
-        // Set the array to be full of all multipart balloons
         this.setMultipartBalloonTypes(ConfigConfiguration.getMultipartBalloons());
-
-        // Set the array to be full of all single balloons
         this.setSingleBalloonTypes(ConfigConfiguration.getSingleBalloons());
     }
 
@@ -84,10 +78,12 @@ public class BalloonCore {
                 continue;
             }
 
-            File file = new File(Bloons.getInstance().getDataFolder() + File.separator + ConfigConfiguration.BALLOON_CONFIGURATION_FOLDER + File.separator + example.getKey());
+            File file = new File(Bloons.getConfigurationManager().getBalloonFolderPath().toFile(), example.getKey());
             if (file.exists()) continue;
 
-            Bloons.getInstance().saveResource(ConfigConfiguration.BALLOON_CONFIGURATION_FOLDER + File.separator + example.getKey(), false);
+            Bloons.getConfigurationManager().saveBundledResourceIfMissing(
+                    ConfigConfiguration.BALLOON_CONFIGURATION_FOLDER + File.separator + example.getKey()
+            );
         }
 
         // Create marker file to indicate initial copy completed
@@ -143,7 +139,7 @@ public class BalloonCore {
      * @return         Whether the balloon is in the registered balloons list, type boolean
      */
     public boolean containsMultipartBalloon(String ID) {
-        return getMultipartBalloonByID(ID) == null;
+        return getMultipartBalloonByID(ID) != null;
     }
 
     /**
@@ -152,6 +148,6 @@ public class BalloonCore {
      * @return        Whether the single balloon is in the registered balloons list, type boolean
      */
     public boolean containsSingleBalloon(String ID) {
-        return getSingleBalloonByID(ID) == null;
+        return getSingleBalloonByID(ID) != null;
     }
 }

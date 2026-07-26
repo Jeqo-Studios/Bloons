@@ -6,6 +6,7 @@ import net.jeqo.bloons.balloon.BalloonCore;
 import net.jeqo.bloons.balloon.multipart.balloon.MultipartBalloon;
 import net.jeqo.bloons.balloon.single.SingleBalloon;
 import net.jeqo.bloons.commands.manager.CommandCore;
+import net.jeqo.bloons.configuration.ConfigurationManager;
 import net.jeqo.bloons.configuration.PluginConfiguration;
 import net.jeqo.bloons.listeners.*;
 import net.jeqo.bloons.listeners.multipart.MultipartBalloonPlayerJoinListener;
@@ -37,6 +38,8 @@ public final class Bloons extends JavaPlugin {
     private static ListenerCore listenerCore;
     @Getter @Setter
     private static BalloonCore balloonCore;
+    @Getter @Setter
+    private static ConfigurationManager configurationManager;
 
     /**
      * A map of all players with a single balloon
@@ -59,6 +62,7 @@ public final class Bloons extends JavaPlugin {
     public void onEnable() {
         // Create an instance of the plugin
         setInstance(this);
+        setConfigurationManager(new ConfigurationManager(this));
 
         // Send initial startup message
         Logger.logInitialStartup();
@@ -68,12 +72,8 @@ public final class Bloons extends JavaPlugin {
          * INITIAL LOADING OF THE PLUGIN AND ITS ISSUES
          */
 
-        // Copy over language files
-        Languages.copyLanguageFiles();
-
-        // Generate config(s) and set defaults
-        getConfig().options().copyDefaults();
-        saveDefaultConfig();
+        // Initialize runtime configuration and bundled resources
+        getConfigurationManager().initialize(Languages.getAvailableLanguages());
 
         // Register core managers within the plugin
         setCommandCore(new CommandCore(getInstance()));
@@ -103,6 +103,7 @@ public final class Bloons extends JavaPlugin {
 
         // Copy over example balloons folder
         getBalloonCore().copyExampleBalloons();
+        getConfigurationManager().reload();
 
         // Initialize multipart balloons
         getBalloonCore().initialize();

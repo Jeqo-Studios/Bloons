@@ -11,7 +11,6 @@ import net.jeqo.bloons.gui.menus.BalloonMenu;
 import net.jeqo.bloons.logger.Logger;
 import net.jeqo.bloons.colors.Color;
 import net.jeqo.bloons.message.Languages;
-import net.jeqo.bloons.message.MessageTranslations;
 import net.jeqo.bloons.utils.CustomModelDataCompat;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -40,7 +39,6 @@ import static net.jeqo.bloons.commands.utils.ErrorHandling.usage;
 public class CommandCore implements CommandExecutor {
     private final ArrayList<Command> commands;
     private final JavaPlugin plugin;
-    private final MessageTranslations messageTranslations;
 
     /**
      *                          Creates a new instance of the command core
@@ -49,7 +47,6 @@ public class CommandCore implements CommandExecutor {
     public CommandCore(JavaPlugin providedPlugin) {
         this.plugin = providedPlugin;
         this.commands = new ArrayList<>();
-        this.messageTranslations = new MessageTranslations(this.getPlugin());
 
         // Add any commands you want registered here
         addCommand(new CommandEquip(this.getPlugin()));
@@ -107,7 +104,7 @@ public class CommandCore implements CommandExecutor {
             Player player = (Player) sender;
 
             if (!player.hasPermission("bloons.menu")) {
-                String noPermission = Languages.getMessage("prefix") + Languages.getMessage("no-permission");
+                String noPermission = Bloons.getConfigurationManager().getConfigString("prefix") + Bloons.getConfigurationManager().getConfigString("no-permission");
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', noPermission));
                 return true;
             }
@@ -118,7 +115,7 @@ public class CommandCore implements CommandExecutor {
 
             // Check if none are registered
             if (singleBalloonTypes == null && multipartBalloonTypes == null) {
-                Logger.logError(ChatColor.translateAlternateColorCodes('&', Languages.getMessage("no-balloons-registered")));
+                Logger.logError(ChatColor.translateAlternateColorCodes('&', Bloons.getConfigurationManager().getConfigString("no-balloons-registered")));
                 return false;
             }
 
@@ -147,7 +144,7 @@ public class CommandCore implements CommandExecutor {
             }
 
             // Formulate a menu with the items
-            new BalloonMenu(items, this.getMessageTranslations().getString("menu-title"), player);
+            new BalloonMenu(items, Bloons.getConfigurationManager().getConfigString("menu-title"), player);
             return true;
         }
 
@@ -161,13 +158,13 @@ public class CommandCore implements CommandExecutor {
             if (currentCommand.getCommandAliases().contains(subcommand)) {
                 // Check if the sender has the permission to execute the command
                 if (!meetsRequirements(currentCommand, sender)) {
-                    sender.sendMessage(Languages.getMessage("prefix") + Languages.getMessage("no-permission"));
+                    sender.sendMessage(Bloons.getConfigurationManager().getConfigString("prefix") + Bloons.getConfigurationManager().getConfigString("no-permission"));
                     return false;
                 }
 
                 // Check if the command is disabled
                 if (currentCommand.getRequiredAccess() == CommandAccess.DISABLED) {
-                    sender.sendMessage(Languages.getMessage("prefix") + Languages.getMessage("command-disabled"));
+                    sender.sendMessage(Bloons.getConfigurationManager().getConfigString("prefix") + Bloons.getConfigurationManager().getConfigString("command-disabled"));
                     return false;
                 }
 
@@ -202,7 +199,7 @@ public class CommandCore implements CommandExecutor {
      * @return                      Whether we should add the balloon to the menu, type boolean
      */
     private boolean shouldAddSingleBalloon(Player player, SingleBalloonType singleBalloonType) {
-        if (this.getMessageTranslations().getString("hide-balloons-without-permission").equalsIgnoreCase("true")) {
+        if (Bloons.getConfigurationManager().getConfigString("hide-balloons-without-permission").equalsIgnoreCase("true")) {
             if (singleBalloonType.getPermission() == null) return true;
 
             return player.hasPermission(singleBalloonType.getPermission());
@@ -217,7 +214,7 @@ public class CommandCore implements CommandExecutor {
      * @return                      Whether we should add the balloon to the menu, type boolean
      */
     private boolean shouldAddMultipartBalloon(Player player, MultipartBalloonType multipartBalloonType) {
-        if (this.getMessageTranslations().getString("hide-balloons-without-permission").equalsIgnoreCase("true")) {
+        if (Bloons.getConfigurationManager().getConfigString("hide-balloons-without-permission").equalsIgnoreCase("true")) {
             if (multipartBalloonType.getPermission() == null) return true;
 
             return player.hasPermission(multipartBalloonType.getPermission());
@@ -233,14 +230,14 @@ public class CommandCore implements CommandExecutor {
     private ItemStack createBalloonItem(SingleBalloonType singleBalloonType) {
         Material material = Material.matchMaterial(singleBalloonType.getMaterial());
         if (material == null) {
-            Logger.logError(String.format(Languages.getMessage("material-not-valid"), singleBalloonType.getMaterial()));
+            Logger.logError(String.format(Bloons.getConfigurationManager().getConfigString("material-not-valid"), singleBalloonType.getMaterial()));
             return null;
         }
 
         ItemStack item = new ItemStack(material);
         ItemMeta meta = item.getItemMeta();
         if (meta == null) {
-            Logger.logError(String.format(Languages.getMessage("invalid-item-meta"), singleBalloonType.getMaterial()));
+            Logger.logError(String.format(Bloons.getConfigurationManager().getConfigString("invalid-item-meta"), singleBalloonType.getMaterial()));
             return null;
         }
 
@@ -276,14 +273,14 @@ public class CommandCore implements CommandExecutor {
     private ItemStack createBalloonItem(MultipartBalloonType multipartBalloonType) {
         Material material = Material.matchMaterial(multipartBalloonType.getHeadModel().getMaterial());
         if (material == null) {
-            Logger.logError(String.format(Languages.getMessage("material-not-valid"), multipartBalloonType.getHeadModel().getMaterial()));
+            Logger.logError(String.format(Bloons.getConfigurationManager().getConfigString("material-not-valid"), multipartBalloonType.getHeadModel().getMaterial()));
             return null;
         }
 
         ItemStack item = new ItemStack(material);
         ItemMeta meta = item.getItemMeta();
         if (meta == null) {
-            Logger.logError(String.format(Languages.getMessage("invalid-item-meta"), multipartBalloonType.getHeadModel().getMaterial()));
+            Logger.logError(String.format(Bloons.getConfigurationManager().getConfigString("invalid-item-meta"), multipartBalloonType.getHeadModel().getMaterial()));
             return null;
         }
 
@@ -381,7 +378,7 @@ public class CommandCore implements CommandExecutor {
                 fireworkMeta.setEffect(effect);
             } else {
                 if (singleBalloonType.getMegModelID() == null) {
-                    Logger.logWarning(String.format(Languages.getMessage("material-not-dyeable"), singleBalloonType.getMaterial()));
+                    Logger.logWarning(String.format(Bloons.getConfigurationManager().getConfigString("material-not-dyeable"), singleBalloonType.getMaterial()));
                 }
             }
         }
@@ -404,7 +401,7 @@ public class CommandCore implements CommandExecutor {
                         .build();
                 fireworkMeta.setEffect(effect);
             } else {
-                Logger.logWarning(String.format(Languages.getMessage("material-not-dyeable"), multipartBalloonType.getHeadModel().getMaterial()));
+                Logger.logWarning(String.format(Bloons.getConfigurationManager().getConfigString("material-not-dyeable"), multipartBalloonType.getHeadModel().getMaterial()));
             }
         }
     }
