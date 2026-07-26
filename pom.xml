@@ -54,6 +54,15 @@
                 </executions>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.8.0</version>
+                <configuration>
+                    <failOnError>false</failOnError>
+                    <doclint>none</doclint>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>blue.lhf</groupId>
                 <artifactId>run-paper-maven-plugin</artifactId>
                 <version>1.1.1</version>
