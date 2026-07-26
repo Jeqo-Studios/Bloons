@@ -9,6 +9,7 @@ net.jeqo.bloons.colors
 net.jeqo.bloons.commands
 net.jeqo.bloons.commands.manager
 net.jeqo.bloons.commands.manager.types
+net.jeqo.bloons.commands.support
 net.jeqo.bloons.commands.utils
 net.jeqo.bloons.configuration
 net.jeqo.bloons.gui
