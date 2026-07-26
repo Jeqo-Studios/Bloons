@@ -7,7 +7,6 @@ import net.jeqo.bloons.balloon.model.BalloonModel;
 import net.jeqo.bloons.balloon.model.BalloonSegmentType;
 import net.jeqo.bloons.logger.Logger;
 import net.jeqo.bloons.colors.Color;
-import net.jeqo.bloons.message.Languages;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 

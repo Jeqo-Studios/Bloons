@@ -1,18 +1,14 @@
 package net.jeqo.bloons.commands;
 
 import net.jeqo.bloons.Bloons;
-import net.jeqo.bloons.balloon.multipart.MultipartBalloonType;
-import net.jeqo.bloons.balloon.multipart.balloon.MultipartBalloon;
-import net.jeqo.bloons.balloon.multipart.balloon.MultipartBalloonBuilder;
-import net.jeqo.bloons.balloon.single.SingleBalloon;
-import net.jeqo.bloons.balloon.single.SingleBalloonType;
 import net.jeqo.bloons.commands.manager.Command;
 import net.jeqo.bloons.commands.manager.types.CommandPermission;
+import net.jeqo.bloons.commands.support.BalloonColorOverrideParser;
+import net.jeqo.bloons.commands.support.BalloonColorOverrides;
+import net.jeqo.bloons.commands.support.BalloonEquipService;
+import net.jeqo.bloons.commands.support.BalloonSelection;
 import net.jeqo.bloons.logger.Logger;
 import net.jeqo.bloons.logger.LoggingLevel;
-import net.jeqo.bloons.message.Languages;
-import net.jeqo.bloons.management.SingleBalloonManagement;
-import net.jeqo.bloons.management.MultipartBalloonManagement;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
@@ -42,127 +38,35 @@ public class CommandEquip extends Command {
     public boolean execute(CommandSender sender, String[] args) {
         if (!(sender instanceof Player player)) return false;
 
-        // If the args isn't within the range of the command, send the usage message
         if (args.length < 1) {
             usage(player);
             return false;
         }
 
-        String balloonID = args[0];
+        BalloonSelection selection = BalloonSelection.resolve(args[0]);
+        BalloonColorOverrides overrides = BalloonColorOverrideParser.parse(player, args, 1, selection);
+        if (overrides == null) return false;
 
-        // Prepare containers for possible overrides
-        String singleColorOverride = null;
-        String headOverride = null;
-        String bodyOverride = null;
-        String tailOverride = null;
-
-        // Regex for hex color #RRGGBB
-        final String hexRegex = "^#([A-Fa-f0-9]{6})$";
-
-        // Determine if the balloonID maps to multipart or single
-        SingleBalloonType singleBalloonType = Bloons.getBalloonCore().getSingleBalloonByID(balloonID);
-        MultipartBalloonType multipartBalloonType = Bloons.getBalloonCore().getMultipartBalloonByID(balloonID);
-
-        // Parse color args depending on type
-        if (multipartBalloonType != null) {
-            // Accept up to 3 hex colors: head, body, tail in that order
-            if (args.length >= 2) {
-                headOverride = args[1];
-                if (!headOverride.matches(hexRegex)) {
-                    String invalidHex = Bloons.getConfigurationManager().getConfigString("prefix") + String.format(Bloons.getConfigurationManager().getConfigString("invalid-hex-code"), headOverride);
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', invalidHex));
-                    return false;
-                }
-            }
-            if (args.length >= 3) {
-                bodyOverride = args[2];
-                if (!bodyOverride.matches(hexRegex)) {
-                    String invalidHex = Bloons.getConfigurationManager().getConfigString("prefix") + String.format(Bloons.getConfigurationManager().getConfigString("invalid-hex-code"), bodyOverride);
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', invalidHex));
-                    return false;
-                }
-            }
-            if (args.length >= 4) {
-                tailOverride = args[3];
-                if (!tailOverride.matches(hexRegex)) {
-                    String invalidHex = Bloons.getConfigurationManager().getConfigString("prefix") + String.format(Bloons.getConfigurationManager().getConfigString("invalid-hex-code"), tailOverride);
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', invalidHex));
-                    return false;
-                }
-            }
-        } else {
-            // single balloon: old behaviour, optional single hex at args[1]
-            if (args.length >= 2) {
-                singleColorOverride = args[1];
-                if (!singleColorOverride.matches(hexRegex)) {
-                    String invalidHex = Bloons.getConfigurationManager().getConfigString("prefix") + String.format(Bloons.getConfigurationManager().getConfigString("invalid-hex-code"), singleColorOverride);
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', invalidHex));
-                    return false;
-                }
-            }
+        if (selection.singleType() != null && !player.hasPermission(selection.singleType().getPermission())) {
+            player.sendMessage(Bloons.getConfigurationManager().getConfigString("prefix") + Bloons.getConfigurationManager().getConfigString("no-permission"));
+            return false;
         }
 
-        // Permission checks
-        if (singleBalloonType != null) {
-            if (!player.hasPermission(singleBalloonType.getPermission())) {
-                String noPermissionMessage = Bloons.getConfigurationManager().getConfigString("prefix") + Bloons.getConfigurationManager().getConfigString("no-permission");
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', noPermissionMessage));
-                return false;
-            }
+        if (selection.multipartType() != null && !player.hasPermission(selection.multipartType().getPermission())) {
+            player.sendMessage(Bloons.getConfigurationManager().getConfigString("prefix") + Bloons.getConfigurationManager().getConfigString("no-permission"));
+            return false;
         }
 
-        if (multipartBalloonType != null) {
-            if (!player.hasPermission(multipartBalloonType.getPermission())) {
-                String noPermissionMessage = Bloons.getConfigurationManager().getConfigString("prefix") + Bloons.getConfigurationManager().getConfigString("no-permission");
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', noPermissionMessage));
-                return false;
-            }
+        String equippedBalloonName = BalloonEquipService.equip(player, selection, overrides);
+        if (equippedBalloonName == null) {
+            Logger.logToPlayer(LoggingLevel.ERROR, player, "The current balloon type is null! Please correct this in the config.");
+            return false;
         }
 
-        // If player has a previous multipart balloon, unequip it
-        MultipartBalloonType type = multipartBalloonType;
-        MultipartBalloon previousBalloon = MultipartBalloonManagement.getPlayerBalloon(player.getUniqueId());
-        if (previousBalloon != null) {
-            previousBalloon.destroy();
-            MultipartBalloonManagement.removePlayerBalloon(player.getUniqueId());
-        }
-
-        // Equip multipart balloon (with optional head/body/tail overrides)
-        if (type != null) {
-            MultipartBalloonBuilder builder = new MultipartBalloonBuilder(type, player);
-
-            // NOTE: Ensure MultipartBalloonBuilder has these setter methods implemented to apply overrides.
-            if (headOverride != null) builder.setHeadColorOverride(headOverride);
-            if (bodyOverride != null) builder.setBodyColorOverride(bodyOverride);
-            if (tailOverride != null) builder.setTailColorOverride(tailOverride);
-
-            SingleBalloonManagement.removeBalloon(player, Bloons.getPlayerSingleBalloons().get(player.getUniqueId()));
-            MultipartBalloon balloon = builder.build();
-            balloon.initialize();
-            balloon.run();
-
-            MultipartBalloonManagement.setPlayerBalloon(player.getUniqueId(), balloon);
-
-            String equippedMessage = Bloons.getConfigurationManager().getConfigString("prefix") + String.format(Bloons.getConfigurationManager().getConfigString("equipped"), type.getName());
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', equippedMessage));
-
-        } else {
-            // Single balloon path (same as before), pass the singleColorOverride
-            SingleBalloonManagement.removeBalloon(player, Bloons.getPlayerSingleBalloons().get(player.getUniqueId()));
-            SingleBalloon.checkBalloonRemovalOrAdd(player, balloonID, singleColorOverride);
-
-            if (singleBalloonType == null) {
-                Logger.logToPlayer(LoggingLevel.ERROR, player, "The current balloon type is null! Please correct this in the config.");
-                return false;
-            } else {
-                String equippedMessage = Bloons.getConfigurationManager().getConfigString("prefix") + String.format(Bloons.getConfigurationManager().getConfigString("equipped"), singleBalloonType.getName());
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', equippedMessage));
-            }
-        }
-
-        // Play a sound regardless of the balloon type and when it executes successfully
+        String equippedMessage = Bloons.getConfigurationManager().getConfigString("prefix")
+                + String.format(Bloons.getConfigurationManager().getConfigString("equipped"), equippedBalloonName);
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&', equippedMessage));
         player.playSound(player.getLocation(), Sound.ENTITY_CHICKEN_EGG, 1, 1);
-
         return false;
     }
 }

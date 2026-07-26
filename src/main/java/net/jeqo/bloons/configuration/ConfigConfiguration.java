@@ -6,7 +6,6 @@ import net.jeqo.bloons.balloon.multipart.MultipartBalloonModel;
 import net.jeqo.bloons.balloon.multipart.MultipartBalloonType;
 import net.jeqo.bloons.balloon.single.SingleBalloonType;
 import net.jeqo.bloons.logger.Logger;
-import net.jeqo.bloons.message.Languages;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -81,71 +80,21 @@ public class ConfigConfiguration {
     public static ArrayList<SingleBalloonType> getSingleBalloons() {
         ArrayList<SingleBalloonType> singleBalloons = new ArrayList<>();
         for (File file : getBalloonConfigurationFiles()) {
-            String fileName = file.getName();
             FileConfiguration config = YamlConfiguration.loadConfiguration(file);
-            ConfigurationSection section = config.getConfigurationSection("");
-
+            ConfigurationSection section = getRootSection(config, file);
             if (section == null) {
-                Logger.logWarning(String.format(Bloons.getConfigurationManager().getConfigString("configuration-section-not-found"), file.getPath()));
                 continue;
             }
 
             for (String key : section.getKeys(false)) {
-                String type = config.getString(key + ".type", BalloonConfiguration.SINGLE_BALLOON_TYPE_IDENTIFIER);
-
-                if (type == null || type.isBlank()) {
-                    Logger.logError(String.format(Bloons.getConfigurationManager().getConfigString("balloon-type-not-found"), key, fileName));
+                String type = getBalloonType(config, file.getName(), key);
+                if (!BalloonConfiguration.SINGLE_BALLOON_TYPE_IDENTIFIER.equals(type)) {
                     continue;
                 }
 
-                if (!type.equals(BalloonConfiguration.SINGLE_BALLOON_TYPE_IDENTIFIER)) {
-                    continue;
-                }
-
-                if (config.getString(key + ".meg-model-id") != null) {
-                    if (!isPaperServer()) {
-                        Logger.logWarning("Model Engine balloons are only supported on Paper servers. Skipping MEG balloon type: " + key + " in file: " + fileName);
-                        continue;
-                    }
-
-                    if (!serverHasModelEngine()) {
-                        Logger.logWarning("Model Engine plugin not found. Skipping MEG balloon type: " + key + " in file: " + fileName);
-                        continue;
-                    }
-
-                    try {
-                        singleBalloons.add(new SingleBalloonType(
-                                key,
-                                config.getString(key + ".id"),
-                                config.getString(key + ".permission"),
-                                config.getString(key + ".icon.material"),
-                                config.getString(key + ".icon.custom-model-data"),
-                                config.getString(key + ".meg-model-id"),
-                                config.getString(key + ".icon.name"),
-                                config.getStringList(key + ".icon.lore").toArray(new String[0])
-                        ));
-                    } catch (Exception e) {
-                        Logger.logWarning("Error processing MEG balloon type for section: " + key + " in file: " + fileName + " - " + e.getMessage());
-                    }
-                    continue;
-                }
-
-                try {
-                    singleBalloons.add(new SingleBalloonType(
-                            key,
-                            config.getString(key + ".id"),
-                            config.getString(key + ".permission"),
-                            config.getDouble(key + ".leash-height"),
-                            config.getDouble(key + ".balloon-height"),
-                            config.getString(key + ".material"),
-                            config.getString(key + ".color"),
-                            config.getString(key + ".custom-model-data"),
-                            config.getString(key + ".item-model"),
-                            config.getString(key + ".name"),
-                            config.getStringList(key + ".lore").toArray(new String[0])
-                    ));
-                } catch (Exception e) {
-                    Logger.logWarning("Error processing single balloon type for section: " + key + " in file: " + fileName + " - " + e.getMessage());
+                SingleBalloonType singleBalloon = createSingleBalloonType(config, file.getName(), key);
+                if (singleBalloon != null) {
+                    singleBalloons.add(singleBalloon);
                 }
             }
         }
@@ -161,97 +110,21 @@ public class ConfigConfiguration {
     public static ArrayList<MultipartBalloonType> getMultipartBalloons() {
         ArrayList<MultipartBalloonType> multipartBalloons = new ArrayList<>();
         for (File file : getBalloonConfigurationFiles()) {
-            String fileName = file.getName();
             FileConfiguration config = YamlConfiguration.loadConfiguration(file);
-            ConfigurationSection section = config.getConfigurationSection("");
-
+            ConfigurationSection section = getRootSection(config, file);
             if (section == null) {
-                Logger.logWarning(String.format(Bloons.getConfigurationManager().getConfigString("configuration-section-not-found"), file.getPath()));
                 continue;
             }
 
             for (String key : section.getKeys(false)) {
-                String type = config.getString(key + ".type", BalloonConfiguration.SINGLE_BALLOON_TYPE_IDENTIFIER);
-
-                if (type == null || type.isBlank()) {
-                    Logger.logError(String.format(Bloons.getConfigurationManager().getConfigString("balloon-type-not-found"), key, fileName));
+                String type = getBalloonType(config, file.getName(), key);
+                if (!BalloonConfiguration.MULTIPART_BALLOON_TYPE_IDENTIFIER.equals(type)) {
                     continue;
                 }
 
-                if (!type.equals(BalloonConfiguration.MULTIPART_BALLOON_TYPE_IDENTIFIER)) {
-                    continue;
-                }
-
-                try {
-                    int nodeCount = config.getInt(key + ".node-count", 5);
-                    List<MultipartBalloonModel> bodyModels = new ArrayList<>();
-                    MultipartBalloonModel defaultBody = new MultipartBalloonModel(
-                            BalloonSegmentType.BODY,
-                            config.getString(key + ".body.material"),
-                            config.getString(key + ".body.color"),
-                            config.getString(key + ".body.custom-model-data"),
-                            config.getString(key + ".body.item-model")
-                    );
-                    for (int i = nodeCount - 2; i >= 1; i--) {
-                        if (config.contains(key + ".body-" + i + ".material")) {
-                            bodyModels.add(new MultipartBalloonModel(
-                                    BalloonSegmentType.BODY,
-                                    config.getString(key + ".body-" + i + ".material"),
-                                    config.getString(key + ".body-" + i + ".color"),
-                                    config.getString(key + ".body-" + i + ".custom-model-data"),
-                                    config.getString(key + ".body-" + i + ".item-model")
-                            ));
-                        } else {
-                            bodyModels.add(defaultBody);
-                        }
-                    }
-                    if (bodyModels.isEmpty()) {
-                        bodyModels.add(defaultBody);
-                    }
-
-                    multipartBalloons.add(new MultipartBalloonType(
-                            config.getString(key + ".id"),
-                            config.getString(key + ".permission"),
-                            config.getString(key + ".name"),
-                            config.getStringList(key + ".lore").toArray(new String[0]),
-                            config.getInt(key + ".node-count"),
-                            config.getDouble(key + ".distance-between-nodes"),
-                            config.getDouble(key + ".leash-height"),
-                            config.getDouble(key + ".head-node-offset"),
-                            config.getDouble(key + ".body-node-offset"),
-                            config.getDouble(key + ".tail-node-offset"),
-                            config.getDouble(key + ".max-joint-angle"),
-                            config.getDouble(key + ".y-axis-interpolation"),
-                            config.getDouble(key + ".turning-spline-interpolation"),
-                            config.getDouble(key + ".passive-sine-wave-speed"),
-                            config.getDouble(key + ".passive-sine-wave-amplitude"),
-                            config.getDouble(key + ".passive-nose-sine-wave-amplitude"),
-                            config.getBoolean(key + ".roll-oscillation-enabled"),
-                            config.getDouble(key + ".roll-oscillation-amplitude"),
-                            config.getDouble(key + ".roll-oscillation-phase-offset"),
-                            new MultipartBalloonModel(
-                                    BalloonSegmentType.HEAD,
-                                    config.getString(key + ".head.material"),
-                                    config.getString(key + ".head.color"),
-                                    config.getString(key + ".head.custom-model-data"),
-                                    config.getString(key + ".head.item-model")
-                            ),
-                            bodyModels,
-                            new MultipartBalloonModel(
-                                    BalloonSegmentType.TAIL,
-                                    config.getString(key + ".tail.material"),
-                                    config.getString(key + ".tail.color"),
-                                    config.getString(key + ".tail.custom-model-data"),
-                                    config.getString(key + ".tail.item-model")
-                            ),
-                            config.getBoolean(key + ".tail-particles.enabled"),
-                            config.getString(key + ".tail-particles.type", "DUST"),
-                            config.getString(key + ".tail-particles.color", "#0000FF"),
-                            config.getInt(key + ".tail-particles.count", 5),
-                            config.getDouble(key + ".tail-particles.speed", 0.01)
-                    ));
-                } catch (Exception e) {
-                    Logger.logWarning(String.format(Bloons.getConfigurationManager().getConfigString("balloon-process-error"), key, fileName, e));
+                MultipartBalloonType multipartBalloon = createMultipartBalloonType(config, file.getName(), key);
+                if (multipartBalloon != null) {
+                    multipartBalloons.add(multipartBalloon);
                 }
             }
         }
@@ -265,5 +138,145 @@ public class ConfigConfiguration {
             Logger.logWarning(String.format(Bloons.getConfigurationManager().getConfigString("no-configuration-files-found"), getBalloonConfigurationFolder()));
         }
         return files;
+    }
+
+    private static ConfigurationSection getRootSection(FileConfiguration config, File file) {
+        ConfigurationSection section = config.getConfigurationSection("");
+        if (section == null) {
+            Logger.logWarning(String.format(Bloons.getConfigurationManager().getConfigString("configuration-section-not-found"), file.getPath()));
+        }
+        return section;
+    }
+
+    private static String getBalloonType(FileConfiguration config, String fileName, String key) {
+        String type = config.getString(key + ".type", BalloonConfiguration.SINGLE_BALLOON_TYPE_IDENTIFIER);
+        if (type == null || type.isBlank()) {
+            Logger.logError(String.format(Bloons.getConfigurationManager().getConfigString("balloon-type-not-found"), key, fileName));
+            return null;
+        }
+        return type;
+    }
+
+    private static SingleBalloonType createSingleBalloonType(FileConfiguration config, String fileName, String key) {
+        if (config.getString(key + ".meg-model-id") != null) {
+            return createMegBalloonType(config, fileName, key);
+        }
+
+        try {
+            return new SingleBalloonType(
+                    key,
+                    config.getString(key + ".id"),
+                    config.getString(key + ".permission"),
+                    config.getDouble(key + ".leash-height"),
+                    config.getDouble(key + ".balloon-height"),
+                    config.getString(key + ".material"),
+                    config.getString(key + ".color"),
+                    config.getString(key + ".custom-model-data"),
+                    config.getString(key + ".item-model"),
+                    config.getString(key + ".name"),
+                    config.getStringList(key + ".lore").toArray(new String[0])
+            );
+        } catch (Exception e) {
+            Logger.logWarning("Error processing single balloon type for section: " + key + " in file: " + fileName + " - " + e.getMessage());
+            return null;
+        }
+    }
+
+    private static SingleBalloonType createMegBalloonType(FileConfiguration config, String fileName, String key) {
+        if (!isPaperServer()) {
+            Logger.logWarning("Model Engine balloons are only supported on Paper servers. Skipping MEG balloon type: " + key + " in file: " + fileName);
+            return null;
+        }
+
+        if (!serverHasModelEngine()) {
+            Logger.logWarning("Model Engine plugin not found. Skipping MEG balloon type: " + key + " in file: " + fileName);
+            return null;
+        }
+
+        try {
+            return new SingleBalloonType(
+                    key,
+                    config.getString(key + ".id"),
+                    config.getString(key + ".permission"),
+                    config.getString(key + ".icon.material"),
+                    config.getString(key + ".icon.custom-model-data"),
+                    config.getString(key + ".meg-model-id"),
+                    config.getString(key + ".icon.name"),
+                    config.getStringList(key + ".icon.lore").toArray(new String[0])
+            );
+        } catch (Exception e) {
+            Logger.logWarning("Error processing MEG balloon type for section: " + key + " in file: " + fileName + " - " + e.getMessage());
+            return null;
+        }
+    }
+
+    private static MultipartBalloonType createMultipartBalloonType(FileConfiguration config, String fileName, String key) {
+        try {
+            int nodeCount = config.getInt(key + ".node-count", 5);
+            List<MultipartBalloonModel> bodyModels = getBodyModels(config, key, nodeCount);
+
+            return new MultipartBalloonType(
+                    config.getString(key + ".id"),
+                    config.getString(key + ".permission"),
+                    config.getString(key + ".name"),
+                    config.getStringList(key + ".lore").toArray(new String[0]),
+                    config.getInt(key + ".node-count"),
+                    config.getDouble(key + ".distance-between-nodes"),
+                    config.getDouble(key + ".leash-height"),
+                    config.getDouble(key + ".head-node-offset"),
+                    config.getDouble(key + ".body-node-offset"),
+                    config.getDouble(key + ".tail-node-offset"),
+                    config.getDouble(key + ".max-joint-angle"),
+                    config.getDouble(key + ".y-axis-interpolation"),
+                    config.getDouble(key + ".turning-spline-interpolation"),
+                    config.getDouble(key + ".passive-sine-wave-speed"),
+                    config.getDouble(key + ".passive-sine-wave-amplitude"),
+                    config.getDouble(key + ".passive-nose-sine-wave-amplitude"),
+                    config.getBoolean(key + ".roll-oscillation-enabled"),
+                    config.getDouble(key + ".roll-oscillation-amplitude"),
+                    config.getDouble(key + ".roll-oscillation-phase-offset"),
+                    createSegmentModel(config, key, "head", BalloonSegmentType.HEAD),
+                    bodyModels,
+                    createSegmentModel(config, key, "tail", BalloonSegmentType.TAIL),
+                    config.getBoolean(key + ".tail-particles.enabled"),
+                    config.getString(key + ".tail-particles.type", "DUST"),
+                    config.getString(key + ".tail-particles.color", "#0000FF"),
+                    config.getInt(key + ".tail-particles.count", 5),
+                    config.getDouble(key + ".tail-particles.speed", 0.01)
+            );
+        } catch (Exception e) {
+            Logger.logWarning(String.format(Bloons.getConfigurationManager().getConfigString("balloon-process-error"), key, fileName, e));
+            return null;
+        }
+    }
+
+    private static List<MultipartBalloonModel> getBodyModels(FileConfiguration config, String key, int nodeCount) {
+        List<MultipartBalloonModel> bodyModels = new ArrayList<>();
+        MultipartBalloonModel defaultBody = createSegmentModel(config, key, "body", BalloonSegmentType.BODY);
+
+        for (int i = nodeCount - 2; i >= 1; i--) {
+            String path = key + ".body-" + i;
+            if (config.contains(path + ".material")) {
+                bodyModels.add(createSegmentModel(config, key, "body-" + i, BalloonSegmentType.BODY));
+            } else {
+                bodyModels.add(defaultBody);
+            }
+        }
+
+        if (bodyModels.isEmpty()) {
+            bodyModels.add(defaultBody);
+        }
+
+        return bodyModels;
+    }
+
+    private static MultipartBalloonModel createSegmentModel(FileConfiguration config, String key, String segmentPath, BalloonSegmentType segmentType) {
+        return new MultipartBalloonModel(
+                segmentType,
+                config.getString(key + "." + segmentPath + ".material"),
+                config.getString(key + "." + segmentPath + ".color"),
+                config.getString(key + "." + segmentPath + ".custom-model-data"),
+                config.getString(key + "." + segmentPath + ".item-model")
+        );
     }
 }

@@ -4,14 +4,11 @@ import lombok.Getter;
 import lombok.Setter;
 import net.jeqo.bloons.Bloons;
 import net.jeqo.bloons.configuration.BalloonConfiguration;
+import net.jeqo.bloons.item.BalloonItemFactory;
 import net.jeqo.bloons.logger.Logger;
-import net.jeqo.bloons.message.Languages;
 import net.jeqo.bloons.management.SingleBalloonManagement;
-import net.jeqo.bloons.colors.Color;
-import net.jeqo.bloons.utils.CustomModelDataCompat;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Chicken;
@@ -19,13 +16,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.EulerAngle;
 import org.bukkit.util.Vector;
 import org.joml.Quaternionf;
 
-import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Getter @Setter
@@ -52,11 +47,6 @@ public class SingleBalloon extends BukkitRunnable {
     private int ticks = 0;
     private float targetYaw = 0.0F;
 
-    // A prefix that is needed for dyable materials
-    private static final String LEATHER_MATERIAL_PREFIX = "LEATHER_";
-    /**
-     * Optional override colour for the balloon visual (hex string like #RRGGBB)
-     */
     private String overrideColor;
 
     /**
@@ -177,67 +167,18 @@ public class SingleBalloon extends BukkitRunnable {
      * the control center of the core functionality of how the balloon moves
      */
     public void run() {
-        // If the balloon armor stand is null, initialize the balloon
         if (this.getArmorStand() == null) initializeBalloon();
 
-        // Every tick, retrieve the updated player location
-        Location playerLocation = this.getPlayerLocation();
-        playerLocation.setYaw(this.getPlayerLocation().getYaw());
+        Location targetPlayerLocation = updateTrackedPlayerLocation();
+        updateTargetYaw(targetPlayerLocation);
 
-        // If the ticks reach 20, set back to 0 and set a new target yaw
-        if (this.getTicks() == 20) {
-            this.setTargetYaw(ThreadLocalRandom.current().nextInt(10) - 5);
-            this.setTicks(0);
-        }
-
-        // If the target yaw is greater than the player location yaw, add 0.2 to the yaw
-        if (this.getTargetYaw() > playerLocation.getYaw()) {
-            playerLocation.setYaw(playerLocation.getYaw() + 0.2F);
-        } else if (this.getTargetYaw() < playerLocation.getYaw()) {
-            playerLocation.setYaw(playerLocation.getYaw() - 0.2F);
-        }
-
-        // Set the move location to the armor stand location minus 2 on the Y axis
-        this.setMoveLocation(this.getArmorStand().getLocation().subtract(0.0D, this.getType().getBalloonHeight(), 0.0D).clone());
-
-        // Set the vector to the player location minus the move location
-        Vector playerToBalloon = playerLocation.toVector().subtract(this.getMoveLocation().toVector());
-        playerToBalloon.multiply(0.3D);
-        this.setMoveLocation(this.getMoveLocation().add(playerToBalloon));
-
-        // Compute local tilt
-        Vector direction = playerLocation.getDirection().setY(0).normalize();
-        double yawRad = Math.atan2(direction.getX(), direction.getZ());
-        Quaternionf toLocal = new Quaternionf().rotateY((float) -yawRad);
-        Vector localTilt = playerToBalloon.clone();
-        toLocal.transform(localTilt.toVector3f());
-
-        double pitch = Math.toRadians(localTilt.getZ() * 50.0D * -1.0D);
-        double roll  = Math.toRadians(localTilt.getX() * 50.0D * -1.0D);
-
-        EulerAngle tiltAngle = new EulerAngle(pitch, yawRad, roll);
-
-        ArmorStand armorStand = this.getArmorStand();
-        armorStand.setHeadPose(tiltAngle);
-        if (this.hasMEGModel && this.getMegHandler() != null) {
-            this.getMegHandler().updateRotation(pitch, roll);
-        }
-
-        // Teleport the balloon to the move location and set the player location yaw
-        this.teleport(this.getMoveLocation());
-
-        // If the balloon armor stand is more than 5 blocks away, teleport to player location
-        if (this.getArmorStand().getLocation().distance(playerLocation) > 5.0D) {
-            this.teleport(playerLocation);
-        }
-
-        // If all parts of a MEG balloon exist and the idle animation exists and it isn't playing, play it
-        if (this.hasMEGModel && this.getMegHandler() != null) {
-            this.getMegHandler().updateAnimation();
-        }
+        Vector playerToBalloon = moveBalloonTowardsPlayer(targetPlayerLocation);
+        applyTiltFromMovement(targetPlayerLocation, playerToBalloon);
+        teleportEntities(targetPlayerLocation);
+        updateMegAnimation();
 
         this.setPlayerLocation(this.getPlayer().getLocation());
-        this.getPlayerLocation().setYaw(playerLocation.getYaw());
+        this.getPlayerLocation().setYaw(targetPlayerLocation.getYaw());
         this.setTicks(this.getTicks() + 1);
     }
 
@@ -249,12 +190,15 @@ public class SingleBalloon extends BukkitRunnable {
         if (this.hasMEGModel && this.getMegHandler() != null) {
             this.getMegHandler().destroy();
         }
+
         if (this.getArmorStand() != null) {
             this.getArmorStand().remove();
         }
+
         if (this.getChicken() != null) {
             this.getChicken().remove();
         }
+
         super.cancel();
     }
 
@@ -302,51 +246,7 @@ public class SingleBalloon extends BukkitRunnable {
             return new ItemStack(Material.BARRIER);
         }
 
-        ItemStack item = new ItemStack(material);
-        ItemMeta meta = item.getItemMeta();
-
-        if (meta != null) {
-            // Set custom model data if present
-            String customModelData = singleBalloonType.getCustomModelData();
-            if (customModelData != null && !customModelData.isEmpty()) {
-                CustomModelDataCompat.applyCustomModelData(meta, List.of(customModelData));
-            }
-
-            // Set item model if present
-            String itemModel = singleBalloonType.getItemModel();
-            if (itemModel != null && !itemModel.isEmpty()) {
-                NamespacedKey itemModelKey = NamespacedKey.fromString(itemModel);
-                meta.setItemModel(itemModelKey);
-            }
-
-            // Decide which colour to use: override takes precedence
-            String colorHex = (overrideColor != null && !overrideColor.isEmpty()) ? overrideColor : singleBalloonType.getColor();
-
-            if (colorHex != null) {
-                if (singleBalloonType.getMaterial().startsWith(LEATHER_MATERIAL_PREFIX)) {
-                    if (colorHex.equalsIgnoreCase("potion")) {
-                        Logger.logWarning(String.format(Bloons.getConfigurationManager().getConfigString("material-not-dyeable"), material));
-                        item.setItemMeta(meta);
-                        return item;
-                    }
-                    if (meta instanceof LeatherArmorMeta leatherArmorMeta) {
-                        leatherArmorMeta.setColor(Color.hexToColor(colorHex));
-                        item.setItemMeta(leatherArmorMeta);
-                        return item;
-                    }
-                } else if (material == Material.FIREWORK_STAR && meta instanceof org.bukkit.inventory.meta.FireworkEffectMeta fireworkMeta) {
-                    org.bukkit.FireworkEffect effect = org.bukkit.FireworkEffect.builder()
-                            .withColor(Color.hexToColor(colorHex))
-                            .build();
-                    fireworkMeta.setEffect(effect);
-                    item.setItemMeta(fireworkMeta);
-                    return item;
-                }
-            }
-            item.setItemMeta(meta);
-        }
-
-        return item;
+        return BalloonItemFactory.createSingleVisualItem(singleBalloonType, overrideColor);
     }
 
     /**
@@ -382,5 +282,64 @@ public class SingleBalloon extends BukkitRunnable {
 
             }
         }.runTaskLater(Bloons.getInstance(), 1L);
+    }
+
+    private Location updateTrackedPlayerLocation() {
+        Location trackedLocation = this.getPlayerLocation();
+        trackedLocation.setYaw(this.getPlayerLocation().getYaw());
+        return trackedLocation;
+    }
+
+    private void updateTargetYaw(Location playerLocation) {
+        if (this.getTicks() == 20) {
+            this.setTargetYaw(ThreadLocalRandom.current().nextInt(10) - 5);
+            this.setTicks(0);
+        }
+
+        if (this.getTargetYaw() > playerLocation.getYaw()) {
+            playerLocation.setYaw(playerLocation.getYaw() + 0.2F);
+        } else if (this.getTargetYaw() < playerLocation.getYaw()) {
+            playerLocation.setYaw(playerLocation.getYaw() - 0.2F);
+        }
+    }
+
+    private Vector moveBalloonTowardsPlayer(Location playerLocation) {
+        this.setMoveLocation(this.getArmorStand().getLocation().subtract(0.0D, this.getType().getBalloonHeight(), 0.0D).clone());
+
+        Vector playerToBalloon = playerLocation.toVector().subtract(this.getMoveLocation().toVector());
+        playerToBalloon.multiply(0.3D);
+        this.setMoveLocation(this.getMoveLocation().add(playerToBalloon));
+        return playerToBalloon;
+    }
+
+    private void applyTiltFromMovement(Location playerLocation, Vector playerToBalloon) {
+        Vector direction = playerLocation.getDirection().setY(0).normalize();
+        double yawRad = Math.atan2(direction.getX(), direction.getZ());
+
+        Quaternionf toLocal = new Quaternionf().rotateY((float) -yawRad);
+        Vector localTilt = playerToBalloon.clone();
+        toLocal.transform(localTilt.toVector3f());
+
+        double pitch = Math.toRadians(localTilt.getZ() * 50.0D * -1.0D);
+        double roll = Math.toRadians(localTilt.getX() * 50.0D * -1.0D);
+
+        this.getArmorStand().setHeadPose(new EulerAngle(pitch, yawRad, roll));
+        if (this.hasMEGModel && this.getMegHandler() != null) {
+            this.getMegHandler().updateRotation(pitch, roll);
+        }
+    }
+
+    private void teleportEntities(Location playerLocation) {
+        this.teleport(this.getMoveLocation());
+
+        if (this.getArmorStand().getLocation().distance(playerLocation) > 5.0D) {
+            this.teleport(playerLocation);
+        }
+    }
+
+    private void updateMegAnimation() {
+        if (this.hasMEGModel && this.getMegHandler() != null) {
+            this.getMegHandler().updateAnimation();
+        }
     }
 }

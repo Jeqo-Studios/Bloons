@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import net.jeqo.bloons.balloon.multipart.MultipartBalloonType;
 import net.jeqo.bloons.configuration.BalloonConfiguration;
-import net.jeqo.bloons.logger.Logger;
 import net.jeqo.bloons.management.MultipartBalloonManagement;
 import net.jeqo.bloons.balloon.multipart.MultipartBalloonModel;
 import org.bukkit.Location;
@@ -288,63 +287,15 @@ public class MultipartBalloonNode {
      * Sets the correct position and item in the armor stand.
      */
     public void display() {
-        // Determine player's stored balloon (if any) to check for overrides
         var stored = MultipartBalloonManagement.getPlayerBalloon(this.getBalloonOwner().getUniqueId());
+        this.getBalloonArmorStand().getEquipment().setHelmet(resolveDisplayedModel(stored).getFinalizedModel());
+        spawnTailParticlesIfNeeded();
 
-        // Sets the segments finalized models based on their position in the balloon
-        if (this.getIndex() == this.getBalloonType().getNodeCount() - 1) {
-            // Head segment
-            MultipartBalloonModel orig = this.getBalloonType().getHeadModel();
-            MultipartBalloonModel modelToUse;
-            if (stored != null && stored.getHeadColorOverride() != null) {
-                modelToUse = new MultipartBalloonModel(orig.getSegmentType(), orig.getMaterial(), stored.getHeadColorOverride(), orig.getCustomModelData(), orig.getItemModel());
-            } else {
-                modelToUse = orig;
-            }
-            this.getBalloonArmorStand().getEquipment().setHelmet(modelToUse.getFinalizedModel());
-
-        } else if (this.getIndex() == 0) {
-            // Tail segment
-            MultipartBalloonModel orig = this.getBalloonType().getTailModel();
-            MultipartBalloonModel modelToUse;
-            if (stored != null && stored.getTailColorOverride() != null) {
-                modelToUse = new MultipartBalloonModel(orig.getSegmentType(), orig.getMaterial(), stored.getTailColorOverride(), orig.getCustomModelData(), orig.getItemModel());
-            } else {
-                modelToUse = orig;
-            }
-            this.getBalloonArmorStand().getEquipment().setHelmet(modelToUse.getFinalizedModel());
-
-            // Add particle trail behind the tail
-            if (this.getBalloonType().isTailParticlesEnabled()) {
-                Location tailLocation = this.getBalloonArmorStand().getEyeLocation();
-                org.bukkit.Particle particleType = org.bukkit.Particle.valueOf(this.getBalloonType().getTailParticleType());
-                if (particleType == org.bukkit.Particle.DUST) {
-                    org.bukkit.Color color = org.bukkit.Color.fromRGB(Integer.parseInt(this.getBalloonType().getTailParticleColor().substring(1), 16));
-                    this.getBalloonOwner().getWorld().spawnParticle(particleType, tailLocation, this.getBalloonType().getTailParticleCount(), 0.1, 0.1, 0.1, this.getBalloonType().getTailParticleSpeed(), new org.bukkit.Particle.DustOptions(color, 1.0f));
-                } else {
-                    this.getBalloonOwner().getWorld().spawnParticle(particleType, tailLocation, this.getBalloonType().getTailParticleCount(), 0.1, 0.1, 0.1, this.getBalloonType().getTailParticleSpeed());
-                }
-            }
-        } else {
-            int bodyIndex = (int) (this.getIndex() - 1) % this.getBalloonType().getBodyModels().size();
-            MultipartBalloonModel orig = this.getBalloonType().getBodyModels().get(bodyIndex);
-            MultipartBalloonModel modelToUse;
-            if (stored != null && stored.getBodyColorOverride() != null) {
-                modelToUse = new MultipartBalloonModel(orig.getSegmentType(), orig.getMaterial(), stored.getBodyColorOverride(), orig.getCustomModelData(), orig.getItemModel());
-            } else {
-                modelToUse = orig;
-            }
-            this.getBalloonArmorStand().getEquipment().setHelmet(modelToUse.getFinalizedModel());
-        }
-
-        // Creates a new Bukkit vector based on the position of the two points
         Vector pointAVector = new Vector(this.getPointA().x, this.getPointA().y, this.getPointA().z);
         Vector pointBVector = new Vector(this.getPointB().x, this.getPointB().y, this.getPointB().z);
 
-        // Set the direction for the armor stand to face
         this.getBalloonArmorStand().setHeadPose(calculateHeadPose(pointAVector, pointBVector));
-        // Teleport it to the correct location
-        this.getBalloonArmorStand().teleport(new Location(this.getBalloonOwner().getWorld(), (this.getPointA().x + this.getPointB().x) / 2.0, (this.getPointA().y + this.getPointB().y) / 2.0, (this.getPointA().z + this.getPointB().z) / 2.0)); // Change Y value to the right height
+        this.getBalloonArmorStand().teleport(getMidpointLocation());
     }
 
     /**
@@ -354,5 +305,76 @@ public class MultipartBalloonNode {
         if (this.getBalloonArmorStand() != null && !this.getBalloonArmorStand().isDead()) {
             this.getBalloonArmorStand().remove();
         }
+    }
+
+    private MultipartBalloonModel resolveDisplayedModel(net.jeqo.bloons.balloon.multipart.balloon.MultipartBalloon storedBalloon) {
+        if (isHeadNode()) return withColorOverride(this.getBalloonType().getHeadModel(), storedBalloon != null ? storedBalloon.getHeadColorOverride() : null);
+
+        if (isTailNode()) return withColorOverride(this.getBalloonType().getTailModel(), storedBalloon != null ? storedBalloon.getTailColorOverride() : null);
+
+        int bodyIndex = (int) (this.getIndex() - 1) % this.getBalloonType().getBodyModels().size();
+        MultipartBalloonModel bodyModel = this.getBalloonType().getBodyModels().get(bodyIndex);
+        return withColorOverride(bodyModel, storedBalloon != null ? storedBalloon.getBodyColorOverride() : null);
+    }
+
+    private MultipartBalloonModel withColorOverride(MultipartBalloonModel originalModel, String colorOverride) {
+        if (colorOverride == null) return originalModel;
+
+        return new MultipartBalloonModel(
+                originalModel.getSegmentType(),
+                originalModel.getMaterial(),
+                colorOverride,
+                originalModel.getCustomModelData(),
+                originalModel.getItemModel()
+        );
+    }
+
+    private void spawnTailParticlesIfNeeded() {
+        if (!isTailNode() || !this.getBalloonType().isTailParticlesEnabled()) return;
+
+        Location tailLocation = this.getBalloonArmorStand().getEyeLocation();
+        org.bukkit.Particle particleType = org.bukkit.Particle.valueOf(this.getBalloonType().getTailParticleType());
+
+        if (particleType == org.bukkit.Particle.DUST) {
+            org.bukkit.Color color = org.bukkit.Color.fromRGB(Integer.parseInt(this.getBalloonType().getTailParticleColor().substring(1), 16));
+            this.getBalloonOwner().getWorld().spawnParticle(
+                    particleType,
+                    tailLocation,
+                    this.getBalloonType().getTailParticleCount(),
+                    0.1,
+                    0.1,
+                    0.1,
+                    this.getBalloonType().getTailParticleSpeed(),
+                    new org.bukkit.Particle.DustOptions(color, 1.0f)
+            );
+            return;
+        }
+
+        this.getBalloonOwner().getWorld().spawnParticle(
+                particleType,
+                tailLocation,
+                this.getBalloonType().getTailParticleCount(),
+                0.1,
+                0.1,
+                0.1,
+                this.getBalloonType().getTailParticleSpeed()
+        );
+    }
+
+    private boolean isHeadNode() {
+        return this.getIndex() == this.getBalloonType().getNodeCount() - 1;
+    }
+
+    private boolean isTailNode() {
+        return this.getIndex() == 0;
+    }
+
+    private Location getMidpointLocation() {
+        return new Location(
+                this.getBalloonOwner().getWorld(),
+                (this.getPointA().x + this.getPointB().x) / 2.0,
+                (this.getPointA().y + this.getPointB().y) / 2.0,
+                (this.getPointA().z + this.getPointB().z) / 2.0
+        );
     }
 }

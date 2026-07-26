@@ -4,10 +4,7 @@ import com.ticxo.modelengine.api.ModelEngineAPI;
 import com.ticxo.modelengine.api.animation.handler.AnimationHandler;
 import com.ticxo.modelengine.api.model.ActiveModel;
 import com.ticxo.modelengine.api.model.ModeledEntity;
-import com.ticxo.modelengine.api.model.bone.BoneBehaviorTypes;
 import com.ticxo.modelengine.api.model.bone.SimpleManualAnimator;
-import com.ticxo.modelengine.api.model.bone.behavior.BoneBehavior;
-import com.ticxo.modelengine.api.model.bone.behavior.BoneBehaviorType;
 import org.bukkit.entity.ArmorStand;
 import org.joml.Quaternionf;
 

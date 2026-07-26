@@ -8,7 +8,6 @@ import net.jeqo.bloons.balloon.single.SingleBalloon;
 import net.jeqo.bloons.colors.Color;
 import net.jeqo.bloons.colors.ColorCodeConverter;
 import net.jeqo.bloons.gui.menus.BalloonMenu;
-import net.jeqo.bloons.message.Languages;
 import net.jeqo.bloons.management.MultipartBalloonManagement;
 import net.jeqo.bloons.management.SingleBalloonManagement;
 import org.bukkit.NamespacedKey;

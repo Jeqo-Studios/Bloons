@@ -51,9 +51,9 @@ public class MultipartBalloon {
      */
     private final List<MultipartBalloonNode> multipartBalloonNodes = new ArrayList<>();
 
-    private String headColorOverride;
-    private String bodyColorOverride;
-    private String tailColorOverride;
+    private final String headColorOverride;
+    private final String bodyColorOverride;
+    private final String tailColorOverride;
 
     /**
      * Initializes the balloons functionality

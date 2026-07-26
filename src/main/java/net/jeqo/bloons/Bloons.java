@@ -20,6 +20,7 @@ import net.jeqo.bloons.health.UpdateChecker;
 import net.jeqo.bloons.logger.Logger;
 import net.jeqo.bloons.health.Metrics;
 import net.jeqo.bloons.utils.VersionChecker;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
@@ -60,85 +61,24 @@ public final class Bloons extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        // Create an instance of the plugin
         setInstance(this);
         setConfigurationManager(new ConfigurationManager(this));
-
-        // Send initial startup message
         Logger.logInitialStartup();
-
-        /*
-         * KEEP CONFIGURATION INITIALIZATION AT THE TOP TO PREVENT
-         * INITIAL LOADING OF THE PLUGIN AND ITS ISSUES
-         */
-
-        // Initialize runtime configuration and bundled resources
         getConfigurationManager().initialize(Languages.getAvailableLanguages());
-
-        // Register core managers within the plugin
-        setCommandCore(new CommandCore(getInstance()));
-        setListenerCore(new ListenerCore(getInstance()));
-        setBalloonCore(new BalloonCore(getInstance()));
-
-        // Stage listeners
-        getListenerCore().stageListener(new BalloonChickenLeashListener());
-        getListenerCore().stageListener(new BalloonMenuListener());
-        getListenerCore().stageListener(new BalloonChickenEntityListener());
-        getListenerCore().stageListener(new BalloonArmorStandEntityListener());
-
-        getListenerCore().stageListener(new SingleBalloonPlayerListener());
-        getListenerCore().stageListener(new SingleBalloonPlayerJoinListener());
-        getListenerCore().stageListener(new SingleBalloonPlayerLeaveListener());
-
-        getListenerCore().stageListener(new MultipartBalloonPlayerListener());
-        getListenerCore().stageListener(new MultipartBalloonPlayerJoinListener());
-        getListenerCore().stageListener(new MultipartBalloonPlayerLeaveListener());
-
-        // Register all handlers
-        getListenerCore().registerListeners();
-
-        // Startup the metrics and update checker
-        new Metrics(this, PluginConfiguration.BSTATS_PLUGIN_ID);
-        updateChecker();
-
-        // Copy over example balloons folder
-        getBalloonCore().copyExampleBalloons();
-        getConfigurationManager().reload();
-
-        // Initialize multipart balloons
-        getBalloonCore().initialize();
-
-        // Send final startup message
+        initializeManagers();
+        registerListeners();
+        startRuntimeServices();
+        initializeBalloonData();
         Logger.logFinalStartup();
     }
 
     @Override
     public void onDisable() {
-        // Log an initial shutdown message
         Logger.logInitialShutdown();
-
-        if (getPlayerSingleBalloons() != null && !getPlayerSingleBalloons().isEmpty()) {
-            // Unregister all balloons and stop the task
-            for (SingleBalloon owner : getPlayerSingleBalloons().values()) {
-                owner.cancel();
-            }
-        }
-
-        // Unregister all balloons and stop the task if it exists
-        if (!getPlayerMultipartBalloons().isEmpty()) {
-            for (MultipartBalloon owner : getPlayerMultipartBalloons().values()) {
-                owner.destroy();
-            }
-        }
-
-        // Clear all balloon data if it exists
-        if (getPlayerSingleBalloons() != null) getPlayerSingleBalloons().clear();
-        getPlayerMultipartBalloons().clear();
-
-        // Unregister all listeners in the manager
+        shutdownSingleBalloons();
+        shutdownMultipartBalloons();
+        clearBalloonCaches();
         getListenerCore().unregisterListeners();
-
-        // Send final shutdown message
         Logger.logFinalShutdown();
     }
 
@@ -148,7 +88,6 @@ public final class Bloons extends JavaPlugin {
      * Not planned to change
      */
     public void updateChecker() {
-        // Resource ID for the plugin on SpigotMC
         int resourceId = 106243;
         new UpdateChecker(this, resourceId).getVersion(version -> {
             String currentVersion = this.getDescription().getVersion();
@@ -159,5 +98,70 @@ public final class Bloons extends JavaPlugin {
                 Logger.logUnreleasedVersionNotification();
             }
         });
+    }
+
+    private void initializeManagers() {
+        setCommandCore(new CommandCore(getInstance()));
+        setListenerCore(new ListenerCore(getInstance()));
+        setBalloonCore(new BalloonCore(getInstance()));
+    }
+
+    private void registerListeners() {
+        Listener[] listeners = {
+                new BalloonChickenLeashListener(),
+                new BalloonMenuListener(),
+                new BalloonChickenEntityListener(),
+                new BalloonArmorStandEntityListener(),
+                new SingleBalloonPlayerListener(),
+                new SingleBalloonPlayerJoinListener(),
+                new SingleBalloonPlayerLeaveListener(),
+                new MultipartBalloonPlayerListener(),
+                new MultipartBalloonPlayerJoinListener(),
+                new MultipartBalloonPlayerLeaveListener()
+        };
+
+        for (Listener listener : listeners) {
+            getListenerCore().stageListener(listener);
+        }
+
+        getListenerCore().registerListeners();
+    }
+
+    private void startRuntimeServices() {
+        new Metrics(this, PluginConfiguration.BSTATS_PLUGIN_ID);
+        updateChecker();
+    }
+
+    private void initializeBalloonData() {
+        getBalloonCore().copyExampleBalloons();
+        getConfigurationManager().reload();
+        getBalloonCore().initialize();
+    }
+
+    private void shutdownSingleBalloons() {
+        if (getPlayerSingleBalloons() == null || getPlayerSingleBalloons().isEmpty()) {
+            return;
+        }
+
+        for (SingleBalloon owner : getPlayerSingleBalloons().values()) {
+            owner.cancel();
+        }
+    }
+
+    private void shutdownMultipartBalloons() {
+        if (getPlayerMultipartBalloons().isEmpty()) {
+            return;
+        }
+
+        for (MultipartBalloon owner : getPlayerMultipartBalloons().values()) {
+            owner.destroy();
+        }
+    }
+
+    private void clearBalloonCaches() {
+        if (getPlayerSingleBalloons() != null) {
+            getPlayerSingleBalloons().clear();
+        }
+        getPlayerMultipartBalloons().clear();
     }
 }
