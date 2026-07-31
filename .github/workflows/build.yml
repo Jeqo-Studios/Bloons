@@ -12,7 +12,7 @@ jobs:
   ubuntu:
     name: 'Build Ubuntu Latest'
     runs-on: ubuntu-latest
-    environment: jdk21-building
+    environment: jdk25-building
     permissions:
       contents: read
 
@@ -43,7 +43,7 @@ jobs:
   macos:
     name: 'Build MacOS Latest'
     runs-on: macos-latest
-    environment: jdk21-building
+    environment: jdk25-building
     permissions:
       contents: read
 
@@ -74,7 +74,7 @@ jobs:
   windows:
     name: 'Build Windows Latest'
     runs-on: windows-latest
-    environment: jdk21-building
+    environment: jdk25-building
     permissions:
       contents: read
 

@@ -12,7 +12,7 @@ jobs:
   dependency-submission:
     name: Generate and submit dependency graph
     runs-on: ubuntu-latest
-    environment: jdk21-flat
+    environment: jdk25-flat
     permissions:
       contents: write
 

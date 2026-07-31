@@ -12,7 +12,7 @@ jobs:
     name: Publish Package
     if: ${{ startsWith(github.event.head_commit.message, 'feat') }}
     runs-on: ubuntu-latest
-    environment: jdk21-publishing
+    environment: jdk25-publishing
     permissions:
       contents: read
       packages: write

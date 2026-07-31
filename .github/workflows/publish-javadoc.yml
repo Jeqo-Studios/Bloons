@@ -8,7 +8,7 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    environment: jdk21-flat
+    environment: jdk25-flat
     permissions:
       contents: write  # if you have a protection rule on your repository, you'll need to give write permission to the workflow.
     steps:
