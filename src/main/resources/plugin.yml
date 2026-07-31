@@ -1,7 +1,7 @@
 name: Bloons
 version: '${project.version}'
 main: net.jeqo.bloons.Bloons
-api-version: 1.21
+api-version: 26.2
 prefix: Bloons
 authors: [ Jeqo, Gucci Fox ]
 description: A unique balloons plugin.
