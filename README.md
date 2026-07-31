@@ -1,35 +1,60 @@
-<div class="logo" align="center">
-  <img width="25%" src="https://www.spigotmc.org/data/resource_icons/106/106243.jpg?1668352166" alt="bloons-logo">
-  <br>
-</div>
+<p align="center">
+  <img width="220" src="https://jeqo.net/plugins/bloons.png" alt="Bloons logo">
+</p>
 
-<div align="center">
+<h1 align="center">Bloons</h1>
 
-[![Javadoc](https://img.shields.io/badge/JavaDoc-Online-green)](https://bloons.jeqo.net/javadoc/index.html)
-  <a href="https://jeqo.net/bloons" alt="jeqo">
-<img src="https://img.shields.io/badge/jeqo.net-bloons">
+<p align="center">
+  A Minecraft cosmetic plugin for creating and managing single and multipart balloons.
+</p>
+
+<p align="center">
+  <a href="https://bloons.jeqo.net/javadoc/index.html">
+    <img src="https://img.shields.io/badge/JavaDoc-Online-green" alt="Javadoc">
   </a>
-  <a href="https://www.spigotmc.org/resources/authors/jeqo.9929/" alt="spigot">
-<img src="https://img.shields.io/badge/spigot-bloons">
+  <a href="https://jeqo.net/plugins/bloons">
+    <img src="https://img.shields.io/badge/Website-jeqo.net%2Fplugins%2Fbloons-blue" alt="Website">
   </a>
-  <a href="https://jeqo.net/discord" alt="discord">
-<img src="https://dcbadge.limes.pink/api/server/RdfUnYjxy3?style=plastic)(https://jeqo.net/discord">
+  <a href="https://jeqo.net/discord">
+    <img src="https://img.shields.io/badge/Discord-Join%20the%20community-5865F2" alt="Discord">
   </a>
-</div>
+</p>
 
-## What is Bloons?
-Bloons is a Minecraft cosmetic plugin that allows for players to create and manage both single and multipart balloons both easily and flawlessly and with ease.
+## Overview
+Bloons adds cosmetic balloons to Minecraft servers with support for both simple single balloons and more advanced multipart designs. It is built to make custom balloon setup straightforward while staying reliable on live servers.
 
-**Consider supporting us by joining our [Discord](https://jeqo.net/discord)**
+## Highlights
+- Easy balloon setup through clear configuration files and in-game flows
+- Support for both single balloons and multipart balloon designs
+- Custom model support for resource-pack-based cosmetics
+- Built with performance and day-to-day server reliability in mind
 
-## Features
-- **Easy-to-use Balloons**: Create and manage balloons with ease through our simple and intuitive interfaces and configuration file.
-- **Multipart Balloons**: Create balloons with multiple parts with a slue of ranging options.
-- **Custom Model Support**: Utilize custom models from a resource pack easily for balloons with our configuration.
-- **Reliability and Performance**: Bloons is built with performance and reliability in mind, ensuring that your server runs smoothly and efficiently while utilizing the plugin.
+## Installation
+1. Build or download the `Bloons` plugin JAR.
+2. Place it in your server's `plugins` folder.
+3. Start or restart your server.
+4. Review the generated configuration files in `plugins/Bloons`.
 
-## Javadoc Documentation
-Documentation is important to us with every project we continue to maintain and collaborate on. We have a [Javadoc](https://bloons.jeqo.net/javadoc/index.html) available for Bloons to help you understand the plugin better and to find and implement API usages.
+Bloons is currently configured against Paper `26.2` in this repository.
+
+## Development
+### Requirements
+- Java `25`
+- Maven
+
+### Build
+```bash
+mvn package
+```
+
+The packaged plugin JAR will be created in `target/`.
+
+## Documentation
+API documentation is available through the published [Javadocs](https://bloons.jeqo.net/javadoc/index.html). If you're integrating with Bloons or contributing to the codebase, that is the best place to start.
 
 ## Support
-Have a question or need support with an issue you're having? Consider joining our [Discord](https://jeqo.net/discord) for help and support or email guccifox@jeqo.net for person inquiries.
+If you need help, want to report an issue, or have an idea for improvement:
+
+- Join the [Discord server](https://jeqo.net/discord)
+- Open an issue on GitHub
+- Review the contribution guidelines in [CONTRIBUTING.md](CONTRIBUTING.md)
