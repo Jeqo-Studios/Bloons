@@ -5,7 +5,7 @@ api-version: 26.2
 prefix: Bloons
 authors: [ Jeqo, Gucci Fox ]
 description: A unique balloons plugin.
-website: https://jeqo.net/bloons
+website: https://jeqo.net/plugins/bloons
 commands:
   bloons:
     aliases: [balloons, b]
